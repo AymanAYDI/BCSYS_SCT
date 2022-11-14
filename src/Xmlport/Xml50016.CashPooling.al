@@ -55,17 +55,14 @@ xmlport 50016 "BC6_Cash Pooling"
                                     Grec_FeuilleCashPooling."Debit Amount" := Gdec_DebitAmount;
                                 end;
 
-                                if EVALUATE(varInteger, COPYSTR(Gtext_Champ9, 1, 4)) then begin
+                                if EVALUATE(varInteger, COPYSTR(Gtext_Champ9, 1, 4)) then
                                     Gint_Year := varInteger;
-                                end;
 
-                                if EVALUATE(varInteger, COPYSTR(Gtext_Champ9, 5, 2)) then begin
+                                if EVALUATE(varInteger, COPYSTR(Gtext_Champ9, 5, 2)) then
                                     Gint_Month := varInteger;
-                                end;
 
-                                if EVALUATE(varInteger, COPYSTR(Gtext_Champ9, 7, 2)) then begin
+                                if EVALUATE(varInteger, COPYSTR(Gtext_Champ9, 7, 2)) then
                                     Gint_Day := varInteger;
-                                end;
 
                                 Gdate_PostingDate := DMY2DATE(Gint_Day, Gint_Month, Gint_Year);
                                 Grec_FeuilleCashPooling."Posting Date" := Gdate_PostingDate;

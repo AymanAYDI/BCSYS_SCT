@@ -95,22 +95,6 @@ pageextension 50045 "BC6_PurchaseQuoteArchive" extends "Purchase Quote Archive"
                 ToolTip = 'View or change detailed information about the record on the document or journal line.';
             }
         }
-
-        // addfirst(Navigation)
-        // {
-        //     group("BC6_&Quote")
-        //     {
-        //         Caption = '&Quote';
-        //         action(BC6_Contrat)
-        //         {
-        //             Caption = 'Contract';
-        //             RunObject = Page "BC6_Posted Contract";
-        //             RunPageLink = "BC6_Initial quote No" = FIELD("No.");
-        //             RunPageView = SORTING("BC6_Initial quote No");
-        //             ApplicationArea = All;
-        //         }
-        //     }
-        // }
         addafter(Print)
         {
             action(BC6_Approbations)

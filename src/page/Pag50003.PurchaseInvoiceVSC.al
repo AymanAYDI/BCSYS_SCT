@@ -267,40 +267,40 @@ page 50003 "BC6_Purchase Invoice VSC"
             group(Livraison)
             {
                 Caption = 'Shipping';
-                field("Ship-to Name"; 'Ship-to Name')
+                field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
                 }
-                field("Ship-to Address"; 'Ship-to Address')
+                field("Ship-to Address"; Rec."Ship-to Address")
                 {
                     ApplicationArea = All;
                 }
-                field("Ship-to Address 2"; 'Ship-to Address 2')
+                field("Ship-to Address 2"; Rec."Ship-to Address 2")
                 {
                     ApplicationArea = All;
                 }
-                field("Ship-to Post Code"; 'Ship-to Post Code')
+                field("Ship-to Post Code"; Rec."Ship-to Post Code")
                 {
                     Caption = 'Ship-to Post Code/City';
                     ApplicationArea = All;
                 }
-                field("Ship-to City"; 'Ship-to City')
+                field("Ship-to City"; Rec."Ship-to City")
                 {
                     ApplicationArea = All;
                 }
-                field("Ship-to Contact"; 'Ship-to Contact')
+                field("Ship-to Contact"; Rec."Ship-to Contact")
                 {
                     ApplicationArea = All;
                 }
-                field("Location Code"; 'Location Code')
+                field("Location Code"; Rec."Location Code")
                 {
                     ApplicationArea = All;
                 }
-                field("Shipment Method Code"; 'Shipment Method Code')
+                field("Shipment Method Code"; Rec."Shipment Method Code")
                 {
                     ApplicationArea = All;
                 }
-                field("Expected Receipt Date"; 'Expected Receipt Date')
+                field("Expected Receipt Date"; Rec."Expected Receipt Date")
                 {
                     ApplicationArea = All;
                 }
@@ -308,7 +308,7 @@ page 50003 "BC6_Purchase Invoice VSC"
             group(International)
             {
                 Caption = 'Foreign Trade';
-                field("Currency Code"; 'Currency Code')
+                field("Currency Code"; Rec."Currency Code")
                 {
                     ApplicationArea = All;
 
@@ -328,23 +328,23 @@ page 50003 "BC6_Purchase Invoice VSC"
                         CurrencyCodeOnAfterValidate();
                     end;
                 }
-                field("Transaction Type"; 'Transaction Type')
+                field("Transaction Type"; Rec."Transaction Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Transaction Specification"; 'Transaction Specification')
+                field("Transaction Specification"; Rec."Transaction Specification")
                 {
                     ApplicationArea = All;
                 }
-                field("Transport Method"; 'Transport Method')
+                field("Transport Method"; Rec."Transport Method")
                 {
                     ApplicationArea = All;
                 }
-                field("Entry Point"; 'Entry Point')
+                field("Entry Point"; Rec."Entry Point")
                 {
                     ApplicationArea = All;
                 }
-                field("Area"; 'Area')
+                field("Area"; Rec.Area)
                 {
                     ApplicationArea = All;
                 }

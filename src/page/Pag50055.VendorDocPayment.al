@@ -62,11 +62,6 @@ page 50055 "BC6_Vendor Doc. Payment"
     var
         AmountToPay: Decimal;
 
-    //[Scope('Internal')]
-    /// <summary>
-    /// ReturnAmount.
-    /// </summary>
-    /// <returns>Return value of type Decimal.</returns>
     procedure ReturnAmount(): Decimal
     begin
         exit(AmountToPay);

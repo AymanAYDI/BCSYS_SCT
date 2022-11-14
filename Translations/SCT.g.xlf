@@ -1843,11 +1843,6 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page BC6_VSC historic - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Page 1539128273 - Control 1878130204 - Property 62802879" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Invoice,Receipt,Credit Memo</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Page BC6_VSC historic - Control Type - Property OptionCaption</note>
-        </trans-unit>
         <trans-unit id="Page 885204053 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>VSC Settings</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1913,6 +1908,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Contrepassation des FNP - NamedType Text003</note>
         </trans-unit>
+        <trans-unit id="Report 3005157301 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Export ETAFI</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export ETAFI - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 3005157301 - Control 1911706648 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Date à isoler</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1930,8 +1930,13 @@
         </trans-unit>
         <trans-unit id="Report 2373584010 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Export Lisam-LOI SAPIN 2</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Export Lisam-LOI SAPIN 2"</note>
+          <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export Lisam-LOI SAPIN 2 - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3944039460 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Export Magnitude</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export Magnitude - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 3944039460 - Control 3439268676 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Date comptabilisation</source>
@@ -2042,6 +2047,11 @@
           <source>please fill the 'Periode' axis</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des FNP - NamedType Text004</note>
+        </trans-unit>
+        <trans-unit id="Report 1720894670 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>LISAM</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_LISAM - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 1720894670 - NamedType 2236029831" size-unit="char" translate="yes" xml:space="preserve">
           <source>Account</source>
@@ -2155,12 +2165,12 @@
         </trans-unit>
         <trans-unit id="Report 3779419231 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>LISAM (quick) VAT</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Export LISAM TVA (rapide)"</note>
+          <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_LISAM (quick) VAT - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 627625866 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>LISAM</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Export LISAM"</note>
+          <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_LISAM Export - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 2465814408 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -2207,6 +2217,11 @@
           <source>Period axe update on GJL</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Period axe update on GJL - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 924400891 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Solde BC Masse</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 924400891 - NamedType 652464844" size-unit="char" translate="yes" xml:space="preserve">
           <source>Réception N° #1################</source>
@@ -2325,12 +2340,12 @@
         </trans-unit>
         <trans-unit id="Report 4144985605 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Yooz Export Vendor</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Yooz export fournisseurs"</note>
+          <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Yooz Export Vendor - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 4149269850 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Yooz Purch. Inv.&amp;CrM. Imp</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Yooz import facture achat"</note>
+          <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Yooz Purch. Inv.&amp;CrM. Imp - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 389867124 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -3959,7 +3974,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PurchaseHeader - Field BC6_Lines Amount - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1704912272 - Field 707728174 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2072992664">
-          <source>BC6_Litige</source>
+          <source>Litige</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PurchaseHeader - Field BC6_Litige - Property Caption</note>
         </trans-unit>
@@ -4164,7 +4179,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PurchCrMemoHdr - Field BC6_BC No. - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 2279363163 - Field 707728174 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2271228953">
-          <source>BC6_Litige</source>
+          <source>Litige</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PurchCrMemoHdr - Field BC6_Litige - Property Caption</note>
         </trans-unit>
@@ -4219,7 +4234,7 @@
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PurchInvHeader - Field BC6_Invoice receipt date - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1856797422 - Field 707728174 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1592379974">
-          <source>BC6_Litige</source>
+          <source>Litige</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PurchInvHeader - Field BC6_Litige - Property Caption</note>
         </trans-unit>

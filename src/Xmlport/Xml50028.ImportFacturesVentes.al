@@ -36,9 +36,8 @@ xmlport 50028 "BC6_Import Factures Ventes"
                 trigger OnBeforeInsertRecord()
                 begin
                     Gint_Compteur += 1;//pour passer l'en tˆte du fichier
-                    if Gint_Compteur = 1 then begin
+                    if Gint_Compteur = 1 then
                         currXMLport.SKIP();
-                    end;
 
                     // Gtext_CHAMP1];     //Soci‚t‚
                     // Gtext_CHAMP2];     //Nø client factur‚
@@ -172,17 +171,15 @@ xmlport 50028 "BC6_Import Factures Ventes"
         Grec_SalesHeader.LOCKTABLE();
 
         //Mettre le nø souche des facture vente en manuel
-        if Grec_NoSeries.GET('VAP') then begin
+        if Grec_NoSeries.GET('VAP') then
             if not Grec_NoSeries."Manual Nos." then begin
                 Gbool_NoSoucheManuel := false;
                 Grec_NoSeries.VALIDATE(Grec_NoSeries."Manual Nos.", true);
                 Grec_NoSeries.MODIFY();
-            end else begin
+            end else
                 Gbool_NoSoucheManuel := true;
-            end;
-        end;
 
-        //r‚cup‚ration des codes axe analytique
+        //récupération des codes axe analytique
         if Grecord_GeneralLedgerSetup.FIND('-') then begin
             Gcode_Axe[1] := Grecord_GeneralLedgerSetup."Shortcut Dimension 3 Code";
             Gcode_Axe[2] := Grecord_GeneralLedgerSetup."Shortcut Dimension 4 Code";
@@ -200,12 +197,11 @@ xmlport 50028 "BC6_Import Factures Ventes"
     trigger OnPostXMLport()
     begin
         //Enlever, le nø souche des factures de ventes en manuel
-        if Grec_NoSeries.GET('VAP') then begin
+        if Grec_NoSeries.GET('VAP') then
             if not Gbool_NoSoucheManuel then begin
                 Grec_NoSeries.VALIDATE(Grec_NoSeries."Manual Nos.", false);
                 Grec_NoSeries.MODIFY();
             end;
-        end;
 
         MESSAGE(Text009);
     end;

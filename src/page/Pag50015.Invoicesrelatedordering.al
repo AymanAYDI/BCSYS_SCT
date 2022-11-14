@@ -124,10 +124,6 @@ page 50015 "BC6_Invoices related  ordering"
         gInt_Count: Integer;
         gCode_Invoice: array[6, 1000] of Text;
 
-    /// <summary>
-    /// jx_InitForm.
-    /// </summary>
-    /// <param name="pCode_Commande">Code[20].</param>
     procedure jx_InitForm(pCode_Commande: Code[20])
     begin
         gCode_Commande := pCode_Commande;

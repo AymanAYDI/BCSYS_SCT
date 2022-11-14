@@ -3,6 +3,7 @@ report 50049 "BC6_Export ETAFI"
     ProcessingOnly = true;
     ApplicationArea = All;
     UsageCategory = Tasks;
+    Caption = 'Export ETAFI';
 
     dataset
     {

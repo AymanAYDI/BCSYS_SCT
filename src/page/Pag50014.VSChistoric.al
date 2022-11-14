@@ -15,7 +15,6 @@ page 50014 "BC6_VSC historic"
                 field(Type; Rec.Type)
                 {
                     Editable = false;
-                    OptionCaption = 'Invoice,Receipt,Credit Memo';
                     ApplicationArea = All;
                 }
                 field("No."; Rec."No.")
@@ -56,10 +55,6 @@ page 50014 "BC6_VSC historic"
     {
     }
 
-    /// <summary>
-    /// InitForm.
-    /// </summary>
-    /// <param name="PRec_Historic">Record "BC6_VSC historic".</param>
     procedure InitForm(PRec_Historic: Record "BC6_VSC historic")
     begin
         Rec := PRec_Historic;

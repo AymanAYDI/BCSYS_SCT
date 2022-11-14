@@ -737,10 +737,8 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice"
                                 end;
                 until Grec_PurchaseLine.NEXT() = 0;
         end;
-
         //Status := Status::Released;
         //Rec.MODIFY;
-
         exit(true);
         //Fin modif JX-AUd du 25/10/11
     end;

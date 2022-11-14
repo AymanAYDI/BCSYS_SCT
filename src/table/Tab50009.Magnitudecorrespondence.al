@@ -45,8 +45,4 @@ table 50009 "BC6_Magnitude correspondence"
             Clustered = true;
         }
     }
-
-    fieldgroups
-    {
-    }
 }

@@ -101,10 +101,9 @@ codeunit 50004 "BC6_Links Between Documents"
                                     repeat
                                         //***** On v‚rifie si la facture est d‚j… dans la liste *****
                                         gBool_InvoiceExist := false;
-                                        for i := 1 to gInt_Count do begin
+                                        for i := 1 to gInt_Count do
                                             if gRec_ValueEntry."Document No." = pCode_Invoice[1, i] then
                                                 gBool_InvoiceExist := true;
-                                        end;
                                         //***** Si la facture n'est pas dans la liste, on l'y ajoute *****
                                         if not gBool_InvoiceExist then begin
                                             gInt_Count += 1;
@@ -127,12 +126,11 @@ codeunit 50004 "BC6_Links Between Documents"
                                             //Modif JX-AUD du 30/10/2012
                                             //recherche si la facture est ouverte
                                             grec_VendorLedgerEntry.SETFILTER(grec_VendorLedgerEntry."Document No.", gRec_ValueEntry."Document No.");
-                                            if grec_VendorLedgerEntry.FIND('-') then begin
+                                            if grec_VendorLedgerEntry.FIND('-') then
                                                 if grec_VendorLedgerEntry.Open then
                                                     pCode_Invoice[3, gInt_Count] := 'true'
                                                 else
                                                     pCode_Invoice[3, gInt_Count] := 'false'
-                                            end;
                                             //Fin Modif JX-AUD du 30/10/2012
                                         end;
                                     until gRec_ValueEntry.NEXT() = 0;

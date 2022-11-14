@@ -40,16 +40,6 @@ tableextension 50028 "BC6_PurchaseHeader" extends "Purchase Header" //38
                 TESTFIELD(Status, Status::Open);
                 if "BC6_Matricule No." <> xRec."BC6_Matricule No." then
                     UpdatePurchLines(FIELDCAPTION("BC6_Matricule No."), true);
-                //TODO: non migré
-                //mise à jour des champs Nom prestataire et Prénom prestataire du contrat
-                // IF Grec_Matricule.GET("BC6_Matricule No.") THEN BEGIN
-                //     IF Grec_Contract.GET("Quote No.") OR Grec_Contract.GET("No.") THEN BEGIN
-                //         Grec_Contract."BC6_Nom prestataire" := Grec_Matricule."BC6_Provider name";
-                //         Grec_Contract."BC6_Prénom prestataire" := Grec_Matricule."BC6_Provider first name";
-                //         Grec_Contract.MODIFY;
-                //     END;
-                //END;
-                //Fin modif JX-AUD du 17/02/2012
             end;
         }
         field(50006; "BC6_Free comment"; Text[50])
@@ -93,6 +83,7 @@ tableextension 50028 "BC6_PurchaseHeader" extends "Purchase Header" //38
         }
         field(50012; BC6_Litige; Boolean)
         {
+            Caption = 'Litige';
             DataClassification = CustomerContent;
         }
         field(50013; "BC6_BC No."; Code[20])
@@ -188,7 +179,5 @@ tableextension 50028 "BC6_PurchaseHeader" extends "Purchase Header" //38
     end;
 
     var
-        //TODO: "BC6_Contract" non migré
-        //Grec_Contract: Record "BC6_Contract";
         Grec_QualificationFAP: Record "BC6_FAP Status";
 }

@@ -103,20 +103,6 @@ pageextension 50046 "BC6_PurchaseOrderArchive" extends "Purchase Order Archive"
                 ToolTip = 'View or change detailed information about the record on the document or journal line.';
             }
         }
-        // addfirst(Navigation)
-        // {
-        //     group("BC6_O&rder")
-        //     {
-        //         Caption = 'O&rder';
-        //         action(BC6_Contrat)
-        //         {
-        //             Caption = 'Contract';
-        //             RunObject = Page "BC6_Posted Contract";
-        //             RunPageLink = "BC6_Order No." = FIELD("No.");
-        //             ApplicationArea = All;
-        //         }
-        //     }
-        // }
     }
     var
         UserMgt: Codeunit "BC6_FunctionsMgt";

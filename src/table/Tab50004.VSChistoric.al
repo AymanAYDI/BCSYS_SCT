@@ -57,19 +57,4 @@ table 50004 "BC6_VSC historic"
     fieldgroups
     {
     }
-
-    /// <summary>
-    /// ShowHistoric.
-    /// </summary>
-    procedure ShowHistoric()
-    begin
-        //TESTFIELD("Document No.");
-        //TESTFIELD("Line No.");
-        //DocDim.SETRANGE("Table ID",DATABASE::"Purchase Line");
-        //DocDim.SETRANGE("Document Type","Document Type");
-        //DocDim.SETRANGE("Document No.","Document No.");
-        //DocDim.SETRANGE("Line No.","Line No.");
-        //DocDimensions.SETTABLEVIEW(DocDim);
-        //DocDimensions.RUNMODAL;
-    end;
 }

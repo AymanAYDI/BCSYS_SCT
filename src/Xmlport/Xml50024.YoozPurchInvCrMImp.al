@@ -1,6 +1,3 @@
-/// <summary>
-/// XmlPort BC6 Yooz Purch. Inv.CrM. Imp (ID 50024).
-/// </summary>
 xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
 {
     Caption = 'Yooz Purch. Inv.&CrM. Import';
@@ -35,7 +32,7 @@ xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
                 trigger OnBeforeInsertRecord()
                 begin
                     Gint_Compteur := Gint_Compteur + 1;
-                    if (Gint_Compteur > 1) then begin
+                    if (Gint_Compteur > 1) then
                         if Gtext_Champ1 = CompName then begin
                             //On test si la facture Yooz aurait d‚j… ‚t‚ int‚gr‚e
                             Grec_PurchaseHeader2.RESET();
@@ -82,15 +79,12 @@ xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
                                 else
                                     OComp := OComp + '/' + Gtext_Champ1;
                         end;
-                    end;
                 end;
             }
         }
     }
 
     trigger OnPreXMLport()
-    var
-        CompName: Text;
     begin
         case COMPANYNAME of
             'VFEC':

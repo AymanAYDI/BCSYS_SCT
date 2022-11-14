@@ -63,28 +63,6 @@ tableextension 50002 "BC6_PaymentHeader" extends "Payment Header" //10865
         // {
         // } TODO
     }
-
-    //procedure InitHeader();
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    "Posting Date" := WORKDATE;
-    "Document Date" := WORKDATE;
-    VALIDATE("Account Type","Account Type"::"Bank Account");
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    #1..3
-    // JX-VSC3.0-PBD Banque info. Société par défaut
-    CompanyInfo.GET;
-    VALIDATE("Account No.",CompanyInfo."Default Bank Account No.");
-    //
-    */
-    //end;
-
     procedure FctYooz(ReCalc: Boolean)
     var
         YoozTable: Record "BC6_No. Yooz";

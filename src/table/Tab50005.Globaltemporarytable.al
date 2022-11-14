@@ -117,8 +117,4 @@ table 50005 "BC6_Global temporary table"
         {
         }
     }
-
-    fieldgroups
-    {
-    }
 }

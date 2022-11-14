@@ -28,6 +28,7 @@ tableextension 50010 "BC6_PurchInvHeader" extends "Purch. Inv. Header" //122
         }
         field(50012; BC6_Litige; Boolean)
         {
+            Caption = 'Litige';
             DataClassification = CustomerContent;
         }
         field(50013; "BC6_BC No."; Code[20])

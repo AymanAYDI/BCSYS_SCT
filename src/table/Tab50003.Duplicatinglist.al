@@ -44,15 +44,6 @@ table 50003 "BC6_Duplicating list"
         }
     }
 
-    fieldgroups
-    {
-    }
-
-    //[Scope('Internal')]
-    /// <summary>
-    /// SelectAll.
-    /// </summary>
-    /// <param name="Pbool_SelectAll">Boolean.</param>
     procedure SelectAll(Pbool_SelectAll: Boolean)
     begin
         //DEBUT MODIF JX-XAD 07/06/2011
@@ -65,11 +56,6 @@ table 50003 "BC6_Duplicating list"
         //FIN MODIF JX-XAD 07/06/2011
     end;
 
-    // [Scope('Internal')]
-    /// <summary>
-    /// SelectAllWithDim.
-    /// </summary>
-    /// <param name="Pbool_SelectAllWithDim">Boolean.</param>
     procedure SelectAllWithDim(Pbool_SelectAllWithDim: Boolean)
     begin
         //DEBUT MODIF JX-XAD 07/06/2011

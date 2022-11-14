@@ -3,6 +3,7 @@ report 50008 "BC6_Solde BC Masse"
     ProcessingOnly = true;
     ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
+    Caption = 'Solde BC Masse';
     dataset
     {
         dataitem("Purch. Rcpt. Line"; "Purch. Rcpt. Line")

@@ -19,30 +19,38 @@ pageextension 50086 "BC6_PurchaseCreditMemos" extends "Purchase Credit Memos"
         {
             field("BC6_Your Reference"; Rec."Your Reference")
             {
+                ApplicationArea = all;
             }
             field("BC6_Lines Amount"; Rec."BC6_Lines Amount")
             {
+                ApplicationArea = all;
             }
         }
         addafter("Job Queue Status")
         {
             field("BC6_Creation date"; Rec."BC6_Creation date")
             {
+                ApplicationArea = all;
             }
             field(BC6_Litige; Rec."BC6_Litige")
             {
+                ApplicationArea = all;
             }
             field("BC6_Status Code"; Rec."BC6_Status Code")
             {
+                ApplicationArea = all;
             }
             field("BC6_Status description"; Rec."BC6_Status description")
             {
+                ApplicationArea = all;
             }
             field("BC6_Free comment"; Rec."BC6_Free comment")
             {
+                ApplicationArea = all;
             }
             field("BC6_Register amount"; Rec."BC6_Register amount")
             {
+                ApplicationArea = all;
             }
         }
     }

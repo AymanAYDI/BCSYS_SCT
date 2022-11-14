@@ -31,8 +31,4 @@ page 50025 "BC6_Matricule list"
             }
         }
     }
-
-    actions
-    {
-    }
 }

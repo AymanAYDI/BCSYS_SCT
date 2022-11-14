@@ -23,8 +23,4 @@ page 50040 "BC6_User Setup Card"
             }
         }
     }
-
-    actions
-    {
-    }
 }

@@ -21,8 +21,4 @@ table 50001 "BC6_Table temporaire"
             Clustered = true;
         }
     }
-
-    fieldgroups
-    {
-    }
 }

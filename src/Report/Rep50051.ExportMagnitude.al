@@ -3,6 +3,7 @@ report 50051 "BC6_Export Magnitude"
     ProcessingOnly = true;
     ApplicationArea = All;
     UsageCategory = Tasks;
+    Caption = 'Export Magnitude';
 
     dataset
     {

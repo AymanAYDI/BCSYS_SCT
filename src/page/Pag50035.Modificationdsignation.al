@@ -97,10 +97,6 @@ page 50035 "BC6_Modification désignation"
         Gtext_TypeDocument: Text[30];
         Gtext_Designation: Text[50];
 
-    /// <summary>
-    /// SetPostedInvoice.
-    /// </summary>
-    /// <param name="Prec_SalesInvLine">Record "Sales Invoice Line".</param>
     procedure SetPostedInvoice(Prec_SalesInvLine: Record "Sales Invoice Line")
     begin
         Gcode_DocumentNo := Prec_SalesInvLine."Document No.";
@@ -112,10 +108,6 @@ page 50035 "BC6_Modification désignation"
         if Gcode_ItemNo = '' then Gtext_No := '';
     end;
 
-    /// <summary>
-    /// SetPostedCreditMemo.
-    /// </summary>
-    /// <param name="Prec_SalesCrMemoLine">Record "Sales Cr.Memo Line".</param>
     procedure SetPostedCreditMemo(Prec_SalesCrMemoLine: Record "Sales Cr.Memo Line")
     begin
         Gcode_DocumentNo := Prec_SalesCrMemoLine."Document No.";

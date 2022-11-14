@@ -1,6 +1,3 @@
-/// <summary>
-/// XmlPort BC6 LISAM (quick) VAT (ID 50032).
-/// </summary>
 xmlport 50032 "BC6_LISAM (quick) VAT"
 {
     Caption = 'LISAM (quick) VAT';
@@ -255,24 +252,6 @@ xmlport 50032 "BC6_LISAM (quick) VAT"
             }
         }
     }
-    requestpage
-    {
-        layout
-        {
-            area(content)
-            {
-                group(GroupName)
-                {
-                }
-            }
-        }
-        actions
-        {
-            area(processing)
-            {
-            }
-        }
-    }
     var
         Grecord_LedgerEntryDimension: Record "Dimension Set Entry";
         Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
@@ -303,59 +282,51 @@ xmlport 50032 "BC6_LISAM (quick) VAT"
     local procedure FctRetrieveDim(piDimSetID: Integer);
     begin
         if Grecord_LedgerEntryDimension.GET(piDimSetID, Gcode_Axe1)
-        then begin
-            Gtext_Axe1 := Grecord_LedgerEntryDimension."Dimension Value Code";
-        end else begin
+        then
+            Gtext_Axe1 := Grecord_LedgerEntryDimension."Dimension Value Code"
+        else
             Gtext_Axe1 := '';
-        end;
 
         if Grecord_LedgerEntryDimension.GET(piDimSetID, Gcode_Axe2)
-        then begin
-            Gtext_Axe2 := Grecord_LedgerEntryDimension."Dimension Value Code";
-        end else begin
+        then
+            Gtext_Axe2 := Grecord_LedgerEntryDimension."Dimension Value Code"
+        else
             Gtext_Axe2 := '';
-        end;
 
         if Grecord_LedgerEntryDimension.GET(piDimSetID, Gcode_Axe3)
-        then begin
-            Gtext_Axe3 := Grecord_LedgerEntryDimension."Dimension Value Code";
-        end else begin
+        then
+            Gtext_Axe3 := Grecord_LedgerEntryDimension."Dimension Value Code"
+        else
             Gtext_Axe3 := '';
-        end;
 
         if Grecord_LedgerEntryDimension.GET(piDimSetID, Gcode_Axe4)
-        then begin
-            Gtext_Axe4 := Grecord_LedgerEntryDimension."Dimension Value Code";
-        end else begin
+        then
+            Gtext_Axe4 := Grecord_LedgerEntryDimension."Dimension Value Code"
+        else
             Gtext_Axe4 := '';
-        end;
 
         if Grecord_LedgerEntryDimension.GET(piDimSetID, Gcode_Axe5)
-        then begin
-            Gtext_Axe5 := Grecord_LedgerEntryDimension."Dimension Value Code";
-        end else begin
+        then
+            Gtext_Axe5 := Grecord_LedgerEntryDimension."Dimension Value Code"
+        else
             Gtext_Axe5 := '';
-        end;
 
         if Grecord_LedgerEntryDimension.GET(piDimSetID, Gcode_Axe6)
-        then begin
-            Gtext_Axe6 := Grecord_LedgerEntryDimension."Dimension Value Code";
-        end else begin
+        then
+            Gtext_Axe6 := Grecord_LedgerEntryDimension."Dimension Value Code"
+        else
             Gtext_Axe6 := '';
-        end;
 
         if Grecord_LedgerEntryDimension.GET(piDimSetID, Gcode_Axe7)
-        then begin
-            Gtext_Axe7 := Grecord_LedgerEntryDimension."Dimension Value Code";
-        end else begin
+        then
+            Gtext_Axe7 := Grecord_LedgerEntryDimension."Dimension Value Code"
+        else
             Gtext_Axe7 := '';
-        end;
 
         if Grecord_LedgerEntryDimension.GET(piDimSetID, Gcode_Axe8)
-        then begin
-            Gtext_Axe8 := Grecord_LedgerEntryDimension."Dimension Value Code";
-        end else begin
+        then
+            Gtext_Axe8 := Grecord_LedgerEntryDimension."Dimension Value Code"
+        else
             Gtext_Axe8 := '';
-        end;
     end;
 }

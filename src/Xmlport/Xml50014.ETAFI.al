@@ -53,7 +53,7 @@ xmlport 50014 "BC6_ETAFI"
                     //Fin Ajout ecritures isolées
                     Gtext_A_Nouveau := FORMAT(Gdec_MontantANouveau, 16, '<Sign,1><Integer><Decimals,3>');
 
-                    //TODO Field removed : GLAccountList.SETFILTER("G/L Entry Type Filter", '%1', GLAccountList."G/L Entry Type Filter"::Definitive);
+                    //TODO Field removed :GLAccountList.SETFILTER("G/L Entry Type Filter", '%1', GLAccountList."G/L Entry Type Filter"::Definitive);
                     //SETRANGE("Date Filter",Gdate_StartDate,Gdate_EndDate);
                     GLAccountList.SETFILTER("Date Filter", '%1..%2&<>%3', Gdate_StartDate, Gdate_EndDate, Gdate_DateIsolation);  //Filtre sur ecritures isol‚es
 

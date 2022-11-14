@@ -59,9 +59,7 @@ tableextension 50023 "BC6_PurchasesPayablesSetup" extends "Purchases & Payables 
             Caption = 'Vérifier Existance Section 3 sur ligne Achat';
             DataClassification = CustomerContent;
         }
-#pragma warning disable AL0468
         field(50020; "BC6_ExcelFile Vend. Not Created"; Text[250])
-#pragma warning restore AL0468
         {
             Caption = 'Fichier Excel Mail Fourn. Non Créé';
             DataClassification = CustomerContent;

@@ -66,7 +66,7 @@ xmlport 50015 "BC6_Export Magnitude"
                                 until Grec_GL_Account.NEXT() = 0;
 
                             //FILTRE SUR LES COMPTES DE NIVEAU S'IL Y EN A
-                            if Grec_MagnitudeCorrespondence.GET(Grec_MagnitudeCorrespondence2."Line No.") then begin
+                            if Grec_MagnitudeCorrespondence.GET(Grec_MagnitudeCorrespondence2."Line No.") then
                                 if Grec_MagnitudeCorrespondence.FIND('>') then
                                     while (Grec_MagnitudeCorrespondence.Level > Grec_MagnitudeCorrespondence2.Level) and (Gbool_exit) do begin
                                         Grec_Temporary.SETFILTER(Grec_Temporary.Compte, Grec_MagnitudeCorrespondence."Account No.");
@@ -90,7 +90,6 @@ xmlport 50015 "BC6_Export Magnitude"
 
                                         if not Grec_MagnitudeCorrespondence.FIND('>') then Gbool_exit := false;
                                     end;
-                            end;
 
                             //CALCUL MONTANT
                             if Grec_Temporary.FIND('-') then

@@ -9,6 +9,7 @@ tableextension 50012 "BC6_PurchCrMemoHdr" extends "Purch. Cr. Memo Hdr." //124
         }
         field(50012; BC6_Litige; Boolean)
         {
+            Caption = 'Litige';
             DataClassification = CustomerContent;
         }
         field(50013; "BC6_BC No."; Code[20])

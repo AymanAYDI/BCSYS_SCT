@@ -41,29 +41,17 @@ xmlport 50018 "BC6_Import OD Paye"
                         if (Gtext_Champ5 <> '') and (Gtext_Champ5 <> ' ') then
                             case LOWERCASE(Gcu_Converter.Ansi2Ascii(Gtext_Champ5)) of
                                 'paiement':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::Payment);
-                                    end;
+                                    Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::Payment);
                                 'facture':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::Invoice);
-                                    end;
+                                    Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::Invoice);
                                 'avoir':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::"Credit Memo");
-                                    end;
+                                    Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::"Credit Memo");
                                 'intérêt':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::"Finance Charge Memo");
-                                    end;
+                                    Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::"Finance Charge Memo");
                                 'relance':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::Reminder);
-                                    end;
+                                    Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::Reminder);
                                 'remboursement':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::Refund);
-                                    end;
+                                    Grec_FeuilleODPaie.VALIDATE("Document Type", Grec_FeuilleODPaie."Document Type"::Refund);
                                 else
                                     ERROR('Le Type Document %1 n''existe pas, erreur sur la ligne %2 ', Gcu_Converter.Ansi2Ascii(Gtext_Champ5), Gint_Compteur);
                             end;
@@ -77,65 +65,58 @@ xmlport 50018 "BC6_Import OD Paye"
                                     begin
                                         //Grec_FeuilleODPaie."Account Type" := Grec_FeuilleODPaie."Account Type"::"G/L Account";
                                         Grec_FeuilleODPaie.VALIDATE("Account Type", Grec_FeuilleODPaie."Account Type"::"G/L Account");
-                                        if Grec_Account.GET(Gcode_AccountNo) then begin
-                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo);
-                                        end else begin
+                                        if Grec_Account.GET(Gcode_AccountNo) then
+                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo)
+                                        else
                                             ERROR(Text003 + ' Général ' + Text004, Gcode_AccountNo, Gint_Compteur);
-                                        end;
                                     end;
                                 'client':
                                     begin
                                         //Grec_FeuilleODPaie."Account Type" := Grec_FeuilleODPaie."Account Type"::Customer;
                                         Grec_FeuilleODPaie.VALIDATE("Account Type", Grec_FeuilleODPaie."Account Type"::Customer);
-                                        if Grec_Customer.GET(Gcode_AccountNo) then begin
-                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo);
-                                        end else begin
+                                        if Grec_Customer.GET(Gcode_AccountNo) then
+                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo)
+                                        else
                                             ERROR(Text003 + ' Client ' + Text004, Gcode_AccountNo, Gint_Compteur);
-                                        end;
                                     end;
                                 'fournisseur':
                                     begin
                                         //Grec_FeuilleODPaie."Account Type" := Grec_FeuilleODPaie."Account Type"::Vendor;
                                         Grec_FeuilleODPaie.VALIDATE("Account Type", Grec_FeuilleODPaie."Account Type"::Vendor);
-                                        if Grec_Fournisseur.GET(Gcode_AccountNo) then begin
-                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo);
-                                        end else begin
+                                        if Grec_Fournisseur.GET(Gcode_AccountNo) then
+                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo)
+                                        else
                                             ERROR(Text003 + ' Fournisseur ' + Text004, Gcode_AccountNo, Gint_Compteur);
-                                        end;
                                     end;
                                 'banque':
                                     begin
                                         //Grec_FeuilleODPaie."Account Type" := Grec_FeuilleODPaie."Account Type"::"Bank Account";
                                         Grec_FeuilleODPaie.VALIDATE("Account Type", Grec_FeuilleODPaie."Account Type"::"Bank Account");
-                                        if Grec_Banque.GET(Gcode_AccountNo) then begin
-                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo);
-                                        end else begin
+                                        if Grec_Banque.GET(Gcode_AccountNo) then
+                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo)
+                                        else
                                             ERROR(Text003 + ' Banque ' + Text004, Gcode_AccountNo, Gint_Compteur);
-                                        end;
                                     end;
                                 'immobilisation':
                                     begin
                                         //Grec_FeuilleODPaie."Account Type" := Grec_FeuilleODPaie."Account Type"::"Fixed Asset";
                                         Grec_FeuilleODPaie.VALIDATE("Account Type", Grec_FeuilleODPaie."Account Type"::"Fixed Asset");
-                                        if Grec_Immo.GET(Gcode_AccountNo) then begin
-                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo);
-                                        end else begin
+                                        if Grec_Immo.GET(Gcode_AccountNo) then
+                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo)
+                                        else
                                             ERROR(Text003 + ' Immobilisation ' + Text004, Gcode_AccountNo, Gint_Compteur);
-                                        end;
                                     end;
                                 'partenaire ic':
                                     begin
                                         //Grec_FeuilleODPaie."Account Type" := Grec_FeuilleODPaie."Account Type"::"IC Partner";
                                         Grec_FeuilleODPaie.VALIDATE("Account Type", Grec_FeuilleODPaie."Account Type"::"IC Partner");
-                                        if Grec_PartenaireIC.GET(Gcode_AccountNo) then begin
-                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo);
-                                        end else begin
+                                        if Grec_PartenaireIC.GET(Gcode_AccountNo) then
+                                            Grec_FeuilleODPaie.VALIDATE("Account No.", Gcode_AccountNo)
+                                        else
                                             ERROR(Text003 + ' Partenaire IC ' + Text004, Gcode_AccountNo, Gint_Compteur);
-                                        end;
                                     end;
-                                else begin
+                                else
                                     ERROR(Text005, Gcu_Converter.Ansi2Ascii(Gtext_Champ6), Gint_Compteur);
-                                end;
                             end;
 
                         //champ 7: nøclient

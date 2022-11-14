@@ -31,8 +31,4 @@ page 50026 "BC6_FAP Status"
             }
         }
     }
-
-    actions
-    {
-    }
 }

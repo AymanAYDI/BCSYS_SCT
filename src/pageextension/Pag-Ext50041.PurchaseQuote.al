@@ -123,10 +123,6 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote"
             Visible = false;
         }
 
-        modify(Control84)
-        {
-            Visible = false;
-        }
         modify("Pay-to County")
         {
             Visible = false;
@@ -138,10 +134,6 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote"
         }
 
         modify("Attached Documents")
-        {
-            Visible = false;
-        }
-        modify(Control13)
         {
             Visible = false;
         }
@@ -324,39 +316,6 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote"
         }
         addafter(Dimensions)
         {
-            // action(BC6_Contrat)
-            // {
-            //     Caption = 'Contract';
-            //     Image = ContractPayment;
-            //     Promoted = true;
-            //     PromotedCategory = Category4;
-            //     PromotedIsBig = true;
-            //     ApplicationArea = All;
-
-            //     trigger OnAction()
-            //     begin
-            //         //Modif JX-AUD du 20/02/2012
-            //         IF Rec."BC6_Matricule No." = '' THEN
-            //             ERROR(Text002);
-
-            //         IF Grec_Matricule.GET(Rec."BC6_Matricule No.") THEN BEGIN
-
-            //             IF NOT Grec_Contract.GET(Rec."No.") THEN BEGIN
-            //                 Grec_Contract.INIT;
-            //                 Grec_Contract."BC6_Initial quote No" := Rec."No.";
-            //                 Grec_Contract."BC6_User" := USERID;
-            //                 Grec_Contract."BC6_Nom prestataire" := Grec_Matricule."BC6_Provider name";
-            //                 Grec_Contract."BC6_Prénom prestataire" := Grec_Matricule."BC6_Provider first name";
-            //                 Grec_Contract.INSERT;
-            //             END;
-
-            //             Grec_Contract.SETFILTER(Grec_Contract."BC6_Initial quote No", Rec."No.");
-            //             Page.RUN(Page::"BC6_Contract", Grec_Contract);
-
-            //         END;
-            //         //Fin modif JX-AUD du 20/02/2012
-            //     end;
-            // }
             action(BC6_Approvals)
             {
                 Caption = 'Approvals';

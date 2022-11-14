@@ -2,7 +2,7 @@ report 50050 "BC6_LISAM"
 {
     DefaultLayout = RDLC;
     RDLCLayout = './src/Report/RDLC/LISAM.rdl';
-
+    caption = 'LISAM';
     dataset
     {
         dataitem(DataItem1000000004; Integer)

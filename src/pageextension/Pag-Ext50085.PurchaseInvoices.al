@@ -33,36 +33,47 @@ pageextension 50085 "BC6_PurchaseInvoices" extends "Purchase Invoices"
         {
             field("BC6_Your Reference"; Rec."Your Reference")
             {
+                ApplicationArea = All;
             }
             field("BC6_Lines Amount"; Rec."BC6_Lines Amount")
             {
+                ApplicationArea = All;
             }
             field("BC6_Assigned User ID"; Rec."Assigned User ID")
             {
+                ApplicationArea = All;
             }
             field("BC6_Creation date"; Rec."BC6_Creation date")
             {
+                ApplicationArea = All;
             }
             field(BC6_Litige; Rec."BC6_Litige")
             {
+                ApplicationArea = All;
             }
             field(BC6_Status; Rec.Status)
             {
+                ApplicationArea = All;
             }
             field("BC6_Status Code"; Rec."BC6_Status Code")
             {
+                ApplicationArea = All;
             }
             field("BC6_Status description"; Rec."BC6_Status description")
             {
+                ApplicationArea = All;
             }
             field("BC6_Free comment"; Rec."BC6_Free comment")
             {
+                ApplicationArea = All;
             }
             field("BC6_Free comment CDG"; Rec."BC6_Free comment CDG")
             {
+                ApplicationArea = All;
             }
             field("BC6_Register amount"; Rec."BC6_Register amount")
             {
+                ApplicationArea = All;
             }
         }
     }

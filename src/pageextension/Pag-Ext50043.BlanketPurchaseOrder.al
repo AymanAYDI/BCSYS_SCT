@@ -28,25 +28,6 @@ pageextension 50043 "BC6_BlanketPurchaseOrder" extends "Blanket Purchase Order"
         {
             Visible = true;
         }
-
-        //Unsupported feature: Code Modification on ""Buy-from Vendor No."(Control 4).OnValidate".
-
-        //trigger "(Control 4)()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        OnAfterValidateBuyFromVendorNo(Rec,xRec);
-        CurrPage.Update;
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        BuyfromVendorNoOnAfterValidate;
-        */
-        //end;
-
         modify("Buy-from Vendor Name")
         {
             Visible = false;
@@ -55,64 +36,6 @@ pageextension 50043 "BC6_BlanketPurchaseOrder" extends "Blanket Purchase Order"
         {
             Visible = false;
         }
-
-        //Unsupported feature: Code Modification on ""Currency Code"(Control 12).OnAssistEdit".
-
-        //trigger OnAssistEdit()
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        Clear(ChangeExchangeRate);
-        ChangeExchangeRate.SetParameter("Currency Code","Currency Factor",WorkDate);
-        if ChangeExchangeRate.RunModal = ACTION::OK then begin
-          Validate("Currency Factor",ChangeExchangeRate.GetParameter);
-          SaveInvoiceDiscountAmount;
-        end;
-        Clear(ChangeExchangeRate);
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        CLEAR(ChangeExchangeRate);
-        ChangeExchangeRate.SetParameter("Currency Code","Currency Factor",WORKDATE);
-        IF ChangeExchangeRate.RUNMODAL = ACTION::OK THEN BEGIN
-          VALIDATE("Currency Factor",ChangeExchangeRate.GetParameter);
-          CurrPage.UPDATE;
-        END;
-        CLEAR(ChangeExchangeRate);
-        */
-        //end;
-
-        //Unsupported feature: Code Modification on ""Currency Code"(Control 12).OnValidate".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        CurrPage.Update;
-        PurchCalcDiscByType.ApplyDefaultInvoiceDiscount(0,Rec);
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        CurrPage.UPDATE;
-        PurchCalcDiscByType.ApplyDefaultInvoiceDiscount(0,Rec);
-        */
-        //end;
-
-        //Unsupported feature: Code Insertion on ""Pay-to Vendor No."(Control 22)".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //begin
-        /*
-        PaytoVendorNoOnAfterValidate;
-        */
-        //end;
-
         modify(Control5)
         {
             Visible = false;
@@ -149,26 +72,6 @@ pageextension 50043 "BC6_BlanketPurchaseOrder" extends "Blanket Purchase Order"
                 ToolTip = 'View or edit detailed information about the vendor on the purchase document.';
             }
         }
-
-        //Unsupported feature: Code Modification on "MakeOrder(Action 77).OnAction".
-
-        //trigger OnAction()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        if ApprovalsMgmt.PrePostApprovalCheckPurch(Rec) then
-          CODEUNIT.Run(CODEUNIT::"Blnkt Purch Ord. to Ord. (Y/N)",Rec);
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        IF ApprovalMgt.PrePostApprovalCheck(SalesHeader,Rec) THEN
-          CODEUNIT.RUN(CODEUNIT::"Blnkt Purch Ord. to Ord. (Y/N)",Rec);
-        */
-        //end;
-
         addafter(CopyDocument)
         {
             separator(Action135)
@@ -185,25 +88,6 @@ pageextension 50043 "BC6_BlanketPurchaseOrder" extends "Blanket Purchase Order"
 
     var
         UserMgt: Codeunit "BC6_FunctionsMgt";
-
-    //Unsupported feature: Code Modification on "OnNewRecord".
-
-    //trigger OnNewRecord(BelowxRec: Boolean)
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    "Responsibility Center" := UserMgt.GetPurchasesFilter;
-
-    if (not DocNoVisible) and ("No." = '') then
-      SetBuyFromVendorFromFilter;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    "Responsibility Center" := UserMgt.GetPurchasesFilter;
-    */
-    //end;
 
     trigger OnOpenPage()
 

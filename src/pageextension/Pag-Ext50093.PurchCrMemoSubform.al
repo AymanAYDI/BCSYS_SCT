@@ -66,14 +66,12 @@ pageextension 50093 "BC6_PurchCrMemoSubform" extends "Purch. Cr. Memo Subform"
                     Rec.ValidateShortcutDimCode(10, ShortcutDimCode[10]);
                 end;
             }
-            //TODO: "Gen. Bus. Posting Group" est déjà existe dans la page standard
 
             field("BC6_Gen. Bus. Posting Group"; Rec."Gen. Bus. Posting Group")
             {
                 Visible = false;
                 ApplicationArea = All;
             }
-            //TODO: "VAT Bus. Posting Group" est déjà existe dans la page standard
 
             field("BC6_VAT Bus. Posting Group"; Rec."VAT Bus. Posting Group")
             {

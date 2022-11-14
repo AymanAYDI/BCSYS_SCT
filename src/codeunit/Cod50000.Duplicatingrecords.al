@@ -153,7 +153,7 @@ codeunit 50000 "BC6_Duplicating records"
                 Ltxt_Confirmation := Ltxt_Confirmation + '\\' + text109//JX-AUD du 07/04/14
             else
                 Ltxt_Confirmation := Ltxt_Confirmation + '\\' + text088;
-            if CONFIRM(Ltxt_Confirmation) then begin
+            if CONFIRM(Ltxt_Confirmation) then
                 case Lopt_TypeFiche of
                     Lopt_TypeFiche::Vendor:
                         Lint_DuplicationNumber := CreateVendor(Lcode_Fiche);
@@ -172,10 +172,8 @@ codeunit 50000 "BC6_Duplicating records"
                         Lint_DuplicationNumber := DeleteUser(Lcode_Fiche);
                 //FIN MODIF JX-AUD 07/04/14
                 end;
-            end;
-        end else begin
+        end else
             MESSAGE(text001);     // Aucune soci‚t‚ n'a ‚t‚ coch‚e !
-        end;
     end;
 
     procedure Initialiser();

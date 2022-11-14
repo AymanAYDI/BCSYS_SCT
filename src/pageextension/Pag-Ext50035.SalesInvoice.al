@@ -156,15 +156,6 @@ pageextension 50035 "BC6_SalesInvoice" extends "Sales Invoice"
                     StdCustSalesCode.InsertSalesLines(Rec);
                 end;
             }
-            separator(Action139)
-            {
-            }
-        }
-        addafter(CancelApprovalRequest)
-        {
-            separator(Action161)
-            {
-            }
         }
         addafter("Test Report")
         {
