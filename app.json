@@ -1,0 +1,34 @@
+{
+  "id": "c61ddb44-df14-47cc-bf4e-5ad7e01a1e0e",
+  "name": "SCT",
+  "publisher": "BC6",
+  "version": "21.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "./resource/logo/SCT.jpg",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "21.0.0.0",
+  "idRanges": [
+    {
+      "from": 50000,
+      "to": 59999
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://sct.com/help/",
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "10.0",
+  "target": "OnPrem",
+  "features": [
+    "NoImplicitWith", "TranslationFile"
+  ]
+}
