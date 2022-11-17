@@ -331,7 +331,7 @@ report 50065 "Customer : summary aging VSC 2"
                                     DetailedVendorLedgerEntry."Entry Type"::"Initial Entry") and
                                    (VendorLedgEntryEndingDate."Posting Date" > EndingDate) and
                                    (AgingBy <> AgingBy::"Posting Date")
-                                then begin
+                                then
                                     if VendorLedgEntryEndingDate."Document Date" <= EndingDate then
                                         DetailedVendorLedgerEntry."Posting Date" :=
                                           VendorLedgEntryEndingDate."Document Date"
@@ -340,8 +340,7 @@ report 50065 "Customer : summary aging VSC 2"
                                            (AgingBy = AgingBy::"Due Date")
                                         then
                                             DetailedVendorLedgerEntry."Posting Date" :=
-                                              VendorLedgEntryEndingDate."Due Date"
-                                end;
+                                              VendorLedgEntryEndingDate."Due Date";
 
                                 if (DetailedVendorLedgerEntry."Posting Date" <= EndingDate) or
                                    (TempVendorLedgEntry.Open and
@@ -405,7 +404,7 @@ report 50065 "Customer : summary aging VSC 2"
 
                         //Traitement écritures échues
                         Gint_IndexPeriodeNonEchue := 0;
-                        if PeriodIndex = 1 then begin
+                        if PeriodIndex = 1 then
                             if (VendorLedgEntryEndingDate."Due Date" <= Gdate_FinPeriodeNonEchue[1]) then
                                 Gint_IndexPeriodeNonEchue := 1
                             else
@@ -415,7 +414,6 @@ report 50065 "Customer : summary aging VSC 2"
                                 else
                                     if (VendorLedgEntryEndingDate."Due Date" >= Gdate_DebutPeriodeNonEchue[3]) then
                                         Gint_IndexPeriodeNonEchue := 3;
-                        end;
                         for i := 1 to 3 do begin
                             if (i = Gint_IndexPeriodeNonEchue) then
                                 Gdec_MontantNonEchu[i] := AgedVendorLedgEntry[1]."Remaining Amount"
@@ -472,9 +470,8 @@ report 50065 "Customer : summary aging VSC 2"
 
             trigger OnAfterGetRecord()
             begin
-                if ISSERVICETIER then
-                    if NewPagePerVendor then
-                        PageGroupNo := PageGroupNo + 1;
+                if NewPagePerVendor then
+                    PageGroupNo := PageGroupNo + 1;
 
                 TempCurrency.RESET();
                 TempCurrency.DELETEALL();
@@ -487,8 +484,7 @@ report 50065 "Customer : summary aging VSC 2"
 
             trigger OnPreDataItem()
             begin
-                if ISSERVICETIER then
-                    PageGroupNo := 1;
+                PageGroupNo := 1;
             end;
         }
         dataitem(CurrencyTotals; Integer)
@@ -704,9 +700,8 @@ report 50065 "Customer : summary aging VSC 2"
         if (AgingBy = AgingBy::"Due Date") or (AgingBy = AgingBy::"Posting Date") then begin //Modif JX-AUD du 24/08/11
             HeaderText[1] := Text000;
             i := 2;
-        end else begin
+        end else
             i := 1;
-        end;
         /*
         WHILE i < ARRAYLEN(PeriodEndDate) DO BEGIN
           IF HeadingType = HeadingType::"Date Interval" THEN

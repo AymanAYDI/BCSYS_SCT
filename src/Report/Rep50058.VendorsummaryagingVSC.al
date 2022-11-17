@@ -16,7 +16,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
             column(COMPANYNAME; COMPANYNAME)
             {
             }
-            column(CurrReport_PAGENO; CurrReport.PAGENO())
+            column(CurrReport_PAGENO; '')
             {
             }
             column("USERID"; USERID)
@@ -276,7 +276,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
                                     DetailedVendorLedgerEntry."Entry Type"::"Initial Entry") and
                                    (VendorLedgEntryEndingDate."Posting Date" > EndingDate) and
                                    (AgingBy <> AgingBy::"Posting Date")
-                                then begin
+                                then
                                     if VendorLedgEntryEndingDate."Document Date" <= EndingDate then
                                         DetailedVendorLedgerEntry."Posting Date" :=
                                           VendorLedgEntryEndingDate."Document Date"
@@ -284,9 +284,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
                                         if (VendorLedgEntryEndingDate."Due Date" <= EndingDate) and
                                            (AgingBy = AgingBy::"Due Date")
                                         then
-                                            DetailedVendorLedgerEntry."Posting Date" :=
-                                              VendorLedgEntryEndingDate."Due Date"
-                                end;
+                                            DetailedVendorLedgerEntry."Posting Date" := VendorLedgEntryEndingDate."Due Date";
 
                                 if (DetailedVendorLedgerEntry."Posting Date" <= EndingDate) or
                                    (TempVendorLedgEntry.Open and
@@ -394,9 +392,8 @@ report 50058 "BC6_Vendor : summary aging VSC"
 
             trigger OnAfterGetRecord()
             begin
-                if ISSERVICETIER then
-                    if NewPagePerVendor then
-                        PageGroupNo := PageGroupNo + 1;
+                if NewPagePerVendor then
+                    PageGroupNo := PageGroupNo + 1;
 
                 TempCurrency.RESET();
                 TempCurrency.DELETEALL();
@@ -406,8 +403,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
 
             trigger OnPreDataItem()
             begin
-                if ISSERVICETIER then
-                    PageGroupNo := 1;
+                PageGroupNo := 1;
             end;
         }
         dataitem(CurrencyTotals; Integer)
@@ -437,8 +433,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
 
             trigger OnPreDataItem()
             begin
-                if ISSERVICETIER then
-                    PageGroupNo := 0;
+                PageGroupNo := 0;
             end;
         }
     }
@@ -530,7 +525,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
         HeadingType: Option "Date Interval","Number of Days";
         AgingBy: Option "Due Date","Posting Date","Document Date";
         HeaderText: array[5] of Text[30];
-        VendorFilter: Text[250];
+        VendorFilter: Text;
 
     local procedure CalcDates()
     var
@@ -551,8 +546,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
             PeriodStartDate[i] := CALCDATE(PeriodLength2, PeriodEndDate[i] + 1);
         end;
 
-        if ISSERVICETIER then
-            i := ARRAYLEN(PeriodEndDate);
+        i := ARRAYLEN(PeriodEndDate);
 
         PeriodStartDate[i] := 0D;
 

@@ -426,6 +426,19 @@ codeunit 50005 "BC6_EventsMgt"
     begin
         BC6_FunctMgt.FctReceiptStatus(PurchaseHeader);
     end;
+    //---CODEUNIT/5813---
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Undo Purchase Receipt Line", 'OnAfterCode', '', false, false)]
+    local procedure Cdu5813_OnAfterCode_UndoPurchaseReceiptLine(var PurchRcptLine: Record "Purch. Rcpt. Line")
+    var
+        PurchOrder: Record "Purchase Header";
+        PurchRelease: Codeunit "Release Purchase Document";
+    begin
+        if PurchRcptLine."Order No." <> '' then
+            if PurchOrder.GET(PurchOrder."Document Type"::Order, PurchRcptLine."Order No.") then begin
+                PurchRelease.Reopen(PurchOrder);
+                PurchRelease.RUN(PurchOrder);
+            end;
+    end;
     //---TAB10865---
     [EventSubscriber(ObjectType::Table, DataBase::"Payment Header", 'OnAfterModifyEvent', '', false, false)]
     local procedure TAB10865_OnAfterModifyEvent_PaymentHeader(var Rec: Record "Payment Header"; RunTrigger: Boolean)
@@ -666,9 +679,9 @@ codeunit 50005 "BC6_EventsMgt"
           or (COMPANYNAME = 'Agence - RECETTE') or (COMPANYNAME = 'VFEC - RECETTE') or (COMPANYNAME = 'SNCF-C25')) then
             if PurchaseLine.Type = PurchaseLine.Type::Item then// Type article
                 if PurchaseLine."Unit of Measure" = 'Euros' then//Unité EUROS
-                begin
+
+
                     PurchaseLine.VALIDATE("Direct Unit Cost", 1);
-                end;
         //Fin  modif JX-AUD du 25/01/2013
     end;
 

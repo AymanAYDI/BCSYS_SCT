@@ -165,67 +165,61 @@ report 50050 "BC6_LISAM"
                 Grec_DimSetEntry.SETRANGE("Dimension Set ID", "Dimension Set ID");
                 Grec_DimSetEntry.SETRANGE("Dimension Code", Gcode_Axe1);
                 if Grec_DimSetEntry.FINDFIRST()
-                  then begin
-                    Gtext_Axe1 := Grec_DimSetEntry."Dimension Value Code";
-                end else begin
+                  then
+                    Gtext_Axe1 := Grec_DimSetEntry."Dimension Value Code"
+                else
                     Gtext_Axe1 := '';
-                end;
 
                 Grec_DimSetEntry.RESET();
                 Grec_DimSetEntry.SETRANGE("Dimension Set ID", "Dimension Set ID");
                 Grec_DimSetEntry.SETRANGE("Dimension Code", Gcode_Axe2);
                 if Grec_DimSetEntry.FINDFIRST()
-                  then begin
-                    Gtext_Axe2 := Grec_DimSetEntry."Dimension Value Code";
-                end else begin
+                  then
+                    Gtext_Axe2 := Grec_DimSetEntry."Dimension Value Code"
+                else
                     Gtext_Axe2 := '';
-                end;
 
                 Grec_DimSetEntry.RESET();
                 Grec_DimSetEntry.SETRANGE("Dimension Set ID", "Dimension Set ID");
                 Grec_DimSetEntry.SETRANGE("Dimension Code", Gcode_Axe3);
                 if Grec_DimSetEntry.FINDFIRST()
-                  then begin
-                    Gtext_Axe3 := Grec_DimSetEntry."Dimension Value Code";
-                end else begin
+                  then
+                    Gtext_Axe3 := Grec_DimSetEntry."Dimension Value Code"
+                else
                     Gtext_Axe3 := '';
-                end;
 
                 Grec_DimSetEntry.RESET();
                 Grec_DimSetEntry.SETRANGE("Dimension Set ID", "Dimension Set ID");
                 Grec_DimSetEntry.SETRANGE("Dimension Code", Gcode_Axe4);
                 if Grec_DimSetEntry.FINDFIRST()
-                  then begin
-                    Gtext_Axe4 := Grec_DimSetEntry."Dimension Value Code";
-                end else begin
+                  then
+                    Gtext_Axe4 := Grec_DimSetEntry."Dimension Value Code"
+                else
                     Gtext_Axe4 := '';
-                end;
 
                 Grec_DimSetEntry.RESET();
                 Grec_DimSetEntry.SETRANGE("Dimension Set ID", "Dimension Set ID");
                 Grec_DimSetEntry.SETRANGE("Dimension Code", Gcode_Axe5);
                 if Grec_DimSetEntry.FINDFIRST()
-                  then begin
-                    Gtext_Axe5 := Grec_DimSetEntry."Dimension Value Code";
-                end else begin
+                  then
+                    Gtext_Axe5 := Grec_DimSetEntry."Dimension Value Code"
+                else
                     Gtext_Axe5 := '';
-                end;
 
                 Grec_DimSetEntry.RESET();
                 Grec_DimSetEntry.SETRANGE("Dimension Set ID", "Dimension Set ID");
                 Grec_DimSetEntry.SETRANGE("Dimension Code", Gcode_Axe6);
                 if Grec_DimSetEntry.FINDFIRST()
-                  then begin
-                    Gtext_Axe6 := Grec_DimSetEntry."Dimension Value Code";
-                end else begin
+                  then
+                    Gtext_Axe6 := Grec_DimSetEntry."Dimension Value Code"
+                else
                     Gtext_Axe6 := '';
-                end;
 
                 //Recherche du tiers
                 Gcode_Tiers := '';
                 if "G/L Entry"."Source No." <> '' then
                     Gcode_Tiers := "G/L Entry"."Source No."
-                else begin
+                else
                     if "G/L Entry"."External Document No." <> '' then begin
                         Gtext_ExtDoc := CONVERTSTR("G/L Entry"."External Document No.", '-', ',');
                         Gtext_ExtDoc := SELECTSTR(1, Gtext_ExtDoc);
@@ -247,7 +241,6 @@ report 50050 "BC6_LISAM"
                                             if Grec_PurchInvHeader.GET(Gtext_ExtDoc) then
                                                 Gcode_Tiers := Grec_PurchInvHeader."Buy-from Vendor No.";
                     end;
-                end;
 
                 //Liste de BC pour une facture
                 if "G/L Entry"."Document Type" = "G/L Entry"."Document Type"::Invoice then begin
@@ -256,15 +249,13 @@ report 50050 "BC6_LISAM"
                     Gint_NbOrders := Gunit_LinksBetweenDocument.SearchOrdersFA("G/L Entry"."Document No.", Gcode_Order);
                     Gtext_ListeBC := '';
 
-                    for i := 1 to Gint_NbOrders do begin
+                    for i := 1 to Gint_NbOrders do
                         if i > 1 then
                             Gtext_ListeBC += ';';
-                        Gtext_ListeBC += Gcode_Order[i];
-                    end;
+                    Gtext_ListeBC += Gcode_Order[i];
 
-                end else begin
+                end else
                     Gtext_ListeBC := '';
-                end;
 
                 //Modif JX-AUD du 31/05/11
 
@@ -378,7 +369,7 @@ report 50050 "BC6_LISAM"
         Gtext_Axe4: Text[30];
         Gtext_Axe5: Text[30];
         Gtext_Axe6: Text[30];
-        Gtext_Description: Text[50];
+        Gtext_Description: Text[100];
         Gtext_ExtDoc: Text[50];
         Gtext_ListeBC: Text[1024];
 }

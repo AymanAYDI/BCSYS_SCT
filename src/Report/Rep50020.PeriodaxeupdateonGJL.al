@@ -58,6 +58,7 @@ report 50020 "BC6_Period axe update on GJL"
                 {
                     TableRelation = "Dimension Value".Code where("Dimension Code" = const('PERIODE'));
                     ApplicationArea = All;
+                    Caption = 'Section Axe Période';
                 }
             }
         }

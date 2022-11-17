@@ -77,16 +77,14 @@ report 50016 "BC6_Génération des FNP"
                 field("Date de comptabilisation :"; Gdate_Compta)
                 {
                     ApplicationArea = All;
+                    Caption = 'Date de comptabilisation :';
                 }
-                field("Période"; Gcode_ValeurAxe)
+                field(Période; Gcode_ValeurAxe)
                 {
                     ApplicationArea = All;
+                    Caption = 'Période';
                 }
             }
-        }
-
-        actions
-        {
         }
     }
 

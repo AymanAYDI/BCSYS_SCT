@@ -1598,6 +1598,16 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Page BC6_Purchase Invoice VSC - Action Valider par l&amp;ot - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 4276410972 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Vendor Doc. Payment</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page BC6_Vendor Doc. Payment - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Page 4276410972 - Control 1638038344 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Montant à Payer</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page BC6_Vendor Doc. Payment - Control Montant à Payer - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 3605460140 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Activities</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1888,6 +1898,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Contrepassation des CCA - NamedType Text003</note>
         </trans-unit>
+        <trans-unit id="Report 3884324450 - Control 2145592179 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date de comptabilisation</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Contrepassation des CCA - Control Date de comptabilisation - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 3161242057 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Reversal of invoices not received</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -1908,25 +1923,30 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Contrepassation des FNP - NamedType Text003</note>
         </trans-unit>
+        <trans-unit id="Report 3161242057 - Control 2145592179 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date de comptabilisation</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Contrepassation des FNP - Control Date de comptabilisation - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 3005157301 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Export ETAFI</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export ETAFI - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 3005157301 - Control 1911706648 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 3005157301 - Control 2603629158 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Date à isoler</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export ETAFI - Control Gdate_DateIsolation - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export ETAFI - Control Gdate_DateIsolationV - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 3005157301 - Control 29692313 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 3005157301 - Control 266831019 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Date fin</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export ETAFI - Control Gdate_EndDate - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export ETAFI - Control Gdate_EndDateV - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 3005157301 - Control 796875196 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 3005157301 - Control 3253460834 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Date début</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export ETAFI - Control Gdate_StartDate - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export ETAFI - Control Gdate_StartDateV - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 2373584010 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Export Lisam-LOI SAPIN 2</source>
@@ -1938,10 +1958,10 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export Magnitude - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 3944039460 - Control 3439268676 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 3944039460 - Control 2614878410 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Date comptabilisation</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export Magnitude - Control Gdate_Comptabilisation - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Export Magnitude - Control Gdate_ComptabilisationV - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 3104142725 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>FEC Enriched CAC </source>
@@ -2023,6 +2043,41 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des CCA - NamedType Text004</note>
         </trans-unit>
+        <trans-unit id="Report 904644831 - Control 4204149534 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Dernière CCA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des CCA - Control Dernière CCA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 904644831 - Control 320270937 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>PDernière EXCCA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des CCA - Control Dernière EXCCA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 904644831 - Control 3032434119 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Première CCA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des CCA - Control Première CCA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 904644831 - Control 3390662668 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Première EXCCA</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des CCA - Control Première EXCCA - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 904644831 - Control 676880669 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date de début</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des CCA - Control Date de début - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 904644831 - Control 2249783309 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date de fin (Date Compta.)</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des CCA - Control Date de fin (Date Compta.) - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 904644831 - Control 2969552576 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Période</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des CCA - Control Période - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 3285821768 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Generation of invoices not received</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2047,6 +2102,16 @@
           <source>please fill the 'Periode' axis</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des FNP - NamedType Text004</note>
+        </trans-unit>
+        <trans-unit id="Report 3285821768 - Control 299423997 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date de comptabilisation :</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des FNP - Control Date de comptabilisation : - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 3285821768 - Control 2969552576 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Période</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Génération des FNP - Control Période - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 1720894670 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>LISAM</source>
@@ -2218,6 +2283,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Period axe update on GJL - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Report 871081940 - Control 3680774955 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Section Axe Période</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Period axe update on GJL - Control Section Axe Période - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Report 924400891 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Solde BC Masse</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -2228,30 +2298,30 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - NamedType Text50000</note>
         </trans-unit>
-        <trans-unit id="Report 924400891 - Control 3706019584 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 924400891 - Control 2452721838 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Date comptabilisation</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gdate_DateCompta - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gdate_DateComptaV - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 924400891 - Control 89137749 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 924400891 - Control 2719085055 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Axe période début</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gtext_AxePeriodeDebut - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gtext_AxePeriodeDebutV - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 924400891 - Control 2403114804 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 924400891 - Control 2493025690 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Axe période fin</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gtext_AxePeriodeFin - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gtext_AxePeriodeFinV - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 924400891 - Control 3317143124 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 924400891 - Control 869266746 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Nom facture fournisseur</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gtext_NomFactureFournisseur - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gtext_NomFactureFournisseurV - Property Caption</note>
         </trans-unit>
-        <trans-unit id="Report 924400891 - Control 209239736 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Report 924400891 - Control 2690790918 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Votre référence</source>
           <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gtext_VotreReference - Property Caption</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Solde BC Masse - Control Gtext_VotreReferenceV - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 3536099958 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Vendor : summary aging VSC</source>
@@ -2637,6 +2707,21 @@
           <source>Options</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Vendor : summary aging VSC 2 - Control Options - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 471307644 - Control 2196643821 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Type Comptes Fournisseurs</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Vendor : summary aging VSC 2 - Control Afficher l'entête - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 471307644 - Control 3326511471 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Echéancier à la date du</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Vendor : summary aging VSC 2 - Control Echéancier à la date du - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 471307644 - Control 966563557 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Type Comptes Fournisseurs</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report Vendor : summary aging VSC 2 - Control Type Comptes Fournisseurs - Property Caption</note>
         </trans-unit>
         <trans-unit id="XmlPort 1649977559 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Cash Pooling</source>

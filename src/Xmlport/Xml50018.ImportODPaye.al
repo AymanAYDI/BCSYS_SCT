@@ -121,19 +121,19 @@ xmlport 50018 "BC6_Import OD Paye"
 
                         //champ 7: nøclient
                         if Gtext_Champ7 <> '' then
-                            if Grec_Customer.GET(Gtext_Champ7) then begin
-                                Grec_FeuilleODPaie.VALIDATE("BC6_Customer No.", Gtext_Champ7);
-                            end else begin
+                            if Grec_Customer.GET(Gtext_Champ7) then
+                                Grec_FeuilleODPaie.VALIDATE("BC6_Customer No.", Gtext_Champ7)
+                            else
                                 ERROR('Le compte client n° %1 n''existe pas, erreur ligne n° %2 du fichier', Gtext_Champ7, Gint_Compteur);
-                            end;
+
 
                         //champ 8: nøfournisseur
                         if Gtext_Champ8 <> '' then
-                            if Grec_Fournisseur.GET(Gtext_Champ8) then begin
-                                Grec_FeuilleODPaie.VALIDATE("BC6_Vendor No.", Gtext_Champ8);
-                            end else begin
+                            if Grec_Fournisseur.GET(Gtext_Champ8) then
+                                Grec_FeuilleODPaie.VALIDATE("BC6_Vendor No.", Gtext_Champ8)
+                            else
                                 ERROR('Le compte fournisseur n° %1 n''existe pas, erreur ligne n° %2 du fichier', Gtext_Champ8, Gint_Compteur);
-                            end;
+
 
                         //champ 9: journal
 
@@ -160,20 +160,18 @@ xmlport 50018 "BC6_Import OD Paye"
                         // JX-ABE-13/12/2016-Fin Ajout
 
                         //champ 19: Credit
-                        if Gtext_Champ19 <> '' then begin
+                        if Gtext_Champ19 <> '' then
                             if EVALUATE(varDecimal, Gtext_Champ19) then begin
                                 Gdec_CreditAmount := varDecimal;
                                 Grec_FeuilleODPaie.VALIDATE(Grec_FeuilleODPaie."Credit Amount", Gdec_CreditAmount);
                             end;
-                        end;
 
                         // champ 18: Debit
-                        if Gtext_Champ18 <> '' then begin
+                        if Gtext_Champ18 <> '' then
                             if EVALUATE(varDecimal1, Gtext_Champ18) then begin
                                 Gdec_DebitAmount := varDecimal1;
                                 Grec_FeuilleODPaie.VALIDATE(Grec_FeuilleODPaie."Debit Amount", Gdec_DebitAmount);
                             end;
-                        end;
                         //FINMODIF JX-AUD 06/04/2011
 
                         //champ 2: type compta.TVA
@@ -181,17 +179,14 @@ xmlport 50018 "BC6_Import OD Paye"
                         if Gtext_Champ2 <> '' then
                             case LOWERCASE(Gcu_Converter.Ansi2Ascii(Gtext_Champ2)) of
                                 'achat':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Gen. Posting Type", Grec_FeuilleODPaie."Gen. Posting Type"::Purchase);
-                                    end;
+
+                                    Grec_FeuilleODPaie.VALIDATE("Gen. Posting Type", Grec_FeuilleODPaie."Gen. Posting Type"::Purchase);
                                 'vente':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Gen. Posting Type", Grec_FeuilleODPaie."Gen. Posting Type"::Sale);
-                                    end;
+
+                                    Grec_FeuilleODPaie.VALIDATE("Gen. Posting Type", Grec_FeuilleODPaie."Gen. Posting Type"::Sale);
                                 'règlement':
-                                    begin
-                                        Grec_FeuilleODPaie.VALIDATE("Gen. Posting Type", Grec_FeuilleODPaie."Gen. Posting Type"::Settlement);
-                                    end;
+
+                                    Grec_FeuilleODPaie.VALIDATE("Gen. Posting Type", Grec_FeuilleODPaie."Gen. Posting Type"::Settlement);
                                 else
                                     ERROR('Le Type Document %1 n''existe pas, erreur sur la ligne %2 ', Gcu_Converter.Ansi2Ascii(Gtext_Champ5), Gint_Compteur);
                             end;
@@ -200,21 +195,19 @@ xmlport 50018 "BC6_Import OD Paye"
                         //**********Grec_FeuilleODPaie.VALIDATE("Gen. Bus. Posting Group",Gcu_Converter.Ansi2Ascii(Gtext_Champ3));******//
                         Gtext_ComptaM := Gcu_Converter.Ansi2Ascii(Gtext_Champ3);
                         if Gtext_ComptaM <> '' then
-                            if Grec_GComptaMarche.GET(Gtext_ComptaM) then begin
-                                Grec_FeuilleODPaie.VALIDATE("Gen. Bus. Posting Group", Gtext_ComptaM);
-                            end else begin
+                            if Grec_GComptaMarche.GET(Gtext_ComptaM) then
+                                Grec_FeuilleODPaie.VALIDATE("Gen. Bus. Posting Group", Gtext_ComptaM)
+                            else
                                 ERROR('Le Groupe compta. marché n° %1 n''existe pas, erreur ligne n° %2 du fichier', Gtext_ComptaM, Gint_Compteur);
-                            end;
 
                         //champ 4: groupe compta. produit
                         //***********Grec_FeuilleODPaie.VALIDATE("Gen. Prod. Posting Group",Gcu_Converter.Ansi2Ascii(Gtext_Champ4));*****//
                         Gtext_ComptaP := Gcu_Converter.Ansi2Ascii(Gtext_Champ4);
                         if Gtext_ComptaP <> '' then
-                            if Grec_GComptaProduit.GET(Gtext_ComptaP) then begin
-                                Grec_FeuilleODPaie.VALIDATE("Gen. Prod. Posting Group", Gtext_ComptaP);
-                            end else begin
+                            if Grec_GComptaProduit.GET(Gtext_ComptaP) then
+                                Grec_FeuilleODPaie.VALIDATE("Gen. Prod. Posting Group", Gtext_ComptaP)
+                            else
                                 ERROR('Le Groupe compta. produit nø %1 n''existe pas, erreur ligne nø %2 du fichier', Gtext_ComptaP, Gint_Compteur);
-                            end;
 
                         //insertion ligne
                         Grec_FeuilleODPaie.INSERT();

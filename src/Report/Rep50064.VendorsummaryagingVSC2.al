@@ -317,7 +317,7 @@ report 50064 "Vendor : summary aging VSC 2"
                                     DetailedVendorLedgerEntry."Entry Type"::"Initial Entry") and
                                    (VendorLedgEntryEndingDate."Posting Date" > EndingDate) and
                                    (AgingBy <> AgingBy::"Posting Date")
-                                then begin
+                                then
                                     if VendorLedgEntryEndingDate."Document Date" <= EndingDate then
                                         DetailedVendorLedgerEntry."Posting Date" :=
                                           VendorLedgEntryEndingDate."Document Date"
@@ -326,8 +326,7 @@ report 50064 "Vendor : summary aging VSC 2"
                                            (AgingBy = AgingBy::"Due Date")
                                         then
                                             DetailedVendorLedgerEntry."Posting Date" :=
-                                              VendorLedgEntryEndingDate."Due Date"
-                                end;
+                                              VendorLedgEntryEndingDate."Due Date";
 
                                 if (DetailedVendorLedgerEntry."Posting Date" <= EndingDate) or
                                    (TempVendorLedgEntry.Open and
@@ -391,7 +390,7 @@ report 50064 "Vendor : summary aging VSC 2"
 
                         //Traitement écritures échues
                         Gint_IndexPeriodeNonEchue := 0;
-                        if PeriodIndex = 1 then begin
+                        if PeriodIndex = 1 then
                             if (VendorLedgEntryEndingDate."Due Date" <= Gdate_FinPeriodeNonEchue[1]) then
                                 Gint_IndexPeriodeNonEchue := 1
                             else
@@ -401,7 +400,6 @@ report 50064 "Vendor : summary aging VSC 2"
                                 else
                                     if (VendorLedgEntryEndingDate."Due Date" >= Gdate_DebutPeriodeNonEchue[3]) then
                                         Gint_IndexPeriodeNonEchue := 3;
-                        end;
                         for i := 1 to 3 do begin
                             if (i = Gint_IndexPeriodeNonEchue) then
                                 Gdec_MontantNonEchu[i] := AgedVendorLedgEntry[1]."Remaining Amount"
@@ -446,8 +444,6 @@ report 50064 "Vendor : summary aging VSC 2"
 
                 trigger OnPostDataItem()
                 begin
-                    if NewPagePerVendor and (NumberOfCurrencies > 0) then
-                        CurrReport.NEWPAGE();
                 end;
 
                 trigger OnPreDataItem()
@@ -458,9 +454,8 @@ report 50064 "Vendor : summary aging VSC 2"
 
             trigger OnAfterGetRecord()
             begin
-                if ISSERVICETIER then
-                    if NewPagePerVendor then
-                        PageGroupNo := PageGroupNo + 1;
+                if NewPagePerVendor then
+                    PageGroupNo := PageGroupNo + 1;
 
                 TempCurrency.RESET();
                 TempCurrency.DELETEALL();
@@ -473,8 +468,7 @@ report 50064 "Vendor : summary aging VSC 2"
 
             trigger OnPreDataItem()
             begin
-                if ISSERVICETIER then
-                    PageGroupNo := 1;
+                PageGroupNo := 1;
             end;
         }
         dataitem(CurrencyTotals; Integer)
@@ -504,8 +498,7 @@ report 50064 "Vendor : summary aging VSC 2"
 
             trigger OnPreDataItem()
             begin
-                if ISSERVICETIER then
-                    PageGroupNo := 0;
+                PageGroupNo := 0;
             end;
         }
     }
@@ -524,14 +517,17 @@ report 50064 "Vendor : summary aging VSC 2"
                     field("Echéancier à la date du"; EndingDate)
                     {
                         ApplicationArea = All;
+                        Caption = 'Echéancier à la date du';
                     }
                     field("Type Comptes Fournisseurs"; Gopt_ComptesFourn)
                     {
                         ApplicationArea = All;
+                        Caption = 'Type Comptes Fournisseurs';
                     }
                     field("Afficher l'entête"; Gbool_AfficherEnTete)
                     {
                         ApplicationArea = All;
+                        Caption = 'Type Comptes Fournisseurs';
                     }
                 }
             }
@@ -588,7 +584,7 @@ report 50064 "Vendor : summary aging VSC 2"
         Grec_PurchaseInvoiceHeader: Record "Purch. Inv. Header";
         AgedVendorLedgEntry: array[6] of Record "Vendor Ledger Entry";
         GrandTotalVendorLedgEntry: array[5] of Record "Vendor Ledger Entry";
-        TempVendorLedgEntry: Record "Vendor Ledger Entry";
+        TempVendorLedgEntry: Record "Vendor Ledger Entry" temporary;
         TotalVendorLedgEntry: array[5] of Record "Vendor Ledger Entry";
         VendorLedgEntryEndingDate: Record "Vendor Ledger Entry";
         PeriodLength: DateFormula;
@@ -686,9 +682,8 @@ report 50064 "Vendor : summary aging VSC 2"
         if (AgingBy = AgingBy::"Due Date") or (AgingBy = AgingBy::"Posting Date") then begin //Modif JX-AUD du 24/08/11
             HeaderText[1] := Text000;
             i := 2;
-        end else begin
+        end else
             i := 1;
-        end;
         /*
         WHILE i < ARRAYLEN(PeriodEndDate) DO BEGIN
           IF HeadingType = HeadingType::"Date Interval" THEN

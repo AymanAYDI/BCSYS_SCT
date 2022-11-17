@@ -43,8 +43,8 @@ report 50008 "BC6_Solde BC Masse"
                                 if TempVendorInvNo."External Document No." <> '' then
                                     TempVendorInvNo."External Document No." := INCSTR(TempVendorInvNo."External Document No.")
                                 else begin
-                                    Gint_Num += 1;
-                                    TempVendorInvNo."External Document No." := Gtext_NomFactureFournisseur + '' + GetInvoiceVendorNo(Gint_Num) + '';
+                                    Gint_NumG += 1;
+                                    TempVendorInvNo."External Document No." := Gtext_NomFactureFournisseur + '' + GetInvoiceVendorNo(Gint_NumG) + '';
                                 end;
                                 TempVendorInvNo.MODIFY();
 
@@ -147,27 +147,27 @@ report 50008 "BC6_Solde BC Masse"
         {
             area(content)
             {
-                field(Gtext_AxePeriodeDebut; Gtext_AxePeriodeDebut)
+                field(Gtext_AxePeriodeDebutV; Gtext_AxePeriodeDebut)
                 {
                     Caption = 'Axe période début';
                     ApplicationArea = All;
                 }
-                field(Gtext_AxePeriodeFin; Gtext_AxePeriodeFin)
+                field(Gtext_AxePeriodeFinV; Gtext_AxePeriodeFin)
                 {
                     Caption = 'Axe période fin';
                     ApplicationArea = All;
                 }
-                field(Gtext_NomFactureFournisseur; Gtext_NomFactureFournisseur)
+                field(Gtext_NomFactureFournisseurV; Gtext_NomFactureFournisseur)
                 {
                     Caption = 'Nom facture fournisseur';
                     ApplicationArea = All;
                 }
-                field(Gtext_VotreReference; Gtext_VotreReference)
+                field(Gtext_VotreReferenceV; Gtext_VotreReference)
                 {
                     Caption = 'Votre référence';
                     ApplicationArea = All;
                 }
-                field(Gdate_DateCompta; Gdate_DateCompta)
+                field(Gdate_DateComptaV; Gdate_DateCompta)
                 {
                     Caption = 'Date comptabilisation';
                     ApplicationArea = All;
@@ -206,7 +206,7 @@ report 50008 "BC6_Solde BC Masse"
         PurchPost: Codeunit "Purch.-Post";
         Gdate_DateCompta: Date;
         Window: Dialog;
-        Gint_Num: Integer;
+        Gint_NumG: Integer;
         VendorNo: Integer;
         Text50000: label 'Réception N° #1################';
         Gtext_AxePeriodeDebut: Text[4];

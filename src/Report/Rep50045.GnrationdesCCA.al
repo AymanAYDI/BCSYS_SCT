@@ -87,14 +87,17 @@ report 50045 "BC6_Génération des CCA"
                     field("Date de début"; Gdate_Debut)
                     {
                         ApplicationArea = All;
+                        Caption = 'Date de début';
                     }
                     field("Date de fin (Date Compta.)"; Gdate_Compta)
                     {
                         ApplicationArea = All;
+                        Caption = 'Date de fin (Date Compta.)';
                     }
-                    field("Période"; Gcode_ValeurAxe)
+                    field(Période; Gcode_ValeurAxe)
                     {
                         ApplicationArea = All;
+                        Caption = 'Période';
                     }
                 }
                 group("Filtre Documents Exclus")
@@ -102,18 +105,22 @@ report 50045 "BC6_Génération des CCA"
                     field("Première CCA"; Gtext_DocExclus_CCAPremiere)
                     {
                         ApplicationArea = All;
+                        Caption = 'Première CCA';
                     }
                     field("Dernière CCA"; Gtext_DocExclus_CCADerniere)
                     {
                         ApplicationArea = All;
+                        Caption = 'Dernière CCA';
                     }
                     field("Première EXCCA"; Gtext_DocExclus_EXCCAPremiere)
                     {
                         ApplicationArea = All;
+                        Caption = 'Première EXCCA';
                     }
                     field("Dernière EXCCA"; Gtext_DocExclus_EXCCADerniere)
                     {
                         ApplicationArea = All;
+                        Caption = 'PDernière EXCCA';
                     }
                 }
             }
@@ -405,15 +412,13 @@ report 50045 "BC6_Génération des CCA"
         Gtext_ExDocExclus := '<>';
         if (Gcode_CCA <> '') then begin
             Gtext_ExDocExclus += Gcode_CCA;
-            if (Gcode_ExtCCA <> '') then begin
+            if (Gcode_ExtCCA <> '') then
                 Gtext_ExDocExclus += '&<>' + Gcode_ExtCCA;
-            end;
         end else
-            if (Gcode_ExtCCA <> '') then begin
-                Gtext_ExDocExclus += Gcode_ExtCCA;
-            end else begin
+            if (Gcode_ExtCCA <> '') then
+                Gtext_ExDocExclus += Gcode_ExtCCA
+            else
                 Gtext_ExDocExclus := '';
-            end;
 
         //RequestOptionsForm.No_CCA.UPDATE; //Modif JX-AUD du 25/11/11
 
@@ -434,37 +439,28 @@ report 50045 "BC6_Génération des CCA"
             FiltreCCA := '';
             Gtext_And := false;
             //CurrReport.BREAK;
-        end else begin
-            if (EVALUATE(Gint_CCAPremiere, CCAPremiere)) and (EVALUATE(Gint_CCADerniere, CCADerniere)) then begin
+        end else
+            if (EVALUATE(Gint_CCAPremiere, CCAPremiere)) and (EVALUATE(Gint_CCADerniere, CCADerniere)) then
                 //MESSAGE(FORMAT(Gint_CCAPremiere) + ' ' +FORMAT(Gint_CCADerniere));
 
-                if Gint_CCAPremiere < Gint_CCADerniere then begin
-                    for i := Gint_CCAPremiere to Gint_CCADerniere do begin
-                        if not (i = Gint_CCADerniere) then begin
-                            FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '&<>';
-                        end else begin
+                if Gint_CCAPremiere < Gint_CCADerniere then
+                    for i := Gint_CCAPremiere to Gint_CCADerniere do
+                        if not (i = Gint_CCADerniere) then
+                            FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '&<>'
+                        else
                             FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '';
-                        end;
-                    end;
-                end;
 
-                if Gint_CCAPremiere > Gint_CCADerniere then begin
-                    for i := Gint_CCADerniere to Gint_CCAPremiere do begin
-                        if not (i = Gint_CCAPremiere) then begin
-                            FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '&<>';
-                        end else begin
-                            FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '';
-                        end;
-                    end;
-                end;
+        if Gint_CCAPremiere > Gint_CCADerniere then
+            for i := Gint_CCADerniere to Gint_CCAPremiere do
+                if not (i = Gint_CCAPremiere) then
+                    FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '&<>'
+                else
+                    FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '';
 
-                if Gint_CCAPremiere = Gint_CCADerniere then begin
-                    FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(Gint_CCAPremiere))) + FORMAT(Gint_CCAPremiere) + '';
-                end;
+        if Gint_CCAPremiere = Gint_CCADerniere then
+            FiltreCCA += 'CCA' + RetourneNbZero(STRLEN(FORMAT(Gint_CCAPremiere))) + FORMAT(Gint_CCAPremiere) + '';
 
-                Gtext_And := true;
-            end;
-        end;
+        Gtext_And := true;
         //Fin modif JX-AUD du 25/11/11
     end;
 
@@ -474,43 +470,34 @@ report 50045 "BC6_Génération des CCA"
         //EXCCAPremiere := COPYSTR(EXCCAPremiere,6,5);
         //EXCCADerniere := COPYSTR(EXCCADerniere,6,5);
         FiltreEXCCA := '';
-        if Gtext_And = true then begin
-            FiltreEXCCA := '&<>';
-        end else
+        if Gtext_And = true then
+            FiltreEXCCA := '&<>'
+        else
             FiltreEXCCA := '<>';
 
         i := 0;
-        if ((EXCCAPremiere = '') and (EXCCADerniere = '')) then begin
-            FiltreEXCCA := '';
-            //CurrReport.SKIP;
-        end else begin
-            if (EVALUATE(Gint_EXCCAPremiere, EXCCAPremiere)) and (EVALUATE(Gint_EXCCADerniere, EXCCADerniere)) then begin
+        if ((EXCCAPremiere = '') and (EXCCADerniere = '')) then
+            FiltreEXCCA := ''
+        //CurrReport.SKIP;
+        else
+            if (EVALUATE(Gint_EXCCAPremiere, EXCCAPremiere)) and (EVALUATE(Gint_EXCCADerniere, EXCCADerniere)) then
                 //MESSAGE(FORMAT(Gint_EXCCAPremiere) + ' ' +FORMAT(Gint_EXCCADerniere));
-                if Gint_EXCCAPremiere < Gint_EXCCADerniere then begin
-                    for i := Gint_EXCCAPremiere to Gint_EXCCADerniere do begin
-                        if not (i = Gint_EXCCADerniere) then begin
-                            FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '&<>';
-                        end else begin
+                if Gint_EXCCAPremiere < Gint_EXCCADerniere then
+                    for i := Gint_EXCCAPremiere to Gint_EXCCADerniere do
+                        if not (i = Gint_EXCCADerniere) then
+                            FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '&<>'
+                        else
                             FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '';
-                        end;
-                    end;
-                end;
 
-                if Gint_EXCCAPremiere > Gint_EXCCADerniere then begin
-                    for i := Gint_EXCCADerniere to Gint_EXCCAPremiere do begin
-                        if not (i = Gint_EXCCAPremiere) then begin
-                            FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '&<>';
-                        end else begin
-                            FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '';
-                        end;
-                    end;
-                end;
+        if Gint_EXCCAPremiere > Gint_EXCCADerniere then
+            for i := Gint_EXCCADerniere to Gint_EXCCAPremiere do
+                if not (i = Gint_EXCCAPremiere) then
+                    FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '&<>'
+                else
+                    FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(i))) + FORMAT(i) + '';
 
-                if Gint_EXCCAPremiere = Gint_EXCCADerniere then begin
-                    FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(Gint_EXCCAPremiere))) + FORMAT(Gint_EXCCAPremiere) + '';
-                end;
-            end;
-        end;
+        if Gint_EXCCAPremiere = Gint_EXCCADerniere then
+            FiltreEXCCA += 'EXCCA' + RetourneNbZero(STRLEN(FORMAT(Gint_EXCCAPremiere))) + FORMAT(Gint_EXCCAPremiere) + '';
         //Fin modif JX-AUD du 25/11/11
     end;
 

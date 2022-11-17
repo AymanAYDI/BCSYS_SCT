@@ -65,7 +65,7 @@ tableextension 50002 "BC6_PaymentHeader" extends "Payment Header" //10865
     }
     procedure FctYooz(ReCalc: Boolean)
     var
-        YoozTable: Record "BC6_No. Yooz";
+        YoozTable: Record "BC6_No. Yooz" TEMPORARY;
         SortTable: Record "Excel Buffer" temporary;
         PayLine: Record "Payment Line";
         IntYooz: Integer;

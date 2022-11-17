@@ -25,8 +25,8 @@ xmlport 50015 "BC6_Export Magnitude"
                     Grec_MagnitudeCorrespondence: Record "BC6_Magnitude correspondence";
                     Grec_MagnitudeCorrespondence1: Record "BC6_Magnitude correspondence";
                     Grec_MagnitudeCorrespondence2: Record "BC6_Magnitude correspondence";
-                    Grec_Temporary: Record "BC6_Table temporaire";
-                    Grec_Temporary1: Record "BC6_Table temporaire";
+                    Grec_Temporary: Record "BC6_Table temporaire" TEMPORARY;
+                    Grec_Temporary1: Record "BC6_Table temporaire" TEMPORARY;
                     Grec_Societe: Record "Company Information";
                     Grec_GL_Account: Record "G/L Account";
                     Gbool_exit: Boolean;
@@ -99,15 +99,13 @@ xmlport 50015 "BC6_Export Magnitude"
 
                                         case Grec_MagnitudeCorrespondence2.Sign of
                                             '<=0', '<0':
-                                                begin
-                                                    if Grec_GL_Account."Net Change" > 0 then
-                                                        Grec_GL_Account."Net Change" := 0;
-                                                end;
+
+                                                if Grec_GL_Account."Net Change" > 0 then
+                                                    Grec_GL_Account."Net Change" := 0;
                                             '>=0', '>0':
-                                                begin
-                                                    if Grec_GL_Account."Net Change" <= 0 then
-                                                        Grec_GL_Account."Net Change" := 0;
-                                                end;
+
+                                                if Grec_GL_Account."Net Change" <= 0 then
+                                                    Grec_GL_Account."Net Change" := 0;
                                             else
                                                 ;
                                         end;

@@ -617,7 +617,7 @@ codeunit 50000 "BC6_Duplicating records"
                                                                                                                 if (Lrec_SourceItem."Production BOM No." <> '') and
                                                                                                               (not Lrec_DestProdBOM.GET(Lrec_SourceItem."Production BOM No.")) then
                                                                                                                     MESSAGE(text081, Lrec_SourceItem."Production BOM No.", Grec_DuplicatingList.Name)
-                                                                                                                else begin
+                                                                                                                else
                                                                                                                     //Test code pays et code unit‚ (avec cr‚ation automatique)
                                                                                                                     if not TestCountryRegion(Lrec_SourceItem."Country/Region of Origin Code") then
                                                                                                                         MESSAGE(text050, Grec_DuplicatingList.Name, Lrec_SourceItem."Country/Region of Origin Code")
@@ -678,7 +678,6 @@ codeunit 50000 "BC6_Duplicating records"
                                                                                                                                             Grec_DuplicatingList.Echec := false;
                                                                                                                                             Grec_DuplicatingList.MODIFY();
                                                                                                                                         end;
-                                                                                                                end;
                             end else
                                 MESSAGE(text051, Lcode_Item, Grec_DuplicatingList.Name);   // La fiche article existe d‚j… dans la soci‚t‚ !
                         end else
@@ -734,31 +733,28 @@ codeunit 50000 "BC6_Duplicating records"
                                 end;
                                 if Lrec_SourceVendorBankAccount."Transit No." <> Lrec_DestVendorBankAccount."Transit No." then
                                     Lrec_DestVendorBankAccount."Transit No." := Lrec_SourceVendorBankAccount."Transit No.";
-                                if Lrec_SourceVendorBankAccount."Currency Code" <> Lrec_DestVendorBankAccount."Currency Code" then begin
+                                if Lrec_SourceVendorBankAccount."Currency Code" <> Lrec_DestVendorBankAccount."Currency Code" then
                                     if (Lrec_SourceVendorBankAccount."Currency Code" <> '') and
                                        (not Lrec_DestCurrency.GET(Lrec_SourceVendorBankAccount."Currency Code")) then
                                         MESSAGE(text024, Lrec_SourceVendorBankAccount."Currency Code", Grec_DuplicatingList.Name)
                                     else
                                         Lrec_DestVendorBankAccount."Currency Code" := Lrec_SourceVendorBankAccount."Currency Code";
-                                end;
-                                if Lrec_SourceVendorBankAccount."Country/Region Code" <> Lrec_DestVendorBankAccount."Country/Region Code" then begin
+                                if Lrec_SourceVendorBankAccount."Country/Region Code" <> Lrec_DestVendorBankAccount."Country/Region Code" then
                                     if not TestCountryRegion(Lrec_SourceVendorBankAccount."Country/Region Code") then
                                         MESSAGE(text010, Grec_DuplicatingList.Name, Lrec_SourceVendorBankAccount."Country/Region Code")
                                     else
                                         Lrec_DestVendorBankAccount."Country/Region Code" := Lrec_SourceVendorBankAccount."Country/Region Code";
-                                end;
                                 if Lrec_SourceVendorBankAccount.County <> Lrec_DestVendorBankAccount.County then
                                     Lrec_DestVendorBankAccount.County := Lrec_SourceVendorBankAccount.County;
                                 if Lrec_SourceVendorBankAccount."Fax No." <> Lrec_DestVendorBankAccount."Fax No." then
                                     Lrec_DestVendorBankAccount."Fax No." := Lrec_SourceVendorBankAccount."Fax No.";
                                 if Lrec_SourceVendorBankAccount."Telex Answer Back" <> Lrec_DestVendorBankAccount."Telex Answer Back" then
                                     Lrec_DestVendorBankAccount."Telex Answer Back" := Lrec_SourceVendorBankAccount."Telex Answer Back";
-                                if Lrec_SourceVendorBankAccount."Language Code" <> Lrec_DestVendorBankAccount."Language Code" then begin
+                                if Lrec_SourceVendorBankAccount."Language Code" <> Lrec_DestVendorBankAccount."Language Code" then
                                     if not TestLanguage(Lrec_SourceVendorBankAccount."Language Code") then
                                         MESSAGE(text025, Grec_DuplicatingList.Name, Lrec_SourceVendorBankAccount."Language Code")
                                     else
                                         Lrec_DestVendorBankAccount."Language Code" := Lrec_SourceVendorBankAccount."Language Code";
-                                end;
                                 if Lrec_SourceVendorBankAccount."E-Mail" <> Lrec_DestVendorBankAccount."E-Mail" then
                                     Lrec_DestVendorBankAccount."E-Mail" := Lrec_SourceVendorBankAccount."E-Mail";
                                 if Lrec_SourceVendorBankAccount."Home Page" <> Lrec_DestVendorBankAccount."Home Page" then
@@ -788,7 +784,7 @@ codeunit 50000 "BC6_Duplicating records"
                                 Grec_DuplicatingList.MODIFY();
                                 //          MESSAGE(text096,Lcode_Account1,Lcode_Account2,Grec_DuplicatingList.Name); //La fiche compte bancaire a ‚t‚ mise … jour
                                 //FIN MODIF JX-XAD 31/03/2011 : Modification du RIB si d‚j… existant
-                            end else begin
+                            end else
                                 // Tests concernant les autres champs puis insertion de l'enregistrement si pas d'erreur
                                 if (Lrec_SourceVendorBankAccount."Currency Code" <> '') and
                                         (not Lrec_DestCurrency.GET(Lrec_SourceVendorBankAccount."Currency Code")) then
@@ -817,7 +813,6 @@ codeunit 50000 "BC6_Duplicating records"
                                                 MESSAGE(text092, Lcode_Account1, Lcode_Account2, Grec_DuplicatingList.Name); //La fiche compte bancaire a ‚t‚ dupliqu‚e
                                             end;
                                     end;
-                            end;
                             //END; ELSE
                             //  MESSAGE(text093,Lcode_Account1,Lcode_Account2,Grec_DuplicatingList.Name); //Le compte bancaire existe d‚j… !
                         end else
@@ -855,7 +850,7 @@ codeunit 50000 "BC6_Duplicating records"
                     Lopt_ValuePosting[Lint_NbAxe] := Lrec_DefaultDimension."Value Posting".AsInteger();
                 until Lrec_DefaultDimension.NEXT() = 0;
 
-            for i := 1 to Lint_NbAxe do begin
+            for i := 1 to Lint_NbAxe do
                 if Lrec_DestDimension.GET(Lcode_Axe[i]) then begin
                     if Lrec_DestDimensionValue.GET(Lcode_Axe[i], Lcode_Section[i]) then begin
                         Lrec_DestDefaultDimension.INIT();
@@ -878,7 +873,6 @@ codeunit 50000 "BC6_Duplicating records"
                             MESSAGE(text038, Grec_DuplicatingList.Name, Lcode_Section[i], Lcode_Axe[i]);
                 end else
                     MESSAGE(text037, Grec_DuplicatingList.Name, Lcode_Axe[i]);
-            end;
             COMMIT();
         end;
     end;
@@ -1186,7 +1180,7 @@ codeunit 50000 "BC6_Duplicating records"
                 if Grec_DuplicatingList.Duplication then begin
                     Grec_DuplicatingList.Echec := true;
                     Grec_DuplicatingList.MODIFY();
-                    if Lrec_DestUser.CHANGECOMPANY(Grec_DuplicatingList.Name) then begin
+                    if Lrec_DestUser.CHANGECOMPANY(Grec_DuplicatingList.Name) then
                         if Lrec_SourceUser.GET(Lcode_User) then begin
                             if not Lrec_DestUser.GET(Lcode_User) then begin
                                 // Tests concernant les autres champs puis insertion de l'enregistrement si pas d'erreur
@@ -1221,7 +1215,6 @@ codeunit 50000 "BC6_Duplicating records"
                                 MESSAGE(text098, Lcode_User, Grec_DuplicatingList.Name);   // L'utilisateur existe d‚j… dans la soci‚t‚ !
                         end else
                             MESSAGE(text099, Lcode_User, COMPANYNAME);   // L'utilisateur n'existe pas dans la soci‚t‚
-                    end;
                 end;
             until Grec_DuplicatingList.NEXT() = 0;
     end;
@@ -1239,7 +1232,7 @@ codeunit 50000 "BC6_Duplicating records"
                 if Grec_DuplicatingList.Duplication then begin
                     Grec_DuplicatingList.Echec := true;
                     Grec_DuplicatingList.MODIFY();
-                    if Lrec_DestUser.CHANGECOMPANY(Grec_DuplicatingList.Name) then begin
+                    if Lrec_DestUser.CHANGECOMPANY(Grec_DuplicatingList.Name) then
                         if Lrec_DestUser.GET(Lcode_User) then begin
                             //V‚rification des approbations en cours
                             Lrec_ApprovalEntry.CHANGECOMPANY(Grec_DuplicatingList.Name);
@@ -1261,7 +1254,6 @@ codeunit 50000 "BC6_Duplicating records"
                             end;
                         end else
                             MESSAGE(text099, Lcode_User, Grec_DuplicatingList.Name);
-                    end;
                 end;
             until Grec_DuplicatingList.NEXT() = 0;
     end;
@@ -1282,14 +1274,13 @@ codeunit 50000 "BC6_Duplicating records"
                 Lbool_Ok := false;
             end;
 
-            if Lbool_Ok then begin
+            if Lbool_Ok then
                 //On supprime l'utilisateur
                 if Lrec_DestUser.GET(Lcode_User) then begin
                     Lrec_DestUser.DELETE();
                     COMMIT();
                     MESSAGE(text110, Lcode_User, COMPANYNAME);
                 end;
-            end;
         end;
     end;
 

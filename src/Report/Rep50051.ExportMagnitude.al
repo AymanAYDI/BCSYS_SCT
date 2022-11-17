@@ -26,7 +26,7 @@ report 50051 "BC6_Export Magnitude"
         {
             area(content)
             {
-                field(Gdate_Comptabilisation; Gdate_Comptabilisation)
+                field(Gdate_ComptabilisationV; Gdate_Comptabilisation)
                 {
                     Caption = 'Date comptabilisation';
                     ApplicationArea = All;

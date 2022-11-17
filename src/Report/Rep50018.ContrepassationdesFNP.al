@@ -73,12 +73,9 @@ report 50018 "BC6_Contrepassation des FNP"
                 field("Date de comptabilisation"; Gdate_Compta)
                 {
                     ApplicationArea = All;
+                    Caption = 'Date de comptabilisation';
                 }
             }
-        }
-
-        actions
-        {
         }
     }
 

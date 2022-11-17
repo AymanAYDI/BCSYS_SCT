@@ -48,14 +48,15 @@ codeunit 50001 "BC6_PrintOrderVSC"
                     //     //Fin MODIF JX-XAD le 25/06/2010
                     // END ELSE BEGIN
                     //     //FIN MODIF JX-XAD le 20/04/2010
-                    //     ReportSelection.SETRANGE(Usage, ReportSelection.Usage::"P.Order");
-                    //     ReportSelection.SETFILTER("Report ID", '<>0');
-                    //     ReportSelection.FIND('-');
-                    //     REPEAT
-                    //         REPORT.RUNMODAL(ReportSelection."Report ID", TRUE, FALSE, PurchaseHeader)
-                    //     UNTIL ReportSelection.NEXT = 0;
+                    ReportSelection.SETRANGE(Usage, ReportSelection.Usage::"P.Order");
+                    ReportSelection.SETFILTER("Report ID", '<>0');
+                    ReportSelection.FIND('-');
+                    REPEAT
+                        REPORT.RUNMODAL(ReportSelection."Report ID", TRUE, FALSE, PurchaseHeader)
+                    UNTIL ReportSelection.NEXT() = 0;
                     // END;
-                end else begin
+                end
+                else
 
                     if (PurchaseHeader."Buy-from Country/Region Code" = '') or
                       (PurchaseHeader."Buy-from Country/Region Code" = 'FR') or
@@ -67,39 +68,17 @@ codeunit 50001 "BC6_PrintOrderVSC"
                         repeat
                             REPORT.RUNMODAL(ReportSelection."Report ID", true, false, PurchaseHeader)
                         until ReportSelection.NEXT() = 0;
-                    end
-                    // ELSE BEGIN
-
-                    // IF (COMPANYNAME = 'Agence') OR (COMPANYNAME = 'Agence Test') THEN BEGIN
-                    //     REPORT.RUNMODAL(Report::"PurchaseOrder aVSC EN", TRUE, FALSE, PurchaseHeader);
-                    // END;
-
-                    // IF (COMPANYNAME = 'VSC') OR (COMPANYNAME = 'VSC Test') THEN BEGIN
-                    //     REPORT.RUNMODAL(Report::"PurchaseOrder VSC EN", TRUE, FALSE, PurchaseHeader);
-                    // END;
-                    // END;
-                end;
+                    end;
+            // ELSE BEGIN
+            // IF (COMPANYNAME = 'Agence') OR (COMPANYNAME = 'Agence Test') THEN BEGIN
+            //     REPORT.RUNMODAL(Report::"PurchaseOrder aVSC EN", TRUE, FALSE, PurchaseHeader);
+            // END;
+            // IF (COMPANYNAME = 'VSC') OR (COMPANYNAME = 'VSC Test') THEN BEGIN
+            //     REPORT.RUNMODAL(Report::"PurchaseOrder VSC EN", TRUE, FALSE, PurchaseHeader);
+            // END;
+            // END;
             else
                 exit;
         end;
     end;
-
-    // BEGIN
-    // {
-    //   CREATION JX-AUD le 08.04.2009
-    //   //fonction permettant d'afficher les CGA en fonction de la soci‚t‚ et du codePays du fournisseur
-
-    //   MODIF JX-XAD le 20/04/2010
-    //   Lancement du report 50041 (copmmande + contrat r‚gie) si soci‚t‚ VSCT et unit‚ = jours-hommes
-
-    //   MODIF JX-XAD le 25/06/2010
-    //   On imprime le contrat si le devis existe et contient une description. Ce code est en rapport avec le fait qu'on
-    //   gŠre les contrats uniquement si le devis a ‚t‚ cr‚‚ aprŠs da date de mise en service de la gestion des contrats,
-    //   soit le 16/06/2010.
-
-    //   //MODIF JX-AUD le 16/12/2010
-    //   //Ajout du code "OR (COMPANYNAME = 'VFE')" pour la soci‚t‚ VFE
-    // }
-    // END.
-    //}
 }

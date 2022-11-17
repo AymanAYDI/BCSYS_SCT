@@ -115,7 +115,7 @@ xmlport 50032 "BC6_LISAM (quick) VAT"
                     Gcode_Tiers := '';
                     if GLEntry."Source No." <> '' then
                         Gcode_Tiers := GLEntry."Source No."
-                    else begin
+                    else
                         if GLEntry."External Document No." <> '' then begin
 
                             //Modif ABE du 20/11/2015
@@ -143,7 +143,6 @@ xmlport 50032 "BC6_LISAM (quick) VAT"
                                                 if Grec_PurchInvHeader.GET(Gtext_ExtDoc) then
                                                     Gcode_Tiers := Grec_PurchInvHeader."Buy-from Vendor No.";
                         end;
-                    end;
 
                     //Modif JX-AUD du 31/05/11
 

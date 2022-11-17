@@ -2,6 +2,7 @@ page 50054 "BC6_New Mail FAP"
 {
     PageType = NavigatePage;
     SourceTable = "Purchase Header";
+    Caption = 'New Mail FAP';
 
     layout
     {

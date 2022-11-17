@@ -130,7 +130,7 @@ xmlport 50016 "BC6_Cash Pooling"
         }
     }
     var
-        Grec_GlobalTemporaryTable: Record "BC6_Global temporary table";
+        Grec_GlobalTemporaryTable: Record "BC6_Global temporary table" TEMPORARY;
         Grec_Company: Record Company;
         Grec_CompanyInfo: Record "Company Information";
         Grec_GenJnlBatch: Record "Gen. Journal Batch";
@@ -186,12 +186,11 @@ xmlport 50016 "BC6_Cash Pooling"
                         Grec_NoSeriesLine.RESET();
                         Grec_NoSeriesLine.SETFILTER(Grec_NoSeriesLine."Series Code", Gcode_JournalBatchName);
                         Grec_NoSeriesLine.SETFILTER(Grec_NoSeriesLine.Open, '%1', true);
-                        if Grec_NoSeriesLine.FIND('-') then begin
+                        if Grec_NoSeriesLine.FIND('-') then
                             if Grec_NoSeriesLine."Last No. Used" <> '' then
                                 Grec_GlobalTemporaryTable."External document No." := INCSTR(Grec_NoSeriesLine."Last No. Used")
                             else
                                 Grec_GlobalTemporaryTable."External document No." := Grec_NoSeriesLine."Starting No.";
-                        end;
                     end;
                 end;
 

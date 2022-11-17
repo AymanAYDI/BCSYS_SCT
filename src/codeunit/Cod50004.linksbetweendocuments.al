@@ -45,10 +45,9 @@ codeunit 50004 "BC6_Links Between Documents"
                             repeat
                                 //***** On v‚rifie si la facture est d‚j… dans la liste *****
                                 gBool_InvoiceExist := false;
-                                for i := 1 to gInt_Count do begin
+                                for i := 1 to gInt_Count do
                                     if gRec_PurchaseLine."Document No." = pCode_Invoice[1, i] then
                                         gBool_InvoiceExist := true;
-                                end;
                                 //***** Si la facture n'est pas dans la liste, on l'y ajoute *****
                                 if not gBool_InvoiceExist then begin
                                     gInt_Count += 1;
@@ -162,10 +161,9 @@ codeunit 50004 "BC6_Links Between Documents"
                             if gRec_PurchRcptHeader."Order No." <> '' then begin
                                 //***** On v‚rifie si la commande est d‚j… dans la liste *****
                                 gBool_OrderExist := false;
-                                for i := 1 to gInt_Count do begin
+                                for i := 1 to gInt_Count do
                                     if gRec_PurchRcptHeader."Order No." = pCode_Order[i] then
                                         gBool_OrderExist := true;
-                                end;
                                 //***** Si la commande n'est pas dans la liste, on l'y ajoute *****
                                 if not gBool_OrderExist then begin
                                     gInt_Count += 1;
@@ -202,10 +200,9 @@ codeunit 50004 "BC6_Links Between Documents"
                                     if gRec_PurchRcptHeader."Order No." <> '' then begin
                                         //***** On v‚rifie si la commande est d‚j… dans la liste *****
                                         gBool_OrderExist := false;
-                                        for i := 1 to gInt_Count do begin
+                                        for i := 1 to gInt_Count do
                                             if gRec_PurchRcptHeader."Order No." = pCode_Order[i] then
                                                 gBool_OrderExist := true;
-                                        end;
                                         //***** Si la commande n'est pas dans la liste, on l'y ajoute *****
                                         if not gBool_OrderExist then begin
                                             gInt_Count += 1;

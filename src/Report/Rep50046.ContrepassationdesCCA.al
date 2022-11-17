@@ -68,6 +68,7 @@ report 50046 "BC6_Contrepassation des CCA"
                     field("Date de comptabilisation"; Gdate_Compta)
                     {
                         ApplicationArea = All;
+                        Caption = 'Date de comptabilisation';
                     }
                 }
             }

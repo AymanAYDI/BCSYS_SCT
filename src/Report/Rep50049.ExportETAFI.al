@@ -26,17 +26,17 @@ report 50049 "BC6_Export ETAFI"
         {
             area(content)
             {
-                field(Gdate_StartDate; Gdate_StartDate)
+                field(Gdate_StartDateV; Gdate_StartDate)
                 {
                     Caption = 'Date début';
                     ApplicationArea = All;
                 }
-                field(Gdate_EndDate; Gdate_EndDate)
+                field(Gdate_EndDateV; Gdate_EndDate)
                 {
                     Caption = 'Date fin';
                     ApplicationArea = All;
                 }
-                field(Gdate_DateIsolation; Gdate_DateIsolation)
+                field(Gdate_DateIsolationV; Gdate_DateIsolation)
                 {
                     Caption = 'Date à isoler';
                     ApplicationArea = All;

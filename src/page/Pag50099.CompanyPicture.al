@@ -2,6 +2,7 @@ page 50099 "BC6_Company Picture"
 {
     PageType = CardPart;
     SourceTable = "Company Information";
+    Caption = 'Company Picture';
 
     layout
     {

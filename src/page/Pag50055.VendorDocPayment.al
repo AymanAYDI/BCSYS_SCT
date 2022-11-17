@@ -5,6 +5,7 @@ page 50055 "BC6_Vendor Doc. Payment"
     ModifyAllowed = false;
     PageType = Card;
     SourceTable = "Purchase Header";
+    Caption = 'Vendor Doc. Payment';
 
     layout
     {
@@ -37,6 +38,7 @@ page 50055 "BC6_Vendor Doc. Payment"
                     Style = Unfavorable;
                     StyleExpr = true;
                     ApplicationArea = All;
+                    Caption = 'Montant à Payer';
                 }
             }
         }
@@ -45,6 +47,7 @@ page 50055 "BC6_Vendor Doc. Payment"
             part(Control1000000008; "Vendor Hist. Pay-to FactBox")
             {
                 ApplicationArea = All;
+                //Caption = 'Pay-to Vendor History';
             }
         }
     }

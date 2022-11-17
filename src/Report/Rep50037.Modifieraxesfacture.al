@@ -88,18 +88,6 @@ report 50037 "BC6_Modifier axes facture"
             end;
         }
     }
-
-    requestpage
-    {
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
     labels
     {
     }

@@ -2,6 +2,7 @@ page 50047 "BC6_Purchase Doc. Factbox"
 {
     PageType = CardPart;
     SourceTable = "Purchase Header";
+    Caption = 'Purchase Doc. Factbox';
 
     layout
     {

@@ -198,16 +198,14 @@ codeunit 50011 "BC6_FunctionsMgt"
         Lcode_AxeReserve := 'RESERVE';
         if Lrec_Dimension.GET(Lcode_AxeReserve) then begin
             // On initialise, si n‚cessaire, les sections de l'axe analytique 'RESERVE'
-            if not Lrec_DimensionValue.GET(Lcode_AxeReserve, '100') then begin
-                for Lint_Compteur := 1 to 100 do begin
+            if not Lrec_DimensionValue.GET(Lcode_AxeReserve, '100') then
+                for Lint_Compteur := 1 to 100 do
                     if not Lrec_DimensionValue.GET(Lcode_AxeReserve, FORMAT(Lint_Compteur)) then begin
                         Lrec_DimensionValue.INIT();
                         Lrec_DimensionValue.VALIDATE(Lrec_DimensionValue."Dimension Code", Lcode_AxeReserve);
                         Lrec_DimensionValue.VALIDATE(Lrec_DimensionValue.Code, FORMAT(Lint_Compteur));
                         Lrec_DimensionValue.INSERT();
                     end;
-                end;
-            end;
             // Traitement de l'axe analytique 'RESERVE' pour chaque ligne du document
             if (SalesHeader."Document Type" in [SalesHeader."Document Type"::Invoice, SalesHeader."Document Type"::"Credit Memo", SalesHeader."Document Type"::Order]) then begin
                 Lrec_SalesLine.RESET();
@@ -245,7 +243,7 @@ codeunit 50011 "BC6_FunctionsMgt"
         DimSetEntry.SETRANGE("Dimension Set ID", DimSetID);
         DimSetEntry.FILTERGROUP(0);
         TempSetEntry.DELETEALL();
-        if DimSetEntry.FINDFIRST() then
+        if DimSetEntry.FindSet() then
             repeat
                 TempSetEntry := DimSetEntry;
                 TempSetEntry.INSERT();
@@ -300,40 +298,45 @@ codeunit 50011 "BC6_FunctionsMgt"
 
         //DEBUT MODIF JX XAD 12/05/2010 (traitement modification analytique manuelle post validation)
         Lcode_AxeReserve := 'RESERVE';
-        if Lrec_Dimen.GET(Lcode_AxeReserve) then begin
+        if Lrec_Dimen.GET(Lcode_AxeReserve) then
             // On initialise, si nécessaire, les sections de l'axe analytique 'RESERVE'
-            if not Lrec_DimensionValue.GET(Lcode_AxeReserve, '100') then begin
-                for Lint_Compteur := 1 to 100 do begin
+            if not Lrec_DimensionValue.GET(Lcode_AxeReserve, '100') then
+                for Lint_Compteur := 1 to 100 do
                     if not Lrec_DimensionValue.GET(Lcode_AxeReserve, FORMAT(Lint_Compteur)) then begin
                         Lrec_DimensionValue.INIT();
                         Lrec_DimensionValue.VALIDATE(Lrec_DimensionValue."Dimension Code", Lcode_AxeReserve);
                         Lrec_DimensionValue.VALIDATE(Lrec_DimensionValue.Code, FORMAT(Lint_Compteur));
                         Lrec_DimensionValue.INSERT();
                     end;
-                end;
-            end;
-            // Traitement de l'axe analytique 'RESERVE' pour chaque ligne du document
-            if (PurchaseHeader."Document Type" in [PurchaseHeader."Document Type"::Invoice, PurchaseHeader."Document Type"::"Credit Memo"]) then begin
-                Lrec_PurchLine.RESET();
-                Lrec_PurchLine.SETFILTER(Lrec_PurchLine."Document Type", '%1', PurchaseHeader."Document Type");
-                Lrec_PurchLine.SETFILTER(Lrec_PurchLine."Document No.", '%1', PurchaseHeader."No.");
-                Lrec_PurchLine.SETFILTER(Lrec_PurchLine.Type, '<>%1', Lrec_PurchLine.Type::" ");
-                Lrec_PurchLine.SETFILTER(Lrec_PurchLine."No.", '<>%1', '');
-                Lint_Compteur := 0;
-                if Lrec_PurchLine.FIND('-') then
-                    repeat
-                        Lint_Compteur += 1;
-                        LCode_DimCode[1] := Lcode_AxeReserve;
-                        LCode_DimValueCode[1] := FORMAT(Lint_Compteur);
-                        Lrec_PurchLine."Dimension Set ID" := SetNewDimIDSpec(Lrec_PurchLine."Dimension Set ID", Lrec_PurchLine."Shortcut Dimension 1 Code",
-                                                      Lrec_PurchLine."Shortcut Dimension 2 Code", LCode_DimCode, LCode_DimValueCode);
-                        Lrec_PurchLine.MODIFY();
-                    until Lrec_PurchLine.NEXT() = 0;
-            end;
+        // Traitement de l'axe analytique 'RESERVE' pour chaque ligne du document
+        if (PurchaseHeader."Document Type" in [PurchaseHeader."Document Type"::Invoice, PurchaseHeader."Document Type"::"Credit Memo"]) then begin
+            Lrec_PurchLine.RESET();
+            Lrec_PurchLine.SETFILTER(Lrec_PurchLine."Document Type", '%1', PurchaseHeader."Document Type");
+            Lrec_PurchLine.SETFILTER(Lrec_PurchLine."Document No.", '%1', PurchaseHeader."No.");
+            Lrec_PurchLine.SETFILTER(Lrec_PurchLine.Type, '<>%1', Lrec_PurchLine.Type::" ");
+            Lrec_PurchLine.SETFILTER(Lrec_PurchLine."No.", '<>%1', '');
+            Lint_Compteur := 0;
+            if Lrec_PurchLine.FIND('-') then
+                repeat
+                    Lint_Compteur += 1;
+                    LCode_DimCode[1] := Lcode_AxeReserve;
+                    LCode_DimValueCode[1] := FORMAT(Lint_Compteur);
+                    Lrec_PurchLine."Dimension Set ID" := SetNewDimIDSpec(Lrec_PurchLine."Dimension Set ID", Lrec_PurchLine."Shortcut Dimension 1 Code",
+                                                  Lrec_PurchLine."Shortcut Dimension 2 Code", LCode_DimCode, LCode_DimValueCode);
+                    Lrec_PurchLine.MODIFY();
+                until Lrec_PurchLine.NEXT() = 0;
         end;
         //FIN MODIF JX XAD 12/05/2010 (traitement modification analytique manuelle post validation)
     end;
-    //------------------ CODEUNIT 5700 -------------------------///
+    //---CODEUNIT/5063---
+    PROCEDURE ArchivePurchDocument2(VAR PurchHeader: Record "Purchase Header");
+    var
+        ArchManagment: Codeunit ArchiveManagement;
+    BEGIN
+        ArchManagment.StorePurchDocument(PurchHeader, FALSE);
+    END;
+
+    //---CODEUNIT/5700---
     procedure jx_GetPurchasesFilter() Ltxt_UserList: Text;
     var
         Lrec_UserSetup: Record "User Setup";
@@ -342,7 +345,7 @@ codeunit 50011 "BC6_FunctionsMgt"
     begin
         //Ajout JX-XAD du 13/06/2008
         //Filtrer les documents d'achats sur les utilisateurs dont les droits sont indiqu‚s dans les paramŠtres utilisateurs
-        if Lrec_UserSetup.GET(USERID) then begin
+        if Lrec_UserSetup.GET(USERID) then
             case Lrec_UserSetup."BC6_Droits acces doc. achat" of
                 Lrec_UserSetup."BC6_Droits acces doc. achat"::Utilisateur:
                     Ltext_UserList := USERID;
@@ -352,14 +355,13 @@ codeunit 50011 "BC6_FunctionsMgt"
                         Ltext_UserList := '';
                         Lrec_UserSetup.RESET();
                         Lrec_UserSetup.SETFILTER(Lrec_UserSetup."Service Resp. Ctr. Filter", COPYSTR(Lcode_CodeService, 1, 3) + '*');
-                        if Lrec_UserSetup.FIND('-') then begin
+                        if Lrec_UserSetup.FIND('-') then
                             repeat
                                 if Ltext_UserList <> '' then
                                     Ltext_UserList += '|' + Lrec_UserSetup."User ID"
                                 else
                                     Ltext_UserList += Lrec_UserSetup."User ID";
                             until Lrec_UserSetup.NEXT() = 0;
-                        end;
                     end;
                 Lrec_UserSetup."BC6_Droits acces doc. achat"::"Sous-Responsable":
                     begin
@@ -367,19 +369,18 @@ codeunit 50011 "BC6_FunctionsMgt"
                         Ltext_UserList := '';
                         Lrec_UserSetup.RESET();
                         Lrec_UserSetup.SETFILTER(Lrec_UserSetup."Service Resp. Ctr. Filter", Lcode_CodeService);
-                        if Lrec_UserSetup.FIND('-') then begin
+                        if Lrec_UserSetup.FIND('-') then
                             repeat
                                 if Ltext_UserList <> '' then
                                     Ltext_UserList += '|' + Lrec_UserSetup."User ID"
                                 else
                                     Ltext_UserList += Lrec_UserSetup."User ID";
                             until Lrec_UserSetup.NEXT() = 0;
-                        end;
                     end;
                 Lrec_UserSetup."BC6_Droits acces doc. achat"::Admin:
                     Ltext_UserList := '';
-            end;
-        end else
+            end
+        else
             Ltext_UserList := USERID;
 
         exit(Ltext_UserList);
@@ -527,12 +528,11 @@ codeunit 50011 "BC6_FunctionsMgt"
         or (Rec."Bank Account No." <> xRec."Bank Account No.") or (Rec."RIB Key" <> xRec."RIB Key")
         or (Rec."SWIFT Code" <> xRec."SWIFT Code") or (Rec.IBAN <> xRec.IBAN) then
             Rec."BC6_Change RIB/IBAN" := TODAY;
-        if (Grec_Vendor.GET(Rec."Vendor No.")) then begin
+        if (Grec_Vendor.GET(Rec."Vendor No.")) then
             if ((Rec.Code = '1') and ((Grec_Vendor."BC6_Default Bank Account Code" = '1') or (Grec_Vendor."BC6_Default Bank Account Code" = ''))) then begin
                 Grec_Vendor.VALIDATE("BC6_Default Bank Account Code", '1');
                 Grec_Vendor.MODIFY();
             end;
-        end;
     end;
     //---Codeunit1---
     procedure FctYoozImportFile();
@@ -606,10 +606,10 @@ codeunit 50011 "BC6_FunctionsMgt"
         if GenJnlTemplate2.GET(GenJnlLine."Journal Template Name") then   //MODIF JOH1.0 du 18/03/2015
             if not (GenJnlTemplate2.Type = GenJnlTemplate2.Type::Payments) then //MODIF JOH1.0 du 18/03/2015
                 if not (GenJnlTemplate2.Type = GenJnlTemplate2.Type::"Cash Receipts") then  //MODIF JOH1.0 du 18/03/2015
-                begin //MODIF JOH1.0 du 18/03/2015
+
+                    //MODIF JOH1.0 du 18/03/2015
                     if not DimMgt.CheckDimValuePosting(TableID, No, GenJnlLine."Dimension Set ID") then
                         GenJnlCheckLine.ThrowGenJnlLineError(GenJnlLine, Text012, DimMgt.GetDimValuePostingErr());
-                end;
         CheckDone := true;
     end;
 }
