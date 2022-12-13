@@ -163,8 +163,8 @@ codeunit 50011 "BC6_FunctionsMgt"
     //Codeunit80
     procedure OnBeforePostSalesDocCodeunit80(var SalesHeader: Record "Sales Header")
     var
-        Text061: label 'The field "Your reference" in header %1 is mandatory';
-        Text062: label 'The field "Your reference" in header %1 is mandatory';
+        Text061: label 'The field "Your reference" in header %1 is mandatory', Comment = 'FRA="Le champs "Votre référence" dans en-tête %1 est obligatoire"';
+        Text062: label 'The field "Your reference" in header %1 is mandatory', Comment = 'FRA="Le champs "Notre référence" dans en-tête %1 est obligatoire"';
     begin
         //DEBUT MODIF JX-XAD 20/05/2011
         if (SalesHeader."Document Type" = SalesHeader."Document Type"::Invoice) or (SalesHeader."Document Type" = SalesHeader."Document Type"::"Credit Memo") then begin
@@ -274,7 +274,7 @@ codeunit 50011 "BC6_FunctionsMgt"
     //---Cdu 91---
     procedure Fct_OnBeforeSelectPostOrderOptionCodeunit91(var PurchaseHeader: Record "Purchase Header"; DefaultOption: Integer; var IsHandled: Boolean): Boolean
     var
-        Text003: label 'Do you want this document to confirm receipt?';
+        Text003: label 'Do you want this document to confirm receipt?', Comment = 'FRA="Souhaitez-vous valider ce document en réception ?"';
     begin
         if CONFIRM(Text003) then begin
             PurchaseHeader.Receive := true;
@@ -427,7 +427,7 @@ codeunit 50011 "BC6_FunctionsMgt"
     procedure Fct_OnBeforePostPurchaseDocCodeunit90(var PurchaseHeader: Record "Purchase Header"; PreviewMode: Boolean; CommitIsSupressed: Boolean; var HideProgressWindow: Boolean)
     var
         Grec_Temp: Record "BC6_Table temporaire" temporary;
-        Text061: label 'The field "Your reference" in header %1 is mandatory';
+        Text061: label 'The field "Your reference" in header %1 is mandatory', Comment = 'FRA="Le champs "Votre référence" dans en-tête %1 est obligatoire"';
     begin
         //DEBUT MODIF JX-XAD 20/05/2011
         if (PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::Invoice) or (PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::"Credit Memo") then begin
@@ -558,7 +558,7 @@ codeunit 50011 "BC6_FunctionsMgt"
         lrec_FileYooz.SETCURRENTKEY("Yooz Import", "Yooz Import Date");
         lrec_FileYooz.SETRANGE("Yooz Import", false);
         lrec_FileYooz.SETFILTER("Yooz Import Date", '<>%1', 0D);
-        if lrec_FileYooz.FINDFIRST() then
+        if lrec_FileYooz.FindSet() then
             repeat
                 for i := STRLEN(lrec_FileYooz."File Name" + lrec_FileYooz."File Name 2") downto 1 do
                     if COPYSTR(lrec_FileYooz."File Name" + lrec_FileYooz."File Name 2", i, 1) = '\' then begin
@@ -601,7 +601,7 @@ codeunit 50011 "BC6_FunctionsMgt"
         GenJnlTemplate2: Record "Gen. Journal Template";
         DimMgt: Codeunit DimensionManagement;
         GenJnlCheckLine: Codeunit "Gen. Jnl.-Check Line";
-        Text012: label 'A dimension used in %1 %2, %3, %4 has caused an error. %5';
+        Text012: label 'A dimension used in %1 %2, %3, %4 has caused an error. %5', Comment = 'FRA="L''axe analytique utilisé dans %1 %2, %3, %4 a provoqué une erreur. %5"';
     begin
         if GenJnlTemplate2.GET(GenJnlLine."Journal Template Name") then   //MODIF JOH1.0 du 18/03/2015
             if not (GenJnlTemplate2.Type = GenJnlTemplate2.Type::Payments) then //MODIF JOH1.0 du 18/03/2015
@@ -612,4 +612,51 @@ codeunit 50011 "BC6_FunctionsMgt"
                         GenJnlCheckLine.ThrowGenJnlLineError(GenJnlLine, Text012, DimMgt.GetDimValuePostingErr());
         CheckDone := true;
     end;
+
+    /// CODEUNIT 7181 Purchases Info-Pane Management///
+    procedure LookupContacts(VAR PurchHeader: Record "Purchase Header")
+    var
+        Cont: Record Contact;
+        ContBusRelation: Record "Contact Business Relation";
+    begin
+        WITH PurchHeader DO BEGIN
+            IF "Buy-from Vendor No." <> '' THEN BEGIN
+                IF Cont.GET("Buy-from Contact No.") THEN
+                    Cont.SETRANGE("Company No.", Cont."Company No.")
+                ELSE BEGIN
+                    ContBusRelation.RESET();
+                    ContBusRelation.SETCURRENTKEY("Link to Table", "No.");
+                    ContBusRelation.SETRANGE("Link to Table", ContBusRelation."Link to Table"::Vendor);
+                    ContBusRelation.SETRANGE("No.", "Buy-from Vendor No.");
+                    IF ContBusRelation.FINDFIRST() THEN
+                        Cont.SETRANGE("Company No.", ContBusRelation."Contact No.")
+                    ELSE
+                        Cont.SETRANGE("No.", '');
+                END;
+
+                IF Cont.GET("Buy-from Contact No.") THEN;
+            END ELSE
+                Cont.SETRANGE("No.", '');
+            IF PAGE.RUNMODAL(0, Cont) = ACTION::LookupOK THEN BEGIN
+                VALIDATE("Buy-from Contact No.", Cont."No.");
+                MODIFY(TRUE);
+            END;
+        END;
+    end;
+
+    procedure LookupOrderAddr(VAR PurchHeader: Record "Purchase Header")
+    var
+        OrderAddress: Record "Order Address";
+        Text000: Label 'The Ship-to Address has been changed', Comment = 'FRA="L''adresse destinataire a changé."';
+    begin
+        WITH PurchHeader DO BEGIN
+            OrderAddress.SETRANGE("Vendor No.", "Buy-from Vendor No.");
+            IF PAGE.RUNMODAL(0, OrderAddress) = ACTION::LookupOK THEN BEGIN
+                VALIDATE("Order Address Code", OrderAddress.Code);
+                MODIFY(TRUE);
+                MESSAGE(Text000);
+            END;
+        END;
+    end;
+
 }

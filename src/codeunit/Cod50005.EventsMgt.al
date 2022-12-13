@@ -134,7 +134,7 @@ codeunit 50005 "BC6_EventsMgt"
     [EventSubscriber(ObjectType::Table, DataBase::Customer, 'OnAfterValidateEvent', 'No.', false, false)]
     local procedure TAB18_OnAfterValidateEvent_Customer(var xRec: Record Customer; var Rec: Record Customer; CurrFieldNo: Integer)
     var
-        Text50000: label 'La longueur maximum du code client est de 10 caractères';
+        Text50000: label 'La longueur maximum du code client est de 10 caractères', Comment = 'FRA="La longueur maximum du code client est de 10 caractères"';
     begin
         if STRLEN(Rec."No.") > 10 then
             ERROR(Text50000);
@@ -158,7 +158,7 @@ codeunit 50005 "BC6_EventsMgt"
     [EventSubscriber(ObjectType::Table, DataBase::Vendor, 'OnAfterValidateNo', '', false, false)]
     local procedure TAB23_OnAfterValidateEvent_Vendor(var Vendor: Record Vendor; xVendor: Record Vendor)
     var
-        Text50000: label 'The maximum length of the supplier code is 10 characters';
+        Text50000: label 'The maximum length of the supplier code is 10 characters', Comment = 'FRA="La longueur maximum du code fournisseur est de 10 caractères"';
     begin
         if STRLEN(Vendor."No.") > 10 then
             ERROR(Text50000);
@@ -683,6 +683,82 @@ codeunit 50005 "BC6_EventsMgt"
 
                     PurchaseLine.VALIDATE("Direct Unit Cost", 1);
         //Fin  modif JX-AUD du 25/01/2013
+    end;
+
+    [EventSubscriber(ObjectType::Page, Page::"Purchase Quote Subform", 'OnAfterValidateEvent', 'Direct Unit Cost', false, false)]
+    local procedure PAG91_OnAfterValidateEventDirectUnitCost_PurchaseQuoteSubform(var xRec: Record "Purchase Line"; var Rec: Record "Purchase Line")
+    begin
+        //Modif JX-AUD du 25/01/2013
+        if ((COMPANYNAME = 'VSC') or (COMPANYNAME = 'VSCT') or (COMPANYNAME = 'Agence') or (COMPANYNAME = 'VFEC') or
+          (COMPANYNAME = 'VSC - RECETTE') or (COMPANYNAME = 'VSCT - RECETTE')
+          or (COMPANYNAME = 'Agence - RECETTE') or (COMPANYNAME = 'VFEC - RECETTE') or (COMPANYNAME = 'SNCF-C25')) then
+            if Rec.Type = Rec.Type::Item then// Type article
+                if Rec."Unit of Measure" = 'Euros' then//Unité EUROS
+                    Rec.VALIDATE("Direct Unit Cost", 1);
+        //Fin  modif JX-AUD du 25/01/2013
+    end;
+    //---PAG136---
+    [EventSubscriber(ObjectType::Page, Page::"Posted Purchase Receipt", 'OnOpenPageEvent', '', false, false)]
+    local procedure PAG136_OnOpenPageEvent_PostedPurchaseReceipt(var Rec: Record "Purch. Rcpt. Header")
+    var
+        FunctionsMgt: Codeunit "BC6_FunctionsMgt";
+    begin
+        //Début Modif JX-XAD du 05/08/2008
+        //Filtrer sur le (ou les) utilisateur(s) liés au droit de l'utilisateur courant (voir table des paramŠtres utilisateur)
+        Rec.FILTERGROUP(2);
+        Rec.SETFILTER("User ID", FunctionsMgt.jx_GetPurchasesFilter());
+        Rec.FILTERGROUP(0);
+        //Fin Modif JX-XAD du 05/08/2008
+    end;
+    //TAB121 
+    [EventSubscriber(ObjectType::Table, DataBase::"Purch. Rcpt. Line", 'OnAfterCopyFromPurchRcptLine', '', false, false)]
+    local procedure TAB121_OnAfterCopyFromPurchRcptLine_PurchRcptLine(var PurchaseLine: Record "Purchase Line"; PurchRcptLine: Record "Purch. Rcpt. Line"; var TempPurchLine: Record "Purchase Line")
+    var
+        PurchInvHeader: Record "Purchase Header";
+    begin
+        if PurchInvHeader."No." <> TempPurchLine."Document No." then
+            PurchInvHeader.Get(TempPurchLine."Document Type", TempPurchLine."Document No.");
+        // Migration 2015 : A la demande de VSC
+        PurchaseLine.VALIDATE("VAT Bus. Posting Group", PurchInvHeader."VAT Bus. Posting Group");
+        // Migration 2015 : A la demande de VSC
+    end;
+
+    [EventSubscriber(ObjectType::Table, DataBase::"Purch. Rcpt. Line", 'OnBeforeInsertInvLineFromRcptLineBeforeInsertTextLine', '', false, false)]
+    local procedure TAB121_OnBeforeInsertInvLineFromRcptLineBeforeInsertTextLine_PurchRcptLine(var PurchRcptLine: Record "Purch. Rcpt. Line"; var PurchLine: Record "Purchase Line"; var NextLineNo: Integer; var Handled: Boolean)
+    var
+        Text000: Label 'Receipt No. %1- order %2 :', Comment = 'FRA="N° réception %1 - Commande %2 :"';
+    begin
+        // Modif LAB du 11/12/2008
+        // Ajout Numéro de commande depuis extraction ligne réception sur ligne facture
+        PurchLine.Description := STRSUBSTNO(Text000, PurchRcptLine."Document No.", PurchRcptLine."Order No.");
+        //fin modif LAB du 11/12/2008
+    end;
+    //PAG6650
+    [EventSubscriber(ObjectType::Page, Page::"Posted Return Shipment", 'OnOpenPageEvent', '', false, false)]
+    local procedure PAG6650_OnOpenPageEvent_PostedReturnShipment(var Rec: Record "Return Shipment Header")
+    var
+        UserMgt: Codeunit "BC6_FunctionsMgt";
+    begin
+        Rec.FILTERGROUP(2);
+        Rec.SETFILTER("User ID", UserMgt.jx_GetPurchasesFilter());
+        Rec.FILTERGROUP(0);
+        Rec.SetSecurityFilterOnRespCenter();
+    end;
+    //PAG10868
+    [EventSubscriber(ObjectType::Page, Page::"Payment Slip", 'OnAfterGetRecordEvent', '', false, false)]
+    local procedure PAG10868_OnAfterGetRecord_PaymentSlip(var Rec: Record "Payment Header")
+    var
+        PaymentSlip: Page "Payment Slip";
+    begin
+        PaymentSlip.FctYoozNo();
+    end;
+
+    [EventSubscriber(ObjectType::Page, Page::"Payment Slip", 'OnAfterGetCurrRecordEvent', '', false, false)]
+    local procedure PAG10868_OnAfterGetCurrRecord_PaymentSlip(var Rec: Record "Payment Header")
+    var
+        PaymentSlip: Page "Payment Slip";
+    begin
+        PaymentSlip.FctYoozNo();
     end;
 
     var

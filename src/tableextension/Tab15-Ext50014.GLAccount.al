@@ -5,6 +5,7 @@ tableextension 50014 "BC6_GLAccount" extends "G/L Account" //15
         field(50005; BC6_Rubrique; Code[20])
         {
             DataClassification = CustomerContent;
+            Caption = 'Rubrique', Comment = 'FRA="Rubrique"';
         }
     }
 }

@@ -1,5 +1,17 @@
 pageextension 50081 "BC6_VendorHistBuyfromFactBox" extends "Vendor Hist. Buy-from FactBox" //9095
 {
+    //TODO: A vérifier a garder ou non
+    trigger OnOpenPage()
+    begin
+        CalcNoOfBuyRecords();
+    end;
+
+    trigger OnAfterGetRecord()
+    begin
+        CalcNoOfBuyRecords();
+
+    end;
+
     var
         FunctionsMgt: Codeunit "BC6_FunctionsMgt";
 

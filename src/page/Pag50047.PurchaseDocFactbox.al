@@ -2,7 +2,7 @@ page 50047 "BC6_Purchase Doc. Factbox"
 {
     PageType = CardPart;
     SourceTable = "Purchase Header";
-    Caption = 'Purchase Doc. Factbox';
+    Caption = 'Purchase Doc. Factbox', Comment = 'FRA="Purchase Doc. Factbox"';
 
     layout
     {
@@ -14,7 +14,7 @@ page 50047 "BC6_Purchase Doc. Factbox"
             }
             field("VAT Amount"; VATAmount)
             {
-                Caption = 'Total TVA';
+                Caption = 'Total TVA', Comment = 'FRA="Total TVA"';
                 ApplicationArea = All;
             }
             field("Total Amount Incl. VAT"; Rec."BC6_Total Amount Incl. VAT")
@@ -23,11 +23,6 @@ page 50047 "BC6_Purchase Doc. Factbox"
             }
         }
     }
-
-    actions
-    {
-    }
-
     trigger OnAfterGetRecord()
     begin
         Rec.CALCFIELDS("BC6_Total Amount", "BC6_Total Amount Incl. VAT");

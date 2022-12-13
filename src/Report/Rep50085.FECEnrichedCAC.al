@@ -1,6 +1,6 @@
 report 50085 "BC6_FEC Enriched CAC"
 {
-    Caption = 'FEC Enriched CAC ';
+    Caption = 'FEC Enriched CAC ', Comment = 'FRA="FEC Enrichi  CAC"';
     ProcessingOnly = true;
     ApplicationArea = All;
     UsageCategory = Tasks;
@@ -51,37 +51,28 @@ report 50085 "BC6_FEC Enriched CAC"
             {
                 group(Options)
                 {
-                    Caption = 'Options';
+                    Caption = 'Options', Comment = 'FRA="Options"';
                     field(StartingDate; StartingDate)
                     {
-                        Caption = 'Starting Date';
+                        Caption = 'Starting Date', Comment = 'FRA="Date début"';
                         ClosingDates = true;
                         ApplicationArea = All;
                     }
                     field(EndingDate; EndingDate)
                     {
-                        Caption = 'Ending Date';
+                        Caption = 'Ending Date', Comment = 'FRA="Date fin"';
                         ClosingDates = true;
                         ApplicationArea = All;
                     }
                     field("Include Opening Balances"; IncludeOpeningBalances)
                     {
-                        Caption = 'Include Opening Balances';
+                        Caption = 'Include Opening Balances', Comment = 'FRA="Inclure soldes d''ouverture"';
                         ApplicationArea = All;
                     }
                 }
             }
         }
-
-        actions
-        {
-        }
     }
-
-    labels
-    {
-    }
-
     trigger OnPostReport()
     begin
         ToFileName := GetFileName();
@@ -123,11 +114,11 @@ report 50085 "BC6_FEC Enriched CAC"
         Writer: DotNet StreamWriter;
         OutputFile: File;
         CurrentTransactionNo: Integer;
-        FileCreatedMsg: label 'The text file was created successfully.';
+        FileCreatedMsg: label 'The text file was created successfully.', Comment = 'FRA="Le fichier texte a bien été créé."';
         InvalidWindowsChrStringTxt: label '""#%&*:<>?\/{|}~';
-        MissingEndingDateErr: label 'You must enter an Ending Date.';
-        MissingStartingDateErr: label 'You must enter a Starting Date.';
-        NoEntriestoExportErr: label 'There are no entries to export within the defined filter. The file was not created.';
+        MissingEndingDateErr: label 'You must enter an Ending Date.', Comment = 'FRA="Vous devez entrer une date de fin."';
+        MissingStartingDateErr: label 'You must enter a Starting Date.', Comment = 'FRA="Vous devez entrer une date de début."';
+        NoEntriestoExportErr: label 'There are no entries to export within the defined filter. The file was not created.', Comment = 'FRA="Il n''y a pas d''écriture à exporter dans le filtre défini. Le fichier n''a pas été créé."';
         ServerFileExtensionTxt: label 'TXT';
         oStream: OutStream;
         CustVendLedgEntryPartyName: Text[50];

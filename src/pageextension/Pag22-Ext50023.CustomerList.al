@@ -5,7 +5,7 @@ pageextension 50023 "BC6_CustomerList" extends "Customer List" //22
     //
     // MODIF JX-AUD 07/06/2012
     // Ajout du champ solde période
-    Caption = 'Customer List';
+    Caption = 'Customer List', Comment = 'FRA="Liste des clients"';
 
     layout
     {

@@ -4,38 +4,38 @@ tableextension 50045 "BC6_GeneralLedgerSetup" extends "General Ledger Setup" //9
     {
         field(50000; "BC6_Report Dimension 1"; Code[20])
         {
-            Caption = 'Axe 1 dans Etats';
+            Caption = 'Axe 1 dans Etats', Comment = 'FRA="Axe 1 dans Etats"';
             TableRelation = Dimension.Code;
             DataClassification = CustomerContent;
         }
         field(50001; "BC6_Report Dimension 2"; Code[20])
         {
-            Caption = 'Axe 2 dans Etats';
+            Caption = 'Axe 2 dans Etats', Comment = 'FRA="Axe 2 dans Etats"';
             TableRelation = Dimension.Code;
             DataClassification = CustomerContent;
         }
         field(50002; "BC6_Report Dimension 3"; Code[20])
         {
-            Caption = 'Axe 3 dans Etats';
+            Caption = 'Axe 3 dans Etats', Comment = 'FRA="Axe 3 dans Etats"';
             TableRelation = Dimension.Code;
             DataClassification = CustomerContent;
         }
         field(50003; "BC6_Report Dimension 4"; Code[20])
         {
-            Caption = 'Axe 4 dans Etats';
+            Caption = 'Axe 4 dans Etats', Comment = 'FRA="Axe 4 dans Etats"';
             TableRelation = Dimension.Code;
             DataClassification = CustomerContent;
         }
         field(50004; "BC6_Report Dimension 5"; Code[20])
         {
-            Caption = 'Axe 5 dans Etats';
+            Caption = 'Axe 5 dans Etats', Comment = 'FRA="Axe 5 dans Etats"';
             TableRelation = Dimension.Code;
             DataClassification = CustomerContent;
         }
         field(50020; "BC6_Shortcut Dimension 9 Code"; Code[20])
         {
             AccessByPermission = tabledata "Dimension Combination" = R;
-            Caption = 'Shortcut Dimension 8 Code';
+            Caption = 'Shortcut Dimension 8 Code', Comment = 'FRA="Code raccourci axe 9"';
             Description = '//Modif JX-VSC4.0-PBD du 26/01/15';
             TableRelation = Dimension;
             DataClassification = CustomerContent;
@@ -48,7 +48,7 @@ tableextension 50045 "BC6_GeneralLedgerSetup" extends "General Ledger Setup" //9
         field(50021; "BC6_Shortcut Dimension 10 Code"; Code[20])
         {
             AccessByPermission = tabledata "Dimension Combination" = R;
-            Caption = 'Shortcut Dimension 8 Code';
+            Caption = 'Shortcut Dimension 8 Code', Comment = 'FRA="Code raccourci axe 10"';
             Description = '//Modif JX-VSC4.0-PBD du 26/01/15';
             TableRelation = Dimension;
             DataClassification = CustomerContent;
@@ -60,7 +60,7 @@ tableextension 50045 "BC6_GeneralLedgerSetup" extends "General Ledger Setup" //9
         }
         field(50060; "BC6_Default Payment Class"; Code[20])
         {
-            Caption = 'Type Bordereau par défaut';
+            Caption = 'Type Bordereau par défaut', Comment = 'FRA="Type Bordereau par défaut"';
             TableRelation = "Payment Class".Code;
             DataClassification = CustomerContent;
         }

@@ -1,6 +1,6 @@
 pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
 {
-    Caption = 'General Journal';
+    Caption = 'General Journal', Comment = 'FRA="Feuille comptabilité"';
     PromotedActionCategories = 'New,Process,Report,Bank,Application,Payroll';
     layout
     {
@@ -27,104 +27,8 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
                 ApplicationArea = All;
             }
         }
-        addafter(ShortcutDimCode7)
+        addafter(ShortcutDimCode8)
         {
-            field("ShortcutDimCode[3]"; ShortcutDimCode[3])
-            {
-                CaptionClass = '1,2,3';
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnLookup(var Text: Text): Boolean
-                begin
-                    Rec.LookupShortcutDimCode(3, ShortcutDimCode[3]);
-                end;
-
-                trigger OnValidate()
-                begin
-                    Rec.ValidateShortcutDimCode(3, ShortcutDimCode[3]);
-                end;
-            }
-            field("ShortcutDimCode[4]"; ShortcutDimCode[4])
-            {
-                CaptionClass = '1,2,4';
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnLookup(var Text: Text): Boolean
-                begin
-                    Rec.LookupShortcutDimCode(4, ShortcutDimCode[4]);
-                end;
-
-                trigger OnValidate()
-                begin
-                    Rec.ValidateShortcutDimCode(4, ShortcutDimCode[4]);
-                end;
-            }
-            field("ShortcutDimCode[5]"; ShortcutDimCode[5])
-            {
-                CaptionClass = '1,2,5';
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnLookup(var Text: Text): Boolean
-                begin
-                    Rec.LookupShortcutDimCode(5, ShortcutDimCode[5]);
-                end;
-
-                trigger OnValidate()
-                begin
-                    Rec.ValidateShortcutDimCode(5, ShortcutDimCode[5]);
-                end;
-            }
-            field("ShortcutDimCode[6]"; ShortcutDimCode[6])
-            {
-                CaptionClass = '1,2,6';
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnLookup(var Text: Text): Boolean
-                begin
-                    Rec.LookupShortcutDimCode(6, ShortcutDimCode[6]);
-                end;
-
-                trigger OnValidate()
-                begin
-                    Rec.ValidateShortcutDimCode(6, ShortcutDimCode[6]);
-                end;
-            }
-            field("ShortcutDimCode[7]"; ShortcutDimCode[7])
-            {
-                CaptionClass = '1,2,7';
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnLookup(var Text: Text): Boolean
-                begin
-                    Rec.LookupShortcutDimCode(7, ShortcutDimCode[7]);
-                end;
-
-                trigger OnValidate()
-                begin
-                    Rec.ValidateShortcutDimCode(7, ShortcutDimCode[7]);
-                end;
-            }
-            field("ShortcutDimCode[8]"; ShortcutDimCode[8])
-            {
-                CaptionClass = '1,2,8';
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnLookup(var Text: Text): Boolean
-                begin
-                    Rec.LookupShortcutDimCode(8, ShortcutDimCode[8]);
-                end;
-
-                trigger OnValidate()
-                begin
-                    Rec.ValidateShortcutDimCode(8, ShortcutDimCode[8]);
-                end;
-            }
             field("ShortcutDimCode[9]"; ShortcutDimCode[9])
             {
                 CaptionClass = '1,2,9';
@@ -168,23 +72,19 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
         modify(Post)
         {
             Visible = false;
-            Promoted = true;
-            PromotedCategory = Process;
         }
         modify(PostAndPrint)
         {
-            promoted = true;
-            PromotedCategory = Process;
             Visible = false;
         }
         addfirst(Navigation)
         {
             group(BC6_CCA)
             {
-                Caption = 'CCA';
+                Caption = 'CCA', Comment = 'FRA="CCA"';
                 action("BC6_Contrepasser les CCA")
                 {
-                    Caption = 'reverse invoices not received';
+                    Caption = 'reverse invoices not received', Comment = 'FRA="Contrepasser les CCA"';
                     Ellipsis = true;
                     ApplicationArea = All;
 
@@ -197,7 +97,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
                 }
                 action("Générer les CCA")
                 {
-                    Caption = 'generate invoices not received';
+                    Caption = 'generate invoices not received', Comment = 'FRA="Générer les CCA"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -210,10 +110,10 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
             }
             group(BC6_FNP)
             {
-                Caption = 'FNP';
+                Caption = 'FNP', Comment = 'FRA="FNP"';
                 action("BC6_Contrepasser les FNP")
                 {
-                    Caption = 'reverse invoices not received';
+                    Caption = 'reverse invoices not received', Comment = 'FRA="Contrepasser les FNP"';
                     Ellipsis = true;
                     ApplicationArea = All;
 
@@ -226,7 +126,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
                 }
                 action("Générer les FNP")
                 {
-                    Caption = 'generate invoices not received';
+                    Caption = 'generate invoices not received', Comment = 'FRA="Générer les FNP"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -242,7 +142,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
         {
             action("BC6_Import fichier compta. externe")
             {
-                Caption = 'Import fichier compta. externe';
+                Caption = 'Import fichier compta. externe', Comment = 'FRA="Import fichier compta. externe"';
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -257,8 +157,9 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
         {
             action("BC6_Test Report")
             {
-                Caption = 'Test Report';
+                Caption = 'Test Report', Comment = 'FRA="Impression test"';
                 Image = TestReport;
+                Ellipsis = true;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -275,13 +176,13 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
             action(BC6_Post)
             {
                 ApplicationArea = Basic, Suite;
-                Caption = 'P&ost';
+                Caption = 'P&ost', Comment = 'FRA="&Valider"';
                 Image = PostOrder;
                 Promoted = true;
                 PromotedCategory = Category9;
                 PromotedIsBig = true;
                 ShortCutKey = 'F9';
-                ToolTip = 'Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
+                ToolTip = 'Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.', Comment = 'FRA="Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books."';
 
                 trigger OnAction()
                 begin
@@ -299,13 +200,13 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
             action(BC6_PostAndPrint)
             {
                 ApplicationArea = Basic, Suite;
-                Caption = 'Post and &Print';
+                Caption = 'Post and &Print', Comment = 'FRA="Valider et i&mprimer"';
                 Image = PostPrint;
                 Promoted = true;
                 PromotedCategory = Category9;
                 PromotedIsBig = true;
                 ShortCutKey = 'Shift+F9';
-                ToolTip = 'Finalize and prepare to print the document or journal. The values and quantities are posted to the related accounts. A report request window where you can specify what to include on the print-out.';
+                ToolTip = 'Finalize and prepare to print the document or journal. The values and quantities are posted to the related accounts. A report request window where you can specify what to include on the print-out.', Comment = 'FRA="Finalize and prepare to print the document or journal. The values and quantities are posted to the related accounts. A report request window where you can specify what to include on the print-out."';
                 trigger OnAction()
                 begin
                     if Rec."Journal Batch Name" = 'C-POOL' then

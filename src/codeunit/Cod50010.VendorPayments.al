@@ -13,12 +13,12 @@ codeunit 50010 "BC6_Vendor Payments"
         VendLedgEntry: Record "Vendor Ledger Entry";
         PaymentMgt: Codeunit "Payment Management";
         AmountToPay: Decimal;
-        Text001: label 'One of your slips is being entered. Do you want to add this payment to this slip?';
-        Text002: label 'This document has already been paid for in advance. Are you sure ?';
-        Text003: label 'This invoice has been paid in full. Creation of the slip impossible.';
-        Text004: label 'Supplier ledger entry not found.';
-        Text005: label 'Do you want to validate this slip (No = Display of the slip)?';
-        Text006: label 'This document already appears on the %1 slip. Would you like to continue ?';
+        Text001: label 'One of your slips is being entered. Do you want to add this payment to this slip?', Comment = 'FRA="Un de vos bordereaux est en cours de saisie. Voulez-vous ajouter ce paiement à ce bordereau ?"';
+        Text002: label 'This document has already been paid for in advance. Are you sure ?', Comment = 'FRA="Ce document a été déjà réglé par avance. Etes-vous sûr ?"';
+        Text003: label 'This invoice has been paid in full. Creation of the slip impossible.', Comment = 'FRA="Cette facture a été intégralement payée. Création du bordereau impossible."';
+        Text004: label 'Supplier ledger entry not found.', Comment = 'FRA="Ecriture comptable fournisseur non trouvée."';
+        Text005: label 'Do you want to validate this slip (No = Display of the slip)?', Comment = 'FRA="Voulez-vous valider ce bordereau (Non = Affichage du bordereau) ?"';
+        Text006: label 'This document already appears on the %1 slip. Would you like to continue ?', Comment = 'FRA="Ce document déjà figure sur le bordereau %1. Souhaitez-vous continuer ?"';
 
     trigger OnRun()
     begin

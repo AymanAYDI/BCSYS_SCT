@@ -34,7 +34,7 @@ pageextension 50020 "BC6_ChartofAccounts" extends "Chart of Accounts" //16
         {
             action(BC6_Fiche)
             {
-                Caption = 'Card';
+                Caption = 'Card', Comment = 'FRA="Fiche"';
                 Image = EditLines;
                 RunObject = page "Chart of Accounts";
                 RunPageLink = "No." = field("No."), "Date Filter" = field("Date Filter"), "Global Dimension 1 Filter" = field("Global Dimension 1 Filter"), "Global Dimension 2 Filter" = field("Global Dimension 2 Filter"), "Budget Filter" = field("Budget Filter"), "Business Unit Filter" = field("Business Unit Filter");

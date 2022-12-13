@@ -16,19 +16,13 @@ pageextension 50021 "BC6_GLAccountCard" extends "G/L Account Card" //17
     // //Limitation du champ No. dur formulaire à 8 caractères
     //
     // MODIF JX-PBD du 04/03/15 Migration 2015 => Suppression des champs iris et rubrique
-    layout
-    {
-    }
     actions
     {
         addafter("Apply Entries")
         {
-            separator(Action1000000012)
-            {
-            }
             action("Dupliquer vers une autre société")
             {
-                Caption = 'Duplicate to another company';
+                Caption = 'Duplicate to another company', Comment = 'FRA="Dupliquer vers une autre société"';
                 Image = CopyFromChartOfAccounts;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -38,13 +32,10 @@ pageextension 50021 "BC6_GLAccountCard" extends "G/L Account Card" //17
                 trigger OnAction()
                 begin
                     //DEBUT MODIF JX-XAD 03/04/2009
-
                     //DEBUT MODIF JX-XAD le 15/06/2010
                     //GForm_Dupliquer.initialiser(Gopt_TypeFiche::"G/L Account","No.");
                     GForm_Dupliquer.initialiser(Gopt_TypeFiche::"G/L Account", Rec."No.", '');
-
                     //FIN MODIF JX-XAD le 15/06/2010
-
                     GForm_Dupliquer.RUNMODAL();
                     CLEAR(GForm_Dupliquer);
                     //FIN MODIF JX-XAD 03/04/2009

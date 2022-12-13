@@ -4,13 +4,13 @@ tableextension 50026 "BC6_SalesHeader" extends "Sales Header" //36
     {
         field(50000; BC6_Agent; Code[20])
         {
-            Caption = 'Agent';
+            Caption = 'Agent', Comment = 'FRA="Mandataire"';
             TableRelation = Customer."No.";
             DataClassification = CustomerContent;
         }
         field(50001; "BC6_Paying agent"; Boolean)
         {
-            Caption = 'Paying agent';
+            Caption = 'Paying agent', Comment = 'FRA="Mandataire payeur"';
             DataClassification = CustomerContent;
         }
     }

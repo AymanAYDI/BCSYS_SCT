@@ -29,12 +29,12 @@ pageextension 50084 "BC6_PurchaseOrderList" extends "Purchase Order List" //9307
                 ApplicationArea = All;
             }
         }
+        modify("Vendor Authorization No.")
+        {
+            Visible = false;
+        }
         addafter("Buy-from Vendor Name")
         {
-            field("BC6_Status Code"; Rec."BC6_Status Code")
-            {
-                Visible = false;
-            }
             field("BC6_Your Reference"; Rec."Your Reference")
             {
             }
@@ -53,6 +53,10 @@ pageextension 50084 "BC6_PurchaseOrderList" extends "Purchase Order List" //9307
             field(BC6_Status; Rec.Status)
             {
             }
+            field("BC6_Status Code"; Rec."BC6_Status Code")
+            {
+                Visible = false;
+            }
             field("BC6_Creation date"; Rec."BC6_Creation date")
             {
             }
@@ -69,12 +73,11 @@ pageextension 50084 "BC6_PurchaseOrderList" extends "Purchase Order List" //9307
             action(BC6_Print)
             {
                 ApplicationArea = Suite;
-                Caption = '&Print';
+                Caption = '&Print', Comment = 'FRA="&Imprimer"';
                 Ellipsis = true;
                 Image = Print;
                 Promoted = true;
                 PromotedCategory = Category5;
-                ToolTip = 'Prepare to print the document. The report request window for the document opens where you can specify what to include on the print-out.';
 
                 trigger OnAction()
                 var
@@ -92,7 +95,7 @@ pageextension 50084 "BC6_PurchaseOrderList" extends "Purchase Order List" //9307
         {
             action("BC6_Payer ce document")
             {
-                Caption = 'Payer ce document';
+                Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
                 Image = VendorPayment;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -108,7 +111,6 @@ pageextension 50084 "BC6_PurchaseOrderList" extends "Purchase Order List" //9307
             }
         }
     }
-
     var
         FunctionsMgt: Codeunit "BC6_FunctionsMgt";
 

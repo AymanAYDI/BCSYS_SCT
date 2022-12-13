@@ -4,25 +4,25 @@ tableextension 50003 "BC6_PaymentLine" extends "Payment Line" //10866
     {
         field(50000; "BC6_Account Name"; Text[50])
         {
-            Caption = 'Nom du compte';
+            Caption = 'Nom du compte', Comment = 'FRA="Nom du compte"';
             Description = 'JX-YOOZ2';
             Editable = false;
             DataClassification = CustomerContent;
         }
         field(50010; "BC6_Applied Yooz No."; Text[250])
         {
-            Caption = 'N° Yooz lettrés';
+            Caption = 'N° Yooz lettrés', Comment = 'FRA="N° Yooz lettrés"';
             Description = 'JX-YOOZ2';
             DataClassification = CustomerContent;
         }
         field(50020; "BC6_Pay Document Type"; enum "BC6_Pay Document Type")
         {
-            Caption = 'Type Document payé';
+            Caption = 'Type Document payé', Comment = 'FRA="Type Document payé"';
             DataClassification = CustomerContent;
         }
         field(50021; "BC6_Pay Document No."; Code[20])
         {
-            Caption = 'N° Document payé';
+            Caption = 'N° Document payé', Comment = 'FRA="N° Document payé"';
             DataClassification = CustomerContent;
         }
     }
@@ -46,7 +46,7 @@ tableextension 50003 "BC6_PaymentLine" extends "Payment Line" //10866
             VendLedgerEntry.SetCurrentKey("Vendor No.", "Applies-to ID");
             VendLedgerEntry.SetRange("Vendor No.", "Account No.");
             VendLedgerEntry.SetRange("Applies-to ID", "Applies-to ID");
-            if VendLedgerEntry.FindFirst() then
+            if VendLedgerEntry.FindSet() then
                 repeat
                     if VendLedgerEntry."BC6_Yooz No." = '' then
                         if VendLedgerEntry."Document Type" = VendLedgerEntry."Document Type"::Invoice then begin

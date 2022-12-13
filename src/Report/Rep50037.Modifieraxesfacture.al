@@ -1,6 +1,6 @@
 report 50037 "BC6_Modifier axes facture"
 {
-    Caption = 'Modify invoice dimensions ';
+    Caption = 'Modify invoice dimensions ', Comment = 'FRA="Modifier axes facture"';
     Permissions = tabledata "G/L Entry" = rm,
                   tabledata "Purch. Rcpt. Line" = rm,
                   tabledata "Purch. Inv. Line" = rm,
@@ -88,10 +88,6 @@ report 50037 "BC6_Modifier axes facture"
             end;
         }
     }
-    labels
-    {
-    }
-
     trigger OnInitReport()
     var
         Lrec_Dimension: Record Dimension;
@@ -122,9 +118,9 @@ report 50037 "BC6_Modifier axes facture"
         Gcode_LineNo: Integer;
         Gnew_DimSetID: Integer;
         Gold_DimSetID: Integer;
-        Text002: label 'Operation canceled !';
-        Text005: label 'To use the change function of analytics, you must create an analytical axis named ''RESERVE''';
-        Text006: label 'This document was created before the introduction of the modified analytical functionality.\\The accounting entries will not be updated.\\Would you still continue?';
+        Text002: label 'Operation canceled !', Comment = 'FRA="Opération annulée !"';
+        Text005: label 'To use the change function of analytics, you must create an analytical axis named ''RESERVE''', Comment = 'FRA="Pour utiliser la fonction de modification de l''analytique,\\vous devez créer un axe analytique nommé ''RESERVE''"';
+        Text006: label 'This document was created before the introduction of the modified analytical functionality.\\The accounting entries will not be updated.\\Would you still continue?', Comment = 'FRA="Ce document a été créé avant la mise en place de la fonctionnalité de modification analytique.\\Les écritures comptables ne pourront pas être mises à jour.\\Souhaitez-vous tout de même poursuivre ?"';
 
     procedure SetPostedInvoice(Prec_PurchInvLine: Record "Purch. Inv. Line"; pi_NewDimSetID: Integer)
     begin

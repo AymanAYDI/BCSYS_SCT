@@ -26,18 +26,6 @@ pageextension 50034 "BC6_VendorBankAccountList" extends "Vendor Bank Account Lis
         {
             Visible = true;
         }
-        addafter("Contact")
-        {
-            field(BC6_City; Rec."City")
-            {
-                ApplicationArea = All;
-            }
-            field("BC6_Change RIB/IBAN"; Rec."BC6_Change RIB/IBAN")
-            {
-                ApplicationArea = All;
-            }
-        }
-
         addfirst(Control1)
         {
             field("BC6_Vendor No."; Rec."Vendor No.")
@@ -52,16 +40,17 @@ pageextension 50034 "BC6_VendorBankAccountList" extends "Vendor Bank Account Lis
         {
             group("BC6_&Bank Acc.")
             {
-                Caption = '&Bank Acc.';
-            }
-            action(BC6_Card)
-            {
-                Caption = 'Card';
-                Image = EditLines;
-                RunObject = page "Vendor Bank Account List";
-                RunPageLink = "Vendor No." = field("Vendor No."), Code = field(Code);
-                ShortCutKey = 'Shift+F5';
-                ApplicationArea = All;
+                Caption = '&Bank Acc.', Comment = 'FRA="&Banque"';
+
+                action(BC6_Card)
+                {
+                    Caption = 'Card', Comment = 'FRA="Fiche"';
+                    Image = EditLines;
+                    RunObject = page "Vendor Bank Account List";
+                    RunPageLink = "Vendor No." = field("Vendor No."), Code = field(Code);
+                    ShortCutKey = 'Shift+F5';
+                    ApplicationArea = All;
+                }
             }
         }
     }

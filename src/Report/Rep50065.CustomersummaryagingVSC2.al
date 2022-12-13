@@ -2,7 +2,7 @@ report 50065 "Customer : summary aging VSC 2"
 {
     DefaultLayout = RDLC;
     RDLCLayout = './src/Report/RDLC/CustomersummaryagingVSC2.rdl';
-    Caption = 'Customer : summary aging VSC';
+    Caption = 'Customer : summary aging VSC', Comment = 'FRA="Clients : Echéancier VSC"';
     ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
     dataset
@@ -514,8 +514,7 @@ report 50065 "Customer : summary aging VSC 2"
 
             trigger OnPreDataItem()
             begin
-                if ISSERVICETIER then
-                    PageGroupNo := 0;
+                PageGroupNo := 0;
             end;
         }
     }
@@ -530,27 +529,26 @@ report 50065 "Customer : summary aging VSC 2"
             {
                 group(Options)
                 {
-                    Caption = 'Options';
+                    Caption = 'Options', Comment = 'FRA="Options"';
                     field("Echéancier à la date du"; EndingDate)
                     {
                         ApplicationArea = All;
+                        Caption = 'Echéancier à la date du', Comment = 'FRA="Echéancier à la date du"';
                     }
                     field("Type Comptes Fournisseurs"; Gopt_ComptesFourn)
                     {
                         ApplicationArea = All;
+                        Caption = 'Type Comptes Fournisseurs', Comment = 'FRA="Type Comptes Fournisseurs"';
+                        OptionCaption = 'Tous,Comptes401';
                     }
                     field("Afficher l'entête"; Gbool_AfficherEnTete)
                     {
                         ApplicationArea = All;
+                        Caption = 'Afficher l''entête', Comment = 'FRA="Afficher l''entête"';
                     }
                 }
             }
         }
-
-        actions
-        {
-        }
-
         trigger OnOpenPage()
         begin
 
@@ -566,11 +564,6 @@ report 50065 "Customer : summary aging VSC 2"
             HeadingType := HeadingType::"Number of Days";
         end;
     }
-
-    labels
-    {
-    }
-
     trigger OnPreReport()
     begin
         //Modif JX-AUD du 22/08/11
@@ -620,32 +613,32 @@ report 50065 "Customer : summary aging VSC 2"
         i: Integer;
         NumberOfCurrencies: Integer;
         PageGroupNo: Integer;
-        Aged_Overdue_AmountsCaptionLbl: label 'Due';
-        BdDateLbl: label 'Posting date';
-        BdDesc: label 'Libellé';
-        BdDocNo: label 'N° Document';
-        BdDueDateLbl: label 'Due date';
-        BdExtDocNo: label 'Référence';
-        BdRemAmt: label 'Montant Ouvert';
-        EnteteCaptionPageLbl: label 'Page';
-        Text000: label 'Not Due';
-        Text006: label 'Summary aging as %1';
-        Text010: label 'The Date Formula %1 cannot be used. Try to restate it. E.g. 1M+CM instead of CM+1M.';
-        Text011: label 'Enter a date formula in the Period Length field.';
-        Text012: label 'subtotal';
-        Text013: label 'wich expired';
-        Text014: label 'To be payed within %1 days';
-        Text015: label 'A mature between %1 and %2 days';
-        Text016: label 'A maturity beyond 1% days';
-        Text018: label 'Less than %1 days';
-        Text019: label 'For more than 1% and less than %2 days';
-        Text020: label 'For more than 1% days';
-        Text021: label 'wich not expired';
-        Text022: label 'A échéance entre 30 et 60J';
-        Text023: label 'A échéance au delà de 60J';
-        Text024: label 'Depuis plus de 30J et moins de 60J';
-        Text025: label 'Depuis plus de 60J et moins de 90J';
-        TOTCaptionLbl: label 'Total';
+        Aged_Overdue_AmountsCaptionLbl: label 'Due', Comment = 'FRA="Echues"';
+        BdDateLbl: label 'Posting date', Comment = 'FRA="Date compta."';
+        BdDesc: label 'Libellé', Comment = 'FRA="Libellé"';
+        BdDocNo: label 'N° Document', Comment = 'FRA="N° Document"';
+        BdDueDateLbl: label 'Due date', Comment = 'FRA="Date echéance"';
+        BdExtDocNo: label 'Référence', Comment = 'FRA="Référence"';
+        BdRemAmt: label 'Montant Ouvert', Comment = 'FRA="Montant Ouvert"';
+        EnteteCaptionPageLbl: label 'Page', Comment = 'FRA="Page"';
+        Text000: label 'Not Due', Comment = 'FRA="Non échues"';
+        Text006: label 'Summary aging as %1', Comment = 'FRA="Echéancier client en date du %1"';
+        Text010: label 'The Date Formula %1 cannot be used. Try to restate it. E.g. 1M+CM instead of CM+1M.', Comment = 'FRA="La formule date %1 ne peut pas être utilisée. Veuillez la redéfinir en utilisant, par exemple, 1M+CM au lieu de CM+1M."';
+        Text011: label 'Enter a date formula in the Period Length field.', Comment = 'FRA="Entrez une formule de date dans le champ Base période."';
+        Text012: label 'subtotal', Comment = 'FRA="ss total"';
+        Text013: label 'wich expired', Comment = 'FRA="dont échues"';
+        Text014: label 'To be payed within %1 days', Comment = 'FRA="A payer dans les %1 j"';
+        Text015: label 'A mature between %1 and %2 days', Comment = 'FRA="%1 et %2 j"';
+        Text016: label 'A maturity beyond 1% days', Comment = 'FRA="au-delà de %1 j"';
+        Text018: label 'Less than %1 days', Comment = 'FRA="Depuis moins de %1 j"';
+        Text019: label 'For more than 1% and less than %2 days', Comment = 'FRA="%1 j et moins de %2 j"';
+        Text020: label 'For more than 1% days', Comment = 'FRA="Depuis plus de %1 j"';
+        Text021: label 'wich not expired', Comment = 'FRA="dont non échues"';
+        Text022: label 'A échéance entre 30 et 60J', Comment = 'FRA="A échéance entre 30 et 60J"';
+        Text023: label 'A échéance au delà de 60J', Comment = 'FRA="A échéance au delà de 60J"';
+        Text024: label 'Depuis plus de 30J et moins de 60J', Comment = 'FRA="Depuis plus de 30J et moins de 60J"';
+        Text025: label 'Depuis plus de 60J et moins de 90J', Comment = 'FRA="Depuis plus de 60J et moins de 60J"';
+        TOTCaptionLbl: label 'Total', Comment = 'FRA="Total"';
         HeadingType: Option "Date Interval","Number of Days";
         AgingBy: Option "Due Date","Posting Date","Document Date";
         Gopt_ComptesFourn: Option Tous,Comptes401;

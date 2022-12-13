@@ -1,6 +1,6 @@
 xmlport 50018 "BC6_Import OD Paye"
 {
-    Caption = 'Import OD Paye';
+    Caption = 'Import OD Paye', Comment = 'FRA="Import OD Paye"';
     Format = VariableText;
     FieldDelimiter = '<None>';
     FieldSeparator = '[;]';
@@ -207,7 +207,7 @@ xmlport 50018 "BC6_Import OD Paye"
                             if Grec_GComptaProduit.GET(Gtext_ComptaP) then
                                 Grec_FeuilleODPaie.VALIDATE("Gen. Prod. Posting Group", Gtext_ComptaP)
                             else
-                                ERROR('Le Groupe compta. produit nø %1 n''existe pas, erreur ligne nø %2 du fichier', Gtext_ComptaP, Gint_Compteur);
+                                ERROR('Le Groupe compta. produit n° %1 n''existe pas, erreur ligne n° %2 du fichier', Gtext_ComptaP, Gint_Compteur);
 
                         //insertion ligne
                         Grec_FeuilleODPaie.INSERT();
@@ -286,25 +286,6 @@ xmlport 50018 "BC6_Import OD Paye"
             }
         }
     }
-    requestpage
-    {
-        layout
-        {
-            area(content)
-            {
-                group(GroupName)
-                {
-                }
-            }
-        }
-        actions
-        {
-            area(processing)
-            {
-            }
-        }
-    }
-
     var
         Grec_Banque: Record "Bank Account";
         Grec_Company: Record Company;
@@ -336,11 +317,11 @@ xmlport 50018 "BC6_Import OD Paye"
         Gint_Compteur: Integer;
         Gint_LineNo: Integer;
         i: Integer;
-        Text001: label 'This fonction is not destinated for the current sheet';
-        Text002: label 'This sheet is not empty. Please open a new sheet';
-        Text003: label '"Account No. %1 does not exist for Account Type: "';
-        Text004: label 'at line no. %2 of file';
-        Text005: label 'The Account Type %1 does not exist, error on line no. %2';
+        Text001: label 'This fonction is not destinated for the current sheet', Comment = 'FRA="Cette fonction n''est pas destinée pour la feuille en cours"';
+        Text002: label 'This sheet is not empty. Please open a new sheet', Comment = 'FRA="Cette feuille n''est pas vide. Veuillez ouvrir une nouvelle feuille"';
+        Text003: label '"Account No. %1 does not exist for Account Type: "', Comment = 'FRA="Le compte N° %1 n'' existe pas pour le Type Compte : "';
+        Text004: label 'at line no. %2 of file', Comment = 'FRA="à la ligne n° %2 du fichier"';
+        Text005: label 'The Account Type %1 does not exist, error on line no. %2', Comment = 'FRA="Le Type Compte %1 n'' existe pas, erreur sur la ligne n° %2"';
         Gtext_ComptaM: Text[30];
         Gtext_ComptaP: Text[30];
 

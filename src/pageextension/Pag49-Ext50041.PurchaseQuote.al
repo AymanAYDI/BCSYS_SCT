@@ -1,23 +1,18 @@
 pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
 {
     // // Rendre le Bouton "Archive Document" visible
-    Caption = 'Purchase Quote';
+    Caption = 'Purchase Quote', Comment = 'FRA="Devis"';
     PromotedActionCategories = 'Gérer,Processus,Editions,Naviguer';
 
     layout
     {
-        modify("Buy-from Vendor No.")
-        {
-            Importance = Promoted;
-        }
         modify("Buy-from Contact No.")
         {
             Importance = Additional;
         }
-
-        modify("Due Date")
+        modify("Assigned User ID")
         {
-            Importance = Promoted;
+            Importance = Standard;
         }
         modify("Requested Receipt Date")
         {
@@ -31,126 +26,10 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
         {
             Importance = Additional;
         }
-        modify(Status)
-        {
-            Importance = Promoted;
-        }
-        modify("Invoice Details")
-        {
-            Caption = 'Invoicing';
-        }
-        modify("Currency Code")
-        {
-            Importance = Promoted;
-        }
-        modify("Shipping and Payment")
-        {
-            Caption = 'Shipping';
-        }
-
-        modify("Pay-to Contact")
-        {
-            Importance = Additional;
-        }
-        modify(Control1904651607)
-        {
-            Visible = true;
-        }
-        modify(Control1903435607)
-        {
-            Visible = true;
-        }
-        modify(Control1905767507)
-        {
-            Visible = true;
-        }
-
-        modify("Buy-from Vendor Name")
-        {
-            Visible = false;
-        }
-
-        modify(Control79)
-        {
-            Visible = false;
-        }
-        modify("Buy-from County")
-        {
-            Visible = false;
-        }
-
-        modify("Buy-from Country/Region Code")
-        {
-            Visible = false;
-        }
-        modify(Control45)
-        {
-            Visible = false;
-        }
-        modify(ShippingOptionWithLocation)
-        {
-            Visible = false;
-        }
-
-        modify(Control90)
-        {
-            Visible = false;
-        }
-        modify("Ship-to County")
-        {
-            Visible = false;
-        }
-
-        modify("Ship-to Country/Region Code")
-        {
-            Visible = false;
-        }
-
-        modify(Control51)
-        {
-            Visible = false;
-        }
-        modify(PayToOptions)
-        {
-            Visible = false;
-        }
-        modify(Control67)
-        {
-            Visible = false;
-        }
-        modify("Pay-to Name")
-        {
-            Visible = false;
-        }
-
-        modify("Pay-to County")
-        {
-            Visible = false;
-        }
-
-        modify("Pay-to Country/Region Code")
-        {
-            Visible = false;
-        }
-
-        modify("Attached Documents")
-        {
-            Visible = false;
-        }
-
-        modify(IncomingDocAttachFactBox)
-        {
-            Visible = false;
-        }
-        modify(WorkflowStatus)
-        {
-            Visible = false;
-        }
         modify("Vendor Order No.")
         {
             Importance = Additional;
         }
-
         addafter("No. of Archived Versions")
         {
             field("BC6_Your Reference"; Rec."Your Reference")
@@ -193,7 +72,7 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
         {
             part("Montants Document"; "BC6_Purchase Doc. Factbox")
             {
-                Caption = 'Montants Document';
+                Caption = 'Montants Document', Comment = 'FRA="Montants Document"';
                 Provider = PurchLines;
                 SubPageLink = "Document Type" = field("Document Type"), "No." = field("Document No.");
                 ApplicationArea = All;
@@ -202,19 +81,137 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
     }
     actions
     {
+        addafter(Approvals)
+        {
+            action("BC6_Send A&pproval Request")
+            {
+                Caption = 'Send A&pproval Request', Comment = 'FRA="Envoyer demande d''approbation"';
+                Image = SendApprovalRequest;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    ApprovalMgt: Codeunit "Approvals Mgmt.";
+                begin
+                    // if ApprovalMgt.CheckPurchaseApprovalPossible(Rec) then
+                    //     ApprovalMgt.OnSendPurchaseDocForApproval(Rec);
+                    //D‚but Modif JX-XAD du 24/06/2010
+                    //Modif JX-AUD du 29/01/2013
+                    VerifSaisieAxesAnalytiques();
+                    //Fin modif JX-AUD du 29/01/2013
+                    if ApprovalMgt.CheckPurchaseApprovalPossible(Rec) then
+                        ApprovalMgt.OnSendPurchaseDocForApproval(Rec);
+
+                end;
+            }
+            action(BC6_CancelApprovalRequest)
+            {
+                ApplicationArea = Basic, Suite;
+                Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler demande d''approbation"';
+                Enabled = CanCancelApprovalForRecord;
+                Image = CancelApprovalRequest;
+                ToolTip = 'Cancel the approval request.', Comment = 'FRA="Annuler la demande d''approbation"';
+
+                trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+                begin
+                    ApprovalsMgmt.OnCancelPurchaseApprovalRequest(Rec);
+                end;
+            }
+            action("BC6_Re&open")
+            {
+                Caption = 'Re&open', Comment = 'FRA="R&ouvrir"';
+                Image = ReOpen;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    ReleasePurchDoc: Codeunit "Release Purchase Document";
+                begin
+                    ReleasePurchDoc.PerformManualReopen(Rec);
+                    CurrPage.PurchLines.PAGE.ClearTotalPurchaseHeader();
+                end;
+            }
+            action("BC6_Make &Order")
+            {
+                Caption = 'Make &Order', Comment = 'FRA="&Transformer en commande"';
+                Image = MakeOrder;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    ApprovalMgt: Codeunit "Approvals Mgmt.";
+                begin
+                    VerifSaisieAxesAnalytiques();
+                    if ApprovalMgt.PrePostApprovalCheckPurch(Rec) then
+                        CODEUNIT.Run(CODEUNIT::"Purch.-Quote to Order (Yes/No)", Rec);
+                end;
+            }
+            action(BC6_CopyDocument)
+            {
+                ApplicationArea = Suite;
+                Caption = 'Copy Document', Comment = 'FRA="Copier document"';
+                Ellipsis = true;
+                Enabled = Rec."No." <> '';
+                Image = CopyDocument;
+                ToolTip = 'Copy document lines and header information from another sales document to this document. You can copy a posted sales invoice into a new sales invoice to quickly create a similar document.', Comment = 'FRA="Copiez les lignes document et les informations d''en-tête d''un autre document vente vers celui-ci. Vous pouvez copier une facture vente validée dans une nouvelle facture vente pour créer rapidement un document similaire."';
+
+                trigger OnAction()
+                begin
+                    Rec.CopyDocument();
+                    if Rec.Get(Rec."Document Type", Rec."No.") then;
+                    CurrPage.PurchLines.Page.ForceTotalsCalculation();
+                    CurrPage.Update();
+                end;
+            }
+        }
+        addafter("Archive Document")
+        {
+            action("BC6_Payer ce document")
+            {
+                Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
+                Image = VendorPayment;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ApplicationArea = All;
+
+                trigger OnAction()
+                var
+                    lPaymentMgt: Codeunit "BC6_Vendor Payments";
+                begin
+                    lPaymentMgt.CreatePaymentDoc(Rec);
+                end;
+            }
+        }
+        modify(MakeOrder)
+        {
+            Visible = false;
+        }
+        modify(Print)
+        {
+            Promoted = true;
+            PromotedIsBig = true;
+        }
+        modify(Reopen)
+        {
+            Visible = false;
+        }
         modify("&Quote")
         {
-            Caption = '&Quote';
+            Caption = '&Quote', Comment = 'FRA="&Naviguer"';
         }
         modify(Statistics)
-        {
-            Visible = false;
-        }
-        modify(Vendor)
-        {
-            Visible = false;
-        }
-        modify("Co&mments")
         {
             Visible = false;
         }
@@ -223,6 +220,10 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
             Visible = false;
         }
         modify(Release)
+        {
+            Visible = false;
+        }
+        modify(CancelApprovalRequest)
         {
             Visible = false;
         }
@@ -240,233 +241,17 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
         }
         modify(Approvals)
         {
-            Visible = false;
-        }
-        modify(DocAttach)
-        {
-            Visible = false;
-        }
-        modify(Approval)
-        {
-            Visible = false;
-        }
-        modify(Approve)
-        {
-            Visible = false;
-        }
-        modify(Reject)
-        {
-            Visible = false;
-        }
-        modify(Delegate)
-        {
-            Visible = false;
-        }
-        modify(Comment)
-        {
-            Visible = false;
-        }
-        modify(Print)
-        {
-            Visible = false;
-        }
-        modify(Send)
-        {
-            Visible = false;
-        }
-        modify(Reopen)
-        {
-            Visible = false;
+            Promoted = true;
+            PromotedIsBig = true;
+            PromotedCategory = Category4;
         }
         modify(CopyDocument)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocument)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocCard)
-        {
-            Visible = false;
-        }
-        modify(SelectIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocAttachFile)
-        {
-            Visible = false;
-        }
-        modify(RemoveIncomingDoc)
         {
             Visible = false;
         }
         modify(SendApprovalRequest)
         {
             Visible = false;
-        }
-        modify(CancelApprovalRequest)
-        {
-            Visible = false;
-        }
-        modify(MakeOrder)
-        {
-            Visible = false;
-        }
-        addafter(Dimensions)
-        {
-            action(BC6_Approvals)
-            {
-                Caption = 'Approvals';
-                Image = Approvals;
-                Promoted = true;
-                PromotedCategory = Category4;
-                PromotedIsBig = true;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalEntries: Page "Approval Entries";
-                begin
-                    ApprovalEntries.SetRecordFilters(DATABASE::"Purchase Header", Rec."Document Type", Rec."No.");
-                    ApprovalEntries.RUN();
-                end;
-            }
-        }
-        addfirst(Processing)
-        {
-            action("BC6_Send A&pproval Request")
-            {
-                Caption = 'Send A&pproval Request';
-                Image = SendApprovalRequest;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalMgt: Codeunit "Approvals Mgmt.";
-                begin
-                    if ApprovalMgt.CheckPurchaseApprovalPossible(Rec) then
-                        ApprovalMgt.OnSendPurchaseDocForApproval(Rec);
-                end;
-            }
-            action("BC6_Cancel Approval Re&quest")
-            {
-                Caption = 'Cancel Approval Re&quest';
-                Image = Cancel;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalMgt: Codeunit "Approvals Mgmt.";
-                    WorkflowWebhookMgt: Codeunit "Workflow Webhook Management";
-                begin
-                    ApprovalMgt.OnCancelPurchaseApprovalRequest(Rec);
-                    WorkflowWebhookMgt.FindAndCancel(Rec.RecordId);
-                    // IF ApprovalMgt.CancelPurchaseApprovalRequest(Rec, TRUE, TRUE) THEN;
-                end;
-            }
-            action("BC6_Re&open")
-            {
-                Caption = 'Re&open';
-                Image = ReOpen;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ReleasePurchDoc: Codeunit "Release Purchase Document";
-                begin
-                    ReleasePurchDoc.PerformManualReopen(Rec);
-                end;
-            }
-            action("BC6_Make &Order")
-            {
-                Caption = 'Make &Order';
-                Image = MakeOrder;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalMgt: Codeunit "Approvals Mgmt.";
-                begin
-                    VerifSaisieAxesAnalytiques();
-                    if ApprovalMgt.PrePostApprovalCheckPurch(Rec) then
-                        CODEUNIT.Run(CODEUNIT::"Purch.-Quote to Order (Yes/No)", Rec);
-                end;
-            }
-            action("BC6_Copy Document")
-            {
-                Caption = 'Copy Document';
-                Ellipsis = true;
-                Image = CopyDocument;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                begin
-                    Rec.CopyDocument();
-                    if Rec.Get(Rec."Document Type", Rec."No.") then;
-                end;
-            }
-            action("BC6_&Print")
-            {
-                Caption = '&Print';
-                Ellipsis = true;
-                Image = Print;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApplicationAreaMgmtFacade: Codeunit "Application Area Mgmt. Facade";
-                    DocPrint: Codeunit "Document-Print";
-                    LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
-
-                begin
-                    if ApplicationAreaMgmtFacade.IsFoundationEnabled() then
-                        LinesInstructionMgt.PurchaseCheckAllLinesHaveQuantityAssigned(Rec);
-
-                    DocPrint.PrintPurchHeader(Rec);
-                end;
-            }
-        }
-        addafter("Archive Document")
-        {
-            separator(Action147)
-            {
-            }
-            action("BC6_Payer ce document")
-            {
-                Caption = 'Payer ce document';
-                Image = VendorPayment;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    lPaymentMgt: Codeunit "BC6_Vendor Payments";
-                begin
-                    lPaymentMgt.CreatePaymentDoc(Rec);
-                end;
-            }
         }
     }
 
@@ -483,19 +268,7 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
         Gtext_Axe2: Text[50];
         Gtext_Axe3: Text[50];
         Gtext_Axe4: Text[50];
-
-    local procedure BuyfromVendorNoOnAfterValidate()
-    begin
-        if Rec.GETFILTER("Buy-from Vendor No.") = xRec."Buy-from Vendor No." then
-            if Rec."Buy-from Vendor No." <> xRec."Buy-from Vendor No." then
-                Rec.SETRANGE("Buy-from Vendor No.");
-        CurrPage.UPDATE();
-    end;
-
-    local procedure PaytoVendorNoOnAfterValidate()
-    begin
-        CurrPage.UPDATE();
-    end;
+        CanCancelApprovalForRecord: Boolean;
 
     procedure VerifSaisieAxesAnalytiques()
     begin
@@ -554,4 +327,17 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
                 until Grec_PurchaseLine.NEXT() = 0;
         end;
     end;
+
+    trigger OnAfterGetCurrRecord()
+    begin
+        SetControlAppearance();
+    end;
+
+    local procedure SetControlAppearance()
+    var
+        ApprovalsMgmt: Codeunit "Approvals Mgmt.";
+    begin
+        CanCancelApprovalForRecord := ApprovalsMgmt.CanCancelApprovalForRecord(Rec.RecordId);
+    end;
+
 }

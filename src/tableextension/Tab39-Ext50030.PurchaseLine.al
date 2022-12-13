@@ -17,13 +17,14 @@ tableextension 50030 "BC6_PurchaseLine" extends "Purchase Line" //39
         }
         field(50005; "BC6_Matricule No."; Code[20])
         {
-            Caption = 'Code matricule';
+            Caption = 'Code matricule', Comment = 'FRA="Code matricule"';
             Editable = false;
             DataClassification = CustomerContent;
         }
         field(50020; "BC6_VTIME New Line"; Boolean)
         {
             DataClassification = CustomerContent;
+            Caption = 'VTIME New Line', Comment = 'FRA="VTIME New Line"';
         }
     }
     keys

@@ -1,11 +1,8 @@
-/// <summary>
-/// Codeunit BC6 CheckJnlLine (ID 50006).
-/// </summary>
 codeunit 50006 "BC6_CheckJnlLine"
 {
     var
-        Text001: label 'Error on line %1 document %2 !\\Vendor No. is required for account No. 409';
-        Text002: label 'Error on line %1 document %2 !\\Customer No. is required for accounts 416, 418, 419';
+        Text001: label 'Error on line %1 document %2 !\\Vendor No. is required for account No. 409', Comment = 'FRA="Erreur Ligne %1 document %2 !\\Le n° Fournisseur est obligatoire pour les comptes 409, 408"';
+        Text002: label 'Error on line %1 document %2 !\\Customer No. is required for accounts 416, 418, 419', Comment = 'FRA="Erreur Ligne %1 document %2 !\\Le n° Client est obligatoire pour les comptes 416, 418 et 419"';
 
     trigger OnRun()
     begin
@@ -36,7 +33,7 @@ codeunit 50006 "BC6_CheckJnlLine"
                 Lrec_DimSetEntry.RESET();
                 Lrec_DimSetEntry.SETRANGE("Dimension Set ID", Lrec_GenJnlLine."Dimension Set ID");
                 Lint_Counter := 0;
-                if Lrec_DimSetEntry.FINDFIRST() then
+                if Lrec_DimSetEntry.FindSet() then
                     repeat
                         Lint_Counter += 1;
                         Lcode_Code[Lint_Counter] := Lrec_DimSetEntry."Dimension Code";

@@ -9,7 +9,7 @@ report 50018 "BC6_Contrepassation des FNP"
     // //Modif JX-AUD du 05/02/2013
     // //Retraitement des ajout des lignes analytiques
 
-    Caption = 'Reversal of invoices not received';
+    Caption = 'Reversal of invoices not received', Comment = 'FRA="Contrepassation des FNP"';
     ProcessingOnly = true;
 
     dataset
@@ -73,16 +73,11 @@ report 50018 "BC6_Contrepassation des FNP"
                 field("Date de comptabilisation"; Gdate_Compta)
                 {
                     ApplicationArea = All;
-                    Caption = 'Date de comptabilisation';
+                    Caption = 'Date de comptabilisation', Comment = 'FRA="Date de comptabilisation"';
                 }
             }
         }
     }
-
-    labels
-    {
-    }
-
     trigger OnPreReport()
     begin
         Grec_FeuilleComptaEXTFNP.SETRANGE("Journal Template Name", Grec_FeuilleComptaEXTFNP."Journal Template Name");
@@ -109,9 +104,9 @@ report 50018 "BC6_Contrepassation des FNP"
         Gcode_NoFNP: Code[20];
         Gdate_Compta: Date;
         Gint_Ligne: Integer;
-        Text001: label 'This sheet is not a reversal of invoices not received.';
-        Text002: label 'This sheet is not empty.\\All data being entered will be replaced.\\Would you like to continue ?';
-        Text003: label 'Operation canceled';
+        Text001: label 'This sheet is not a reversal of invoices not received.', Comment = 'FRA="Cette feuille n''est pas destinée à la contrepassation des FNP."';
+        Text002: label 'This sheet is not empty.\\All data being entered will be replaced.\\Would you like to continue ?', Comment = 'FRA="Cette feuille n''est pas vide.\\Toutes les données actuellement saises seront remplacées.\\Souhaitez-vous tout de même poursuivre ?"';
+        Text003: label 'Operation canceled', Comment = 'FRA="Opération annulée"';
 
     procedure SetEXTFNPJnlLine(FeuilleComptaEXTFNP: Record "Gen. Journal Line")
     begin

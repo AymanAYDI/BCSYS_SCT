@@ -5,12 +5,12 @@ codeunit 50003 "BC6_VSC_Mail"
         Mail: codeunit Email;
         EmailMessage: codeunit "Email Message";
         TempBlob: codeunit "Temp Blob";
-        Text002: label 'Hello,';
-        Text010: label 'the credit memo';
-        Text013: label 'Accounting Service.';
-        Text016: label '" with user account """';
-        Text017: label 'This operation is to be carried out only if you agree with the amount of the credit note issued, otherwise please notify the supplier by putting a copy to us.';
-        Text018: label 'Email has been sent';
+        Text002: label 'Hello,', Comment = 'FRA="Bonjour,"';
+        Text010: label 'the credit memo', Comment = 'FRA="l''avoir"';
+        Text013: label 'Accounting Service.', Comment = 'FRA="Service comptabilité."';
+        Text016: label ' with user account "', Comment = 'FRA=" avec le compte utilisateur ""';
+        Text017: label 'This operation is to be carried out only if you agree with the amount of the credit note issued, otherwise please notify the supplier by putting a copy to us.', Comment = 'FRA="Cette opération est à effectuer uniquement si vous être d''accord avec le montant de l''avoir émis, dans le cas contraire veuillez svp en avertir le fournisseur en nous mettant en copie."';
+        Text018: label 'Email has been sent', Comment = 'FRA="Le mail a été envoyé"';
         Gtext_MailUser: List of [Text];
         Gtext_alias: Text[30];
         Gtext_Mail: Text[50];
@@ -53,7 +53,7 @@ codeunit 50003 "BC6_VSC_Mail"
         if (COMPANYNAME = 'VFEC') or (COMPANYNAME = 'VFEC - RECETTE') then
             Gtext_alias := 'VSC GROUPE'
         else
-            Gtext_alias := COMPANYNAME;
+            Gtext_alias := COMPANYNAME();
 
         //creation du mail
         //[Syntax for the Createmessage function -
@@ -129,7 +129,6 @@ codeunit 50003 "BC6_VSC_Mail"
         InStream: InStream;
         FileNameLbl: label 'Avoir_%1%2';
         AttachmentFileName: Text[250];
-
     begin
         AttachmentFileName := STRSUBSTNO(FileNameLbl, pNumAvoir, '.pdf');
 

@@ -1,6 +1,6 @@
 page 50013 "BC6_Duplicating List"
 {
-    Caption = 'Duplicating List';
+    Caption = 'Duplicating List', Comment = 'FRA="Liste de duplication"';
     DeleteAllowed = false;
     InsertAllowed = false;
     PageType = Card;
@@ -28,17 +28,17 @@ page 50013 "BC6_Duplicating List"
                 ShowCaption = false;
                 field(Name; Rec.Name)
                 {
-                    Caption = 'Company';
+                    Caption = 'Company', Comment = 'FRA="Société"';
                     ApplicationArea = All;
                 }
                 field(Duplication; Rec.Duplication)
                 {
-                    Caption = 'Dupliacate to';
+                    Caption = 'Dupliacate to', Comment = 'FRA="Dupliquer vers"';
                     ApplicationArea = All;
                 }
                 field(Dimension; Rec.Dimension)
                 {
-                    Caption = 'With dimensions';
+                    Caption = 'With dimensions', Comment = 'FRA="Avec l''analytique"';
                     Visible = DimensionVisible;
                     ApplicationArea = All;
                 }
@@ -52,7 +52,7 @@ page 50013 "BC6_Duplicating List"
         {
             action("Valider duplication")
             {
-                Caption = 'Validate duplication';
+                Caption = 'Validate duplication', Comment = 'FRA="Valider duplication"';
                 Image = PostponedInteractions;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -100,7 +100,7 @@ page 50013 "BC6_Duplicating List"
             }
             action("Sélection toutes sociétés")
             {
-                Caption = 'Sélection toutes sociétés';
+                Caption = 'Sélection toutes sociétés', Comment = 'FRA="Sélection toutes sociétés"';
                 Image = SelectEntries;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -118,7 +118,7 @@ page 50013 "BC6_Duplicating List"
             }
             action("Valider suppression")
             {
-                Caption = 'Validate deletion';
+                Caption = 'Validate deletion', Comment = 'FRA="Valider suppression"';
                 Image = Delete;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -167,7 +167,7 @@ page 50013 "BC6_Duplicating List"
             }
             action(Annuler)
             {
-                Caption = 'Cancel';
+                Caption = 'Cancel', Comment = 'FRA="Annuler"';
                 Image = CancelAllLines;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -226,32 +226,25 @@ page 50013 "BC6_Duplicating List"
         Gbool_SelectAllWithDim: Boolean;
         Gcode_Fiche: Code[50];
         Gcode_Fiche2: Code[50];
-        text001: label 'Transaction canceled';
-        text006: label 'Duplicate card';
-        text007: label 'The card';
-        text008: label 'Duplication has failed in :';
-        text009: label 'has been duplicated in the following company :';
-        text010: label 'This form must be launched from a sheet supplier, a general account, an article or a bank account!';
-        text011: label 'Vendor';
-        text012: label 'item';
-        text013: label 'G/L account';
-        text014: label 'bank account';
-        text015: label 'user';
-        text016: label 'This button does not apply to your treatment';
-        text017: label 'has been duplicated in the following company :';
-        text018: label 'Duplication has failed in :';
-        Text019: label 'Provider';
-        Text020: label 'Bank account';
+        text001: label 'Transaction canceled', Comment = 'FRA="Opération annulée"';
+        text006: label 'Duplicate card', Comment = 'FRA="Dupliquer fiche"';
+        text007: label 'The card', Comment = 'FRA="La fiche"';
+        text008: label 'Duplication has failed in :', Comment = 'FRA="La duplication a échoué dans :"';
+        text009: label 'has been duplicated in the following company :', Comment = 'FRA="a été dupliquée dans la (ou les) société(s) suivante(s) :"';
+        text010: label 'This form must be launched from a sheet supplier, a general account, an article or a bank account!', Comment = 'FRA="Ce formulaire doit être lancé depuis une fiche fournisseur, un compte général, un article, un compte bancaire ou la liste des paramètres utilisateurs !"';
+        text011: label 'Vendor', Comment = 'FRA="fournisseur"';
+        text012: label 'item', Comment = 'FRA="article"';
+        text013: label 'G/L account', Comment = 'FRA="compte général"';
+        text014: label 'bank account', Comment = 'FRA="compte bancaire"';
+        text015: label 'user', Comment = 'FRA="utilisateur"';
+        text016: label 'This button does not apply to your treatment', Comment = 'FRA="Ce bouton ne s''applique pas pour votre traitement"';
+        text017: label 'has been duplicated in the following company :', Comment = 'FRA="a été supprimée dans la (ou les) société(s) suivante(s) :"';
+        text018: label 'Duplication has failed in :', Comment = 'FRA="La suppression a échoué dans :"';
+        Text019: label 'Provider', Comment = 'FRA="Fournisseur"';
+        Text020: label 'Bank account', Comment = 'FRA="Compte bancaire"';
         Gopt_TypeFiche: Option ,Vendor,"G/L Account",Item,VendorBankAccount,User,UserDelete,UserDeleteActualSociety;
         Gtxt_TypeFiche: Text[30];
 
-    //[Scope('Internal')]
-    /// <summary>
-    /// initialiser.
-    /// </summary>
-    /// <param name="Lopt_TypeFiche">Option ,Vendor,"G/L Account",Item.</param>
-    /// <param name="Lcode_Fiche">Code[50].</param>
-    /// <param name="Lcode_Fiche2">Code[50].</param>
     procedure initialiser(Lopt_TypeFiche: Option ,Vendor,"G/L Account",Item; Lcode_Fiche: Code[50]; Lcode_Fiche2: Code[50])
     begin
         Gopt_TypeFiche := Lopt_TypeFiche;

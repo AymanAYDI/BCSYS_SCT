@@ -38,7 +38,7 @@ pageextension 50019 "BC6_PostedPurchaseCreditMemos" extends "Posted Purchase Cre
         {
             action(BC6_Fiche)
             {
-                Caption = 'Card';
+                Caption = 'Card', Comment = 'FRA="Fiche"';
                 Image = EditLines;
                 RunObject = page "Posted Purchase Credit Memos";
                 RunPageLink = "No." = field("No.");
@@ -47,4 +47,15 @@ pageextension 50019 "BC6_PostedPurchaseCreditMemos" extends "Posted Purchase Cre
             }
         }
     }
+    trigger OnOpenPage()
+    var
+        FunctionsMgt: Codeunit BC6_FunctionsMgt;
+    begin
+        //D‚but Modif JX-XAD du 05/08/2008
+        //Filtrer sur le (ou les) utilisateur(s) li‚s au droit de l'utilisateur courant (voir table des paramŠtres utilisateur)
+        Rec.FILTERGROUP(2);
+        Rec.SETFILTER("User ID", FunctionsMgt.jx_GetPurchasesFilter());
+        Rec.FILTERGROUP(0);
+        //Fin Modif JX-XAD du 05/08/2008
+    end;
 }

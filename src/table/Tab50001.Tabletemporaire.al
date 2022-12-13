@@ -1,6 +1,7 @@
 table 50001 "BC6_Table temporaire"
 {
     DataClassification = CustomerContent;
+    Caption = 'Table temporaire', Comment = 'FRA="Table temporaire"';
 
     fields
     {

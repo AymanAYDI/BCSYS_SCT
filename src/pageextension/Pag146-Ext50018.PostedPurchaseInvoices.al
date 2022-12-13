@@ -63,7 +63,7 @@ pageextension 50018 "BC6_PostedPurchaseInvoices" extends "Posted Purchase Invoic
         {
             action(BC6_Fiche)
             {
-                Caption = 'Card';
+                Caption = 'Card', Comment = 'FRA="Fiche"';
                 Image = EditLines;
                 RunObject = page "Posted Purchase Invoices";
                 RunPageLink = "No." = field("No.");
@@ -71,11 +71,11 @@ pageextension 50018 "BC6_PostedPurchaseInvoices" extends "Posted Purchase Invoic
                 ApplicationArea = All;
             }
         }
-        addafter("&Print")
+        addafter("Navigate")
         {
             action("BC6_Payer ce document")
             {
-                Caption = 'Payer ce document';
+                Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
                 Image = VendorPayment;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -91,4 +91,15 @@ pageextension 50018 "BC6_PostedPurchaseInvoices" extends "Posted Purchase Invoic
             }
         }
     }
+    trigger OnOpenPage()
+    var
+        FunctionsMgt: Codeunit BC6_FunctionsMgt;
+    begin
+        //D‚but Modif JX-XAD du 05/08/2008
+        //Filtrer sur le (ou les) utilisateur(s) li‚s au droit de l'utilisateur courant (voir table des paramŠtres utilisateur)
+        Rec.FILTERGROUP(2);
+        Rec.SETFILTER("User ID", FunctionsMgt.jx_GetPurchasesFilter());
+        Rec.FILTERGROUP(0);
+        //Fin Modif JX-XAD du 05/08/2008
+    end;
 }

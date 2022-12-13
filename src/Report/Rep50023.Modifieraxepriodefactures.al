@@ -1,6 +1,6 @@
 report 50023 "Modifier axe période factures"
 {
-    Caption = 'Modify period dimension for invoices';
+    Caption = 'Modify period dimension for invoices', Comment = 'FRA="Modifier axe période factures"';
     ProcessingOnly = true;
     UseSystemPrinter = false;
     dataset
@@ -117,8 +117,8 @@ report 50023 "Modifier axe période factures"
     var
         Grec_PurchInvHeader: Record "Purch. Inv. Header";
         "Gcode_AxePériode": Code[20];
-        Text001: label 'All accounting will be updated to the invoice %1';
-        Text002: label 'Operation canceled !';
+        Text001: label 'All accounting will be updated to the invoice %1', Comment = 'FRA="Toute la comptabilité analytique sera mise à jour pour la facture %1"';
+        Text002: label 'Operation canceled !', Comment = 'FRA="Facture enregistrée n° : "';
 
     procedure SetPostedInvoice(Lrec_PurchInvHeader: Record "Purch. Inv. Header")
     begin

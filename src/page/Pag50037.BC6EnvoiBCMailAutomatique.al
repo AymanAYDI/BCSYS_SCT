@@ -10,7 +10,7 @@ page 50037 "BC6 Envoi BC Mail Automatique"
     SourceTable = Date;
     ApplicationArea = All;
     UsageCategory = Tasks;
-    Caption = 'Envoi BC Mail Automatique';
+    Caption = 'Envoi BC Mail Automatique', Comment = 'FRA="Envoi BC Mail Automatique"';
 
     layout
     {
@@ -18,7 +18,7 @@ page 50037 "BC6 Envoi BC Mail Automatique"
         {
             field(Gdate_DateCompta; Gdate_DateCompta)
             {
-                Caption = 'Saisir la date de comptabilisation';
+                Caption = 'Saisir la date de comptabilisation', Comment = 'FRA="Saisir la date de comptabilisation"';
                 ApplicationArea = All;
             }
         }
@@ -236,7 +236,7 @@ page 50037 "BC6 Envoi BC Mail Automatique"
         Gtext_DebutContrat: Text[10];
         Gtext_FinContrat: Text[10];
         Gtext_PrenomPresta: Text[100];
-        Gtext_CheminDossierBC: Label '\\10.16.34.109\Pdf\Suppliers \';
-        Gtext_CheminDossierBC1: Label 'C:\Users\aurelie\Desktop\temp\';
+        Gtext_CheminDossierBC: Label '\\10.16.34.109\Pdf\Suppliers \', Comment = 'FRA="\\10.16.34.109\Pdf\Suppliers \"';
+        Gtext_CheminDossierBC1: Label 'C:\Users\aurelie\Desktop\temp\', Comment = 'FRA="C:\Users\aurelie\Desktop\temp\"';
 }
 

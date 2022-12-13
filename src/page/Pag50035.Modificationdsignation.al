@@ -1,6 +1,6 @@
 page 50035 "BC6_Modification désignation"
 {
-    Caption = 'Modify description';
+    Caption = 'Modify description', Comment = 'FRA="Modification désignation"';
     PageType = Card;
     Permissions = tabledata "Sales Invoice Line" = rm,
                   tabledata "Sales Cr.Memo Line" = rm;
@@ -22,7 +22,7 @@ page 50035 "BC6_Modification désignation"
                 }
                 field(Designation; Gtext_Designation)
                 {
-                    Caption = 'Description';
+                    Caption = 'Description', Comment = 'FRA="Désignation"';
                     ApplicationArea = All;
                 }
             }
@@ -35,7 +35,7 @@ page 50035 "BC6_Modification désignation"
         {
             action(Ok)
             {
-                Caption = 'Ok';
+                Caption = 'Ok', Comment = 'FRA="Ok"';
                 Promoted = true;
                 PromotedCategory = Process;
                 ApplicationArea = All;
@@ -61,7 +61,7 @@ page 50035 "BC6_Modification désignation"
             }
             action(Annuler)
             {
-                Caption = 'Cancel';
+                Caption = 'Cancel', Comment = 'FRA="Annuler"';
                 Promoted = true;
                 PromotedCategory = Process;
                 ApplicationArea = All;
@@ -90,9 +90,9 @@ page 50035 "BC6_Modification désignation"
         Gcode_DocumentNo: Code[20];
         Gcode_ItemNo: Code[20];
         Gcode_LineNo: Integer;
-        Text001: label 'Invoice';
-        Text002: label 'No.';
-        Text003: label 'Credit Memo';
+        Text001: label 'Invoice', Comment = 'FRA="Facture"';
+        Text002: label 'No.', Comment = 'FRA="N° :"';
+        Text003: label 'Credit Memo', Comment = 'FRA="Avoir"';
         Gtext_No: Text[10];
         Gtext_TypeDocument: Text[30];
         Gtext_Designation: Text[50];

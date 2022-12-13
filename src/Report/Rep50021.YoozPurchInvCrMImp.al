@@ -1,7 +1,7 @@
 report 50021 "BC6_Yooz Purch. Inv.&CrM. Imp"
 {
     ApplicationArea = All;
-    Caption = 'Yooz Purch. Inv.&CrM. Imp';
+    Caption = 'Yooz Purch. Inv.&CrM. Imp', Comment = 'FRA="Modifier axe période avoirs"';
     UsageCategory = Tasks;
     UseRequestPage = false;
     ProcessingOnly = true;

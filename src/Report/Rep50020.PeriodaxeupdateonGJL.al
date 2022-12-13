@@ -1,6 +1,6 @@
 report 50020 "BC6_Period axe update on GJL"
 {
-    Caption = 'Period axe update on GJL';
+    Caption = 'Period axe update on GJL', Comment = 'FRA="Mise à jour axe PERIODE sur LFC"';
     ProcessingOnly = true;
 
     dataset
@@ -58,7 +58,7 @@ report 50020 "BC6_Period axe update on GJL"
                 {
                     TableRelation = "Dimension Value".Code where("Dimension Code" = const('PERIODE'));
                     ApplicationArea = All;
-                    Caption = 'Section Axe Période';
+                    Caption = 'Section Axe Période', Comment = 'FRA="Section Axe Période"';
                 }
             }
         }

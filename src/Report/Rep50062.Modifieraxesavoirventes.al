@@ -1,6 +1,6 @@
 report 50062 "BC6_Modifier axes avoir ventes"
 {
-    Caption = 'Modify CrMemo dimensions ';
+    Caption = 'Modify CrMemo dimensions ', Comment = 'FRA="Modifier axes avoir ventes"';
     Permissions = tabledata "G/L Entry" = rm,
                   tabledata "Sales Cr.Memo Line" = rm,
                   tabledata "FA Ledger Entry" = rm,
@@ -133,22 +133,6 @@ report 50062 "BC6_Modifier axes avoir ventes"
             end;
         }
     }
-
-    requestpage
-    {
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
-    }
-
     trigger OnInitReport()
     var
         Lrec_Dimension: Record Dimension;
@@ -179,9 +163,9 @@ report 50062 "BC6_Modifier axes avoir ventes"
         Gcode_LineNo: Integer;
         GLast_DimSetID: Integer;
         Gnew_DimSetID: Integer;
-        Text002: label 'Operation canceled !';
-        Text005: label 'To use the change function of analytics, you must create an analytical axis named ''RESERVE''';
-        Text006: label 'This document was created before the introduction of the modified analytical functionality.\\The accounting entries will not be updated.\\Would you still continue?';
+        Text002: label 'Operation canceled !', Comment = 'FRA="Opération annulée !"';
+        Text005: label 'To use the change function of analytics, you must create an analytical axis named ''RESERVE''', Comment = 'FRA="Opération annulée !"';
+        Text006: label 'This document was created before the introduction of the modified analytical functionality.\\The accounting entries will not be updated.\\Would you still continue?', Comment = 'FRA="Ce document a été créé avant la mise en place de la fonctionnalité de modification analytique.\\Les écritures comptables ne pourront pas être mises à jour.\\Souhaitez-vous tout de même poursuivre ?"';
 
     procedure SetPostedInvoice(Prec_SalesCrMemoLine: Record "Sales Cr.Memo Line"; pi_NewDimSetID: Integer)
     begin

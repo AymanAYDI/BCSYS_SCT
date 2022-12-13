@@ -1,6 +1,6 @@
 xmlport 50015 "BC6_Export Magnitude"
 {
-    Caption = 'Export Magnitude';
+    Caption = 'Export Magnitude', Comment = 'FRA="Export Magnitude"';
     schema
     {
         textelement(Root)
@@ -32,11 +32,11 @@ xmlport 50015 "BC6_Export Magnitude"
                     Gbool_exit: Boolean;
                     Gdate_Comptabilisation: Date;
                     i: Integer;
-                    Text001: label 'No company code found';
-                    Text002: label 'Error on the company code';
+                    Text001: label 'No company code found', Comment = 'FRA="Aucun code société trouvé"';
+                    Text002: label 'Error on the company code', Comment = 'FRA="Erreur sur le code société"';
                 begin
                     //mettre tous les montants … 0 de la table MagnitudeCorrespondence
-                    if Grec_MagnitudeCorrespondence1.FIND('-') then
+                    if Grec_MagnitudeCorrespondence1.FindSet() then
                         repeat
                             Grec_MagnitudeCorrespondence1.Amount := 0;
                             Grec_MagnitudeCorrespondence1.MODIFY();
@@ -45,7 +45,7 @@ xmlport 50015 "BC6_Export Magnitude"
                     i := 0;
 
                     //MODIFICATION DU 26/10/10 JX-AUD
-                    if Grec_MagnitudeCorrespondence2.FIND('-') then
+                    if Grec_MagnitudeCorrespondence2.FindFirst() then
                         repeat
                             Grec_GL_Account.RESET();
                             Grec_GL_Account.SETFILTER(Grec_GL_Account."No.", Grec_MagnitudeCorrespondence2."Account No.");
@@ -56,7 +56,7 @@ xmlport 50015 "BC6_Export Magnitude"
                             Grec_Temporary.RESET();
                             Grec_Temporary.DELETEALL();
                             //INITIALISATION DE LA TABLE TEMPORAIRE AVEC LE PREMIER FILTRE
-                            if Grec_GL_Account.FIND('-') then
+                            if Grec_GL_Account.FindSet() then
                                 repeat
                                     i += 1;
                                     Grec_Temporary.INIT();
@@ -72,7 +72,7 @@ xmlport 50015 "BC6_Export Magnitude"
                                         Grec_Temporary.SETFILTER(Grec_Temporary.Compte, Grec_MagnitudeCorrespondence."Account No.");
                                         Grec_Temporary1.DELETEALL();
 
-                                        if Grec_Temporary.FIND('-') then
+                                        if Grec_Temporary.FindSet() then
                                             repeat
                                                 Grec_Temporary1.INIT();
                                                 Grec_Temporary1.Piece := Grec_Temporary.Piece;
@@ -82,7 +82,7 @@ xmlport 50015 "BC6_Export Magnitude"
 
                                         Grec_Temporary.RESET();
 
-                                        if Grec_Temporary1.FIND('-') then
+                                        if Grec_Temporary1.FindSet() then
                                             repeat
                                                 if Grec_Temporary.GET(Grec_Temporary1.Piece) then
                                                     Grec_Temporary.DELETE();
@@ -92,7 +92,7 @@ xmlport 50015 "BC6_Export Magnitude"
                                     end;
 
                             //CALCUL MONTANT
-                            if Grec_Temporary.FIND('-') then
+                            if Grec_Temporary.FindSet() then
                                 repeat
                                     if Grec_GL_Account.GET(Grec_Temporary.Compte) then begin
                                         Grec_GL_Account.CALCFIELDS(Grec_GL_Account."Net Change");
@@ -124,7 +124,7 @@ xmlport 50015 "BC6_Export Magnitude"
                     Grec_MagnitudeCorrespondence.RESET();
 
                     GlobalTempTable.DELETEALL();
-                    if Grec_MagnitudeCorrespondence.FIND('-') then
+                    if Grec_MagnitudeCorrespondence.FindSet() then
                         repeat
                             if GlobalTempTable.GET(Grec_MagnitudeCorrespondence.Rubric, 1) then begin
                                 GlobalTempTable."Credit amount" += Grec_MagnitudeCorrespondence.Amount;

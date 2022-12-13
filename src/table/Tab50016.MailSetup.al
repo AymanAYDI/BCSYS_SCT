@@ -1,17 +1,18 @@
 table 50016 "BC6_Mail Setup"
 {
     DataClassification = CustomerContent;
+    Caption = 'Mail Setup', Comment = 'FRA="Mail Setup"';
 
     fields
     {
         field(1; "Mail Type"; enum "BC6_Mail Type")
         {
-            Caption = 'Type Mail';
+            Caption = 'Type Mail', Comment = 'FRA="Type Mail"';
             DataClassification = CustomerContent;
         }
         field(2; Subject; Text[80])
         {
-            Caption = 'Sujet';
+            Caption = 'Sujet', Comment = 'FRA="Sujet"';
             DataClassification = CustomerContent;
         }
     }
@@ -22,9 +23,5 @@ table 50016 "BC6_Mail Setup"
         {
             Clustered = true;
         }
-    }
-
-    fieldgroups
-    {
     }
 }

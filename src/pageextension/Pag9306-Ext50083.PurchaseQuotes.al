@@ -1,6 +1,6 @@
 pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
 {
-    Caption = 'Purchase Quotes';
+    Caption = 'Purchase Quotes', Comment = 'FRA="Devis"';
 
     layout
     {
@@ -15,14 +15,6 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
         modify("Assigned User ID")
         {
             Visible = false;
-        }
-        addafter(Status)
-        {
-            field("BC6_Status Code"; Rec."BC6_Status Code")
-            {
-                Visible = false;
-                ApplicationArea = All;
-            }
         }
         addafter("Campaign No.")
         {
@@ -44,50 +36,54 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
         {
             field("BC6_Your Reference"; Rec."Your Reference")
             {
+                ApplicationArea = All;
             }
             field("BC6_Lines Amount"; Rec."BC6_Lines Amount")
             {
+                ApplicationArea = All;
             }
             field("BC6_Assigned User ID"; Rec."Assigned User ID")
             {
+                ApplicationArea = All;
             }
             field("BC6_Matricule No."; Rec."BC6_Matricule No.")
             {
+                ApplicationArea = All;
             }
             field(BC6_Status; Rec.Status)
             {
+                ApplicationArea = All;
+            }
+            field("BC6_Status Code"; Rec."BC6_Status Code")
+            {
+                Visible = false;
+                ApplicationArea = All;
             }
             field("BC6_Creation date"; Rec."BC6_Creation date")
             {
+                ApplicationArea = All;
             }
         }
     }
     actions
     {
-        modify(Statistics)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
         modify(MakeOrder)
         {
             Visible = false;
-            Caption = 'Make &Order';
         }
         addbefore(Action12)
         {
             action(BC6_MakeOrder)
             {
                 ApplicationArea = Suite;
-                Caption = 'Make &Order';
+                Caption = 'Make &Order', Comment = 'FRA="&Transformer en commande"';
                 Image = MakeOrder;
                 Promoted = true;
                 PromotedCategory = Process;
-                ToolTip = 'Convert the purchase quote to a purchase order.';
-
                 trigger OnAction()
+                var
+                    ApprovalsMgmt: Codeunit "Approvals Mgmt.";
                 begin
-                    //TODO: a virifé: date 20100616 ou bien 20160610
                     //Début Modif JX-XAD du 24/06/2010
                     // IF Rec."BC6_Creation date" >= 20100616D THEN BEGIN
                     //     // Début Modif JX-XAD du 22/02/2010
@@ -107,12 +103,16 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
                     VerifSaisieAxesAnalytiques();
                     //Fin modif JX-AUD du 29/01/2013
 
-                    // if ApprovalsMgmt.PrePostApprovalCheckPurch(Rec) then
-                    //     CODEUNIT.Run(CODEUNIT::"Purch.-Quote to Order (Yes/No)", Rec);
+                    if ApprovalsMgmt.PrePostApprovalCheckPurch(Rec) then
+                        CODEUNIT.Run(CODEUNIT::"Purch.-Quote to Order (Yes/No)", Rec);
                 end;
             }
         }
         modify(SendApprovalRequest)
+        {
+            Visible = false;
+        }
+        modify(CancelApprovalRequest)
         {
             Visible = false;
         }
@@ -121,20 +121,18 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
             action("Envoyer demande d'approbation")
             {
                 ApplicationArea = Basic, Suite;
-                Caption = 'Send A&pproval Request';
+                Caption = 'Send A&pproval Request', Comment = 'FRA="Envoyer demande d''approbation"';
                 Enabled = not OpenApprovalEntriesExist;
                 Image = SendApprovalRequest;
                 Promoted = true;
                 PromotedCategory = Category4;
                 PromotedIsBig = true;
                 PromotedOnly = true;
-                ToolTip = 'Request approval of the document.';
 
                 trigger OnAction()
                 var
                     ApprovalMgt: Codeunit "Approvals Mgmt.";
                 begin
-                    //TODO: a virifé: date 20100616 ou bien 20160610
                     //Début Modif JX-XAD du 24/06/2010
                     // IF Rec."BC6_Creation date" >= 20100616D THEN BEGIN
                     //     // Début Modif JX-XAD du 22/02/2010
@@ -159,7 +157,7 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
             }
             action("BC6_Cancel Approval Re&quest")
             {
-                Caption = 'Cancel Approval Re&quest';
+                Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler l''approbation"';
                 Image = Cancel;
                 ApplicationArea = All;
 
@@ -174,7 +172,7 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
             }
             action("BC6_Payer ce document")
             {
-                Caption = 'Payer ce document';
+                Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
                 Image = VendorPayment;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -209,9 +207,7 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
 
     trigger OnOpenPage()
     begin
-
         Rec.SetSecurityFilterOnRespCenter();
-
         //Début Modif JX-XAD du 11/06/2008
         //Filtrer sur le (ou les) utilisateur(s) liés au droit de l'utilisateur courant (voir table des paramètres utilisateur)
         Rec.FILTERGROUP(2);

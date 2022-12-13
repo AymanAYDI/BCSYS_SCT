@@ -3,7 +3,7 @@ report 50051 "BC6_Export Magnitude"
     ProcessingOnly = true;
     ApplicationArea = All;
     UsageCategory = Tasks;
-    Caption = 'Export Magnitude';
+    Caption = 'Export Magnitude', Comment = 'FRA="Export Magnitude"';
 
     dataset
     {
@@ -19,7 +19,6 @@ report 50051 "BC6_Export Magnitude"
             end;
         }
     }
-
     requestpage
     {
         layout
@@ -28,21 +27,12 @@ report 50051 "BC6_Export Magnitude"
             {
                 field(Gdate_ComptabilisationV; Gdate_Comptabilisation)
                 {
-                    Caption = 'Date comptabilisation';
+                    Caption = 'Date comptabilisation', Comment = 'FRA="Date comptabilisation"';
                     ApplicationArea = All;
                 }
             }
         }
-
-        actions
-        {
-        }
     }
-
-    labels
-    {
-    }
-
     var
         XmlPortMagnitude: XMLport "BC6_Export Magnitude";
         Gdate_Comptabilisation: Date;

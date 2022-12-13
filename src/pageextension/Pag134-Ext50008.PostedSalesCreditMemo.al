@@ -19,20 +19,21 @@ pageextension 50008 "BC6_PostedSalesCreditMemo" extends "Posted Sales Credit Mem
         {
             Visible = false;
         }
+        modify("Payment Method Code")
+        {
+            Visible = false;
+        }
     }
     actions
     {
-        addafter(SendCustom)
+        addafter(Approvals)
         {
             group("BC6_&Ligne")
             {
-                Caption = '&Line';
-                separator(Action94)
-                {
-                }
+                Caption = '&Line', Comment = 'FRA="&Ligne"';
                 action("BC6_Modifier axes analytiques")
                 {
-                    Caption = 'Modify dimensions';
+                    Caption = 'Modify dimensions', Comment = 'FRA="Modifier axes analytiques"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -40,13 +41,12 @@ pageextension 50008 "BC6_PostedSalesCreditMemo" extends "Posted Sales Credit Mem
                         //MODIF JX-AUD 24/05/2011
                         CurrPage.SalesCrMemoLines.PAGE.ReturnRecord(Grec_SalesCrMemoLine);
                         Grec_SalesCrMemoLine."BC6_ModifyDimensions"();
-                        ;
                         //Fin MODIF JX-AUD 24/05/2011
                     end;
                 }
                 action("Modifier désignation")
                 {
-                    Caption = 'Modify description';
+                    Caption = 'Modify description', Comment = 'FRA="Modifier désignation"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -58,9 +58,6 @@ pageextension 50008 "BC6_PostedSalesCreditMemo" extends "Posted Sales Credit Mem
                         CLEAR(ModifierDesignation);
                         //Fin MODIF JX-AUD 24/05/2011
                     end;
-                }
-                separator(Action5)
-                {
                 }
             }
         }

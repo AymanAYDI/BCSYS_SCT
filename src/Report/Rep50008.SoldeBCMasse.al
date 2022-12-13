@@ -3,7 +3,7 @@ report 50008 "BC6_Solde BC Masse"
     ProcessingOnly = true;
     ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
-    Caption = 'Solde BC Masse';
+    Caption = 'Solde BC Masse', Comment = 'FRA="Solde BC Masse"';
     dataset
     {
         dataitem("Purch. Rcpt. Line"; "Purch. Rcpt. Line")
@@ -149,27 +149,27 @@ report 50008 "BC6_Solde BC Masse"
             {
                 field(Gtext_AxePeriodeDebutV; Gtext_AxePeriodeDebut)
                 {
-                    Caption = 'Axe période début';
+                    Caption = 'Axe période début', Comment = 'FRA="Axe période début"';
                     ApplicationArea = All;
                 }
                 field(Gtext_AxePeriodeFinV; Gtext_AxePeriodeFin)
                 {
-                    Caption = 'Axe période fin';
+                    Caption = 'Axe période fin', Comment = 'FRA="Axe période fin"';
                     ApplicationArea = All;
                 }
                 field(Gtext_NomFactureFournisseurV; Gtext_NomFactureFournisseur)
                 {
-                    Caption = 'Nom facture fournisseur';
+                    Caption = 'Nom facture fournisseur', Comment = 'FRA="Nom facture fournisseur"';
                     ApplicationArea = All;
                 }
                 field(Gtext_VotreReferenceV; Gtext_VotreReference)
                 {
-                    Caption = 'Votre référence';
+                    Caption = 'Votre référence', Comment = 'FRA="Votre référence"';
                     ApplicationArea = All;
                 }
                 field(Gdate_DateComptaV; Gdate_DateCompta)
                 {
-                    Caption = 'Date comptabilisation';
+                    Caption = 'Date comptabilisation', Comment = 'FRA="Date comptabilisation"';
                     ApplicationArea = All;
                 }
             }
@@ -208,7 +208,7 @@ report 50008 "BC6_Solde BC Masse"
         Window: Dialog;
         Gint_NumG: Integer;
         VendorNo: Integer;
-        Text50000: label 'Réception N° #1################';
+        Text50000: label 'Réception N° #1################', Comment = 'FRA="Réception N° #1################"';
         Gtext_AxePeriodeDebut: Text[4];
         Gtext_AxePeriodeFin: Text[4];
         Gtext_NomFactureFournisseur: Text[20];

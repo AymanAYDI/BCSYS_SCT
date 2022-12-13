@@ -1,6 +1,6 @@
 table 50013 "BC6_Yooz Parameters"
 {
-    Caption = 'Yooz Parameters';
+    Caption = 'Yooz Parameters', Comment = 'FRA="Paramètres Yooz"';
     DataClassification = CustomerContent;
 
     fields
@@ -11,17 +11,17 @@ table 50013 "BC6_Yooz Parameters"
         }
         field(2; "Yooz Export Path"; Text[250])
         {
-            Caption = 'Répertoire Export Yooz';
+            Caption = 'Répertoire Export Yooz', Comment = 'FRA="Répertoire Export Yooz"';
             DataClassification = CustomerContent;
         }
         field(3; "Yooz Import Path"; Text[250])
         {
-            Caption = 'Répertoire Import Automatique Yooz';
+            Caption = 'Répertoire Import Automatique Yooz', Comment = 'FRA="Répertoire Import Automatique Yooz"';
             DataClassification = CustomerContent;
         }
         field(4; "Yooz Imported File Path"; Text[250])
         {
-            Caption = 'Déplacer Fichiers Importés Automatiquement dans le répertoire';
+            Caption = 'Déplacer Fichiers Importés Automatiquement dans le répertoire', Comment = 'FRA="Déplacer Fichiers Importés Automatiquement dans le répertoire"';
             DataClassification = CustomerContent;
         }
     }

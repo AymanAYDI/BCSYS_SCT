@@ -5,107 +5,107 @@ codeunit 50000 "BC6_Duplicating records"
 ;
         Grec_CompanyList: Record Company;
         Grec_UserSetup: Record "User Setup";
-        text001: label 'ERROR !\\No company has been checked !';
-        text002: label 'ERROR !\\Vendor %1 already exists in company %2';
-        text003: label 'ERROR !\\Vendor %1 does not exists in company %2 !';
-        text005: label 'ERROR !\\Vendor posting group %1 does not exists in company %2';
-        text007: label 'ERROR in %1 !\\unable to create account bank %2 related to vendor %3';
-        text008: label 'ERROR in %1 !\\unable to create post code/city %2/%3 related to account bank';
-        text009: label 'ERROR in %1 !\\Currency code %2, related to account bank, does not exists';
-        text010: label 'ERROR in %1 !\\unable to create country code %2 related to vendor';
-        text011: label 'ERROR in %1 !\\unable to create language code %2 related to account bank';
-        text012: label 'ERROR !\\Payment terms code %1 does not exists in company %2';
-        text013: label 'ERROR !\\Invoice discount code %1 does not exists in company %2';
-        text014: label 'ERROR !\\Pay-to vendor code %1 does not exists in company %2';
-        text015: label 'ERROR !\\Payment method code %1 does not exists in company %2';
-        text016: label 'ERROR !\\Business posting group %1 does not exists in company %2';
-        text017: label 'ERROR !\\VAT business posting group %1 does not exists in company %2';
-        text018: label 'ERROR !\\Purchaser %1 does not exists in company %2';
-        text019: label 'ERROR !\\Responsability center %1 does not exists in company %2';
-        text020: label 'ERROR !\\IC partner code %1 does not exists in company %2';
-        text021: label 'ERROR !\\Location code %1 does not exists in company %2';
-        text022: label 'ERROR !\\Shipment method code %1 does not exists in company %2';
-        text023: label 'ERROR !\\Base calendar code %1 does not exists in company %2';
-        text024: label 'ERROR !\\Currency code %1 does not exists in company %2';
-        text025: label 'ERROR in %1!\\unable to create language code %2 related to vendor';
-        text026: label 'ERROR in %1!\\unable to create post code/city %2 related to primary contact';
-        text027: label 'ERROR in %1!\\Currency code %2, related to primary contact, does not exists';
-        text028: label 'ERROR in %1!\\unable to create country code %2 related to primary contact';
-        text029: label 'ERROR in %1!\\unable to create language code %2 related to primary contact';
-        text030: label 'ERROR in %1!\\unable to create territory code %2 related to primary contact';
-        text031: label 'ERROR in %1!\\Vendor %2, related to primary contact, does not exists';
-        text032: label 'ERROR in %1!\\Series No. %2, related to primary contact, does not exists';
-        text033: label 'ERROR in %1!\\Organizationnal level code %2, related to primary contact, does not exists';
-        text034: label 'ERROR in %1!\\Salutation code %2, related to primary contact, does not exists';
-        text035: label 'ERREUR dans %1 !\\Impossible de créer le contact principal %2 de la fiche fournisseur';
-        text036: label 'CAREFUL !in %1 !\\unable to create business relation between vendor %2 and contact %3';
-        text037: label 'CAREFUL in %1! Dimension code %2 was not created';
-        text038: label 'CAREFUL in %1 !\\Dimension value code %2 was not created for dimension code %3';
-        text039: label 'ERROR !\\G/L account %1 already exists in company %2';
-        text040: label 'ERROR !\\G/L account %1 does not exists in company %2';
-        text041: label 'ERROR !\\Business posting group%1 does not exists in company %2';
-        text042: label 'ERROR !\\Product posting group %1 does not exists in company %2';
-        text043: label 'ERROR !\\Tax Area Code %1 does not exists in company %2';
-        text044: label 'ERROR !\\Tax group code %1 does not exists in company %2';
-        text045: label 'ERROR !\\VAT business posting group %1 does not exists in company %2';
-        text046: label 'ERROR !\\VAT product posting group %1 does not exists in company %2';
-        text047: label 'ERROR !\\Default IC partner G/L account %1 doest not exists in company %2';
-        text049: label 'ERROR !\\General product posting group %1 does not exist in company %2';
-        text050: label 'ERROR in %1 !\\unable to create origin country code %2 related to this item';
-        text051: label 'ERROR !\\Item %1 already exists in company %2';
-        text052: label 'ERROR !\\Item %1 does not exists in company %2 !';
-        text053: label 'ERROR in %1 !\\unable to create purch. country code %2 related to this item';
-        text054: label 'ERROR in %1!\\unable to create unit of measure %2 related to this item';
-        text055: label 'ERROR in %1!\\unable to create sale unit of measure %2 related to this item';
-        text056: label 'ERROR in %1!\\unable to create purch. unit of measure %2 related to this item';
-        text057: label 'ERROR in %1 !\\unable to create unit code %2';
-        text058: label 'ERROR !\\Inventory posting group %1 does not exist in company %2';
-        text059: label 'ERROR !\\Item Discount Group No. %1 does not exist in company %2';
-        text060: label 'ERROR !\\Vendor N° %1 does not exist in company %2';
-        text061: label 'ERROR !\\Alternative Item No. %1 does not exist in company %2';
-        text062: label 'ERROR !\\Tariff No. %1 does not exist in company %2';
-        text063: label 'ERROR !\\VAT business posting group (price) %1 does not exist in company %2';
-        text064: label 'ERROR !\\No. series %1 does not exist in company %2';
-        text065: label 'ERROR !\\Tax group %1 does not exist in company %2';
-        text066: label 'ERROR !\\VAT product posting group %1 does not exist in company %2';
-        text067: label 'ERROR !\\Serial Nos. %1 does not exist in company %2';
-        text068: label 'ERROR !\\Manufacturer code %1 does not exist in company %2';
-        text069: label 'ERROR !\\Item category code %1 does not exist in company %2';
-        text071: label 'ERROR !\\Service item group %1 does not exist in company %2';
-        text072: label 'ERROR !\\Item tracking code %1 does not exist in company %2';
-        text073: label 'ERROR !\\Lot No. %1 does not exist in company %2';
-        text074: label 'ERROR !\\Special equipment %1 does not exist in company %2';
-        text075: label 'ERROR !\\Put-away template %1 does not exist in company %2';
-        text076: label 'ERROR !\\Phys invt counting period code %1 does not exist in company %2';
-        text077: label 'ERROR in %1 !\\Unable to create put-away unit of measure %2 related to this item';
-        text080: label 'ERROR !\\Routing No. %1 does not exist in company %2';
-        text081: label 'ERROR !\\Production BOM No. %1 does not exist in company %2';
-        text082: label 'Vendor';
-        text083: label 'G/L Account';
-        text084: label 'Item';
-        text085: label 'The card';
-        text086: label 'will be duplicated in the following company :';
-        text088: label 'Can you confirm the duplication ?';
-        text089: label 'CAREFUL in %1 !\\Global dimension 1 %2 code %3 can not be duplicated';
-        text090: label 'CAREFUL in %1 !\\Global dimension 2 %2 code %3 can not be duplicated';
-        text091: label 'Bank account';
-        text092: label 'The bank account %1 has been duplicated in company %2';
-        text094: label 'ERROR !\\Vendor %1 does not exists in company %2 !';
-        text095: label 'ERROR !\\Vendor %1 does not exists in company %2';
-        text097: label 'Utilisateur';
-        text098: label 'ERROR !\\Vendor %1 already exists in company %2';
-        text099: label 'ERROR !\\Vendor %1 does not exists in company %2 !';
-        text100: label 'ERREUR !\\Le code utilisateur n''est pas saisi.';
-        text103: label 'Attention !\Le champ "Service" est vide, souhaitez- vous continuer ?';
-        text104: label 'Attention !\Le champ "Nom (signature)" est vide, souhaitez-vous continuer ?';
-        text105: label 'Attention !\Le champ "ID Approbateur" est vide, souhaitez-vous continuer ?';
-        text106: label 'ERREUR !\L''email utilisateur n''est pas saisi.';
-        text107: label 'ERREUR !\L''utilisateur a des écritures approbations ouvertes dans la  société %1';
-        text108: label 'sera supprimée dans la (ou les)  société(s) suivante(s) :';
-        text109: label 'Can you confirm the duplication ?';
-        text110: label 'L''utilisateur %1 a été supprimé de la  société %2';
-        text111: label 'D''autre parté confirmez-vous la suppression de l''utilisateur %1 pour la  société actuelle: %2';
-        text112: label 'Confirmez-vous la validation des périodes sur la société %1 ?';
+        text001: label 'ERROR !\\No company has been checked !', Comment = 'FRA="Attention\Aucune société n''a été cochée !"';
+        text002: label 'ERROR !\\Vendor %1 already exists in company %2', Comment = 'FRA="ERREUR !\\La fiche fournisseur %1 existe déjà dans la société %2"';
+        text003: label 'ERROR !\\Vendor %1 does not exists in company %2 !', Comment = 'FRA="ERREUR !\\La fiche fournisseur %1 n''existe pas dans la société %2 !"';
+        text005: label 'ERROR !\\Vendor posting group %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta fournisseur %1 est inexistant dans la société %2"';
+        text007: label 'ERROR in %1 !\\unable to create account bank %2 related to vendor %3', Comment = 'FRA="ERREUR dans %1 !\Impossible de créer le compte bancaire %2 pour le fournisseur %3"';
+        text008: label 'ERROR in %1 !\\unable to create post code/city %2/%3 related to account bank', Comment = 'FRA="ERREUR dans %1 !\Impossible de créer le compte bancaire %2 pour le fournisseur %3"';
+        text009: label 'ERROR in %1 !\\Currency code %2, related to account bank, does not exists', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code postal/Ville %2/%3 lié au compte bancaire"';
+        text010: label 'ERROR in %1 !\\unable to create country code %2 related to vendor', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code pays %2 lié au fournisseur"';
+        text011: label 'ERROR in %1 !\\unable to create language code %2 related to account bank', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code langue %2 lié au compte bancaire"';
+        text012: label 'ERROR !\\Payment terms code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code conditions de paiement %1 est inexistant dans la société %2"';
+        text013: label 'ERROR !\\Invoice discount code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code remise facture %1 est inexistant dans la société %2"';
+        text014: label 'ERROR !\\Pay-to vendor code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code fournisseur à payer %1 est inexistant dans la société %2"';
+        text015: label 'ERROR !\\Payment method code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code mode de règlement %1 est inexistant dans la société %2"';
+        text016: label 'ERROR !\\Business posting group %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta marché %1 est inexistant dans la société %2"';
+        text017: label 'ERROR !\\VAT business posting group %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta marcheé TVA %1 est inexistant dans la société %2"';
+        text018: label 'ERROR !\\Purchaser %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code acheteur %1 est inexistant dans la société %2"';
+        text019: label 'ERROR !\\Responsability center %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le centre de gestion %1 est inexistant dans la société %2"';
+        text020: label 'ERROR !\\IC partner code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code du partenaire IC %1 est inexistant dans la société %2"';
+        text021: label 'ERROR !\\Location code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code magasin %1 est inexistant dans la société %2"';
+        text022: label 'ERROR !\\Shipment method code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code condition livraison %1 est inexistant dans la société %2"';
+        text023: label 'ERROR !\\Base calendar code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code calendrier principal %1 est inexistant dans la société %2"';
+        text024: label 'ERROR !\\Currency code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code devise %1 est inexistant dans la société %2"';
+        text025: label 'ERROR in %1!\\unable to create language code %2 related to vendor', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code langue %2 lié au fournisseur"';
+        text026: label 'ERROR in %1!\\unable to create post code/city %2 related to primary contact', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code postal/Ville %2/%3 lié au contact principal"';
+        text027: label 'ERROR in %1!\\Currency code %2, related to primary contact, does not exists', Comment = 'FRA="ERREUR dans %1 !\\Le code devise %2 lié au contact principal est inexistant"';
+        text028: label 'ERROR in %1!\\unable to create country code %2 related to primary contact', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code pays %2 lié au contact principal"';
+        text029: label 'ERROR in %1!\\unable to create language code %2 related to primary contact', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code langue %2 lié au contact principal"';
+        text030: label 'ERROR in %1!\\unable to create territory code %2 related to primary contact', Comment = 'FRA="ERREUR dans %1 !\\Le code secteur %2 lié au contact principal est inexistant"';
+        text031: label 'ERROR in %1!\\Vendor %2, related to primary contact, does not exists', Comment = 'FRA="ERREUR dans %1 !\\Le code vendeur %2 lié au contact principal est inexistant"';
+        text032: label 'ERROR in %1!\\Series No. %2, related to primary contact, does not exists', Comment = 'FRA="ERREUR dans %1 !\\Le code souche %2 lié au contact principal est inexistant"';
+        text033: label 'ERROR in %1!\\Organizationnal level code %2, related to primary contact, does not exists', Comment = 'FRA="ERREUR dans %1 !\\Le code de niveaux organisationnels %2 lié au contact principal est inexistant"';
+        text034: label 'ERROR in %1!\\Salutation code %2, related to primary contact, does not exists', Comment = 'FRA="ERREUR dans %1 !\\Le code appellation %2 lié au contact principal est inexistant"';
+        text035: label 'ERREUR dans %1 !\\Impossible de créer le contact principal %2 de la fiche fournisseur', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le contact principal %2 de la fiche fournisseur"';
+        text036: label 'CAREFUL !in %1 !\\unable to create business relation between vendor %2 and contact %3', Comment = 'FRA="ATTENTION dans %1!\\Impossible de créer la relation d''affaire entre fournisseur %2 et contact %3"';
+        text037: label 'CAREFUL in %1! Dimension code %2 was not created', Comment = 'FRA="ATTENTION dans %1!\\Le code axe %2 n''a pas été crée"';
+        text038: label 'CAREFUL in %1 !\\Dimension value code %2 was not created for dimension code %3', Comment = 'FRA="ATTENTION dans %1!\\Le code section %2 n''a pas été crée pour le l''axe analytique %3"';
+        text039: label 'ERROR !\\G/L account %1 already exists in company %2', Comment = 'FRA="ERREUR !\\La fiche compte général %1 existe déjà dans la société %2"';
+        text040: label 'ERROR !\\G/L account %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\La fiche compte général %1 n''existe pas dans la société %2"';
+        text041: label 'ERROR !\\Business posting group%1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta marché %1 est inexistant dans la société %2"';
+        text042: label 'ERROR !\\Product posting group %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta produit %1 est inexistant dans la société %2"';
+        text043: label 'ERROR !\\Tax Area Code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code zone de recouvrement %1 est inexistant dans la société %2"';
+        text044: label 'ERROR !\\Tax group code %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le code groupe taxes %1 est inexistant dans la société %2"';
+        text045: label 'ERROR !\\VAT business posting group %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta marcheé TVA %1 est inexistant dans la société %2"';
+        text046: label 'ERROR !\\VAT product posting group %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta produit TVA %1 est inexistant dans la société %2"';
+        text047: label 'ERROR !\\Default IC partner G/L account %1 doest not exists in company %2', Comment = 'FRA="ERREUR !\\Le code "compte général par défaut partenaire IC" %1 est inexistant dans la société %2"';
+        text049: label 'ERROR !\\General product posting group %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta produit %1 est inexistant dans la société %2"';
+        text050: label 'ERROR in %1 !\\unable to create origin country code %2 related to this item', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code pays origine %2 lié à cet article"';
+        text051: label 'ERROR !\\Item %1 already exists in company %2', Comment = 'FRA="ERREUR !\\La fiche article %1 existe déjà dans la société %"';
+        text052: label 'ERROR !\\Item %1 does not exists in company %2 !', Comment = 'FRA="ERREUR !\\La fiche article %1 n''existe pas dans la société %2 !"';
+        text053: label 'ERROR in %1 !\\unable to create purch. country code %2 related to this item', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code pays achat %2 lié à cet article"';
+        text054: label 'ERROR in %1!\\unable to create unit of measure %2 related to this item', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code d''unité de mesure %2 lié à cet article"';
+        text055: label 'ERROR in %1!\\unable to create sale unit of measure %2 related to this item', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code d''unité de vente %2 lié à cet article"';
+        text056: label 'ERROR in %1!\\unable to create purch. unit of measure %2 related to this item', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code d''unité d''achat %2 lié à cet article"';
+        text057: label 'ERROR in %1 !\\unable to create unit code %2', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code unité %2"';
+        text058: label 'ERROR !\\Inventory posting group %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta stock %1 est inexistant dans la société %2"';
+        text059: label 'ERROR !\\Item Discount Group No. %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le groupe remise article %1 est inexistant dans la société %2"';
+        text060: label 'ERROR !\\Vendor N° %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le n° fournisseur %1 est inexistant dans la société %2"';
+        text061: label 'ERROR !\\Alternative Item No. %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\La référence de remplacement %1 est inexistante dans la société %2"';
+        text062: label 'ERROR !\\Tariff No. %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\La nomenclature produits %1 est inexistante dans la société %2"';
+        text063: label 'ERROR !\\VAT business posting group (price) %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta marché TVA (prix) %1 est inexistant dans la société %2"';
+        text064: label 'ERROR !\\No. series %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le code souche de no %1 est inexistant dans la société %2"';
+        text065: label 'ERROR !\\Tax group %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le code groupe taxes %1 est inexistant dans la société %2"';
+        text066: label 'ERROR !\\VAT product posting group %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le groupe compta produit TVA %1 est inexistant dans la société %2"';
+        text067: label 'ERROR !\\Serial Nos. %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le no de série %1 est inexistant dans la société %2"';
+        text068: label 'ERROR !\\Manufacturer code %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le code fabricant %1 est inexistant dans la société %2"';
+        text069: label 'ERROR !\\Item category code %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le code de catégorie d''article %1 est inexistant dans la société %2"';
+        text071: label 'ERROR !\\Service item group %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le code article de service %1 est inexistant dans la société %2"';
+        text072: label 'ERROR !\\Item tracking code %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le code traçabilité %1 est inexistant dans la société %2"';
+        text073: label 'ERROR !\\Lot No. %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le no lot %1 est inexistant dans la société %2"';
+        text074: label 'ERROR !\\Special equipment %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le code équipement spécial %1 est inexistant dans la société %2"';
+        text075: label 'ERROR !\\Put-away template %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le modèle de rangement %1 est inexistant dans la société %2"';
+        text076: label 'ERROR !\\Phys invt counting period code %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\Le modèle de rangement %1 est inexistant dans la société %2"';
+        text077: label 'ERROR in %1 !\\Unable to create put-away unit of measure %2 related to this item', Comment = 'FRA="ERREUR dans %1 !\\Impossible de créer le code d''unité d''achat %2 lié à cet article"';
+        text080: label 'ERROR !\\Routing No. %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\No gamme %1 est inexistant dans la société %2"';
+        text081: label 'ERROR !\\Production BOM No. %1 does not exist in company %2', Comment = 'FRA="ERREUR !\\No nomenclature KIT %1 est inexistant dans la société %2"';
+        text082: label 'Vendor', Comment = 'FRA="Fournisseurs"';
+        text083: label 'G/L Account', Comment = 'FRA="Compte général"';
+        text084: label 'Item', Comment = 'FRA="Article"';
+        text085: label 'The card', Comment = 'FRA="La fiche"';
+        text086: label 'will be duplicated in the following company :', Comment = 'FRA="sera dupliquée dans la (ou les) société(s) suivante(s) :"';
+        text088: label 'Can you confirm the duplication ?', Comment = 'FRA="Confirmez-vous la duplication ?"';
+        text089: label 'CAREFUL in %1 !\\Global dimension 1 %2 code %3 can not be duplicated', Comment = 'FRA="ATTENTION dans %1 !\\L''axe principal 1 %2 section %3 ne peut pas être dupliqué"';
+        text090: label 'CAREFUL in %1 !\\Global dimension 2 %2 code %3 can not be duplicated', Comment = 'FRA="ATTENTION dans %1 !\\L''axe principal %2 section %3 ne peut pas être dupliqué"';
+        text091: label 'Bank account', Comment = 'FRA="Compte bancaire"';
+        text092: label 'The bank account %1 has been duplicated in company %2', Comment = 'FRA="Le compte bancaire %1 %2 a été dupliqué dans la société %3"';
+        text094: label 'ERROR !\\Vendor %1 does not exists in company %2 !', Comment = 'FRA="ERREUR !\\La fiche fournisseur %1 n''existe pas dans la société %2 !"';
+        text095: label 'ERROR !\\Vendor %1 does not exists in company %2', Comment = 'FRA="ERREUR !\\La fiche fournisseur %1 n''existe pas dans la société %2 !"';
+        text097: label 'Utilisateur', Comment = 'FRA="Utilisateur"';
+        text098: label 'ERROR !\\Vendor %1 already exists in company %2', Comment = 'FRA="ERREUR !\\La fiche fournisseur %1 existe déjà dans la société %2"';
+        text099: label 'ERROR !\\Vendor %1 does not exists in company %2 !', Comment = 'FRA="ERREUR !\\La fiche fournisseur %1 n''existe pas dans la société %2 !"';
+        text100: label 'ERREUR !\\Le code utilisateur n''est pas saisi.', Comment = 'FRA="ERREUR !\\Le code utilisateur n''est pas saisi."';
+        text103: label 'Attention !\Le champ "Service" est vide, souhaitez- vous continuer ?', Comment = 'FRA="Attention !\Le champ "Service" est vide, souhaitez- vous continuer ?"';
+        text104: label 'Attention !\Le champ "Nom (signature)" est vide, souhaitez-vous continuer ?', Comment = 'FRA="Attention !\Le champ "Nom (signature)" est vide, souhaitez-vous continuer ?"';
+        text105: label 'Attention !\Le champ "ID Approbateur" est vide, souhaitez-vous continuer ?', Comment = 'FRA="Attention !\Le champ "ID Approbateur" est vide, souhaitez-vous continuer ?"';
+        text106: label 'ERREUR !\L''email utilisateur n''est pas saisi.', Comment = 'FRA="ERREUR !\L''email utilisateur n''est pas saisi."';
+        text107: label 'ERREUR !\L''utilisateur a des écritures approbations ouvertes dans la  société %1', Comment = 'FRA="ERREUR !\L''utilisateur a des écritures approbations ouvertes dans la  société %1"';
+        text108: label 'sera supprimée dans la (ou les)  société(s) suivante(s) :', Comment = 'FRA="sera supprimée dans la (ou les)  société(s) suivante(s) :"';
+        text109: label 'Can you confirm the duplication ?', Comment = 'FRA="Confirmez-vous la duplication ?"';
+        text110: label 'L''utilisateur %1 a été supprimé de la  société %2', Comment = 'FRA="L''utilisateur %1 a été supprimé de la  société %2"';
+        text111: label 'D''autre parté confirmez-vous la suppression de l''utilisateur %1 pour la  société actuelle: %2', Comment = 'FRA="D''autre parté confirmez-vous la suppression de l''utilisateur %1 pour la  société actuelle: %2"';
+        text112: label 'Confirmez-vous la validation des périodes sur la société %1 ?', Comment = 'FRA="Confirmez-vous la validation des périodes sur la société %1 ?"';
 
     procedure Dupliquer(Lopt_TypeFiche: Option ,Vendor,"G/L Account",Item,VendorBankAccount,User,UserDelete,UserDeleteActualSociety; Lcode_Fiche: Code[50]; Lcode_Fiche2: Code[50]) Lint_DuplicationNumber: Integer
     var
@@ -317,7 +317,7 @@ codeunit 50000 "BC6_Duplicating records"
                                                                                                         //***** D‚but Dupliquer analytique *****
                                                                                                         if Grec_DuplicatingList.Dimension then begin
                                                                                                             DupliquerAnalytique(23, Lcode_Vendor);
-                                                                                                            if Lrec_SourceGenLedgerSetup.FIND('-') then begin
+                                                                                                            if Lrec_SourceGenLedgerSetup.FindFirst() then begin
                                                                                                                 if (Lrec_SourceVendor."Global Dimension 1 Code" <> '') then
                                                                                                                     if not Lrec_DestDimensionValue.GET(Lrec_SourceGenLedgerSetup."Global Dimension 1 Code",
                                                                                                                                                    Lrec_SourceVendor."Global Dimension 1 Code") then begin
@@ -353,7 +353,7 @@ codeunit 50000 "BC6_Duplicating records"
                                                                                                     end;
                                                                                     end;
                             end else
-                                MESSAGE(text002, Lcode_Vendor, Grec_DuplicatingList.Name);   // La fiche fournisseur existe d‚j… dans la soci‚t‚ !
+                                MESSAGE(text002, Lcode_Vendor, Grec_DuplicatingList.Name);   // La fiche fournisseur existe d‚jà dans la soci‚t‚ !
                         end else
                             MESSAGE(text003, Lcode_Vendor, COMPANYNAME);   // La fiche fournisseur n'existe pas dans la soci‚t‚
                     end;
@@ -429,7 +429,7 @@ codeunit 50000 "BC6_Duplicating records"
                                                             //***** D‚but Dupliquer analytique *****
                                                             if Grec_DuplicatingList.Dimension then begin
                                                                 DupliquerAnalytique(15, Lcode_Account);
-                                                                if Lrec_SourceGenLedgerSetup.FIND('-') then begin
+                                                                if Lrec_SourceGenLedgerSetup.FindFirst() then begin
                                                                     if (Lrec_SourceAccount."Global Dimension 1 Code" <> '') then
                                                                         if not Lrec_DestDimensionValue.GET(Lrec_SourceGenLedgerSetup."Global Dimension 1 Code",
                                                                                                        Lrec_SourceAccount."Global Dimension 1 Code") then begin
@@ -645,7 +645,7 @@ codeunit 50000 "BC6_Duplicating records"
                                                                                                                                             //***** D‚but Dupliquer analytique *****
                                                                                                                                             if Grec_DuplicatingList.Dimension then begin
                                                                                                                                                 DupliquerAnalytique(27, Lcode_Item);
-                                                                                                                                                if Lrec_SourceGenLedgerSetup.FIND('-') then begin
+                                                                                                                                                if Lrec_SourceGenLedgerSetup.FindFirst() then begin
                                                                                                                                                     if (Lrec_SourceItem."Global Dimension 1 Code" <> '') then
                                                                                                                                                         if not Lrec_DestDimensionValue.GET(Lrec_SourceGenLedgerSetup."Global Dimension 1 Code",
                                                                                                                                                                                        Lrec_SourceItem."Global Dimension 1 Code") then begin
@@ -679,9 +679,9 @@ codeunit 50000 "BC6_Duplicating records"
                                                                                                                                             Grec_DuplicatingList.MODIFY();
                                                                                                                                         end;
                             end else
-                                MESSAGE(text051, Lcode_Item, Grec_DuplicatingList.Name);   // La fiche article existe d‚j… dans la soci‚t‚ !
+                                MESSAGE(text051, Lcode_Item, Grec_DuplicatingList.Name);   // La fiche article existe déjà dans la société !
                         end else
-                            MESSAGE(text052, Lcode_Item, COMPANYNAME);   // La fiche article n'existe pas dans la soci‚t‚
+                            MESSAGE(text052, Lcode_Item, COMPANYNAME);   // La fiche article n'existe pas dans la société
                     end;
                 end;
             until Grec_DuplicatingList.NEXT() = 0;
@@ -810,13 +810,13 @@ codeunit 50000 "BC6_Duplicating records"
                                                 Lint_DuplicationNumber += 1;
                                                 Grec_DuplicatingList.Echec := false;
                                                 Grec_DuplicatingList.MODIFY();
-                                                MESSAGE(text092, Lcode_Account1, Lcode_Account2, Grec_DuplicatingList.Name); //La fiche compte bancaire a ‚t‚ dupliqu‚e
+                                                MESSAGE(text092, Lcode_Account1, Lcode_Account2, Grec_DuplicatingList.Name); //La fiche compte bancaire a été dupliquée
                                             end;
                                     end;
                             //END; ELSE
-                            //  MESSAGE(text093,Lcode_Account1,Lcode_Account2,Grec_DuplicatingList.Name); //Le compte bancaire existe d‚j… !
+                            //  MESSAGE(text093,Lcode_Account1,Lcode_Account2,Grec_DuplicatingList.Name); //Le compte bancaire existe déjà !
                         end else
-                            MESSAGE(text094, Lcode_Account1, Lcode_Account2, COMPANYNAME);   // Le compte bancaire n'existe pas dans la soci‚t‚
+                            MESSAGE(text094, Lcode_Account1, Lcode_Account2, COMPANYNAME);   // Le compte bancaire n'existe pas dans la société
                     end;
                 end;
             until Grec_DuplicatingList.NEXT() = 0;
@@ -904,8 +904,7 @@ codeunit 50000 "BC6_Duplicating records"
         Lrec_DestVendorBankAccount: Record "Vendor Bank Account";
         Lrec_SourceVendorBankAccount: Record "Vendor Bank Account";
     begin
-        if Lcode_Bank <> '' then // si pas de code banque, inutile de le dupliquer
-        begin
+        if Lcode_Bank <> '' then begin // si pas de code banque, inutile de le dupliquer
             Lrec_DestVendorBankAccount.CHANGECOMPANY(Grec_DuplicatingList.Name);
             Lrec_DestCurrency.CHANGECOMPANY(Grec_DuplicatingList.Name);
             if not Lrec_DestVendorBankAccount.GET(Lcode_Vendor, Lcode_Bank) then begin
@@ -945,8 +944,7 @@ codeunit 50000 "BC6_Duplicating records"
         Lrec_DestCountryRegion: Record "Country/Region";
         Lrec_SourceCountryRegion: Record "Country/Region";
     begin
-        if (Lcode_Country <> '') then // si pas de code pays, inutile de le dupliquer
-        begin
+        if (Lcode_Country <> '') then begin // si pas de code pays, inutile de le dupliquer
             Lrec_DestCountryRegion.CHANGECOMPANY(Grec_DuplicatingList.Name);
             if not Lrec_DestCountryRegion.GET(Lcode_Country) then begin
                 if Lrec_SourceCountryRegion.GET(Lcode_Country) then begin
@@ -967,8 +965,7 @@ codeunit 50000 "BC6_Duplicating records"
         Lrec_DestLanguage: Record Language;
         Lrec_SourceLanguage: Record Language;
     begin
-        if (Lcode_Language <> '') then // si pas de code langue, inutile de le dupliquer
-        begin
+        if (Lcode_Language <> '') then begin // si pas de code langue, inutile de le dupliquer
             Lrec_DestLanguage.CHANGECOMPANY(Grec_DuplicatingList.Name);
             if not Lrec_DestLanguage.GET(Lcode_Language) then begin
                 if Lrec_SourceLanguage.GET(Lcode_Language) then begin
@@ -998,8 +995,7 @@ codeunit 50000 "BC6_Duplicating records"
         Lrec_DestSalutation: Record Salutation;
         Lrec_DestTerritory: Record Territory;
     begin
-        if Lcode_Contact <> '' then // si pas de code contact, inutile de le dupliquer
-        begin
+        if Lcode_Contact <> '' then begin // si pas de code contact, inutile de le dupliquer
             Lrec_DestContact.CHANGECOMPANY(Grec_DuplicatingList.Name);
             Lrec_DestCurrency.CHANGECOMPANY(Grec_DuplicatingList.Name);
             Lrec_DestTerritory.CHANGECOMPANY(Grec_DuplicatingList.Name);
@@ -1113,8 +1109,7 @@ codeunit 50000 "BC6_Duplicating records"
         Lrec_DestUnit: Record "Unit of Measure";
         Lrec_SourceUnit: Record "Unit of Measure";
     begin
-        if (Lcode_Unit <> '') then // si pas de code unit‚, inutile de le dupliquer
-        begin
+        if (Lcode_Unit <> '') then begin // si pas de code unitéé inutile de le dupliquer
             Lrec_DestUnit.CHANGECOMPANY(Grec_DuplicatingList.Name);
             if not Lrec_DestUnit.GET(Lcode_Unit) then begin
                 if Lrec_SourceUnit.GET(Lcode_Unit) then begin
@@ -1134,8 +1129,8 @@ codeunit 50000 "BC6_Duplicating records"
     var
         Grec_Society: Record Company;
         GLSetup: Record "General Ledger Setup";
-        Text001: label 'Users have been updated on all companies';
-        Text10800: label '%1 must be within the allowed posting range: %2..%3';
+        Text001: label 'Users have been updated on all companies', Comment = 'FRA="Les utilisateurs ont été mis à jour sur toutes les sociétés"';
+        Text10800: label '%1 must be within the allowed posting range: %2..%3';//, Comment = 'FRA="Erreur validation société %4 \\"%1" = %5 doit se situer dans la plage de validation autorisée : %2..%3\\Veuillez changer les périodes de validation dans la table "Paramètres comptabilité" de la société %4 et recommencer le traitement."';
     begin
         //MODIF JX-AUD 28/03/14
         if Grec_Society.FIND('-') then
@@ -1175,7 +1170,7 @@ codeunit 50000 "BC6_Duplicating records"
     begin
         Lbool_Ok := true;
         Lint_DuplicationNumber := 0;
-        if Grec_DuplicatingList.FIND('-') then
+        if Grec_DuplicatingList.FindFirst() then
             repeat
                 if Grec_DuplicatingList.Duplication then begin
                     Grec_DuplicatingList.Echec := true;
@@ -1212,9 +1207,9 @@ codeunit 50000 "BC6_Duplicating records"
                                 end;
 
                             end else
-                                MESSAGE(text098, Lcode_User, Grec_DuplicatingList.Name);   // L'utilisateur existe d‚j… dans la soci‚t‚ !
+                                MESSAGE(text098, Lcode_User, Grec_DuplicatingList.Name);   // L'utilisateur existe déjà dans la société !
                         end else
-                            MESSAGE(text099, Lcode_User, COMPANYNAME);   // L'utilisateur n'existe pas dans la soci‚t‚
+                            MESSAGE(text099, Lcode_User, COMPANYNAME);   // L'utilisateur n'existe pas dans la société
                 end;
             until Grec_DuplicatingList.NEXT() = 0;
     end;
@@ -1227,18 +1222,18 @@ codeunit 50000 "BC6_Duplicating records"
     begin
         Lbool_Ok := true;
         Lint_DuplicationNumber := 0;
-        if Grec_DuplicatingList.FIND('-') then
+        if Grec_DuplicatingList.FindFirst() then
             repeat
                 if Grec_DuplicatingList.Duplication then begin
                     Grec_DuplicatingList.Echec := true;
                     Grec_DuplicatingList.MODIFY();
                     if Lrec_DestUser.CHANGECOMPANY(Grec_DuplicatingList.Name) then
                         if Lrec_DestUser.GET(Lcode_User) then begin
-                            //V‚rification des approbations en cours
+                            //Vérification des approbations en cours
                             Lrec_ApprovalEntry.CHANGECOMPANY(Grec_DuplicatingList.Name);
                             Lrec_ApprovalEntry.SETFILTER(Lrec_ApprovalEntry."Approver ID", Lcode_User);
                             Lrec_ApprovalEntry.SETFILTER(Lrec_ApprovalEntry.Status, FORMAT(Lrec_ApprovalEntry.Status::Open));
-                            if Lrec_ApprovalEntry.FIND('-') then begin
+                            if Lrec_ApprovalEntry.FindFirst() then begin
                                 MESSAGE(text107, Grec_DuplicatingList.Name);
                                 Lbool_Ok := false;
                             end;
@@ -1266,10 +1261,10 @@ codeunit 50000 "BC6_Duplicating records"
     begin
         Lbool_Ok := true;
         if CONFIRM(STRSUBSTNO(text111, Lcode_User, COMPANYNAME)) then begin
-            //V‚rification des approbations en cours
+            //Vérification des approbations en cours
             Lrec_ApprovalEntry.SETFILTER(Lrec_ApprovalEntry."Approver ID", Lcode_User);
             Lrec_ApprovalEntry.SETFILTER(Lrec_ApprovalEntry.Status, FORMAT(Lrec_ApprovalEntry.Status::Open));
-            if Lrec_ApprovalEntry.FIND('-') then begin
+            if Lrec_ApprovalEntry.FindFirst() then begin
                 MESSAGE(text107, COMPANYNAME);
                 Lbool_Ok := false;
             end;

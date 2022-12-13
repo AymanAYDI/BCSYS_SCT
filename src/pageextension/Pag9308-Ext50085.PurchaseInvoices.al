@@ -2,15 +2,15 @@ pageextension 50085 "BC6_PurchaseInvoices" extends "Purchase Invoices" //9308
 {
     layout
     {
+        modify("Vendor Authorization No.")
+        {
+            visible = false;
+        }
         modify("Location Code")
         {
             Visible = false;
         }
         modify("Assigned User ID")
-        {
-            Visible = false;
-        }
-        modify(Status)
         {
             Visible = false;
         }
@@ -83,7 +83,7 @@ pageextension 50085 "BC6_PurchaseInvoices" extends "Purchase Invoices" //9308
         {
             action("BC6_Payer ce document")
             {
-                Caption = 'Payer ce document';
+                Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
                 Image = VendorPayment;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -97,6 +97,14 @@ pageextension 50085 "BC6_PurchaseInvoices" extends "Purchase Invoices" //9308
                     lPaymentMgt.CreatePaymentDoc(Rec);
                 end;
             }
+        }
+        modify(SendApprovalRequest)
+        {
+            Caption = 'Send A&pproval Request', Comment = 'FRA="Approbation de Facture"';
+        }
+        modify(CancelApprovalRequest)
+        {
+            Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler l''approbation"';
         }
     }
 

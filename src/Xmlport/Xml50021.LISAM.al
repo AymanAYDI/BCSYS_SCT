@@ -1,6 +1,6 @@
 xmlport 50021 "BC6_LISAM"
 {
-    Caption = 'LISAM';
+    Caption = 'LISAM', Comment = 'FRA="LISAM"';
     Direction = Export;
     TextEncoding = WINDOWS;
     Format = VariableText;
@@ -12,7 +12,7 @@ xmlport 50021 "BC6_LISAM"
     {
         textelement(Root)
         {
-            tableelement(Header; 2000000026)
+            tableelement(Header; Integer)
             {
                 trigger OnAfterGetRecord()
                 begin
@@ -138,7 +138,7 @@ xmlport 50021 "BC6_LISAM"
                     //Liste de BC pour une facture
                     if GLEntry."Document Type" = GLEntry."Document Type"::Invoice then begin
                         //Gtext_ListeBC := 'facture';
-                        //Recherche des commandes li‚es … la facture
+                        //Recherche des commandes liées à la facture
                         Gint_NbOrders := Gunit_LinksBetweenDocument.SearchOrdersFA(GLEntry."Document No.", Gcode_Order);
                         Gtext_ListeBC := '';
 

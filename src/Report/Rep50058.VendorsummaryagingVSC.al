@@ -2,7 +2,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
 {
     DefaultLayout = RDLC;
     RDLCLayout = './src/Report/RDLC/VendorsummaryagingVSC.rdl';
-    Caption = 'Vendor : summary aging VSC';
+    Caption = 'Vendor : summary aging VSC', Comment = 'FRA="Fourn. : Echéancier VSC"';
 
     dataset
     {
@@ -448,31 +448,21 @@ report 50058 "BC6_Vendor : summary aging VSC"
             {
                 group(Options)
                 {
-                    Caption = 'Options';
+                    Caption = 'Options', Comment = 'FRA="Options"';
                     field(EndingDate; EndingDate)
                     {
-                        Caption = 'Aged As Of';
+                        Caption = 'Aged As Of', Comment = 'FRA="Echéancier à la date du"';
                         ApplicationArea = All;
                     }
                 }
             }
         }
-
-        actions
-        {
-        }
-
         trigger OnOpenPage()
         begin
             if EndingDate = 0D then
                 EndingDate := WORKDATE();
         end;
     }
-
-    labels
-    {
-    }
-
     trigger OnPreReport()
     begin
         VendorFilter := Vendor.GETFILTERS;
@@ -508,20 +498,20 @@ report 50058 "BC6_Vendor : summary aging VSC"
         PeriodStartDate: array[5] of Date;
         NumberOfCurrencies: Integer;
         PageGroupNo: Integer;
-        Aged_Overdue_AmountsCaptionLbl: label 'Due';
-        CurrReport_PAGENOCaptionLbl: label 'Page';
-        EmptyStringCaptionLbl: label '%';
-        FORMAT_VendorLedgEntryEndingDate__Document_Type__CaptionLbl: label 'Document type';
-        Original_Amount_Control58CaptionLbl: label 'Total';
-        Text000: label 'Not Due';
-        Text002: label 'days';
-        Text005: label 'Total for %1';
-        Text006: label 'Summary aging as %1';
-        Text010: label 'The Date Formula %1 cannot be used. Try to restate it. E.g. 1M+CM instead of CM+1M.';
-        Text011: label 'Enter a date formula in the Period Length field.';
-        Total__LCY_CaptionLbl: label 'Total';
-        VendorLedgEntryEndingDate__Document_No__CaptionLbl: label 'Document No.';
-        VendorLedgEntryEndingDate__Posting_Date_CaptionLbl: label 'Posting date';
+        Aged_Overdue_AmountsCaptionLbl: label 'Due', Comment = 'FRA="Echu"';
+        CurrReport_PAGENOCaptionLbl: label 'Page', Comment = 'FRA="Page"';
+        EmptyStringCaptionLbl: label '%', Comment = 'FRA="%"';
+        FORMAT_VendorLedgEntryEndingDate__Document_Type__CaptionLbl: label 'Document type', Comment = 'FRA="Type document"';
+        Original_Amount_Control58CaptionLbl: label 'Total', Comment = 'FRA="Total"';
+        Text000: label 'Not Due', Comment = 'FRA="Non échu"';
+        Text002: label 'days', Comment = 'FRA="jours"';
+        Text005: label 'Total for %1', Comment = 'FRA="Total de %1"';
+        Text006: label 'Summary aging as %1', Comment = 'FRA="Echéancier fournisseur en date du %1"';
+        Text010: label 'The Date Formula %1 cannot be used. Try to restate it. E.g. 1M+CM instead of CM+1M.', Comment = 'FRA="La formule date %1 ne peut pas être utilisée. Veuillez la redéfinir en utilisant, par exemple, 1M+CM au lieu de CM+1M."';
+        Text011: label 'Enter a date formula in the Period Length field.', Comment = 'FRA="Entrez une formule de date dans le champ Base période."';
+        Total__LCY_CaptionLbl: label 'Total', Comment = 'FRA="Total"';
+        VendorLedgEntryEndingDate__Document_No__CaptionLbl: label 'Document No.', Comment = 'FRA="N° document"';
+        VendorLedgEntryEndingDate__Posting_Date_CaptionLbl: label 'Posting date', Comment = 'FRA="Date de comptabilisation"';
         HeadingType: Option "Date Interval","Number of Days";
         AgingBy: Option "Due Date","Posting Date","Document Date";
         HeaderText: array[5] of Text[30];

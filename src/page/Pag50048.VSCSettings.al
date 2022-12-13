@@ -1,6 +1,6 @@
 page 50048 "BC6_VSC Settings"
 {
-    Caption = 'VSC Settings';
+    Caption = 'VSC Settings', Comment = 'FRA="Paramètres VSC"';
     PageType = Card;
     SourceTable = "BC6_VSC Settings";
     ApplicationArea = All;
@@ -11,7 +11,7 @@ page 50048 "BC6_VSC Settings"
         {
             group("PDF BC Path")
             {
-                Caption = 'PDF Instance';
+                Caption = 'PDF Instance', Comment = 'FRA="Dossier PDF BC"';
                 field("Use Temporary Path"; Rec."BCUse Temporary Path")
                 {
                     ApplicationArea = All;
@@ -23,7 +23,7 @@ page 50048 "BC6_VSC Settings"
             }
             group("BC Test Mode")
             {
-                Caption = 'PDF Instance';
+                Caption = 'PDF Instance', Comment = 'FRA="BC Test Mode"';
                 field("BBC Test Mode>"; Rec."BC Test Mode")
                 {
                     ApplicationArea = All;
@@ -35,7 +35,7 @@ page 50048 "BC6_VSC Settings"
             }
             group("Draft Notice")
             {
-                Caption = 'PDF Instance';
+                Caption = 'PDF Instance', Comment = 'FRA="Draft Notice"';
                 field("Draft Account. Depart. Manager"; Rec."Draft Account. Dep. Manag")
                 {
                     ApplicationArea = All;
@@ -47,7 +47,7 @@ page 50048 "BC6_VSC Settings"
             }
             group("Get URL")
             {
-                Caption = 'PDF Instance';
+                Caption = 'PDF Instance', Comment = 'FRA="Get URL"';
                 field("URL Type"; Rec."URL Type")
                 {
                     ApplicationArea = All;

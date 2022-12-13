@@ -12,12 +12,12 @@ pageextension 50098 "BC6_GetPostDocPInvLnSubform" extends "Get Post.Doc - P.InvL
             {
                 AccessByPermission = tabledata Dimension = R;
                 ApplicationArea = all;
-                Caption = 'Dimensions';
+                Caption = 'Dimensions', Comment = 'FRA="Axes analytiques"';
                 Image = Dimensions;
                 ShortCutKey = 'Alt+D';
                 trigger OnAction()
                 begin
-                    Rec.ModifyDimensions();
+                    Rec.BC6_ModifyDimensions();
                 end;
             }
         }

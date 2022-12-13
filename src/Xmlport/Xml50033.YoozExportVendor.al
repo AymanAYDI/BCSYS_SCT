@@ -1,6 +1,6 @@
 xmlport 50033 "BC6_Yooz Export Vendor"
 {
-    Caption = 'BC6 Yooz Export Vendor';
+    Caption = 'BC6 Yooz Export Vendor', Comment = 'FRA="Yooz Export fournisseurs"';
     Direction = Export;
     Format = VariableText;
     TextEncoding = WINDOWS;
@@ -110,7 +110,7 @@ xmlport 50033 "BC6_Yooz Export Vendor"
     var
         Grec_YoozParameters: Record "BC6_Yooz Parameters";
         "Gcu_ANSI-ASCII": Codeunit "BC6_ANSI_ASCII converter";
-        Text001: label 'Export vendor has been realized in folder %1';
+        Text001: label 'Export vendor has been realized in folder %1', Comment = 'FRA="L''export des fournisseurs s''est bien effectué dans le dossier %1"';
         GTextBlank: Text[2];
         Gtext_PathFolder: Text[250];
 

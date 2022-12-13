@@ -12,16 +12,6 @@ pageextension 50048 "BC6_PurchaseList" extends "Purchase List" //53
     // //Ajout de la de la colonne Litige
     layout
     {
-        modify("Location Code")
-        {
-            Visible = true;
-        }
-
-        modify(IncomingDocAttachFactBox)
-        {
-            Visible = false;
-        }
-
         addafter("No.")
         {
             field(BC6_Litige; Rec."BC6_Litige")
@@ -41,7 +31,7 @@ pageextension 50048 "BC6_PurchaseList" extends "Purchase List" //53
             }
             field("BC6_Status description"; Rec."BC6_Status description")
             {
-                Caption = 'FAP status description';
+                Caption = 'FAP status description', Comment = 'FRA="Libellé statut FAP"';
                 ApplicationArea = All;
             }
             field("BC6_Register amount"; Rec."BC6_Register amount")
@@ -70,10 +60,6 @@ pageextension 50048 "BC6_PurchaseList" extends "Purchase List" //53
             }
         }
     }
-    actions
-    {
-    }
-
     var
         UserMgt: Codeunit "BC6_FunctionsMgt";
 

@@ -4,52 +4,52 @@ tableextension 50002 "BC6_PaymentHeader" extends "Payment Header" //10865
     {
         field(50000; "BC6_User ID"; Code[50])
         {
-            Caption = 'Code Utilisateur';
+            Caption = 'Code Utilisateur', Comment = 'FRA="Code Utilisateur"';
             DataClassification = CustomerContent;
         }
         field(50001; "BC6_Creation Date"; Date)
         {
-            Caption = 'Date Création';
+            Caption = 'Date Création', Comment = 'FRA="Date Création"';
             DataClassification = CustomerContent;
         }
         field(50002; "BC6_Modifcation Date"; Date)
         {
-            Caption = 'Date Modification';
+            Caption = 'Date Modification', Comment = 'FRA="Date Modification"';
             DataClassification = CustomerContent;
         }
         field(50010; "BC6_Alone Payment"; Boolean)
         {
-            Caption = 'Bordereau Manuel';
+            Caption = 'Bordereau Manuel', Comment = 'FRA="Bordereau Manuel"';
             DataClassification = CustomerContent;
         }
         field(50020; "BC6_Yooz No."; Text[250])
         {
-            Caption = 'N° Yooz';
+            Caption = 'N° Yooz', Comment = 'FRA="N° Yooz"';
             DataClassification = CustomerContent;
         }
         field(50021; "BC6_Yooz No. 2"; Text[250])
         {
-            Caption = 'N° Yooz 2';
+            Caption = 'N° Yooz 2', Comment = 'FRA="N° Yooz 2"';
             DataClassification = CustomerContent;
         }
         field(50022; "BC6_Yooz No. 3"; Text[250])
         {
-            Caption = 'N° Yooz 3';
+            Caption = 'N° Yooz 3', Comment = 'FRA="N° Yooz 3"';
             DataClassification = CustomerContent;
         }
         field(50023; "BC6_Yooz No. 4"; Text[250])
         {
-            Caption = 'N° Yooz 4';
+            Caption = 'N° Yooz 4', Comment = 'FRA="N° Yooz 4"';
             DataClassification = CustomerContent;
         }
         field(50024; "BC6_Yooz No. 5"; Text[250])
         {
-            Caption = 'N° Yooz 5';
+            Caption = 'N° Yooz 5', Comment = 'FRA="N° Yooz 5"';
             DataClassification = CustomerContent;
         }
         field(50025; "BC6_Yooz No. 6"; Text[250])
         {
-            Caption = 'N° Yooz 6';
+            Caption = 'N° Yooz 6', Comment = 'FRA="N° Yooz 6"';
             DataClassification = CustomerContent;
         }
         field(50026; BC6_Motif; Text[30])

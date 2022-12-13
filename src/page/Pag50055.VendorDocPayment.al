@@ -5,7 +5,7 @@ page 50055 "BC6_Vendor Doc. Payment"
     ModifyAllowed = false;
     PageType = Card;
     SourceTable = "Purchase Header";
-    Caption = 'Vendor Doc. Payment';
+    Caption = 'Vendor Doc. Payment', Comment = 'FRA="Vendor Doc. Payment"';
 
     layout
     {
@@ -38,7 +38,7 @@ page 50055 "BC6_Vendor Doc. Payment"
                     Style = Unfavorable;
                     StyleExpr = true;
                     ApplicationArea = All;
-                    Caption = 'Montant à Payer';
+                    Caption = 'Montant à Payer', Comment = 'FRA="Montant à Payer"';
                 }
             }
         }
@@ -51,11 +51,6 @@ page 50055 "BC6_Vendor Doc. Payment"
             }
         }
     }
-
-    actions
-    {
-    }
-
     trigger OnAfterGetRecord()
     begin
         Rec.CALCFIELDS("Amount Including VAT");

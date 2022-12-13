@@ -1,6 +1,6 @@
 page 50014 "BC6_VSC historic"
 {
-    Caption = 'VSC historic';
+    Caption = 'VSC historic', Comment = 'FRA="Historique VSC"';
     InsertAllowed = false;
     PageType = Card;
     SourceTable = "BC6_VSC historic";
@@ -50,11 +50,6 @@ page 50014 "BC6_VSC historic"
             }
         }
     }
-
-    actions
-    {
-    }
-
     procedure InitForm(PRec_Historic: Record "BC6_VSC historic")
     begin
         Rec := PRec_Historic;

@@ -2,7 +2,7 @@ page 50054 "BC6_New Mail FAP"
 {
     PageType = NavigatePage;
     SourceTable = "Purchase Header";
-    Caption = 'New Mail FAP';
+    Caption = 'New Mail FAP', Comment = 'FRA="New Mail FAP"';
 
     layout
     {
@@ -13,14 +13,17 @@ page 50054 "BC6_New Mail FAP"
                 field("Paramètre 1"; Gtext_Param1)
                 {
                     ApplicationArea = All;
+                    Caption = 'Paramètre 1', Comment = 'FRA="Paramètre 1"';
                 }
                 field("Paramètre 2"; Gtext_Param2)
                 {
                     ApplicationArea = All;
+                    Caption = 'Paramètre 2', Comment = 'FRA="Paramètre 2"';
                 }
                 field("Paramètre 3"; Gtext_Param3)
                 {
                     ApplicationArea = All;
+                    Caption = 'Paramètre 3', Comment = 'FRA="Paramètre 3"';
                 }
                 field("Montant 1"; Amount1)
                 {
@@ -80,7 +83,7 @@ page 50054 "BC6_New Mail FAP"
             {
                 action("Prévisualisation et Envoi Mail")
                 {
-                    Caption = 'Mail';
+                    Caption = 'Mail', Comment = 'FRA="Mail"';
                     Image = SendApprovalRequest;
                     InFooterBar = true;
                     Promoted = true;
@@ -150,9 +153,9 @@ page 50054 "BC6_New Mail FAP"
         Nombre1: Integer;
         Nombre2: Integer;
 
-        Gtext_MailCC: label 'VSCComptaFour@voyages-sncf.com';
-        Text001: label 'The document number is incorrect, please change it';
-        Text002: label 'The email has been sent';
+        Gtext_MailCC: label 'VSCComptaFour@voyages-sncf.com', Comment = 'FRA="VSCComptaFour@voyages-sncf.com"';
+        Text001: label 'The document number is incorrect, please change it', Comment = 'FRA="Le numéro du document est incorrect, veuillez le modifier"';
+        Text002: label 'The email has been sent', Comment = 'FRA="Le mail a bien été envoyé"';
         BCCRecipients: List of [Text];
         Gtext_MailCCList: List of [Text];
         Gtext_MailUser: list of [Text];
@@ -278,9 +281,9 @@ page 50054 "BC6_New Mail FAP"
 
         x := STRPOS(UPPERCASE(pText), '<FJ:FOUR>');
         if x <> 0 then begin
-            if EXISTS(PurchSetup."BC6_ExcelFile Vend. Not Created") then begin
+            if EXISTS(PurchSetup."BC6_ExcelFile Vend Not Created") then begin
                 NbAtt += 1;
-                AddAtt[NbAtt] := PurchSetup."BC6_ExcelFile Vend. Not Created";
+                AddAtt[NbAtt] := PurchSetup."BC6_ExcelFile Vend Not Created";
             end;
             pText := '';
         end;
@@ -727,9 +730,9 @@ page 50054 "BC6_New Mail FAP"
         if VSCSettings."BC Test Mode" then
             Gtext_MailUser.Add(VSCSettings."BC E-Mail Test");
         BCCRecipients.Add('');
+        Gtext_MailCCList.Add(Gtext_MailCC);
         //EmailMessage.Create(Gtext_alias, Gtext_Mail, Gtext_MailUser, Gtext_ObjetMail, '', TRUE);
         EmailMessage.Create(Gtext_MailUser, Gtext_ObjetMail, '', true, Gtext_MailCCList, BCCRecipients);
-        Gtext_MailCCList.Add(Gtext_MailCC);
 
         //Ajout des lignes au mail
         case Gint_Param4 of

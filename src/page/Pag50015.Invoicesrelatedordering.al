@@ -1,6 +1,6 @@
 page 50015 "BC6_Invoices related  ordering"
 {
-    Caption = 'Invoices related to ordering';
+    Caption = 'Invoices related to ordering', Comment = 'FRA="Factures liées à la commande"';
     DeleteAllowed = false;
     Editable = false;
     InsertAllowed = false;
@@ -18,7 +18,7 @@ page 50015 "BC6_Invoices related  ordering"
                 ShowCaption = false;
                 field("gCode_Invoice[1,Number]"; gCode_Invoice[1, Rec.Number])
                 {
-                    Caption = 'Invoices';
+                    Caption = 'Invoices', Comment = 'FRA="Factures"';
                     Editable = false;
                     ApplicationArea = All;
 
@@ -37,17 +37,17 @@ page 50015 "BC6_Invoices related  ordering"
                 }
                 field("gCode_Invoice[2,Number]"; gCode_Invoice[2, Rec.Number])
                 {
-                    Caption = 'Amount';
+                    Caption = 'Amount', Comment = 'FRA="Montant HT"';
                     ApplicationArea = All;
                 }
                 field(Ouvert; gbool_Ouvert)
                 {
-                    Caption = 'Open';
+                    Caption = 'Open', Comment = 'FRA="Ouvert"';
                     ApplicationArea = All;
                 }
                 field("gCode_Invoice[4,Number]"; gCode_Invoice[4, Rec.Number])
                 {
-                    Caption = 'Invoices';
+                    Caption = 'Invoices', Comment = 'FRA="N° Yooz"';
                     Editable = false;
                     ApplicationArea = All;
 
@@ -66,13 +66,13 @@ page 50015 "BC6_Invoices related  ordering"
                 }
                 field("gCode_Invoice[5,Number]"; gCode_Invoice[5, Rec.Number])
                 {
-                    Caption = 'Amount';
+                    Caption = 'Amount', Comment = 'FRA="Lien Yooz"';
                     ExtendedDatatype = URL;
                     ApplicationArea = All;
                 }
                 field("gCode_Invoice[6,Number]"; gCode_Invoice[6, Rec.Number])
                 {
-                    Caption = 'Invoices';
+                    Caption = 'Invoices', Comment = 'FRA="N° BC"';
                     Editable = false;
                     ApplicationArea = All;
 
@@ -92,11 +92,6 @@ page 50015 "BC6_Invoices related  ordering"
             }
         }
     }
-
-    actions
-    {
-    }
-
     trigger OnAfterGetRecord()
     begin
         OnAfterGetCurrRecord();

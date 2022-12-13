@@ -32,14 +32,14 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
             }
             field("BC6_Status Code"; Rec."BC6_Status Code")
             {
-                Caption = 'Code statut';
+                Caption = 'Code statut', Comment = 'FRA="Code statut"';
                 Lookup = true;
                 LookupPageID = "BC6_FAP Status list";
                 ApplicationArea = All;
             }
             field("BC6_Status description"; Rec."BC6_Status description")
             {
-                Caption = 'Libellé statut';
+                Caption = 'Libellé statut', Comment = 'FRA="Libellé statut"';
                 Editable = false;
                 ApplicationArea = All;
             }
@@ -53,7 +53,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
             }
             field("BC6_Register amount"; Rec."BC6_Register amount")
             {
-                Caption = 'Montant à enregistrer';
+                Caption = 'Montant à enregistrer', Comment = 'FRA="Montant à enregistrer"';
                 ApplicationArea = All;
             }
         }
@@ -134,7 +134,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         {
             part("Montants Document"; "BC6_Purchase Doc. Factbox")
             {
-                Caption = 'Montants Document';
+                Caption = 'Montants Document', Comment = 'FRA="Montants Document"';
                 Provider = PurchLines;
                 SubPageLink = "Document Type" = field("Document Type"), "No." = field("Document No.");
                 ApplicationArea = All;
@@ -143,6 +143,10 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
     }
     actions
     {
+        modify(Statistics)
+        {
+            Visible = false;
+        }
         modify(Vendor)
         {
             Visible = false;
@@ -154,7 +158,6 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         modify("Re&lease")
         {
             Promoted = true;
-            PromotedCategory = Process;
             PromotedIsBig = true;
         }
         modify(Reopen)
@@ -167,6 +170,14 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         {
             Visible = false;
         }
+        modify(GetRecurringPurchaseLines)
+        {
+            Visible = false;
+        }
+        modify(Approvals)
+        {
+            Visible = false;
+        }
         modify(MoveNegativeLines)
         {
             Visible = false;
@@ -176,23 +187,106 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
             Promoted = true;
             PromotedIsBig = true;
             PromotedCategory = Process;
+            Caption = 'Send A&pproval Request', Comment = 'FRA="Approbation de Facture"';
         }
         modify(CancelApprovalRequest)
         {
             Promoted = true;
             PromotedCategory = Process;
             PromotedIsBig = true;
+            Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler l''approbation"';
         }
         modify(CopyDocument)
         {
-            Visible = false;
             Promoted = true;
             PromotedIsBig = true;
         }
         modify(Post)
         {
-            Promoted = true;
-            PromotedCategory = Process;
+            Visible = false;
+        }
+        addfirst("P&osting")
+        {
+            action(BC6_Post)
+            {
+                ApplicationArea = all;
+                Caption = 'P&ost', Comment = 'FRA="&Valider"';
+                Image = PostOrder;
+                ShortCutKey = 'F9';
+                trigger OnAction()
+                var
+                    SalesHeader: Record "Sales Header";
+                    ApprovalMgt: Codeunit "Approvals Mgmt.";
+                begin
+                    //Modif JX-AUD du 08/07/2013
+                    Grec_MontantFacture := 0;
+                    //calcul du montant de la facture
+                    Grec_PurchaseLine.SETFILTER(Grec_PurchaseLine."Document No.", Rec."No.");
+                    IF Grec_PurchaseLine.FIND('-') THEN
+                        //MESSAGE(FORMAT(Grec_PurchaseLine.COUNT));
+                        REPEAT
+                            Grec_MontantFacture += Grec_PurchaseLine."Line Amount";
+                        UNTIL Grec_PurchaseLine.NEXT() = 0;
+
+                    IF Rec."BC6_Register amount" <> Grec_MontantFacture THEN
+                        ERROR(Text007);
+
+                    //Fin Modif JX-AUD du 08/07/2013
+
+                    IF NOT (COMPANYNAME = 'HEXATOURISME') THEN//modif JX-AUD du 24/04/2012
+                        IF VerifierLigneRcpt() THEN  //Modif JX-AUD du 25/10/2011
+                            PostDocument(CODEUNIT::"Purch.-Post (Yes/No)", "Navigate After Posting"::"Posted Document")
+                        ELSE //modif JX-AUD du 24/04/2012
+                            IF ApprovalMgt.PrePostApprovalCheckPurch(Rec) THEN begin
+                                VerifyTotal();
+                                PostDocument(CODEUNIT::"Purch.-Post (Yes/No)", "Navigate After Posting"::"Posted Document");
+
+                            end;
+                end;
+
+            }
+        }
+        addafter(TestReport)
+        {
+            action(BC6_PostAndPrint)
+            {
+                ApplicationArea = all;
+                Caption = 'Post and &Print', Comment = 'FRA="Valider et i&mprimer"';
+                Image = PostPrint;
+                ShortCutKey = 'Shift+F9';
+                Visible = NOT IsOfficeAddin;
+
+                trigger OnAction()
+                var
+                    SalesHeader: Record "Sales Header";
+                    ApprovalMgt: Codeunit "Approvals Mgmt.";
+                begin
+                    //Modif JX-AUD du 08/07/2013
+                    Grec_MontantFacture := 0;
+                    //calcul du montant de la facture
+                    Grec_PurchaseLine.SETFILTER(Grec_PurchaseLine."Document No.", Rec."No.");
+                    IF Grec_PurchaseLine.FIND('-') THEN
+                        //MESSAGE(FORMAT(Grec_PurchaseLine.COUNT));
+                        REPEAT
+                            Grec_MontantFacture += Grec_PurchaseLine."Line Amount";
+                        UNTIL Grec_PurchaseLine.NEXT() = 0;
+
+                    IF Rec."BC6_Register amount" <> Grec_MontantFacture THEN
+                        ERROR(Text007);
+                    //Fin Modif JX-AUD du 08/07/2013
+
+                    IF NOT (COMPANYNAME = 'HEXATOURISME') THEN //modif JX-AUD du 24/04/2012
+
+                        IF VerifierLigneRcpt() THEN  //Modif JX-AUD du 25/10/2011
+                                                     //IF ApprovalMgt.PrePostApprovalCheck(SalesHeader,Rec) THEN    //Modif JX-AUD du 25/10/2011
+                            PostDocument(CODEUNIT::"Purch.-Post + Print", "Navigate After Posting"::"Do Nothing")
+                        ELSE //modif JX-AUD du 24/04/2012
+                            IF ApprovalMgt.PrePostApprovalCheckPurch(Rec) THEN begin
+                                VerifyTotal();
+                                PostDocument(CODEUNIT::"Purch.-Post + Print", "Navigate After Posting"::"Do Nothing");
+                            end;
+                end;
+            }
         }
         modify(TestReport)
         {
@@ -200,8 +294,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         }
         modify(PostAndPrint)
         {
-            Promoted = true;
-            PromotedCategory = Process;
+            Visible = false;
         }
         modify(PostBatch)
         {
@@ -209,104 +302,13 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         }
         modify(RemoveFromJobQueue)
         {
-            Visible = JobQueueVisible;
             Enabled = false;
-        }
-        modify("&Invoice")
-        {
-            Visible = false;
-        }
-        modify(DocAttach)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocument)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocCard)
-        {
-            Visible = false;
-        }
-        modify(SelectIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocAttachFile)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocEmailAttachment)
-        {
-            Visible = false;
-        }
-        modify(RemoveIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(Approval)
-        {
-            Visible = false;
-        }
-        modify(Approve)
-        {
-            Visible = false;
-        }
-        modify(Reject)
-        {
-            Visible = false;
-        }
-        modify(Delegate)
-        {
-            Visible = false;
-        }
-        modify(Comment)
-        {
-            Visible = false;
-        }
-        modify(GetRecurringPurchaseLines)
-        {
-            Visible = false;
-        }
-        modify(Approvals)
-        {
-            Visible = false;
-        }
-        modify(CreateFlow)
-        {
-            Visible = false;
-        }
-        modify(SeeFlows)
-        {
-            Visible = false;
-        }
-        modify(Preview)
-        {
-            Visible = false;
-        }
-        addafter(Dimensions)
-        {
-            action(BC6_Approbations)
-            {
-                Caption = 'Approvals';
-                Image = Approvals;
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalEntries: Page "Approval Entries";
-                begin
-                    ApprovalEntries.Setfilters(DATABASE::"Purchase Header", Rec."Document Type".AsInteger(), Rec."No.");
-                    ApprovalEntries.RUN();
-                end;
-            }
         }
         addfirst(Release)
         {
             action(BC6_statics)
             {
-                Caption = 'Statistics';
+                Caption = 'Statistics', Comment = 'FRA="Statistiques"';
                 Image = Statistics;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -316,42 +318,16 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
 
                 trigger OnAction()
                 begin
-                    Rec.CalcInvDiscForHeader();
-                    Commit();
-                    PAGE.RunModal(PAGE::"Purchase Statistics", Rec);
-                    PurchCalcDiscByType.ResetRecalculateInvoiceDisc(Rec);
-                end;
-            }
-        }
-        addafter(CalculateInvoiceDiscount)
-        {
-            separator(Action133)
-            {
-            }
-            action("BC6_Get St&d. Vend. Purchase Codes")
-            {
-                Caption = 'Get St&d. Vend. Purchase Codes';
-                Ellipsis = true;
-                Image = VendorCode;
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    StdVendPurchCode: Record "Standard Vendor Purchase Code";
-                begin
-                    StdVendPurchCode.InsertPurchLines(Rec);
+                    Rec.OpenDocumentStatistics();
+                    CurrPage.PurchLines.Page.ForceTotalsCalculation();
                 end;
             }
         }
         addafter(CancelApprovalRequest)
         {
-            separator(Action144)
-            {
-            }
             action("BC6_Payer ce document")
             {
-                Caption = 'Payer ce document';
+                Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
                 Image = VendorPayment;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -370,10 +346,10 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         {
             group("BC6_Send mail")
             {
-                Caption = 'Send mail';
+                Caption = 'Send mail', Comment = 'FRA="Comptabilité"';
                 action("Envoi mail facture - Four non créé")
                 {
-                    Caption = 'Envoi mail facture - Four non créé';
+                    Caption = 'Envoi mail facture - Four non créé', Comment = 'FRA="Envoi mail facture - Four non créé"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -396,7 +372,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action("Envoi mail facture - DA à créer")
                 {
-                    Caption = 'Envoi mail facture - DA à créer';
+                    Caption = 'Envoi mail facture - DA à créer', Comment = 'FRA="Envoi mail facture - DA à créer"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -420,7 +396,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action("Envoi mail facture - DA non envoyé en appro.")
                 {
-                    Caption = 'Envoi mail facture - DA non envoyé en appro.';
+                    Caption = 'Envoi mail facture - DA non envoyé en appro.', Comment = 'FRA="Envoi mail facture - DA non envoyé en appro."';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -443,7 +419,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action("Envoi mail facture - DA non approuvée")
                 {
-                    Caption = 'Envoi mail facture - DA non approuvée';
+                    Caption = 'Envoi mail facture - DA non approuvée', Comment = 'FRA="Envoi mail facture - DA non approuvée"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -466,7 +442,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action("BC6_Envoi mail facture - DA non tranform.")
                 {
-                    Caption = 'Envoi mail facture - DA non tranform.';
+                    Caption = 'Envoi mail facture - DA non tranform.', Comment = 'FRA="Envoi mail facture - DA non tranform."';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -489,7 +465,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action("BC6_Send mail invoice")
                 {
-                    Caption = 'Send mail invoice';
+                    Caption = 'Send mail invoice', Comment = 'FRA="Envoi mail facture - DA cplmt."';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -512,7 +488,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action("Envoi mail facture - BC à récept.")
                 {
-                    Caption = 'Envoi mail facture - BC à récept.';
+                    Caption = 'Envoi mail facture - BC à récept.', Comment = 'FRA="Envoi mail facture - BC à récept."';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -535,7 +511,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action("Envoi mail facture - Fact. à approuver")
                 {
-                    Caption = 'Envoi mail facture - Fact. à approuver';
+                    Caption = 'Envoi mail facture - Fact. à approuver', Comment = 'FRA="Envoi mail facture - Fact. à approuver"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -559,7 +535,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action("Envoi mail facture - Factures Presta Timé")
                 {
-                    Caption = 'Envoi mail facture - Factures Presta Timé';
+                    Caption = 'Envoi mail facture - Factures Presta Timé', Comment = 'FRA="Envoi mail facture - Factures Presta Timé"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -580,7 +556,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
                 action(BC6_Historique)
                 {
-                    Caption = 'Historic';
+                    Caption = 'Historic', Comment = 'FRA="Historique"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -598,23 +574,6 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 }
             }
         }
-        addbefore("Co&mments")
-        {
-            action(BC6_vendor)
-            {
-                ApplicationArea = Basic, Suite;
-                Caption = 'Vendor';
-                Enabled = Rec."Buy-from Vendor No." <> '';
-                Image = Vendor;
-                Promoted = true;
-                PromotedCategory = Category11;
-                RunObject = page "Vendor List";
-                RunPageLink = "No." = field("Buy-from Vendor No."),
-                                  "Date Filter" = field("Date Filter");
-                ShortCutKey = 'Shift+F7';
-                ToolTip = 'View or edit detailed information about the vendor on the purchase document.';
-            }
-        }
     }
 
     var
@@ -623,6 +582,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         Grec_PurchaseLine: Record "Purchase Line";
         Grec_PurchPaySetup: Record "Purchases & Payables Setup";
         PurchCalcDiscByType: Codeunit "Purch - Calc Disc. By Type";
+        OfficeMgt: Codeunit "Office Management";
         Gform_FAPMail: Page "BC6_New Mail FAP";
         [InDataSet]
         JobQueueVisible: Boolean;
@@ -630,36 +590,27 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         Grec_MontantFacture: Decimal;
         Grec_MontantMax: Decimal;
         Gint_cptLine: Integer;
-        Text004: label 'This invoice was recorded without reconciliation with a BC, you must submit it for validation';
-        Text005: label 'Validation is not possible without new approval.';
-        Text006: label 'Validation is not possible because the status of your invoice is "%1".';
+        Text004: label 'This invoice was recorded without reconciliation with a BC, you must submit it for validation', Comment = 'FRA="Cette facture a été enregistrée sans rapprochement avec un BC, vous devez la soumettre à validation"';
+        Text005: label 'Validation is not possible without new approval.', Comment = 'FRA="La validation n''est pas possible sans nouvelle approbation."';
+        Text006: label 'Validation is not possible because the status of your invoice is "%1".', Comment = 'FRA="La validation n''est pas possible car le statut de votre facture est "%1"."';
+        Text007: label 'Le montant total HT de la facture est différent du montant à enregistrer', Comment = 'FRA="Le montant total HT de la facture est différent du montant à enregistrer"';
         Gtext_ObjetMail: Text[1024];
         Gtext_Param1: Text[1024];
         Gtext_Param2: Text[1024];
         Gtext_Param3: Text[1024];
+        IsOfficeAddin: Boolean;
+        DocumentIsPosted: Boolean;
 
     var
         UserMgt: Codeunit "BC6_FunctionsMgt";
 
     trigger OnOpenPage()
-
     begin
         Rec.FILTERGROUP(2);
         Rec.SETFILTER("Assigned User ID", UserMgt.jx_GetPurchasesFilter());
         Rec.FILTERGROUP(0);
-    end;
+        IsOfficeAddin := OfficeMgt.IsAvailable();
 
-    local procedure BuyfromVendorNoOnAfterValidate()
-    begin
-        if Rec.GETFILTER("Buy-from Vendor No.") = xRec."Buy-from Vendor No." then
-            if Rec."Buy-from Vendor No." <> xRec."Buy-from Vendor No." then
-                Rec.SETRANGE("Buy-from Vendor No.");
-        CurrPage.UPDATE();
-    end;
-
-    local procedure PaytoVendorNoOnAfterValidate()
-    begin
-        CurrPage.UPDATE();
     end;
 
     procedure VerifierLigneRcpt(): Boolean
@@ -741,5 +692,62 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         //Rec.MODIFY;
         exit(true);
         //Fin modif JX-AUd du 25/10/11
+    end;
+
+    local procedure PostDocument(PostingCodeunitID: Integer; Navigate: Enum "Navigate After Posting")
+    var
+        PurchaseHeader: Record "Purchase Header";
+        PurchInvHeader: Record "Purch. Inv. Header";
+        LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
+        InstructionMgt: Codeunit "Instruction Mgt.";
+        IsScheduledPosting: Boolean;
+    begin
+        LinesInstructionMgt.PurchaseCheckAllLinesHaveQuantityAssigned(Rec);
+
+        Rec.SendToPosting(PostingCodeunitID);
+
+        IsScheduledPosting := Rec."Job Queue Status" = Rec."Job Queue Status"::"Scheduled for Posting";
+        DocumentIsPosted := (not PurchaseHeader.Get(Rec."Document Type", Rec."No.")) or IsScheduledPosting;
+
+        if IsScheduledPosting then
+            CurrPage.Close();
+        CurrPage.Update(false);
+        if PostingCodeunitID <> CODEUNIT::"Purch.-Post (Yes/No)" then
+            exit;
+
+        case Navigate of
+            "Navigate After Posting"::"Posted Document":
+                if IsOfficeAddin then begin
+                    PurchInvHeader.SetRange("Pre-Assigned No.", Rec."No.");
+                    PurchInvHeader.SetRange("Order No.", '');
+                    if PurchInvHeader.FindFirst() then
+                        PAGE.Run(PAGE::"Posted Purchase Invoice", PurchInvHeader);
+                end else
+                    if InstructionMgt.IsEnabled(InstructionMgt.ShowPostedConfirmationMessageCode()) then
+                        ShowPostedConfirmationMessage();
+            "Navigate After Posting"::"New Document":
+                if DocumentIsPosted then begin
+                    Clear(PurchaseHeader);
+                    PurchaseHeader.Init();
+                    PurchaseHeader.Validate("Document Type", PurchaseHeader."Document Type"::Invoice);
+                    PurchaseHeader.Insert(true);
+                    PAGE.Run(PAGE::"Purchase Invoice", PurchaseHeader);
+                end;
+        end;
+    end;
+
+    local procedure ShowPostedConfirmationMessage()
+    var
+        PurchInvHeader: Record "Purch. Inv. Header";
+        InstructionMgt: Codeunit "Instruction Mgt.";
+        OpenPostedPurchaseInvQst: Label 'The invoice is posted as number %1 and moved to the Posted Purchase Invoices window.\\Do you want to open the posted invoice?', Comment = 'FRA="La facture est validée sous le numéro %1 et déplacée vers la fenêtre Factures d''achat validées.\\Voulez-vous ouvrir la facture validée ?"';
+    begin
+        PurchInvHeader.SetRange("Pre-Assigned No.", Rec."No.");
+        PurchInvHeader.SetRange("Order No.", '');
+        if PurchInvHeader.FindFirst() then
+            if InstructionMgt.ShowConfirm(StrSubstNo(OpenPostedPurchaseInvQst, PurchInvHeader."No."),
+                 InstructionMgt.ShowPostedConfirmationMessageCode())
+            then
+                InstructionMgt.ShowPostedDocument(PurchInvHeader, Page::"Purchase Invoice");
     end;
 }

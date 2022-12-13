@@ -1,6 +1,6 @@
 xmlport 50016 "BC6_Cash Pooling"
 {
-    Caption = 'Cash Pooling';
+    Caption = 'Cash Pooling', Comment = 'FRA="Cash Pooling"';
     Direction = Import;
     Format = VariableText;
     FieldSeparator = '|';
@@ -22,7 +22,7 @@ xmlport 50016 "BC6_Cash Pooling"
                     Grec_GlobalTemporaryTable.SETFILTER(Grec_GlobalTemporaryTable.Description, 'OK');
 
                     //Pour chaque société, tester le code société et si il correspond, renseigner la feuille de compta
-                    if Grec_GlobalTemporaryTable.FIND('-') then
+                    if Grec_GlobalTemporaryTable.FindSet() then
                         repeat
 
                             Grec_CompanyInfo.CHANGECOMPANY(Grec_GlobalTemporaryTable."Document No.");
@@ -147,7 +147,7 @@ xmlport 50016 "BC6_Cash Pooling"
         Gint_Month: Integer;
         Gint_Year: Integer;
         varInteger: Integer;
-        Text004: label 'No company accounting sheet contains named C-POOL';
+        Text004: label 'No company accounting sheet contains named C-POOL', Comment = 'FRA="Aucune société ne contient de feuille de comptabilité nommée C-POOL"';
         Gtext_AccountNo: Text[30];
 
     trigger OnPreXMLport()
@@ -156,7 +156,7 @@ xmlport 50016 "BC6_Cash Pooling"
         Gint_Compteur := 0;
         Grec_CompanyInfo.GET();
 
-        Gcode_JournalTemplateName := 'GNRAL';
+        Gcode_JournalTemplateName := 'GÉNÉRAL';
         Gcode_JournalBatchName := 'C-POOL';
 
         Grec_GlobalTemporaryTable.DELETEALL();

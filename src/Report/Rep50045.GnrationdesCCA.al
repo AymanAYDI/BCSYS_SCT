@@ -1,6 +1,6 @@
 report 50045 "BC6_Génération des CCA"
 {
-    Caption = 'Generation of invoices not received';
+    Caption = 'Generation of invoices not received', Comment = 'FRA="Génération des CCA"';
     ProcessingOnly = true;
 
     dataset
@@ -87,17 +87,17 @@ report 50045 "BC6_Génération des CCA"
                     field("Date de début"; Gdate_Debut)
                     {
                         ApplicationArea = All;
-                        Caption = 'Date de début';
+                        Caption = 'Date de début', Comment = 'FRA="Date de début"';
                     }
                     field("Date de fin (Date Compta.)"; Gdate_Compta)
                     {
                         ApplicationArea = All;
-                        Caption = 'Date de fin (Date Compta.)';
+                        Caption = 'Date de fin (Date Compta.)', Comment = 'FRA="Date de fin (Date Compta.)"';
                     }
                     field(Période; Gcode_ValeurAxe)
                     {
                         ApplicationArea = All;
-                        Caption = 'Période';
+                        Caption = 'Période', Comment = 'FRA="Période"';
                     }
                 }
                 group("Filtre Documents Exclus")
@@ -105,36 +105,27 @@ report 50045 "BC6_Génération des CCA"
                     field("Première CCA"; Gtext_DocExclus_CCAPremiere)
                     {
                         ApplicationArea = All;
-                        Caption = 'Première CCA';
+                        Caption = 'Première CCA', Comment = 'FRA="Première CCA"';
                     }
                     field("Dernière CCA"; Gtext_DocExclus_CCADerniere)
                     {
                         ApplicationArea = All;
-                        Caption = 'Dernière CCA';
+                        Caption = 'Dernière CCA', Comment = 'FRA="Dernière CCA"';
                     }
                     field("Première EXCCA"; Gtext_DocExclus_EXCCAPremiere)
                     {
                         ApplicationArea = All;
-                        Caption = 'Première EXCCA';
+                        Caption = 'Première EXCCA', Comment = 'FRA="Première EXCCA"';
                     }
                     field("Dernière EXCCA"; Gtext_DocExclus_EXCCADerniere)
                     {
                         ApplicationArea = All;
-                        Caption = 'PDernière EXCCA';
+                        Caption = 'PDernière EXCCA', Comment = 'FRA="PDernière EXCCA"';
                     }
                 }
             }
         }
-
-        actions
-        {
-        }
     }
-
-    labels
-    {
-    }
-
     trigger OnInitReport()
     begin
         Gint_Ligne := 0;
@@ -246,10 +237,10 @@ report 50045 "BC6_Génération des CCA"
         Gint_EXCCAPremiere: Integer;
         Gint_Ligne: Integer;
         i: Integer;
-        Text001: label 'This sheet is not intended to invoices not received';
-        Text002: label 'This sheet is not empty.\\All data being entered will be replaced.\\Would you like to continue?';
-        Text003: label 'Operation canceled';
-        Text004: label 'please fill the ''Periode'' axis';
+        Text001: label 'This sheet is not intended to invoices not received', Comment = 'FRA="Cette feuille n''est pas destinée aux CCA."';
+        Text002: label 'This sheet is not empty.\\All data being entered will be replaced.\\Would you like to continue?', Comment = 'FRA="Cette feuille n''est pas vide.\\Toutes les données actuellement saises seront remplacées.\\Souhaitez-vous tout de même poursuivre ?"';
+        Text003: label 'Operation canceled', Comment = 'FRA="Opération annulée"';
+        Text004: label 'please fill the ''Periode'' axis', Comment = 'FRA="Veuillez renseigner l''axe période"';
         Gtext_DocExclus_CCADerniere: Text[30];
         Gtext_DocExclus_CCAPremiere: Text[30];
         Gtext_DocExclus_EXCCADerniere: Text[30];

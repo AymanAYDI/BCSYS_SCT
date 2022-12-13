@@ -1,6 +1,6 @@
 report 50046 "BC6_Contrepassation des CCA"
 {
-    Caption = 'Reversal of invoices not received';
+    Caption = 'Reversal of invoices not received', Comment = 'FRA="Contrepassation des CCA"';
     ProcessingOnly = true;
 
     dataset
@@ -68,21 +68,12 @@ report 50046 "BC6_Contrepassation des CCA"
                     field("Date de comptabilisation"; Gdate_Compta)
                     {
                         ApplicationArea = All;
-                        Caption = 'Date de comptabilisation';
+                        Caption = 'Date de comptabilisation', Comment = 'FRA="Date de comptabilisation"';
                     }
                 }
             }
         }
-
-        actions
-        {
-        }
     }
-
-    labels
-    {
-    }
-
     trigger OnPreReport()
     begin
         Grec_FeuilleComptaEXTCCA.SETRANGE("Journal Template Name", Grec_FeuilleComptaEXTCCA."Journal Template Name");
@@ -109,9 +100,9 @@ report 50046 "BC6_Contrepassation des CCA"
         Gcode_NoEXTCCA: Code[20];
         Gdate_Compta: Date;
         Gint_Ligne: Integer;
-        Text001: label 'This sheet is not a reversal of invoices not received.';
-        Text002: label 'This sheet is not empty.\\All data being entered will be replaced.\\Would you like to continue ?';
-        Text003: label 'Operation canceled';
+        Text001: label 'This sheet is not a reversal of invoices not received.', Comment = 'FRA="Cette feuille n''est pas destinée à la contrepassation des CCA."';
+        Text002: label 'This sheet is not empty.\\All data being entered will be replaced.\\Would you like to continue ?', Comment = 'FRA="Cette feuille n''est pas vide.\\Toutes les données actuellement saises seront remplacées.\\Souhaitez-vous tout de même poursuivre ?"';
+        Text003: label 'Operation canceled', Comment = 'FRA="Opération annulée"';
 
     procedure SetEXTCCAJnlLine(FeuilleComptaEXTCCA: Record "Gen. Journal Line")
     begin

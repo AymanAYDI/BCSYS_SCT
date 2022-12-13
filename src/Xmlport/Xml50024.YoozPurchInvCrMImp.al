@@ -1,6 +1,6 @@
 xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
 {
-    Caption = 'Yooz Purch. Inv.&CrM. Import';
+    Caption = 'Yooz Purch. Inv.&CrM. Import', Comment = 'FRA="Modifier axe période avoirs"';
     Direction = Import;
     Format = VariableText;
     FieldDelimiter = '<None>';
@@ -12,7 +12,7 @@ xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
     {
         textelement(root)
         {
-            tableelement("Yooz"; 2000000026)
+            tableelement("Yooz"; Integer)
             {
                 textelement(Gtext_Champ1) { }
                 textelement(Gtext_Champ2) { }
@@ -119,7 +119,7 @@ xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
         Gint_Compteur: Integer;
         NbOComp: Integer;
         NbOk: Integer;
-        Text001: label 'Yooz Invoices are integrated';
+        Text001: label 'Yooz Invoices are integrated', Comment = 'FRA="%1 facture(s) Yooz importée(s)."';
         CompName: Text;
         OComp: Text;
 }

@@ -1,6 +1,6 @@
 xmlport 50014 "BC6_ETAFI"
 {
-    Caption = 'ETAFI';
+    Caption = 'ETAFI', Comment = 'FRA="ETAFI"';
     Direction = Export;
     TextEncoding = WINDOWS;
     Format = FixedText;

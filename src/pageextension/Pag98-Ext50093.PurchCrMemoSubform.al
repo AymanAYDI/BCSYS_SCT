@@ -11,6 +11,10 @@ pageextension 50093 "BC6_PurchCrMemoSubform" extends "Purch. Cr. Memo Subform" /
         {
             Visible = false;
         }
+        modify(Control23)
+        {
+            Visible = false;
+        }
         modify("Total Amount Excl. VAT")
         {
             Visible = false;
@@ -22,14 +26,6 @@ pageextension 50093 "BC6_PurchCrMemoSubform" extends "Purch. Cr. Memo Subform" /
         modify("Total Amount Incl. VAT")
         {
             Visible = false;
-        }
-        addafter(Nonstock)
-        {
-            field("BC6_Gen. Prod. Posting Group"; Rec."Gen. Prod. Posting Group")
-            {
-                Visible = false;
-                ApplicationArea = All;
-            }
         }
         addafter(ShortcutDimCode8)
         {
@@ -89,7 +85,7 @@ pageextension 50093 "BC6_PurchCrMemoSubform" extends "Purch. Cr. Memo Subform" /
         Lrec_PurchLines.SETFILTER(Lrec_PurchLines."Document Type", '%1', Rec."Document Type");
         Lrec_PurchLines.SETFILTER(Lrec_PurchLines."Document No.", '%1', Rec."Document No.");
 
-        if Lrec_PurchLines.FIND('-') then
+        if Lrec_PurchLines.FindFirst() then
             Rtxt_Description := Lrec_PurchLines.Description;
         //Fin Ajout JX-XAD le 15/01/2010
     end;

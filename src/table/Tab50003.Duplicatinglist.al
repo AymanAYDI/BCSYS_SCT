@@ -1,6 +1,6 @@
 table 50003 "BC6_Duplicating list"
 {
-    Caption = 'Liste de duplication';
+    Caption = 'Liste de duplication', Comment = 'FRA="Liste de duplication"';
     DataClassification = CustomerContent;
 
     fields

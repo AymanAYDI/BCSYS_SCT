@@ -1,6 +1,6 @@
 report 50016 "BC6_Génération des FNP"
 {
-    Caption = 'Generation of invoices not received';
+    Caption = 'Generation of invoices not received', Comment = 'FRA="Génération des FNP"';
     ProcessingOnly = true;
 
     dataset
@@ -77,21 +77,16 @@ report 50016 "BC6_Génération des FNP"
                 field("Date de comptabilisation :"; Gdate_Compta)
                 {
                     ApplicationArea = All;
-                    Caption = 'Date de comptabilisation :';
+                    Caption = 'Date de comptabilisation :', Comment = 'FRA="Date de comptabilisation"';
                 }
                 field(Période; Gcode_ValeurAxe)
                 {
                     ApplicationArea = All;
-                    Caption = 'Période';
+                    Caption = 'Période', Comment = 'FRA="Période"';
                 }
             }
         }
     }
-
-    labels
-    {
-    }
-
     trigger OnPreReport()
     begin
         Grec_FeuilleComptaFNP.SETRANGE("Journal Template Name", Grec_FeuilleComptaFNP."Journal Template Name");
@@ -131,10 +126,10 @@ report 50016 "BC6_Génération des FNP"
         Gdec_MontantTTC: Decimal;
         "Gint_AnnéeComptable": Integer;
         Gint_Ligne: Integer;
-        Text001: label 'This sheet is not intended to invoices not received';
-        Text002: label 'This sheet is not empty.\\All data being entered will be replaced.\\Would you like to continue?';
-        Text003: label 'Operation canceled';
-        Text004: label 'please fill the ''Periode'' axis';
+        Text001: label 'This sheet is not intended to invoices not received', Comment = 'FRA="Cette feuille n''est pas destinée aux FNP."';
+        Text002: label 'This sheet is not empty.\\All data being entered will be replaced.\\Would you like to continue?', Comment = 'FRA="Cette feuille n''est pas vide.\\Toutes les données actuellement saises seront remplacées.\\Souhaitez-vous tout de même poursuivre ?"';
+        Text003: label 'Operation canceled', Comment = 'FRA="Opération annulée"';
+        Text004: label 'please fill the ''Periode'' axis', Comment = 'FRA="Veuillez renseigner l''axe période"';
 
     procedure SetFNPJnlLine(FeuilleComptaFNP: Record "Gen. Journal Line")
     begin

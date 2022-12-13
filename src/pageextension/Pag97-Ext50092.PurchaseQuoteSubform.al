@@ -1,17 +1,8 @@
 pageextension 50092 "BC6_PurchaseQuoteSubform" extends "Purchase Quote Subform" //97
 {
     //TODO: un variable a été modifié: Array[8] devient Array[10],
-    //field "VAT Prod. Posting Group" a faire
     layout
     {
-        modify(Description)
-        {
-            Visible = true;
-        }
-        modify("VAT Prod. Posting Group")
-        {
-            Visible = false;
-        }
         modify("Location Code")
         {
             Visible = false;
@@ -43,7 +34,6 @@ pageextension 50092 "BC6_PurchaseQuoteSubform" extends "Purchase Quote Subform" 
         }
         modify("Qty. to Assign")
         {
-            //BlankZero = true;
             Visible = false;
         }
         modify("Qty. Assigned")
@@ -99,15 +89,6 @@ pageextension 50092 "BC6_PurchaseQuoteSubform" extends "Purchase Quote Subform" 
         {
             Visible = false;
         }
-        addfirst(Control1)
-        {
-            field("BC6_Line No."; Rec."Line No.")
-            {
-                Editable = false;
-                Visible = false;
-                ApplicationArea = All;
-            }
-        }
         addafter(ShortcutDimCode8)
         {
             field("ShortcutDimCode[9]"; ShortcutDimCode[9])
@@ -149,56 +130,4 @@ pageextension 50092 "BC6_PurchaseQuoteSubform" extends "Purchase Quote Subform" 
             }
         }
     }
-    actions
-    {
-        modify(SelectMultiItems)
-        {
-            Visible = false;
-        }
-        modify(DocAttach)
-        {
-            Visible = false;
-        }
-        addfirst(processing)
-        {
-        }
-    }
-
-    var
-        UpdateAllowedVar: Boolean;
-        Text000: label 'Unable to run this function while in View mode.';
-
-    procedure ItemChargeAssgnt()
-    begin
-        Rec.ShowItemChargeAssgnt();
-    end;
-
-    procedure UpdateAllowed(): Boolean
-    begin
-        if UpdateAllowedVar = false then begin
-            MESSAGE(Text000);
-            exit(false);
-        end;
-        exit(true);
-    end;
-
-    procedure ShowPrices()
-    var
-        PurchHeader: Record "Purchase Header";
-        PurchPriceCalcMgt: Codeunit "Purch. Price Calc. Mgt.";
-    begin
-        PurchHeader.GET(Rec."Document Type", Rec."Document No.");
-        CLEAR(PurchPriceCalcMgt);
-        PurchPriceCalcMgt.GetPurchLinePrice(PurchHeader, Rec);
-    end;
-
-    procedure ShowLineDisc()
-    var
-        PurchHeader: Record "Purchase Header";
-        PurchPriceCalcMgt: Codeunit "Purch. Price Calc. Mgt.";
-    begin
-        PurchHeader.GET(Rec."Document Type", Rec."Document No.");
-        CLEAR(PurchPriceCalcMgt);
-        PurchPriceCalcMgt.GetPurchLineLineDisc(PurchHeader, Rec);
-    end;
 }

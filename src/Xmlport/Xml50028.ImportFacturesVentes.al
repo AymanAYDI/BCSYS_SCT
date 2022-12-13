@@ -5,12 +5,13 @@ xmlport 50028 "BC6_Import Factures Ventes"
     FieldSeparator = '[;]';
     UseRequestPage = false;
     FileName = '*.csv';
+    Caption = 'Import Factures Ventes', Comment = 'FRA="Import Factures Ventes"';
 
     schema
     {
         textelement(Root)
         {
-            tableelement(ImportFactureVente; 2000000026)
+            tableelement(ImportFactureVente; Integer)
             {
                 textelement(Gtext_Champ1) { }
                 textelement(Gtext_Champ2) { }
@@ -29,7 +30,7 @@ xmlport 50028 "BC6_Import Factures Ventes"
                 textelement(Gtext_Champ15) { }
                 textelement(Gtext_Champ16) { }
 
-                // SourceTable =Table2000000026;
+                //SourceTable =2000000026;
                 // AutoSave =No;
                 // AutoUpdate =No;
                 // AutoReplace =No;
@@ -68,10 +69,8 @@ xmlport 50028 "BC6_Import Factures Ventes"
                     Gtemporaire.SETFILTER(Gtemporaire.Piece, FORMAT(Gint_NumLigne));
                     Gtemporaire.SETFILTER(Gtemporaire.Compte, '');
 
-                    if not (Gtemporaire.FIND('-')) then //si la facture n'existe pas on la cr‚er
-                    begin
-
-                        //traitement pour avoir le num‚ro de facture
+                    if not (Gtemporaire.FindFirst()) then begin //si la facture n'existe pas on la créer
+                        //traitement pour avoir le numéro de facture
                         if Grec_LastNoSeriesLine.GET('VAP', 10000) then begin
                             Gcode_No := INCSTR(Grec_LastNoSeriesLine."Last No. Used");
                             Grec_LastNoSeriesLine."Last No. Used" := Gcode_No;
@@ -150,12 +149,12 @@ xmlport 50028 "BC6_Import Factures Ventes"
         Gint_LineNo: Integer;
         Gint_NumLigne: Integer;
         i: Integer;
-        Text0001: label 'The client "%1" does not exist row %2';
-        Text0002: label 'Error converting quantity to decimal';
-        Text0003: label 'General account %1 does not exist';
-        Text0004: label 'The Your reference field exceeds the 30 characters allowed line %1';
-        Text009: label 'The file has been imported successfully.';
-        Text013: label 'Error on line "%3" of file. \\ Code "%1" for analytical section "%2" does not exist.';
+        Text0001: label 'The client "%1" does not exist row %2', Comment = 'FRA="Le client "%1" n''existe pas ligne %2"';
+        Text0002: label 'Error converting quantity to decimal', Comment = 'FRA="Erreur sur la conversion de la quantité en decimal"';
+        Text0003: label 'General account %1 does not exist', Comment = 'FRA="Le compte général %1 n''existe pas"';
+        Text0004: label 'The Your reference field exceeds the 30 characters allowed line %1', Comment = 'FRA="Le champ Votre référence dépasse les 30 caractères autorisés ligne %1"';
+        Text009: label 'The file has been imported successfully.', Comment = 'FRA="Le fichier a bien été importé."';
+        Text013: label 'Error on line "%3" of file. \\ Code "%1" for analytical section "%2" does not exist.', Comment = 'FRA="Erreur sur la ligne "%3" du fichier.\\Le code "%1" pour la section analytique "%2" n''existe pas."';
 
     trigger OnInitXMLport()
     begin

@@ -8,6 +8,10 @@ pageextension 50022 "BC6_GeneralLedgerEntries" extends "General Ledger Entries" 
             {
                 ApplicationArea = All;
             }
+            field("BC6_Entry No."; Rec."Entry No.")
+            {
+                ApplicationArea = All;
+            }
         }
         addafter("Gen. Prod. Posting Group")
         {
@@ -33,7 +37,7 @@ pageextension 50022 "BC6_GeneralLedgerEntries" extends "General Ledger Entries" 
         {
             field(BC6_Gtext_CodeAxe; Gtext_CodeAxe)
             {
-                Caption = 'Code intragroupe ';
+                Caption = 'Code intragroupe', Comment = 'FRA="Code intragroupe"';
                 ApplicationArea = All;
             }
             field("BC6_Source No. 2"; Rec."Source No.")
@@ -48,17 +52,18 @@ pageextension 50022 "BC6_GeneralLedgerEntries" extends "General Ledger Entries" 
                 ApplicationArea = All;
             }
         }
+        modify("Entry No.")
+        {
+            Visible = false;
+        }
     }
     actions
     {
         addafter("Value Entries")
         {
-            separator(Action1000000004)
-            {
-            }
             action("BC6_Modifier axes analytiques")
             {
-                Caption = 'Modify dimensions';
+                Caption = 'Modify dimensions', Comment = 'FRA="Axes analytiques"';
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -74,8 +79,9 @@ pageextension 50022 "BC6_GeneralLedgerEntries" extends "General Ledger Entries" 
     var
         Grec_DefaultDimension: Record "Default Dimension";
         Grec_NEntetefacturefournisseur: Record "Purch. Inv. Header";
+        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
         Gcode_Axe: Code[20];
-        Text001: label 'This type of G/L Entry is blocked by modification of dimensions';
+        Text001: label 'This type of G/L Entry is blocked by modification of dimensions', Comment = 'FRA="Ce type d''écriture est bloqué en modification analytique"';
         Gtext_CodeAxe: Text[30];
 
     trigger OnAfterGetRecord()
@@ -97,5 +103,12 @@ pageextension 50022 "BC6_GeneralLedgerEntries" extends "General Ledger Entries" 
             Grec_NEntetefacturefournisseur.GET(Rec."Document No.")
         else
             CLEAR(Grec_NEntetefacturefournisseur);
+    end;
+
+    trigger OnOpenPage()
+    begin
+        //Modif JX-AUD du 03/01/2012
+        IF Grecord_GeneralLedgerSetup.FIND('-') THEN
+            Gcode_Axe := Grecord_GeneralLedgerSetup."Shortcut Dimension 8 Code";
     end;
 }

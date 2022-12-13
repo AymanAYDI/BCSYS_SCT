@@ -1,7 +1,7 @@
 page 50004 "BC6_Purch. Invoice Subform VSC"
 {
     AutoSplitKey = true;
-    Caption = 'Purch. Invoice Subform';
+    Caption = 'Purch. Invoice Subform', Comment = 'FRA="Sous-form. facture achat"';
     DelayedInsert = true;
     MultipleNewLines = true;
     PageType = ListPart;
@@ -373,12 +373,12 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
         {
             group("Fonction&s")
             {
-                Caption = 'F&unctions';
+                Caption = 'F&unctions', Comment = 'FRA="Fonction&s"';
                 Image = "Action";
                 action("&Eclater nomenclature")
                 {
                     AccessByPermission = tabledata "BOM Component" = R;
-                    Caption = 'E&xplode BOM';
+                    Caption = 'E&xplode BOM', Comment = 'FRA="&Eclater nomenclature"';
                     Image = ExplodeBOM;
                     ApplicationArea = All;
 
@@ -390,7 +390,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 action("Insérer te&xtes étendus")
                 {
                     AccessByPermission = tabledata "Extended Text Header" = R;
-                    Caption = 'Insert &Ext. Texts';
+                    Caption = 'Insert &Ext. Texts', Comment = 'FRA="Insérer te&xtes étendus"';
                     Image = Text;
                     ApplicationArea = All;
 
@@ -402,7 +402,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 action(GetReceiptLines)
                 {
                     AccessByPermission = tabledata "Purch. Rcpt. Header" = R;
-                    Caption = '&Get Receipt Lines';
+                    Caption = '&Get Receipt Lines', Comment = 'FRA="Extraire lignes réce&ption"';
                     Ellipsis = true;
                     Image = Receipt;
                     ApplicationArea = All;
@@ -415,15 +415,15 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
             }
             group("&Ligne")
             {
-                Caption = '&Line';
+                Caption = '&Line', Comment = 'FRA="&Ligne"';
                 Image = Line;
                 group("Disponibilité article par")
                 {
-                    Caption = 'Item Availability by';
+                    Caption = 'Item Availability by', Comment = 'FRA="Disponibilité article par"';
                     Image = ItemAvailability;
                     action("Événement")
                     {
-                        Caption = 'Event';
+                        Caption = 'Event', Comment = 'FRA="Événement"';
                         Image = "Event";
                         ApplicationArea = All;
 
@@ -434,7 +434,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                     }
                     action("Période")
                     {
-                        Caption = 'Period';
+                        Caption = 'Period', Comment = 'FRA="Période"';
                         Image = Period;
                         ApplicationArea = All;
 
@@ -445,7 +445,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                     }
                     action(Variante)
                     {
-                        Caption = 'Variant';
+                        Caption = 'Variant', Comment = 'FRA="Variante"';
                         Image = ItemVariant;
                         ApplicationArea = All;
 
@@ -457,7 +457,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                     action(Magasin)
                     {
                         AccessByPermission = tabledata Location = R;
-                        Caption = 'Location';
+                        Caption = 'Location', Comment = 'FRA="Magasin"';
                         Image = Warehouse;
                         ApplicationArea = All;
 
@@ -468,7 +468,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                     }
                     action("Niveau nomenclature")
                     {
-                        Caption = 'BOM Level';
+                        Caption = 'BOM Level', Comment = 'FRA="Niveau nomenclature"';
                         Image = BOMLevel;
                         ApplicationArea = All;
 
@@ -481,7 +481,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 action("Axes analytiques")
                 {
                     AccessByPermission = tabledata Dimension = R;
-                    Caption = 'Dimensions';
+                    Caption = 'Dimensions', Comment = 'FRA="Axes analytiques"';
                     Image = Dimensions;
                     ShortCutKey = 'Shift+Ctrl+D';
                     ApplicationArea = All;
@@ -493,7 +493,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 }
                 action("Co&mmentaires")
                 {
-                    Caption = 'Co&mments';
+                    Caption = 'Co&mments', Comment = 'FRA="Co&mmentaires"';
                     Image = ViewComments;
                     ApplicationArea = All;
 
@@ -505,7 +505,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 action(ItemChargeAssignment)
                 {
                     AccessByPermission = tabledata "Item Charge" = R;
-                    Caption = 'Item Charge &Assignment';
+                    Caption = 'Item Charge &Assignment', Comment = 'FRA="&Affectation frais annexes"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -515,7 +515,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 }
                 action("Lignes &traçabilité")
                 {
-                    Caption = 'Item &Tracking Lines';
+                    Caption = 'Item &Tracking Lines', Comment = 'FRA="Lignes &traçabilité"';
                     Image = ItemTrackingLines;
                     ShortCutKey = 'Shift+Ctrl+I';
                     ApplicationArea = All;
@@ -559,46 +559,26 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
         TransferExtendedText: Codeunit "Transfer Extended Text";
         ShortcutDimCode: array[10] of Code[20];
 
-    /// <summary>
-    /// ApproveCalcInvDisc.
-    /// </summary>
     procedure ApproveCalcInvDisc()
     begin
         CODEUNIT.RUN(CODEUNIT::"Purch.-Disc. (Yes/No)", Rec);
     end;
 
-    // [Scope('Internal')]
-    /// <summary>
-    /// CalcInvDisc.
-    /// </summary>
     procedure CalcInvDisc()
     begin
         CODEUNIT.RUN(CODEUNIT::"Purch.-Calc.Discount", Rec);
     end;
 
-    // [Scope('Internal')]
-    /// <summary>
-    /// ExplodeBOM.
-    /// </summary>
     procedure ExplodeBOM()
     begin
         CODEUNIT.RUN(CODEUNIT::"Purch.-Explode BOM", Rec);
     end;
 
-    //[Scope('Internal')]
-    /// <summary>
-    /// GetReceipt.
-    /// </summary>
     procedure GetReceipt()
     begin
         CODEUNIT.RUN(CODEUNIT::"Purch.-Get Receipt", Rec);
     end;
 
-    // [Scope('Internal')]
-    /// <summary>
-    /// InsertExtendedText.
-    /// </summary>
-    /// <param name="Unconditionally">Boolean.</param>
     procedure InsertExtendedText(Unconditionally: Boolean)
     begin
         if TransferExtendedText.PurchCheckIfAnyExtText(Rec, Unconditionally) then begin
@@ -609,26 +589,16 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
             CurrPage.Update(true);
     end;
 
-    /// <summary>
-    /// ItemChargeAssgnt.
-    /// </summary>
     procedure ItemChargeAssgnt()
     begin
         Rec.ShowItemChargeAssgnt();
     end;
 
-    /// <summary>
-    /// UpdateForm.
-    /// </summary>
-    /// <param name="SetSaveRecord">Boolean.</param>
     procedure UpdateForm(SetSaveRecord: Boolean)
     begin
         CurrPage.UPDATE(SetSaveRecord);
     end;
 
-    /// <summary>
-    /// ShowPrices.
-    /// </summary>
     procedure ShowPrices()
     begin
         PurchHeader.GET(Rec."Document Type", Rec."Document No.");
@@ -636,9 +606,6 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
         PurchPriceCalcMgt.GetPurchLinePrice(PurchHeader, Rec);
     end;
 
-    /// <summary>
-    /// ShowLineDisc.
-    /// </summary>
     procedure ShowLineDisc()
     begin
         PurchHeader.GET(Rec."Document Type", Rec."Document No.");

@@ -12,142 +12,14 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
     // o         Pour VSCT  c'est le client ASNCF00000.
     // o         Pour VSC c'est le client ASNCFGLX00
 
-    //Unsupported feature: Property Modification (SourceTableView) on ""Sales Credit Memo"(Page 44)".
-
     layout
     {
-        modify("No.")
-        {
-            Importance = Promoted;
-        }
-        modify("Sell-to Customer No.")
-        {
-            Importance = Promoted;
-            ShowMandatory = true;
-        }
-        modify("Sell-to Post Code")
-        {
-            Importance = Promoted;
-        }
-        modify("Sell-to Country/Region Code")
-        {
-            Importance = Promoted;
-            Visible = false;
-        }
-
-        modify("External Document No.")
-        {
-            Importance = Promoted;
-        }
-        modify(Status)
-        {
-            Importance = Promoted;
-        }
-        modify("Credit Memo Details")
-        {
-            Caption = 'Shipping';
-        }
-
-        modify("Bill-to Contact")
-        {
-            Importance = Additional;
-        }
-
-        modify(Control1902018507)
-        {
-            Visible = true;
-        }
-        modify(Control1900316107)
-        {
-            Visible = true;
-        }
-
-        modify(Control1905767507)
-        {
-            Visible = true;
-        }
-        modify("Sell-to Customer Name")
-        {
-            Visible = false;
-        }
-
-        modify("Posting Description")
-        {
-            Visible = false;
-        }
-
-        modify("Your Reference")
-        {
-            Visible = false;
-        }
-        modify("Posting Date")
-        {
-            Visible = false;
-        }
-
-        modify("Work Description")
-        {
-            Visible = false;
-        }
-        modify(WorkDescription)
-        {
-            Visible = false;
-        }
-        modify("VAT Bus. Posting Group")
-        {
-            Visible = false;
-        }
         modify("Payment Method Code")
         {
             Visible = false;
         }
-        modify("EU 3-Party Trade")
+        addafter("Your Reference")
         {
-            Visible = false;
-        }
-        modify("Bill-to Name")
-        {
-            Visible = false;
-        }
-        modify(Control55)
-        {
-            Visible = false;
-        }
-        modify("Bill-to Country/Region Code")
-        {
-            Visible = false;
-        }
-        modify("Attached Documents")
-        {
-            Visible = false;
-        }
-        modify(Control19)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocAttachFactBox)
-        {
-            Visible = false;
-        }
-        modify(WorkflowStatus)
-        {
-            Visible = false;
-        }
-
-        addafter("Sell-to Customer Name")
-        {
-            field("BC6_Sell-to Post Code"; Rec."Sell-to Post Code")
-            {
-                Importance = Additional;
-                ApplicationArea = All;
-            }
-        }
-        addafter("Sell-to Contact")
-        {
-            field("BC6_Your Reference"; Rec."Your Reference")
-            {
-                ApplicationArea = All;
-            }
             field(BC6_Agent; Rec."BC6_Agent")
             {
                 ApplicationArea = All;
@@ -160,6 +32,10 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
                 ApplicationArea = All;
             }
         }
+        modify("Customer Posting Group")
+        {
+            Visible = false;
+        }
         addafter("VAT Bus. Posting Group")
         {
             field("BC6_Customer Posting Group2"; Rec."Customer Posting Group")
@@ -168,58 +44,10 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
                 ApplicationArea = All;
             }
         }
-        addafter("Sell-to Country/Region Code")
-        {
-            field("BC6_Ship-to Post Code"; Rec."Ship-to Post Code")
-            {
-                Importance = Promoted;
-                ApplicationArea = All;
-            }
-        }
-        addafter("Foreign Trade")
-        {
-            group(BC6_Lettrage)
-            {
-                Caption = 'Application';
-            }
-        }
     }
     actions
     {
-        modify(Statistics)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
-        modify(Release)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
-        modify(ApplyEntries)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
-        modify(CopyDocument)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
-        modify("Request Approval")
-        {
-            Caption = 'Approval';
-        }
         modify(Post)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
-        modify(DocAttach)
-        {
-            Visible = false;
-        }
-        modify("Credit Memo")
         {
             Visible = false;
         }
@@ -232,86 +60,22 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
             action(BC6_Customer)
             {
                 ApplicationArea = Basic, Suite;
-                Caption = 'Customer';
+                Caption = 'Customer', Comment = 'FRA="Client"';
                 Enabled = IsCustomerOrContactNotEmpty;
                 Image = Customer;
                 RunObject = page "Customer List";
                 RunPageLink = "No." = field("Sell-to Customer No."),
                                   "Date Filter" = field("Date Filter");
                 ShortCutKey = 'Shift+F7';
-                ToolTip = 'View or edit detailed information about the customer.';
+                ToolTip = 'View or edit detailed information about the customer.', Comment = 'FRA="Afficher ou modifier des informations détaillées sur le client."';
             }
-        }
-        modify(Dimensions)
-        {
-            Visible = false;
-        }
-        modify(Approval)
-        {
-            Visible = false;
-        }
-        modify(Approve)
-        {
-            Visible = false;
-        }
-        modify(Reject)
-        {
-            Visible = false;
-        }
-        modify(Delegate)
-        {
-            Visible = false;
-        }
-        modify(Comment)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocument)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocCard)
-        {
-            Visible = false;
-        }
-        modify(SelectIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocAttachFile)
-        {
-            Visible = false;
-        }
-        modify(RemoveIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(CreateFlow)
-        {
-            Visible = false;
-        }
-        modify(SeeFlows)
-        {
-            Visible = false;
-        }
-        modify(TestReport)
-        {
-            Visible = false;
-        }
-        modify(PostAndSend)
-        {
-            Visible = false;
-        }
-        modify("Preview Posting")
-        {
-            Visible = false;
         }
         addafter("Co&mments")
         {
             action("BC6_Axes analytiques")
             {
                 AccessByPermission = tabledata Dimension = R;
-                Caption = 'Dimensions';
+                Caption = 'Dimensions', Comment = 'FRA="Axes analytiques"';
                 Image = Dimensions;
                 ShortCutKey = 'Shift+Ctrl+D';
                 ApplicationArea = All;
@@ -323,50 +87,42 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
                 end;
             }
         }
-        addafter(CalculateInvoiceDiscount)
-        {
-            separator(Action113)
-            {
-            }
-        }
-        addafter(ApplyEntries)
-        {
-            separator(Action126)
-            {
-            }
-        }
-        addafter(GetStdCustSalesCodes)
-        {
-            separator(Action128)
-            {
-            }
-        }
-        addafter(CancelApprovalRequest)
-        {
-            separator(Action130)
-            {
-            }
-        }
-        addbefore(TestReport)
+        addfirst("P&osting")
         {
             action("BC6_P&ost")
             {
                 Promoted = true;
+                Caption = 'P&ost', Comment = 'FRA="&Valider"';
                 PromotedIsBig = true;
                 Image = PostOrder;
                 PromotedCategory = Process;
                 ApplicationArea = All;
                 trigger OnAction()
+                var
+                    ApprovalMgt: Codeunit "Approvals Mgmt.";
+                    Text003: Label 'Please enter field External Document No.', Comment = 'FRA="Veuillez saisir le champ N° doc. externe"';
                 begin
-                    PostDocument(CODEUNIT::"Sales-Post (Yes/No)");
+                    //Modif JX-AUD du 13/02/2013
+                    IF (COMPANYNAME = 'VSC') OR (COMPANYNAME = 'VSC - RECETTE') THEN
+                        IF Rec."Sell-to Customer No." = 'ASNCFGLX00' THEN
+                            IF Rec."External Document No." = '' THEN
+                                ERROR(Text003);
+
+                    IF (COMPANYNAME = 'VSCT') OR (COMPANYNAME = 'VSCT - RECETTE') THEN
+                        IF Rec."Sell-to Customer No." = 'ASNCF00000' THEN
+                            IF Rec."External Document No." = '' THEN
+                                ERROR(Text003);
+                    //Fin modif JX-AUD du 13/02/2013
+                    IF ApprovalMgt.PrePostApprovalCheckSales(Rec) THEN
+                        PostDocument(CODEUNIT::"Sales-Post (Yes/No)");
                 end;
             }
         }
-        addafter(Post)
+        addafter(TestReport)
         {
             action("BC6_Post and &Print")
             {
-                Caption = 'Post and &Print';
+                Caption = 'Post and &Print', Comment = 'FRA="Valider et i&mprimer"';
                 Image = PostPrint;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -375,34 +131,23 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
                 ApplicationArea = All;
 
                 trigger OnAction()
-                begin
-                    PostDocument(CODEUNIT::"Sales-Post + Print");
-                end;
-            }
-            action("BC6_Valider et envoyer par e-mail")
-            {
-                Caption = 'Post and Email';
-                Image = PostMail;
-                ApplicationArea = All;
-
-                trigger OnAction()
                 var
-                    SalesPostPrint: Codeunit "Sales-Post + Print";
+                    ApprovalMgt: Codeunit "Approvals Mgmt.";
+                    Text003: Label 'Please enter field External Document No.', Comment = 'FRA="Veuillez saisir le champ N° doc. externe"';
                 begin
-                    SalesPostPrint.PostAndEmail(Rec);
-                end;
-            }
-            action("BC6_Valider par l&ot")
-            {
-                Caption = 'Post &Batch';
-                Ellipsis = true;
-                Image = PostBatch;
-                ApplicationArea = All;
+                    IF (COMPANYNAME = 'VSC') OR (COMPANYNAME = 'VSC - RECETTE') THEN
+                        IF Rec."Sell-to Customer No." = 'ASNCFGLX00' THEN
+                            IF Rec."External Document No." = '' THEN
+                                ERROR(Text003);
 
-                trigger OnAction()
-                begin
-                    REPORT.RUNMODAL(REPORT::"Batch Post Sales Credit Memos", true, true, Rec);
-                    CurrPage.UPDATE(false);
+                    IF (COMPANYNAME = 'VSCT') OR (COMPANYNAME = 'VSCT - RECETTE') THEN
+                        IF Rec."Sell-to Customer No." = 'ASNCF00000' THEN
+                            IF Rec."External Document No." = '' THEN
+                                ERROR(Text003);
+                    //Fin modif JX-AUD du 13/02/2013
+
+                    IF ApprovalMgt.PrePostApprovalCheckSales(Rec) THEN
+                        PostDocument(CODEUNIT::"Sales-Post + Print");
                 end;
             }
         }
@@ -410,35 +155,16 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
 
     var
         IsCustomerOrContactNotEmpty: Boolean;
-
-    local procedure SetControlAppearance()
-    begin
-        IsCustomerOrContactNotEmpty := (Rec."Sell-to Customer No." <> '') or (Rec."Sell-to Contact No." <> '');
-    end;
-
-    local procedure SelltoCustomerNoOnAfterValidat()
-    begin
-        if Rec.GETFILTER("Sell-to Customer No.") = xRec."Sell-to Customer No." then
-            if Rec."Sell-to Customer No." <> xRec."Sell-to Customer No." then
-                Rec.SETRANGE("Sell-to Customer No.");
-        CurrPage.UPDATE();
-    end;
-
-    local procedure BilltoCustomerNoOnAfterValidat()
-    begin
-        CurrPage.UPDATE();
-    end;
+        DocumentIsPosted: Boolean;
 
     local procedure PostDocument(PostingCodeunitID: Integer)
     var
-        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
         SalesHeader: Record "Sales Header";
-        InstructionMgt: Codeunit "Instruction Mgt.";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
         OfficeMgt: Codeunit "Office Management";
-        DocumentIsPosted: Boolean;
-        IsScheduledPosting: Boolean;
+        InstructionMgt: Codeunit "Instruction Mgt.";
         PreAssignedNo: Code[20];
-
+        IsScheduledPosting: Boolean;
     begin
         CheckSalesCheckAllLinesHaveQuantityAssigned();
         PreAssignedNo := Rec."No.";
@@ -451,7 +177,6 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
         if IsScheduledPosting then
             CurrPage.Close();
         CurrPage.Update(false);
-
         if PostingCodeunitID <> CODEUNIT::"Sales-Post (Yes/No)" then
             exit;
 
@@ -468,24 +193,44 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
     var
         SalesCrMemoHeader: Record "Sales Cr.Memo Header";
         InstructionMgt: Codeunit "Instruction Mgt.";
-        OpenPostedSalesCrMemoQst: label 'The credit memo is posted as number %1 and moved to the Posted Sales Credit Memos window.\\Do you want to open the posted credit memo?', Comment = '%1 = posted document number';
-
+        OpenPostedSalesCrMemoQst: label 'The credit memo is posted as number %1 and moved to the Posted Sales Credit Memos window.\\Do you want to open the posted credit memo?', Comment = 'FRA="L''avoir vente est inscrit au numéro %1 et déplacé à la fenêtre Avoirs vente enregistrés. Voulez-vous ouvrir l’avoirs vente enregistrés?"';
     begin
         SalesCrMemoHeader.SetRange("Pre-Assigned No.", PreAssignedNo);
         if SalesCrMemoHeader.FindFirst() then
             if InstructionMgt.ShowConfirm(StrSubstNo(OpenPostedSalesCrMemoQst, SalesCrMemoHeader."No."),
                  InstructionMgt.ShowPostedConfirmationMessageCode())
             then
-                PAGE.Run(PAGE::"Posted Sales Credit Memo", SalesCrMemoHeader);
+                InstructionMgt.ShowPostedDocument(SalesCrMemoHeader, Page::"Sales Credit Memo");
     end;
 
     local procedure CheckSalesCheckAllLinesHaveQuantityAssigned()
     var
-        ApplicationAreaMgmtFacade: Codeunit "Application Area Mgmt. Facade";
         LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
-
     begin
-        if ApplicationAreaMgmtFacade.IsFoundationEnabled() then
-            LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(Rec);
+        LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(Rec);
     end;
+
+    local procedure SetIsCustomerOrContactNotEmpty()
+    var
+    begin
+        IsCustomerOrContactNotEmpty := (Rec."Sell-to Customer No." <> '') or (Rec."Sell-to Contact No." <> '');
+    end;
+
+    trigger OnAfterGetCurrRecord()
+    begin
+        SetIsCustomerOrContactNotEmpty();
+    end;
+
+    trigger OnNewRecord(BelowxRec: Boolean)
+    begin
+        SetIsCustomerOrContactNotEmpty();
+    end;
+
+    trigger OnOpenPage()
+    var
+        EnvironmentInfo: Codeunit "Environment Information";
+    begin
+        SetIsCustomerOrContactNotEmpty();
+    end;
+
 }

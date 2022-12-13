@@ -1,6 +1,6 @@
 table 50011 "BC6_FAP Status"
 {
-    Caption = 'FAP Status';
+    Caption = 'FAP Status', Comment = 'FRA="Statuts FAP"';
     DataClassification = CustomerContent;
     DrillDownPageId = "BC6_FAP Status";
     LookupPageId = "BC6_FAP Status";
@@ -9,17 +9,17 @@ table 50011 "BC6_FAP Status"
     {
         field(1; "Status No."; Code[10])
         {
-            Caption = 'Code statut';
+            Caption = 'Code statut', Comment = 'FRA="Code statut"';
             DataClassification = CustomerContent;
         }
         field(2; "Description status"; Text[50])
         {
-            Caption = 'Description qualification';
+            Caption = 'Description qualification', Comment = 'FRA="Libellé statut"';
             DataClassification = CustomerContent;
         }
         field(3; Bloked; Boolean)
         {
-            Caption = 'Bloqué';
+            Caption = 'Bloqué', Comment = 'FRA="Bloqué"';
             DataClassification = CustomerContent;
         }
     }
@@ -48,5 +48,5 @@ table 50011 "BC6_FAP Status"
 
     var
         Grec_PurchaseHeader: Record "Purchase Header";
-        Text001: label 'Impossible to delete because the Qualification No. %1  is used on an Invoice';
+        Text001: label 'Impossible to delete because the Qualification No. %1  is used on an Invoice', Comment = 'FRA="Impossible de supprimer le code qualification %1 car il est utilisé sur une facture"';
 }

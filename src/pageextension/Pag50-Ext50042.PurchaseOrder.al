@@ -39,26 +39,9 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
     PromotedActionCategories = 'Gérer,Processus,Editions,Naviguer';
     layout
     {
-        modify("Buy-from Vendor No.")
-        {
-            Importance = Promoted;
-            ShowMandatory = true;
-        }
-        modify("Buy-from Contact")
-        {
-            Importance = Additional;
-        }
-        modify("Due Date")
-        {
-            Importance = Promoted;
-        }
         modify("Vendor Invoice No.")
         {
             Visible = false;
-        }
-        modify("Order Date")
-        {
-            Importance = Promoted;
         }
         modify("Vendor Order No.")
         {
@@ -72,141 +55,10 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         {
             Visible = false;
         }
-        modify(Status)
+        modify("Assigned User ID")
         {
-            Importance = Promoted;
+            Importance = Standard;
         }
-        modify("Invoice Details")
-        {
-            Caption = 'Invoicing';
-        }
-        modify("Shipping and Payment")
-        {
-            Caption = 'Shipping';
-        }
-        modify("Pay-to Contact")
-        {
-            Importance = Additional;
-        }
-        modify(Control1904651607)
-        {
-            Visible = true;
-        }
-        modify(Control1903435607)
-        {
-            Visible = true;
-        }
-        modify(Control1905767507)
-        {
-            Visible = true;
-        }
-        modify("Buy-from Vendor Name")
-        {
-            Visible = false;
-        }
-        modify("Posting Description")
-        {
-            Visible = false;
-        }
-        modify(Control122)
-        {
-            Visible = false;
-        }
-        modify("Buy-from County")
-        {
-            Visible = false;
-        }
-        modify("Buy-from Country/Region Code")
-        {
-            Visible = false;
-        }
-        modify("Posting Date")
-        {
-            Visible = false;
-        }
-        modify(Control83)
-        {
-            Visible = false;
-        }
-        modify(Control94)
-        {
-            Visible = false;
-        }
-        modify(Control99)
-        {
-            Visible = false;
-        }
-        modify(Control98)
-        {
-            Visible = false;
-        }
-        modify("No. of Archived Versions")
-        {
-            Visible = false;
-        }
-
-        modify(Control101)
-        {
-            Visible = false;
-        }
-
-        modify(Control124)
-        {
-            Visible = false;
-        }
-        modify("Ship-to County")
-        {
-            Visible = false;
-        }
-        modify(Control71)
-        {
-            Visible = false;
-        }
-        modify(PayToOptions)
-        {
-            Visible = false;
-        }
-        modify(Control95)
-        {
-            Visible = false;
-        }
-        modify("Pay-to Name")
-        {
-            Visible = false;
-        }
-
-        modify(Control123)
-        {
-            Visible = false;
-        }
-        modify("Pay-to County")
-        {
-            Visible = false;
-        }
-        modify("Pay-to Country/Region Code")
-        {
-            Visible = false;
-        }
-
-        modify("Attached Documents")
-        {
-            Visible = false;
-        }
-        modify(Control23)
-        {
-            Visible = false;
-        }
-
-        modify(IncomingDocAttachFactBox)
-        {
-            Visible = false;
-        }
-
-        modify(WorkflowStatus)
-        {
-            Visible = false;
-        }
-
         addafter("No. of Archived Versions")
         {
             field("BC6_Your Reference"; Rec."Your Reference")
@@ -249,24 +101,11 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
                 ApplicationArea = All;
             }
         }
-        addfirst("Invoice Details")
-        {
-            field("BC6_Pay-to Vendor No."; Rec."Pay-to Vendor No.")
-            {
-                Importance = Promoted;
-                ApplicationArea = All;
-
-                trigger OnValidate()
-                begin
-                    PaytoVendorNoOnAfterValidate();
-                end;
-            }
-        }
         addfirst(FactBoxes)
         {
             part("Montants Document"; "BC6_Purchase Doc. Factbox")
             {
-                Caption = 'Montants Document';
+                Caption = 'Montants Document', Comment = 'FRA="Montants Document"';
                 Provider = PurchLines;
                 SubPageLink = "Document Type" = field("Document Type"), "No." = field("Document No.");
                 ApplicationArea = All;
@@ -284,10 +123,17 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
     {
         modify(Dimensions)
         {
-            Promoted = false;
             Visible = false;
         }
         modify(Statistics)
+        {
+            Visible = false;
+        }
+        modify(Vendor)
+        {
+            Visible = false;
+        }
+        modify(Approvals)
         {
             Visible = false;
         }
@@ -295,11 +141,14 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         {
             Visible = false;
         }
+        modify(Receipts)
+        {
+            Visible = false;
+        }
         modify(Invoices)
         {
             Promoted = true;
             PromotedIsBig = true;
-            PromotedCategory = Category4;
         }
         modify(PostedPrepaymentInvoices)
         {
@@ -313,14 +162,17 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         {
             Visible = false;
         }
-        modify(PostPrepaymentInvoice)
+        modify("In&vt. Put-away/Pick Lines")
+        {
+            Visible = false;
+        }
+        modify("Whse. Receipt Lines")
         {
             Visible = false;
         }
         modify(Release)
         {
             Promoted = true;
-            PromotedCategory = Process;
             PromotedIsBig = true;
         }
         modify(Reopen)
@@ -335,7 +187,6 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         }
         modify(GetRecurringPurchaseLines)
         {
-            Caption = 'Get St&d. Vend. Purchase Codes';
             Visible = false;
         }
         modify(CopyDocument)
@@ -363,28 +214,19 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         {
             Visible = false;
         }
-        modify(Action186)
-        {
-            Visible = false;
-        }
-        modify(Action187)
-        {
-            Visible = false;
-        }
         modify("Archive Document")
         {
             Visible = true;
         }
         modify("Send Intercompany Purchase Order")
         {
-            Caption = 'Send IC Purchase Order';
             Visible = false;
         }
-        modify("Request Approval")
+        modify(CancelApprovalRequest)
         {
-            Caption = 'Approval';
+            Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler l''approbation"';
         }
-        modify("Whse. Receipt Lines")
+        modify("Create &Whse. Receipt")
         {
             Visible = false;
         }
@@ -398,96 +240,9 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         }
         modify("Post and &Print")
         {
-            Promoted = true;
-            PromotedCategory = Process;
             Visible = false;
         }
         modify("Prepa&yment")
-        {
-            Visible = false;
-        }
-        modify(Approvals)
-        {
-            Visible = false;
-        }
-        modify(DocAttach)
-        {
-            Visible = false;
-        }
-        modify(Receipts)
-        {
-            Visible = false;
-        }
-        modify(Approval)
-        {
-            Caption = 'Approval';
-            Visible = false;
-        }
-        modify(Approve)
-        {
-            Visible = false;
-        }
-        modify(Reject)
-        {
-            Visible = false;
-        }
-        modify(Delegate)
-        {
-            Visible = false;
-        }
-        modify(Comment)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocument)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocCard)
-        {
-            Visible = false;
-        }
-        modify(SelectIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocAttachFile)
-        {
-            Visible = false;
-        }
-        modify(RemoveIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(SendApprovalRequest)
-        {
-            Visible = false;
-        }
-        modify(CancelApprovalRequest)
-        {
-            Visible = false;
-        }
-        modify(Flow)
-        {
-            Visible = false;
-        }
-        modify(CreateFlow)
-        {
-            Visible = false;
-        }
-        modify(Post)
-        {
-            Visible = false;
-        }
-        modify(Preview)
-        {
-            Visible = false;
-        }
-        modify(PreviewPrepmtInvoicePosting)
-        {
-            Visible = false;
-        }
-        modify(PreviewPrepmtCrMemoPosting)
         {
             Visible = false;
         }
@@ -499,34 +254,11 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         {
             Visible = false;
         }
-        modify(SendCustom)
-        {
-            Visible = false;
-        }
-        addafter(Approvals)
-        {
-            action(BC6_Approbations)
-            {
-                Caption = 'Approvals';
-                Image = Approvals;
-                Promoted = false;
-                Visible = false;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalEntries: Page "Approval Entries";
-                begin
-                    ApprovalEntries.SetRecordFilters(DATABASE::"Purchase Header", Rec."Document Type", Rec."No.");
-                    ApprovalEntries.RUN();
-                end;
-            }
-        }
         addafter("Co&mments")
         {
             action("BC6_Invoices related to ordering")
             {
-                Caption = 'Listes des factures associées';
+                Caption = 'Listes des factures associées', Comment = 'FRA="Listes des factures associées"';
                 Image = ReturnRelated;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -549,7 +281,7 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         {
             action(BC6_Receipts)
             {
-                Caption = 'Receipts';
+                Caption = 'Receipts', Comment = 'FRA="Bons de réception"';
                 Image = PostedReceipts;
                 Promoted = true;
                 PromotedCategory = Category4;
@@ -560,41 +292,37 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
                 ApplicationArea = All;
             }
         }
-        addfirst(Warehouse)
-        {
-            separator(Action181)
-            {
-            }
-        }
-        addafter(PreviewPrepmtInvoicePosting)
-        {
-            separator(Action611)
-            {
-            }
-        }
-        addafter(CalculateInvoiceDiscount)
-        {
-            separator(Action190)
-            {
-            }
-        }
-        addafter(GetRecurringPurchaseLines)
-        {
-            separator(Action75)
-            {
-            }
-        }
         addbefore(Release)
         {
-            action("BC6_P&ost")
+            action(BC6_Post)
             {
+                Caption = 'P&ost', Comment = 'FRA="&Réceptionner"';
+                ShortCutKey = F9;
+                Ellipsis = true;
+                Promoted = true;
+                PromotedIsBig = true;
+                Image = PostOrder;
+                PromotedCategory = Process;
+                trigger OnAction()
+                VAR
+                    FunctionsMgt: Codeunit "BC6_FunctionsMgt";
+                begin
+                    //Modif JX-AUD du 29/01/2013
+                    VerifSaisieAxesAnalytiques();
+                    //Fin modif JX-AUD du 29/01/2013
+                    PostDocument(CODEUNIT::"Purch.-Post (Yes/No)", "Navigate After Posting"::"Posted Document");
+                    //Modif JX-VSC4.0-PBD du 24/06/15 Migration 2015 - Gestion statut r‚ception
+                    FunctionsMgt.FctReceiptStatus(Rec);
+                    Rec.Modify();
+                    //
+                end;
             }
         }
         addafter(CopyDocument)
         {
             action("BC6_&Imprimer")
             {
-                Caption = '&Print';
+                Caption = '&Print', Comment = 'FRA="&Imprimer"';
                 Ellipsis = true;
                 Image = Print;
                 Promoted = true;
@@ -612,7 +340,7 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         {
             action("BC6_Payer ce document")
             {
-                Caption = 'Payer ce document';
+                Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
                 Image = VendorPayment;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -627,14 +355,11 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
                 end;
             }
         }
-        addafter(Action186)
+        addbefore("Archive Document")
         {
-            separator(Action1000000004)
-            {
-            }
             action("Liste des factures associées")
             {
-                Caption = 'List of invoices associated';
+                Caption = 'List of invoices associated', Comment = 'FRA="Liste des factures associées"';
                 Visible = false;
                 ApplicationArea = All;
 
@@ -648,50 +373,6 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
                 end;
             }
         }
-        addafter("Send Intercompany Purchase Order")
-        {
-            separator(Action189)
-            {
-            }
-        }
-        addafter(Approval)
-        {
-            action("BC6_Send A&pproval Request")
-            {
-                Caption = 'Send A&pproval Request';
-                Image = SendApprovalRequest;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalMgt: Codeunit "Approvals Mgmt.";
-                begin
-                    if ApprovalMgt.CheckPurchaseApprovalPossible(Rec) then
-                        ApprovalMgt.OnSendPurchaseDocForApproval(Rec);
-                end;
-            }
-            action("Annuler l'approbation")
-            {
-                Caption = 'Cancel Approval Re&quest';
-                Image = Cancel;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalMgt: Codeunit "Approvals Mgmt.";
-                    WorkflowWebhookMgt: Codeunit "Workflow Webhook Management";
-                begin
-                    ApprovalMgt.OnCancelPurchaseApprovalRequest(Rec);
-                    WorkflowWebhookMgt.FindAndCancel(Rec.RecordId);
-                end;
-            }
-        }
-        addafter("Remove From Job Queue")
-        {
-            separator(Action201)
-            {
-            }
-        }
     }
 
     var
@@ -701,6 +382,7 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         Grec_PurchaseLine: Record "Purchase Line";
         DocPrintENU: Codeunit "BC6_PrintOrderVSC";
         Form_ListeFactures: Page "BC6_Invoices related  ordering";
+        DocumentIsPosted: Boolean;
         Gcode_Axe1: Code[20];
         Gcode_Axe2: Code[20];
         Gcode_Axe3: Code[20];
@@ -709,44 +391,6 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         Gtext_Axe2: Text[50];
         Gtext_Axe3: Text[50];
         Gtext_Axe4: Text[50];
-
-    local procedure BuyfromVendorNoOnAfterValidate()
-    begin
-        if Rec.GETFILTER("Buy-from Vendor No.") = xRec."Buy-from Vendor No." then
-            if Rec."Buy-from Vendor No." <> xRec."Buy-from Vendor No." then
-                Rec.SETRANGE("Buy-from Vendor No.");
-        CurrPage.UPDATE();
-    end;
-
-    local procedure PurchaserCodeOnAfterValidate()
-    begin
-        CurrPage.PurchLines.PAGE.UpdateForm(true);
-    end;
-
-    local procedure PaytoVendorNoOnAfterValidate()
-    begin
-        CurrPage.UPDATE();
-    end;
-
-    local procedure ShortcutDimension1CodeOnAfterV()
-    begin
-        CurrPage.UPDATE();
-    end;
-
-    local procedure ShortcutDimension2CodeOnAfterV()
-    begin
-        CurrPage.UPDATE();
-    end;
-
-    local procedure PricesIncludingVATOnAfterValid()
-    begin
-        CurrPage.UPDATE();
-    end;
-
-    local procedure Prepayment37OnAfterValidate()
-    begin
-        CurrPage.UPDATE();
-    end;
 
     local procedure VerifSaisieAxesAnalytiques()
     begin
@@ -809,15 +453,11 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
     local procedure PostDocument(PostingCodeunitID: Integer; Navigate: Enum "Navigate After Posting")
     var
         PurchaseHeader: Record "Purchase Header";
-        ApplicationAreaMgmtFacade: Codeunit "Application Area Mgmt. Facade";
         InstructionMgt: Codeunit "Instruction Mgt.";
         LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
-        DocumentIsPosted: Boolean;
         IsScheduledPosting: Boolean;
-
     begin
-        if ApplicationAreaMgmtFacade.IsFoundationEnabled() then
-            LinesInstructionMgt.PurchaseCheckAllLinesHaveQuantityAssigned(Rec);
+        LinesInstructionMgt.PurchaseCheckAllLinesHaveQuantityAssigned(Rec);
 
         Rec.SendToPosting(PostingCodeunitID);
 
@@ -827,14 +467,18 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         if IsScheduledPosting then
             CurrPage.Close();
         CurrPage.Update(false);
-
         if PostingCodeunitID <> CODEUNIT::"Purch.-Post (Yes/No)" then
             exit;
 
         case Navigate of
             "Navigate After Posting"::"Posted Document":
-                if InstructionMgt.IsEnabled(InstructionMgt.ShowPostedConfirmationMessageCode()) then
-                    ShowPostedConfirmationMessage();
+                begin
+                    if InstructionMgt.IsEnabled(InstructionMgt.ShowPostedConfirmationMessageCode()) then
+                        ShowPostedConfirmationMessage();
+
+                    if IsScheduledPosting or DocumentIsPosted then
+                        CurrPage.Close();
+                end;
             "Navigate After Posting"::"New Document":
                 if DocumentIsPosted then begin
                     Clear(PurchaseHeader);
@@ -851,7 +495,7 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
         PurchInvHeader: Record "Purch. Inv. Header";
         OrderPurchaseHeader: Record "Purchase Header";
         InstructionMgt: Codeunit "Instruction Mgt.";
-        OpenPostedPurchaseOrderQst: label 'The order is posted as number %1 and moved to the Posted Purchase Invoices window.\\Do you want to open the posted invoice?', Comment = '%1 = posted document number';
+        OpenPostedPurchaseOrderQst: label 'The order is posted as number %1 and moved to the Posted Purchase Invoices window.\\Do you want to open the posted invoice?', Comment = 'FRA="La commande est validée sous le numéro %1 et déplacée vers la fenêtre Factures d''achat validées.\\Voulez-vous ouvrir la facture validée ?"';
 
     begin
         if not OrderPurchaseHeader.Get(Rec."Document Type", Rec."No.") then begin
@@ -860,7 +504,19 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
                 if InstructionMgt.ShowConfirm(StrSubstNo(OpenPostedPurchaseOrderQst, PurchInvHeader."No."),
                      InstructionMgt.ShowPostedConfirmationMessageCode())
                 then
-                    PAGE.Run(PAGE::"Posted Purchase Invoice", PurchInvHeader);
+                    InstructionMgt.ShowPostedDocument(PurchInvHeader, Page::"Purchase Order");
         end;
+    end;
+
+    trigger OnOpenPage()
+    var
+        FunctionsMgt: Codeunit "BC6_FunctionsMgt";
+    begin
+        //D‚but Modif JX-XAD du 11/06/2008
+        //Filtrer sur le (ou les) utilisateur(s) li‚s au droit de l'utilisateur courant (voir table des paramŠtres utilisateur)
+        Rec.FILTERGROUP(2);
+        Rec.SETFILTER("Assigned User ID", FunctionsMgt.jx_GetPurchasesFilter());
+        Rec.FILTERGROUP(0);
+        //Fin Modif JX-XAD du 11/06/2008
     end;
 }

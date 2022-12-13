@@ -1,6 +1,6 @@
 page 50003 "BC6_Purchase Invoice VSC"
 {
-    Caption = 'Purchase Invoice';
+    Caption = 'Purchase Invoice', Comment = 'FRA="Facture achat"';
     DeleteAllowed = false;
     Editable = false;
     InsertAllowed = false;
@@ -16,7 +16,7 @@ page 50003 "BC6_Purchase Invoice VSC"
         {
             group("Général")
             {
-                Caption = 'General';
+                Caption = 'General', Comment = 'FRA="Général"';
                 field("No."; Rec."No.")
                 {
                     Importance = Promoted;
@@ -59,7 +59,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 field("Buy-from Post Code"; Rec."Buy-from Post Code")
                 {
-                    Caption = 'Buy-from Post Code/City';
+                    Caption = 'Buy-from Post Code/City', Comment = 'FRA="CP/Ville fournisseur"';
                     Importance = Additional;
                     ApplicationArea = All;
                 }
@@ -169,7 +169,7 @@ page 50003 "BC6_Purchase Invoice VSC"
             }
             group(Facturation)
             {
-                Caption = 'Invoicing';
+                Caption = 'Invoicing', Comment = 'FRA="Facturation"';
                 field("Pay-to Vendor No."; Rec."Pay-to Vendor No.")
                 {
                     ApplicationArea = All;
@@ -197,7 +197,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 field("Pay-to Post Code"; Rec."Pay-to Post Code")
                 {
-                    Caption = 'Pay-to Post Code/City';
+                    Caption = 'Pay-to Post Code/City', Comment = 'FRA="CP/Ville"';
                     ApplicationArea = All;
                 }
                 field("Pay-to City"; Rec."Pay-to City")
@@ -266,7 +266,7 @@ page 50003 "BC6_Purchase Invoice VSC"
             }
             group(Livraison)
             {
-                Caption = 'Shipping';
+                Caption = 'Shipping', Comment = 'FRA="Livraison"';
                 field("Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
@@ -281,7 +281,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 field("Ship-to Post Code"; Rec."Ship-to Post Code")
                 {
-                    Caption = 'Ship-to Post Code/City';
+                    Caption = 'Ship-to Post Code/City', Comment = 'FRA="CP/Ville destinataire"';
                     ApplicationArea = All;
                 }
                 field("Ship-to City"; Rec."Ship-to City")
@@ -307,7 +307,7 @@ page 50003 "BC6_Purchase Invoice VSC"
             }
             group(International)
             {
-                Caption = 'Foreign Trade';
+                Caption = 'Foreign Trade', Comment = 'FRA="International"';
                 field("Currency Code"; Rec."Currency Code")
                 {
                     ApplicationArea = All;
@@ -354,7 +354,7 @@ page 50003 "BC6_Purchase Invoice VSC"
         {
             part("Montants Document"; "BC6_Purchase Doc. Factbox")
             {
-                Caption = 'Montants Document';
+                Caption = 'Montants Document', Comment = 'FRA="Montants Document"';
                 Provider = PurchLines;
                 SubPageLink = "Document Type" = field("Document Type"), "No." = field("Document No.");
                 ApplicationArea = All;
@@ -415,11 +415,11 @@ page 50003 "BC6_Purchase Invoice VSC"
         {
             group("&Invoice")
             {
-                Caption = '&Invoice';
+                Caption = '&Invoice', Comment = 'FRA="Fa&cture"';
                 Visible = false;
                 action(Card)
                 {
-                    Caption = 'Card';
+                    Caption = 'Card', Comment = 'FRA="Fiche"';
                     Image = EditLines;
                     RunObject = page "Vendor List";
                     RunPageLink = "No." = field("Buy-from Vendor No.");
@@ -429,7 +429,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Co&mments")
                 {
-                    Caption = 'Co&mments';
+                    Caption = 'Co&mments', Comment = 'FRA="Co&mmentaires"';
                     Image = ViewComments;
                     RunObject = page "Purch. Comment Sheet";
                     RunPageLink = "Document Type" = field("Document Type"), "No." = field("No."), "Document Line No." = const(0);
@@ -438,7 +438,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action(Dimensions)
                 {
-                    Caption = 'Dimensions';
+                    Caption = 'Dimensions', Comment = 'FRA="A&xes analytiques"';
                     Image = Dimensions;
                     Visible = false;
                     ApplicationArea = All;
@@ -450,7 +450,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action(Approbations)
                 {
-                    Caption = 'Approvals';
+                    Caption = 'Approvals', Comment = 'FRA="Approbations"';
                     Image = Approvals;
                     Visible = false;
                     ApplicationArea = All;
@@ -469,14 +469,11 @@ page 50003 "BC6_Purchase Invoice VSC"
         {
             group("Fonction&s")
             {
-                Caption = 'F&unctions';
+                Caption = 'F&unctions', Comment = 'FRA="Fonction&s"';
                 Visible = false;
-                separator(Action1000000020)
-                {
-                }
                 action("Extraire codes &achat fourn. std")
                 {
-                    Caption = 'Get St&d. Vend. Purchase Codes';
+                    Caption = 'Get St&d. Vend. Purchase Codes', Comment = 'FRA="Extraire codes &achat fourn. std"';
                     Ellipsis = true;
                     Visible = false;
                     ApplicationArea = All;
@@ -488,12 +485,9 @@ page 50003 "BC6_Purchase Invoice VSC"
                         StdVendPurchCode.InsertPurchLines(Rec);
                     end;
                 }
-                separator(Action1000000026)
-                {
-                }
                 action("Déplacer lignes négatives")
                 {
-                    Caption = 'Move Negative Lines';
+                    Caption = 'Move Negative Lines', Comment = 'FRA="Déplacer lignes négatives"';
                     Ellipsis = true;
                     Visible = false;
                     ApplicationArea = All;
@@ -506,12 +500,9 @@ page 50003 "BC6_Purchase Invoice VSC"
                         MoveNegPurchLines.ShowDocument();
                     end;
                 }
-                separator(Action1000000032)
-                {
-                }
                 action(Statistiques)
                 {
-                    Caption = 'Statistics';
+                    Caption = 'Statistics', Comment = 'FRA="Statistiques"';
                     Image = Statistics;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -532,7 +523,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action(Lancer)
                 {
-                    Caption = 'Re&lease';
+                    Caption = 'Re&lease', Comment = 'FRA="Lancer"';
                     Image = ReleaseDoc;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -550,7 +541,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("R&ouvrir")
                 {
-                    Caption = 'Re&open';
+                    Caption = 'Re&open', Comment = 'FRA="R&ouvrir"';
                     Image = ReOpen;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -567,7 +558,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("&Copier document")
                 {
-                    Caption = 'Copy Document';
+                    Caption = 'Copy Document', Comment = 'FRA="&Copier document"';
                     Ellipsis = true;
                     Image = CopyDocument;
                     Promoted = true;
@@ -585,7 +576,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Approbation de Facture")
                 {
-                    Caption = 'Send A&pproval Request';
+                    Caption = 'Send A&pproval Request', Comment = 'FRA="Approbation de Facture"';
                     Image = SendApprovalRequest;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -602,7 +593,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Annuler l'approbation")
                 {
-                    Caption = 'Cancel Approval Re&quest';
+                    Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler l''approbation"';
                     Image = Cancel;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -620,7 +611,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Payer ce document")
                 {
-                    Caption = 'Payer ce document';
+                    Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
                     Image = VendorPayment;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -637,11 +628,11 @@ page 50003 "BC6_Purchase Invoice VSC"
             }
             group("P&osting")
             {
-                Caption = 'P&osting';
+                Caption = 'P&osting', Comment = 'FRA="&Validation"';
                 Image = Post;
                 action("P&ost")
                 {
-                    Caption = 'P&ost';
+                    Caption = 'P&ost', Comment = 'FRA="&Valider"';
                     Image = PostOrder;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -667,17 +658,16 @@ page 50003 "BC6_Purchase Invoice VSC"
                             ERROR(Text007);
 
                         if not (COMPANYNAME = 'HEXATOURISME') then//modif JX-AUD du 24/04/2012
-                        begin
                             if VerifierLigneRcpt() then
-                                Post(CODEUNIT::"Purch.-Post (Yes/No)");
-                        end else
-                            if ApprovalMgt.PrePostApprovalCheckPurch(Rec) then
-                                PurchPostYNPrepmt.PostPrepmtInvoiceYN(Rec, false);
+                                Post(CODEUNIT::"Purch.-Post (Yes/No)")
+                            else
+                                if ApprovalMgt.PrePostApprovalCheckPurch(Rec) then
+                                    PurchPostYNPrepmt.PostPrepmtInvoiceYN(Rec, false);
                     end;
                 }
                 action("Impression test")
                 {
-                    Caption = 'Test Report';
+                    Caption = 'Test Report', Comment = 'FRA="Impression test"';
                     Ellipsis = true;
                     Image = TestReport;
                     Visible = false;
@@ -690,7 +680,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Valider et i&mprimer")
                 {
-                    Caption = 'Post and &Print';
+                    Caption = 'Post and &Print', Comment = 'FRA="Valider et i&mprimer"';
                     Image = PostPrint;
                     Promoted = true;
                     PromotedCategory = Process;
@@ -725,7 +715,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Valider par l&ot")
                 {
-                    Caption = 'Post &Batch';
+                    Caption = 'Post &Batch', Comment = 'FRA="Valider par l&ot"';
                     Ellipsis = true;
                     Image = PostBatch;
                     Visible = false;
@@ -739,7 +729,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Supprimer de la file d'attente des travaux")
                 {
-                    Caption = 'Remove From Job Queue';
+                    Caption = 'Remove From Job Queue', Comment = 'FRA="Supprimer de la file d''attente des travaux"';
                     Enabled = false;
                     Image = RemoveLine;
                     Visible = JobQueueVisible;
@@ -753,10 +743,10 @@ page 50003 "BC6_Purchase Invoice VSC"
             }
             group("Comptabilité")
             {
-                Caption = 'Send mail';
+                Caption = 'Send mail', Comment = 'FRA="Comptabilité"';
                 action("Envoi mail facture - Four non créé")
                 {
-                    Caption = 'Envoi mail facture - Four non créé';
+                    Caption = 'Envoi mail facture - Four non créé', Comment = 'FRA="Envoi mail facture - Four non créé"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -778,7 +768,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Envoi mail facture - DA à créer")
                 {
-                    Caption = 'Envoi mail facture - DA à créer';
+                    Caption = 'Envoi mail facture - DA à créer', Comment = 'FRA="Envoi mail facture - DA à créer"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -801,7 +791,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Envoi mail facture - DA non envoyé en appro.")
                 {
-                    Caption = 'Envoi mail facture - DA non envoyé en appro.';
+                    Caption = 'Envoi mail facture - DA non envoyé en appro.', Comment = 'FRA="Envoi mail facture - DA non envoyé en appro."';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -824,7 +814,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Envoi mail facture - DA non approuvée")
                 {
-                    Caption = 'Envoi mail facture - DA non approuvée';
+                    Caption = 'Envoi mail facture - DA non approuvée', Comment = 'FRA="Envoi mail facture - DA non approuvée"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -847,7 +837,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Envoi mail facture - DA non tranform.")
                 {
-                    Caption = 'Envoi mail facture - DA non tranform.';
+                    Caption = 'Envoi mail facture - DA non tranform.', Comment = 'FRA="Envoi mail facture - DA non tranform."';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -870,7 +860,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Envoi mail facture - DA cplmt.")
                 {
-                    Caption = 'Send mail invoice';
+                    Caption = 'Send mail invoice', Comment = 'FRA="Envoi mail facture - DA cplmt."';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -893,7 +883,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Envoi mail facture - BC à récept.")
                 {
-                    Caption = 'Envoi mail facture - BC à récept.';
+                    Caption = 'Envoi mail facture - BC à récept.', Comment = 'FRA="Envoi mail facture - BC à récept."';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -916,7 +906,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Envoi mail facture - Fact. à approuver")
                 {
-                    Caption = 'Envoi mail facture - Fact. à approuver';
+                    Caption = 'Envoi mail facture - Fact. à approuver', Comment = 'FRA="Envoi mail facture - Fact. à approuver"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -939,7 +929,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action("Envoi mail facture - Factures Presta Timé")
                 {
-                    Caption = 'Envoi mail facture - Factures Presta Timé';
+                    Caption = 'Envoi mail facture - Factures Presta Timé', Comment = 'FRA="Envoi mail facture - Factures Presta Timé"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -962,7 +952,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 }
                 action(Historique)
                 {
-                    Caption = 'Historic';
+                    Caption = 'Historic', Comment = 'FRA="Historique"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -1046,10 +1036,10 @@ page 50003 "BC6_Purchase Invoice VSC"
         Grec_MontantFacture: Decimal;
         Grec_MontantMax: Decimal;
         Gint_cptLine: Integer;
-        Text004: label 'This invoice was recorded without reconciliation with a PO, you must submit it ... validation';
-        Text005: label 'Validation is not possible without new approval.';
-        Text006: label 'Validation is not possible because the status of your invoice is "%1".';
-        Text007: label 'The total amount of the invoice excluding VAT is different from the amount ... save';
+        Text004: label 'This invoice was recorded without reconciliation with a PO, you must submit it ... validation', Comment = 'FRA="Cette facture a été enregistrée sans rapprochement avec un BC, vous devez la soumettre à validation"';
+        Text005: label 'Validation is not possible without new approval.', Comment = 'FRA="La validation n''est pas possible sans nouvelle approbation."';
+        Text006: label 'Validation is not possible because the status of your invoice is "%1".', Comment = 'FRA="La validation n''est pas possible car le statut de votre facture est "%1"."';
+        Text007: label 'The total amount of the invoice excluding VAT is different from the amount ... save', Comment = 'FRA="Le montant total HT de la facture est différent du montant à enregistrer"';
         Gtext_ObjetMail: Text[1024];
         Gtext_Param1: Text[1024];
         Gtext_Param2: Text[1024];

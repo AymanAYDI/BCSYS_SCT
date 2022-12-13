@@ -1,6 +1,7 @@
 table 50005 "BC6_Global temporary table"
 {
     DataClassification = CustomerContent;
+    Caption = 'Global temporary table', Comment = 'FRA="Global temporary table"';
 
     fields
     {

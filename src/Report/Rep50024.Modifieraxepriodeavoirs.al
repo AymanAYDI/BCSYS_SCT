@@ -1,6 +1,6 @@
 report 50024 "Modifier axe période avoirs"
 {
-    Caption = 'Modify period dimension for credit memos';
+    Caption = 'Modify period dimension for credit memos', Comment = 'FRA="Modifier axe période avoirs"';
     ProcessingOnly = true;
     UseSystemPrinter = false;
 
@@ -121,8 +121,8 @@ report 50024 "Modifier axe période avoirs"
         "Gcode_AxePériode": Code[20];
         // Grec_PostedDocDim: Record "Dimension Set Entry";
         // Grec_PostedDocDim2: Record "Dimension Set Entry";
-        Text001: label 'All accounting will be updated to the credit memo %1';
-        Text002: label 'Operation canceled !';
+        Text001: label 'All accounting will be updated to the credit memo %1', Comment = 'FRA="Toute la comptabilité analytique sera mise à jour pour l''avoir %1"';
+        Text002: label 'Operation canceled !', Comment = 'FRA="Opération annulée"';
 
     procedure SetPostedCreditMemo(Lrec_PurchCreditMemo: Record "Purch. Cr. Memo Hdr.")
     begin

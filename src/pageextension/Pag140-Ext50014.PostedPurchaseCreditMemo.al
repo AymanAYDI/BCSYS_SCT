@@ -36,10 +36,10 @@ pageextension 50014 "BC6_PostedPurchaseCreditMemo" extends "Posted Purchase Cred
         {
             group("BC6_Modifier axe")
             {
-                Caption = 'Modify dimension';
+                Caption = 'Modify dimension', Comment = 'FRA="Modifier axe"';
                 action("période")
                 {
-                    Caption = 'period';
+                    Caption = 'period', Comment = 'FRA="période"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -52,7 +52,7 @@ pageextension 50014 "BC6_PostedPurchaseCreditMemo" extends "Posted Purchase Cred
             }
             group("BC6_&Ligne")
             {
-                Caption = '&Line';
+                Caption = '&Line', Comment = 'FRA="&Ligne"';
                 separator(Action90)
                 {
                 }
@@ -63,4 +63,15 @@ pageextension 50014 "BC6_PostedPurchaseCreditMemo" extends "Posted Purchase Cred
     var
         ModifierAxe: Report "Modifier axe période avoirs";
     // ModifierAxesAvoir: Report "Modifier axes avoir";
+    trigger OnOpenPage()
+    var
+        FunctionsMgt: Codeunit BC6_FunctionsMgt;
+    begin
+        //D‚but Modif JX-XAD du 05/08/2008
+        //Filtrer sur le (ou les) utilisateur(s) li‚s au droit de l'utilisateur courant (voir table des paramŠtres utilisateur)
+        Rec.FILTERGROUP(2);
+        Rec.SETFILTER("User ID", FunctionsMgt.jx_GetPurchasesFilter());
+        Rec.FILTERGROUP(0);
+        //Fin Modif JX-XAD du 05/08/2008
+    end;
 }

@@ -2,7 +2,7 @@ report 50050 "BC6_LISAM"
 {
     DefaultLayout = RDLC;
     RDLCLayout = './src/Report/RDLC/LISAM.rdl';
-    caption = 'LISAM';
+    caption = 'LISAM', Comment = 'FRA="LISAM"';
     dataset
     {
         dataitem(DataItem1000000004; Integer)
@@ -295,22 +295,6 @@ report 50050 "BC6_LISAM"
             end;
         }
     }
-
-    requestpage
-    {
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
-    }
-
     trigger OnInitReport()
     begin
         Gbool_AfficherEnTete := true;
@@ -341,28 +325,28 @@ report 50050 "BC6_LISAM"
         Gcode_Tiers: Code[20];
         Gint_NbOrders: Integer;
         i: Integer;
-        AccountCaptionLbl: label 'Account';
-        AmountCaptionLbl: label 'Amount';
-        ConsoCaptionLbl: label 'Conso';
-        CreditCaptionLbl: label 'Credit';
-        Date__CaptionLbl: label 'Date :';
-        DateCaption_Control1000000009Lbl: label 'Date';
-        DateCaptionLbl: label 'Date';
-        DebitCaptionLbl: label 'Debit';
-        DescriptionCaptionLbl: label 'Description';
-        Dim1CaptionLbl: label 'Dim1';
-        Dim2CaptionLbl: label 'Dim2';
-        Dim3CaptionLbl: label 'Dim3';
-        Dim4CaptionLbl: label 'Dim4';
-        Doc_No_CaptionLbl: label 'Doc No.';
-        Order_No_CaptionLbl: label 'Order No.';
-        PeriodCaptionLbl: label 'Period';
-        PieceCaptionLbl: label 'Piece';
-        Source_CodeCaptionLbl: label 'Source Code';
-        TEXT001: label 'Page %1';
-        Text002: label 'Vendor Statement';
-        Text004: label 'at';
-        User__CaptionLbl: label 'User :';
+        AccountCaptionLbl: label 'Account', Comment = 'FRA="Compte"';
+        AmountCaptionLbl: label 'Amount', Comment = 'FRA="Solde"';
+        ConsoCaptionLbl: label 'Conso', Comment = 'FRA="Conso"';
+        CreditCaptionLbl: label 'Credit', Comment = 'FRA="Credit"';
+        Date__CaptionLbl: label 'Date :', Comment = 'FRA="Date"';
+        DateCaption_Control1000000009Lbl: label 'Date', Comment = 'FRA="Date"';
+        DateCaptionLbl: label 'Date', Comment = 'FRA="tiers - Contrepartie"';
+        DebitCaptionLbl: label 'Debit', Comment = 'FRA="Debit"';
+        DescriptionCaptionLbl: label 'Description', Comment = 'FRA="Libelle"';
+        Dim1CaptionLbl: label 'Dim1', Comment = 'FRA="Axe1"';
+        Dim2CaptionLbl: label 'Dim2', Comment = 'FRA="Axe2"';
+        Dim3CaptionLbl: label 'Dim3', Comment = 'FRA="Axe3"';
+        Dim4CaptionLbl: label 'Dim4', Comment = 'FRA="Axe4"';
+        Doc_No_CaptionLbl: label 'Doc No.', Comment = 'FRA="N° Doc"';
+        Order_No_CaptionLbl: label 'Order No.', Comment = 'FRA="N° de BC"';
+        PeriodCaptionLbl: label 'Period', Comment = 'FRA="Periode"';
+        PieceCaptionLbl: label 'Piece', Comment = 'FRA="Piece"';
+        Source_CodeCaptionLbl: label 'Source Code', Comment = 'FRA="Origine"';
+        TEXT001: label 'Page %1', Comment = 'FRA="Page %1"';
+        Text002: label 'Vendor Statement', Comment = 'FRA="LISAM"';
+        Text004: label 'at', Comment = 'FRA="à"';
+        User__CaptionLbl: label 'User :', Comment = 'FRA="Utilisateur :"';
         Gtext_Axe1: Text[30];
         Gtext_Axe2: Text[30];
         Gtext_Axe3: Text[30];

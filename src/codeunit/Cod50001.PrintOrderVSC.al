@@ -24,7 +24,7 @@ codeunit 50001 "BC6_PrintOrderVSC"
             PurchaseHeader."Document Type"::Order:
                 if (COMPANYNAME = 'VSCT') or (COMPANYNAME = 'VSCT Test') or (COMPANYNAME = 'VFEC') or (COMPANYNAME = 'VFEC Test') then begin
                     //DEBUT MODIF JX-XAD le 20/04/2010
-                    //TODO:Contract: n'est pas migré
+                    //Contract: n'est pas migré
                     // IF (NOT Gcu_ContractManagement.CheckOrderLines(PurchaseHeader."No.")) THEN BEGIN
                     //     //D‚but MODIF JX-XAD le 25/06/2010
                     //     //REPORT.RUNMODAL(ReportSelection."Report ID",TRUE,FALSE,PurchaseHeader)
@@ -50,7 +50,7 @@ codeunit 50001 "BC6_PrintOrderVSC"
                     //     //FIN MODIF JX-XAD le 20/04/2010
                     ReportSelection.SETRANGE(Usage, ReportSelection.Usage::"P.Order");
                     ReportSelection.SETFILTER("Report ID", '<>0');
-                    ReportSelection.FIND('-');
+                    ReportSelection.FindFirst();
                     REPEAT
                         REPORT.RUNMODAL(ReportSelection."Report ID", TRUE, FALSE, PurchaseHeader)
                     UNTIL ReportSelection.NEXT() = 0;
@@ -64,7 +64,7 @@ codeunit 50001 "BC6_PrintOrderVSC"
                       (PurchaseHeader."Buy-from Country/Region Code" = 'LU') then begin
                         ReportSelection.SETRANGE(Usage, ReportSelection.Usage::"P.Order");
                         ReportSelection.SETFILTER("Report ID", '<>0');
-                        ReportSelection.FIND('-');
+                        ReportSelection.FindFirst();
                         repeat
                             REPORT.RUNMODAL(ReportSelection."Report ID", true, false, PurchaseHeader)
                         until ReportSelection.NEXT() = 0;

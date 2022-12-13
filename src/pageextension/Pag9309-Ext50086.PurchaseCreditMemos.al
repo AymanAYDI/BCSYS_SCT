@@ -25,6 +25,10 @@ pageextension 50086 "BC6_PurchaseCreditMemos" extends "Purchase Credit Memos" //
             {
                 ApplicationArea = all;
             }
+            field("BC6_Assigned User ID"; Rec."Assigned User ID")
+            {
+                ApplicationArea = all;
+            }
         }
         addafter("Job Queue Status")
         {
@@ -52,6 +56,17 @@ pageextension 50086 "BC6_PurchaseCreditMemos" extends "Purchase Credit Memos" //
             {
                 ApplicationArea = all;
             }
+        }
+    }
+    actions
+    {
+        modify(SendApprovalRequest)
+        {
+            Caption = 'Send A&pproval Request', Comment = 'FRA="Approbation d''avoir"';
+        }
+        modify(CancelApprovalRequest)
+        {
+            Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler l''approbation"';
         }
     }
     var

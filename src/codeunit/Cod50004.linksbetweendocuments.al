@@ -20,30 +20,28 @@ codeunit 50004 "BC6_Links Between Documents"
     var
         Lrec_PurchInvLine: Record "Purch. Inv. Header";
     begin
-        //Fonction qui permet de retrouver pour une commande donn‚e
-        //toutes les factures … la fois en cours et enregistr‚es.
+        //Fonction qui permet de retrouver pour une commande donnée
+        //toutes les factures à la fois en cours et enregistrées.
         //Entr‚es :  nø commande
-        //Sorties :  pCode_Invoice (Tableau … deux dimensions de 2x100 chaines de 20 caractŠres contenant les factures:
+        //Sorties :  pCode_Invoice (Tableau à deux dimensions de 2x100 chaines de 20 caractŠres contenant les factures:
         //                            pCode_Invoice[1,x] = Nø facture et pCode_Invoice[2,x] = montant HT)
         //           rInt_NbInvoices (Nombre de factures trouv‚es)
-
         gInt_Count := 0;    //Compteur de factures
-
-        //***** On recherche d'abord les r‚ceptions li‚es … la commande *****
+        //***** On recherche d'abord les réceptions liées à la commande *****
         gRec_PurchRcptHeader.RESET();
         gRec_PurchRcptHeader.SETFILTER(gRec_PurchRcptHeader."Order No.", '%1', pCode_Commande);
         if gRec_PurchRcptHeader.COUNT > 0 then
 
-            //***** Pour chaque r‚ception, on recherche les factures en cours correspondantes *****
-            if gRec_PurchRcptHeader.FIND('-') then
+            //***** Pour chaque réception, on recherche les factures en cours correspondantes *****
+            if gRec_PurchRcptHeader.FindFirst() then
                 repeat
                     gRec_PurchaseLine.RESET();
                     gRec_PurchaseLine.SETFILTER(gRec_PurchaseLine."Document Type", '%1', gRec_PurchaseLine."Document Type"::Invoice);
                     gRec_PurchaseLine.SETFILTER(gRec_PurchaseLine."Receipt No.", '%1', gRec_PurchRcptHeader."No.");
                     if gRec_PurchaseLine.COUNT > 0 then
-                        if gRec_PurchaseLine.FIND('-') then
+                        if gRec_PurchaseLine.FindFirst() then
                             repeat
-                                //***** On v‚rifie si la facture est d‚j… dans la liste *****
+                                //***** On vérifie si la facture est déjà dans la liste *****
                                 gBool_InvoiceExist := false;
                                 for i := 1 to gInt_Count do
                                     if gRec_PurchaseLine."Document No." = pCode_Invoice[1, i] then
@@ -59,7 +57,7 @@ codeunit 50004 "BC6_Links Between Documents"
                                     Grec_PurchaseLine2.RESET();
                                     Grec_PurchaseLine2.SETFILTER(Grec_PurchaseLine2."Document Type", '%1', Grec_PurchaseLine2."Document Type"::Invoice);
                                     Grec_PurchaseLine2.SETFILTER(Grec_PurchaseLine2."Document No.", '%1', pCode_Invoice[1, gInt_Count]);
-                                    if Grec_PurchaseLine2.FIND('-') then
+                                    if Grec_PurchaseLine2.FindFirst() then
                                         repeat
                                             Gdec_TotalHTDocument += Grec_PurchaseLine2."Line Amount";
                                         until Grec_PurchaseLine2.NEXT() = 0;
@@ -82,23 +80,23 @@ codeunit 50004 "BC6_Links Between Documents"
                             until gRec_PurchaseLine.NEXT() = 0;
                 until gRec_PurchRcptHeader.NEXT() = 0;
 
-        //***** Pour chaque r‚ception, rechercher les ‚critures article correspondantes *****
-        if gRec_PurchRcptHeader.FIND('-') then
+        //***** Pour chaque réception, rechercher les écritures article correspondantes *****
+        if gRec_PurchRcptHeader.FindFirst() then
             repeat
-                //***** Pour chaque ‚criture article li‚e … la r‚ception, rechercher les ‚critures valeur *****
+                //***** Pour chaque écriture article liée à la réception, rechercher les écritures valeur *****
                 gRec_ItemLedgerEntry.RESET();
                 gRec_ItemLedgerEntry.SETFILTER(gRec_ItemLedgerEntry."Document No.", '%1', gRec_PurchRcptHeader."No.");
                 if gRec_ItemLedgerEntry.COUNT > 0 then
-                    if gRec_ItemLedgerEntry.FIND('-') then
+                    if gRec_ItemLedgerEntry.FindFirst() then
                         repeat
-                            //***** Pour chaque ‚criture valeur li‚e … l'‚criture article, rechercher les factures enregistr‚es *****
+                            //***** Pour chaque écriture valeur liée à l'écriture article, rechercher les factures enregistrées *****
                             gRec_ValueEntry.RESET();
                             gRec_ValueEntry.SETFILTER(gRec_ValueEntry."Item Ledger Entry No.", '%1', gRec_ItemLedgerEntry."Entry No.");
                             gRec_ValueEntry.SETFILTER(gRec_ValueEntry."Document Type", '%1', gRec_ValueEntry."Document Type"::"Purchase Invoice");
                             if gRec_ValueEntry.COUNT > 0 then
-                                if gRec_ValueEntry.FIND('-') then
+                                if gRec_ValueEntry.FindFirst() then
                                     repeat
-                                        //***** On v‚rifie si la facture est d‚j… dans la liste *****
+                                        //***** On vérifie si la facture est déjà dans la liste *****
                                         gBool_InvoiceExist := false;
                                         for i := 1 to gInt_Count do
                                             if gRec_ValueEntry."Document No." = pCode_Invoice[1, i] then
@@ -125,7 +123,7 @@ codeunit 50004 "BC6_Links Between Documents"
                                             //Modif JX-AUD du 30/10/2012
                                             //recherche si la facture est ouverte
                                             grec_VendorLedgerEntry.SETFILTER(grec_VendorLedgerEntry."Document No.", gRec_ValueEntry."Document No.");
-                                            if grec_VendorLedgerEntry.FIND('-') then
+                                            if grec_VendorLedgerEntry.FindFirst() then
                                                 if grec_VendorLedgerEntry.Open then
                                                     pCode_Invoice[3, gInt_Count] := 'true'
                                                 else
@@ -141,25 +139,25 @@ codeunit 50004 "BC6_Links Between Documents"
 
     procedure SearchOrdersFAP(pCode_Invoice: Code[20]; var pCode_Order: array[1000] of Code[20]) rInt_NbOrders: Integer;
     begin
-        //Fonction qui permet de retrouver pour une facture donn‚e (en cours) toutes les commandes.
-        //Entr‚es :  pCode_Invoice (nø facture en cours)
+        //Fonction qui permet de retrouver pour une facture donnée (en cours) toutes les commandes.
+        //Entr‚es :  pCode_Invoice (n° facture en cours)
         //Sorties :  pCode_Order (Tableau de 100 chaines de 20 caractŠres contenant les commandes)
-        //           rInt_NbOrders (Nombre de commandes trouv‚es)
+        //           rInt_NbOrders (Nombre de commandes trouvées)
 
         gInt_Count := 0;    //Compteur de commandes
 
-        //***** On recherche les r‚ceptions li‚es … la facture *****
+        //***** On recherche les réceptions liées à la facture *****
         gRec_PurchaseLine.RESET();
         gRec_PurchaseLine.SETFILTER(gRec_PurchaseLine."Document Type", '%1', gRec_PurchaseLine."Document Type"::Invoice);
         gRec_PurchaseLine.SETFILTER(gRec_PurchaseLine."Document No.", '%1', pCode_Invoice);
         if gRec_PurchaseLine.COUNT > 0 then
-            //***** Pour chaque r‚ception, on r‚cupŠre le nø commande *****
-            if gRec_PurchaseLine.FIND('-') then
+            //***** Pour chaque réceptioné on récupère le n° commande *****
+            if gRec_PurchaseLine.FindFirst() then
                 repeat
                     if gRec_PurchaseLine."Receipt No." <> '' then
                         if gRec_PurchRcptHeader.GET(gRec_PurchaseLine."Receipt No.") then
                             if gRec_PurchRcptHeader."Order No." <> '' then begin
-                                //***** On v‚rifie si la commande est d‚j… dans la liste *****
+                                //***** On vérifie si la commande est déjà dans la liste *****
                                 gBool_OrderExist := false;
                                 for i := 1 to gInt_Count do
                                     if gRec_PurchRcptHeader."Order No." = pCode_Order[i] then
@@ -177,28 +175,28 @@ codeunit 50004 "BC6_Links Between Documents"
 
     procedure SearchOrdersFA(pCode_Invoice: Code[20]; var pCode_Order: array[1000] of Code[20]) rInt_NbOrders: Integer;
     begin
-        //Fonction qui permet de retrouver pour une facture donn‚e (enregistr‚e) toutes les commandes.
-        //Entr‚es :  pCode_Invoice (nø facture en cours)
-        //Sorties :  pCode_Order (Tableau de 100 chaines de 20 caractŠres contenant les commandes)
+        //Fonction qui permet de retrouver pour une facture donnée (enregistrée) toutes les commandes.
+        //Entrées :  pCode_Invoice (nø facture en cours)
+        //Sorties :  pCode_Order (Tableau de 100 chaines de 20 caractères contenant les commandes)
         //           rInt_NbOrders (Nombre de commandes trouv‚es)
 
         gInt_Count := 0;    //Compteur de commandes
 
-        //***** Pour chaque ligne de la facture, rechercher les ‚critures valeur correspondantes *****
+        //***** Pour chaque ligne de la facture, rechercher les écritures valeur correspondantes *****
         gRec_PurchInvLine.RESET();
         gRec_PurchInvLine.SETFILTER(gRec_PurchInvLine."Document No.", '%1', pCode_Invoice);
-        if gRec_PurchInvLine.FIND('-') then
+        if gRec_PurchInvLine.FindFirst() then
             repeat
                 gRec_ValueEntry.RESET();
                 gRec_ValueEntry.SETFILTER(gRec_ValueEntry."Document No.", '%1', gRec_PurchInvLine."Document No.");
                 gRec_ValueEntry.SETFILTER(gRec_ValueEntry."Document Line No.", '%1', gRec_PurchInvLine."Line No.");
                 if gRec_ValueEntry.COUNT > 0 then
-                    if gRec_ValueEntry.FIND('-') then
+                    if gRec_ValueEntry.FindFirst() then
                         repeat
                             if gRec_ItemLedgerEntry.GET(gRec_ValueEntry."Item Ledger Entry No.") then
                                 if gRec_PurchRcptHeader.GET(gRec_ItemLedgerEntry."Document No.") then
                                     if gRec_PurchRcptHeader."Order No." <> '' then begin
-                                        //***** On v‚rifie si la commande est d‚j… dans la liste *****
+                                        //***** On vérifie si la commande est déjà dans la liste *****
                                         gBool_OrderExist := false;
                                         for i := 1 to gInt_Count do
                                             if gRec_PurchRcptHeader."Order No." = pCode_Order[i] then

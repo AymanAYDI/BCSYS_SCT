@@ -1,6 +1,6 @@
 xmlport 50020 "BC6_Export Lisam-LOI SAPIN 2"
 {
-    Caption = 'Export Lisam-LOI SAPIN 2';
+    Caption = 'Export Lisam-LOI SAPIN 2', Comment = 'FRA="Export Lisam-LOI SAPIN 2"';
     Direction = Export;
     TextEncoding = WINDOWS;
     Format = VariableText;
@@ -12,9 +12,9 @@ xmlport 50020 "BC6_Export Lisam-LOI SAPIN 2"
     {
         textelement(Root)
         {
-            tableelement(Header; 2000000026)
+            tableelement(Header; Integer)
             {
-                //SourceTableView=SORTING(Field1)  WHERE(Field1=CONST(1));
+                SourceTableView = SORTING(Number) WHERE(Number = CONST(1));
                 trigger OnAfterGetRecord()
                 begin
                     Gtext_NomChamp := 'Date;Origine;Pièce;Compte;Libellé;Période;Axe 1;Axe 2;Axe 3;Axe 4;Conso;Débit;Crédit;Solde;Tiers-Contrepartie;N° doc;N° de BC;;;N° de séquence';
@@ -24,7 +24,8 @@ xmlport 50020 "BC6_Export Lisam-LOI SAPIN 2"
             {
             }
             tableelement(GLEntry; "G/L Entry")
-            { //RequestFilterField=Field4,Field3;
+            {
+                //RequestFilterField="Posting Date","G/L Account No.";
                 fieldelement(PostingDate; GLEntry."Posting Date")
                 {
                 }

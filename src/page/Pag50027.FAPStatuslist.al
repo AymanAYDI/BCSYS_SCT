@@ -2,7 +2,7 @@ page 50027 "BC6_FAP Status list"
 {
     // //Creation JX-AUD du 23/04/2013
 
-    Caption = 'FAP Status list';
+    Caption = 'FAP Status list', Comment = 'FRA="Liste des statuts FAP"';
     Editable = false;
     PageType = Card;
     SourceTable = "BC6_FAP Status";
@@ -17,12 +17,12 @@ page 50027 "BC6_FAP Status list"
                 ShowCaption = false;
                 field("Status No."; Rec."Status No.")
                 {
-                    Caption = 'Code statut';
+                    Caption = 'Code statut', Comment = 'FRA="Code statut"';
                     ApplicationArea = All;
                 }
                 field("Description status"; Rec."Description status")
                 {
-                    Caption = 'Description qualification';
+                    Caption = 'Description qualification', Comment = 'FRA="Libellé statut"';
                     ApplicationArea = All;
                 }
             }

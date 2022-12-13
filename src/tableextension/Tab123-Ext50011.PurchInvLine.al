@@ -4,11 +4,11 @@ tableextension 50011 "BC6_PurchInvLine" extends "Purch. Inv. Line" //123
     {
         field(50005; "BC6_Matricule No."; Code[20])
         {
-            Caption = 'Code matricule';
+            Caption = 'Code matricule', Comment = 'FRA=" matricule"';
             DataClassification = CustomerContent;
         }
     }
-    procedure ModifyDimensions()
+    procedure BC6_ModifyDimensions()
     var
         lUpdateDim: Report "BC6_Modifier axes facture";
         DimMgt: Codeunit DimensionManagement;

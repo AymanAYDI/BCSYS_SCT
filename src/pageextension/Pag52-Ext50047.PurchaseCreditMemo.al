@@ -45,169 +45,8 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
     // //Ajout du champ Litige
     // //Appel de la nouvelle méthode par SMTP pour l'envoi du mail
 
-    //Unsupported feature: Property Modification (SourceTableView) on ""Purchase Credit Memo"(Page 52)".
-
     layout
     {
-        modify("No.")
-        {
-            Importance = Promoted;
-        }
-
-        modify("Buy-from Contact")
-        {
-            Importance = Additional;
-        }
-        modify("Expected Receipt Date")
-        {
-            Importance = Promoted;
-        }
-        modify("Vendor Authorization No.")
-        {
-            Importance = Promoted;
-        }
-
-        modify(Status)
-        {
-            Importance = Promoted;
-        }
-
-        modify("Invoice Details")
-        {
-            Caption = 'Invoicing';
-        }
-        modify("Location Code")
-        {
-            Importance = Promoted;
-        }
-        modify("Shipping and Payment")
-        {
-            Caption = 'Shipping';
-        }
-        modify("Order Address Code")
-        {
-            QuickEntry = false;
-        }
-
-        modify("Pay-to Contact")
-        {
-            Importance = Additional;
-        }
-
-        modify(Control1904651607)
-        {
-            Visible = true;
-        }
-        modify(Control1903435607)
-        {
-            Visible = true;
-        }
-
-        modify(Control1905767507)
-        {
-            Visible = true;
-        }
-        modify("Buy-from Vendor No.")
-        {
-            Visible = false;
-        }
-
-        modify("Buy-from Vendor Name")
-        {
-            Visible = false;
-        }
-
-        modify("Posting Description")
-        {
-            Visible = false;
-        }
-        modify(Control88)
-        {
-            Visible = false;
-        }
-        modify("Buy-from County")
-        {
-            Visible = false;
-        }
-
-        modify("Buy-from Country/Region Code")
-        {
-            Visible = false;
-        }
-
-        modify("Posting Date")
-        {
-            Visible = false;
-        }
-        modify("VAT Bus. Posting Group")
-        {
-            Visible = false;
-        }
-
-        modify("Payment Method Code")
-        {
-            Visible = false;
-        }
-
-        modify(Control71)
-        {
-            Visible = false;
-        }
-        modify(ShipToOptions)
-        {
-            Visible = false;
-        }
-        modify(Control69)
-        {
-            Visible = false;
-        }
-
-        modify(Control86)
-        {
-            Visible = false;
-        }
-        modify("Ship-to County")
-        {
-            Visible = false;
-        }
-
-        modify("Ship-to Country/Region Code")
-        {
-            Visible = false;
-        }
-        modify(Control84)
-        {
-            Visible = false;
-        }
-        modify("Pay-to County")
-        {
-            Visible = false;
-        }
-
-        modify("Pay-to Country/Region Code")
-        {
-            Visible = false;
-        }
-
-        modify("Attached Documents")
-        {
-            Visible = false;
-        }
-        modify(Control15)
-        {
-            Visible = false;
-        }
-
-        modify(IncomingDocAttachFactBox)
-        {
-            Visible = false;
-        }
-
-        modify(WorkflowStatus)
-        {
-            Visible = false;
-        }
-
         addafter("Buy-from Contact")
         {
             field("BC6_Your Reference"; Rec."Your Reference")
@@ -255,7 +94,7 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
         {
             part("Montants Document"; "BC6_Purchase Doc. Factbox")
             {
-                Caption = 'Montants Document';
+                Caption = 'Montants Document', Comment = 'FRA="Montants Document"';
                 Provider = PurchLines;
                 SubPageLink = "Document Type" = field("Document Type"), "No." = field("Document No.");
                 ApplicationArea = All;
@@ -264,11 +103,6 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
     }
     actions
     {
-        modify(Statistics)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
         modify(Vendor)
         {
             Visible = false;
@@ -278,7 +112,7 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
             action(BC6_vendor)
             {
                 ApplicationArea = Basic, Suite;
-                Caption = 'Vendor';
+                Caption = 'Vendor', Comment = 'FRA="Fournisseur"';
                 Enabled = Rec."Buy-from Vendor No." <> '';
                 Image = Vendor;
                 Promoted = true;
@@ -287,104 +121,24 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
                 RunPageLink = "No." = field("Buy-from Vendor No."),
                                   "Date Filter" = field("Date Filter");
                 ShortCutKey = 'Shift+F7';
-                ToolTip = 'View or edit detailed information about the vendor on the purchase document.';
             }
-        }
-        modify(Release)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
         }
         modify(SendApprovalRequest)
         {
-            Caption = 'Send A&pproval Request';
+            Caption = 'Send A&pproval Request', Comment = 'FRA="Approbation d''avoir"';
         }
         modify(CancelApprovalRequest)
         {
-            Caption = 'Cancel Approval Re&quest';
-        }
-        modify(Flow)
-        {
-            Caption = 'Post &Batch';
-        }
-        modify(Post)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
-        modify(PostAndPrint)
-        {
-            Promoted = true;
-            PromotedCategory = Process;
-        }
-        modify(Approvals)
-        {
-            Visible = false;
-        }
-        modify(DocAttach)
-        {
-            Visible = false;
-        }
-        modify(Approval)
-        {
-            Visible = false;
-        }
-        modify(Approve)
-        {
-            Visible = false;
-        }
-        modify(Reject)
-        {
-            Visible = false;
-        }
-        modify(Delegate)
-        {
-            Visible = false;
-        }
-        modify(Comment)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocument)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocCard)
-        {
-            Visible = false;
-        }
-        modify(SelectIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(IncomingDocAttachFile)
-        {
-            Visible = false;
-        }
-        modify(RemoveIncomingDoc)
-        {
-            Visible = false;
-        }
-        modify(CreateFlow)
-        {
-            Visible = false;
-        }
-        modify(SeeFlows)
-        {
-            Visible = false;
-        }
-        modify(Preview)
-        {
-            Visible = false;
+            Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler l''approbation"';
         }
         addfirst(Navigation)
         {
             group("BC6_Send mail")
             {
-                Caption = 'Send mail';
+                Caption = 'Send mail', Comment = 'FRA="Envoi mail"';
                 action("BC6_Send mail credit memo")
                 {
-                    Caption = 'Send mail credit memo';
+                    Caption = 'Send mail credit memo', Comment = 'FRA="Envoi mail avoir"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -425,7 +179,7 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
                 }
                 action(BC6_Historic)
                 {
-                    Caption = 'Historic';
+                    Caption = 'Historic', Comment = 'FRA="Historique"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -443,23 +197,6 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
                 }
             }
         }
-        addafter(Dimensions)
-        {
-            action(BC6_Approbations)
-            {
-                Caption = 'Approvals';
-                Image = Approvals;
-                ApplicationArea = All;
-
-                trigger OnAction()
-                var
-                    ApprovalEntries: Page "Approval Entries";
-                begin
-                    ApprovalEntries.Setfilters(DATABASE::"Purchase Header", Rec."Document Type".AsInteger(), Rec."No.");
-                    ApprovalEntries.RUN();
-                end;
-            }
-        }
     }
 
     var
@@ -467,8 +204,8 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
         CU_VSC_Mail: Codeunit "BC6_VSC_Mail";
         CR: Char;
         LF: Char;
-        Text001: label ' [NAV] Credit Memo No. ';
-        Text002: label ' to validate';
+        Text001: label '[NAV] Credit Memo No. ', Comment = 'FRA=" [NAV] Avoir N°"';
+        Text002: label 'to validate', Comment = 'FRA=" à valider"';
         CRLF: Text[2];
 
     trigger OnOpenPage()
@@ -476,18 +213,5 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
         Rec.FILTERGROUP(2);
         Rec.SETFILTER("Assigned User ID", UserMgt.jx_GetPurchasesFilter());
         Rec.FILTERGROUP(0);
-    end;
-
-    local procedure BuyfromVendorNoOnAfterValidate()
-    begin
-        if Rec.GETFILTER("Buy-from Vendor No.") = xRec."Buy-from Vendor No." then
-            if Rec."Buy-from Vendor No." <> xRec."Buy-from Vendor No." then
-                Rec.SETRANGE("Buy-from Vendor No.");
-        CurrPage.UPDATE();
-    end;
-
-    local procedure PaytoVendorNoOnAfterValidate()
-    begin
-        CurrPage.UPDATE();
     end;
 }

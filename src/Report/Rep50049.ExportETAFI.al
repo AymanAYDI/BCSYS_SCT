@@ -3,7 +3,7 @@ report 50049 "BC6_Export ETAFI"
     ProcessingOnly = true;
     ApplicationArea = All;
     UsageCategory = Tasks;
-    Caption = 'Export ETAFI';
+    Caption = 'Export ETAFI', Comment = 'FRA="Export ETAFI"';
 
     dataset
     {
@@ -28,17 +28,17 @@ report 50049 "BC6_Export ETAFI"
             {
                 field(Gdate_StartDateV; Gdate_StartDate)
                 {
-                    Caption = 'Date début';
+                    Caption = 'Date début', Comment = 'FRA="Date début"';
                     ApplicationArea = All;
                 }
                 field(Gdate_EndDateV; Gdate_EndDate)
                 {
-                    Caption = 'Date fin';
+                    Caption = 'Date fin', Comment = 'FRA="Date fin"';
                     ApplicationArea = All;
                 }
                 field(Gdate_DateIsolationV; Gdate_DateIsolation)
                 {
-                    Caption = 'Date à isoler';
+                    Caption = 'Date à isoler', Comment = 'FRA="Date à isoler"';
                     ApplicationArea = All;
                 }
             }

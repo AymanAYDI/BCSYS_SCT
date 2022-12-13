@@ -1,6 +1,6 @@
 xmlport 50032 "BC6_LISAM (quick) VAT"
 {
-    Caption = 'LISAM (quick) VAT';
+    Caption = 'LISAM (quick) VAT', Comment = 'FRA="LISAM (rapide) TVA"';
     Direction = Export;
     TextEncoding = WINDOWS;
     Format = VariableText;

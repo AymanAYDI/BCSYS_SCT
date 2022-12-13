@@ -78,10 +78,10 @@ pageextension 50012 "BC6_PostedPurchaseInvoice" extends "Posted Purchase Invoice
         {
             group("BC6_Modifier axe")
             {
-                Caption = 'Modify dimension';
+                Caption = 'Modify dimension', Comment = 'FRA="Modifier axe"';
                 action("Période")
                 {
-                    Caption = 'Period';
+                    Caption = 'Period', Comment = 'FRA="Période"';
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -94,7 +94,7 @@ pageextension 50012 "BC6_PostedPurchaseInvoice" extends "Posted Purchase Invoice
             }
             action(BC6_Historique)
             {
-                Caption = 'Historic';
+                Caption = 'Historic', Comment = 'FRA="Historique"';
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -113,7 +113,7 @@ pageextension 50012 "BC6_PostedPurchaseInvoice" extends "Posted Purchase Invoice
             }
             group("BC6_&Ligne")
             {
-                Caption = '&Line';
+                Caption = '&Line', Comment = 'FRA="&Ligne"';
                 separator(Action108)
                 {
                 }
@@ -123,7 +123,7 @@ pageextension 50012 "BC6_PostedPurchaseInvoice" extends "Posted Purchase Invoice
         {
             action("BC6_Payer ce document")
             {
-                Caption = 'Payer ce document';
+                Caption = 'Payer ce document', Comment = 'FRA="Payer ce document"';
                 Image = VendorPayment;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -139,6 +139,17 @@ pageextension 50012 "BC6_PostedPurchaseInvoice" extends "Posted Purchase Invoice
             }
         }
     }
+    trigger OnOpenPage()
+    var
+        FunctionsMgt: Codeunit BC6_FunctionsMgt;
+    begin
+        //D‚but Modif JX-XAD du 05/08/2008
+        //Filtrer sur le (ou les) utilisateur(s) li‚s au droit de l'utilisateur courant (voir table des paramŠtres utilisateur)
+        Rec.FILTERGROUP(2);
+        Rec.SETFILTER("User ID", FunctionsMgt.jx_GetPurchasesFilter());
+        Rec.FILTERGROUP(0);
+        //Fin Modif JX-XAD du 05/08/2008
+    end;
 
     var
         ModifierAxe: Report "Modifier axe période factures";

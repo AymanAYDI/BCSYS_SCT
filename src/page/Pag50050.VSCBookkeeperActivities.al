@@ -1,6 +1,6 @@
 page 50050 "BC6_VSC Bookkeeper Activities"
 {
-    Caption = 'Activities';
+    Caption = 'Activities', Comment = 'FRA="Activités"';
     PageType = CardPart;
     SourceTable = "Finance Cue";
 
@@ -10,7 +10,7 @@ page 50050 "BC6_VSC Bookkeeper Activities"
         {
             cuegroup(Fournisseurs)
             {
-                Caption = 'Payables';
+                Caption = 'Payables', Comment = 'FRA="Fournisseurs"';
                 field("Purchase Invoices Due Today"; Rec."Purchase Documents Due Today")
                 {
                     DrillDownPageID = "Vendor Ledger Entries";
@@ -19,7 +19,7 @@ page 50050 "BC6_VSC Bookkeeper Activities"
             }
             cuegroup(Clients)
             {
-                Caption = 'Receivables';
+                Caption = 'Receivables', Comment = 'FRA="Clients"';
                 field("Overdue Sales Documents"; Rec."Overdue Sales Documents")
                 {
                     DrillDownPageID = "Customer Ledger Entries";
@@ -28,11 +28,6 @@ page 50050 "BC6_VSC Bookkeeper Activities"
             }
         }
     }
-
-    actions
-    {
-    }
-
     trigger OnOpenPage()
     begin
         Rec.RESET();
