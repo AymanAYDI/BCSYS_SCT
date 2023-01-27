@@ -22,7 +22,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
             column("USERID"; USERID)
             {
             }
-            column(STRSUBSTNO_Text006_FORMAT_EndingDate_0_4__; STRSUBSTNO(Text006, FORMAT(EndingDate, 0, 4)))
+            column(STRSUBSTNO_Text006_FORMAT_EndingDate_0_4__; STRSUBSTNO(Text006, FORMAT(EndingDateV, 0, 4)))
             {
             }
             column(HeaderText_5_; HeaderText[5])
@@ -123,7 +123,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
                 begin
                     VendorLedgEntry.SETCURRENTKEY("Closed by Entry No.");
                     VendorLedgEntry.SETRANGE("Closed by Entry No.", "Entry No.");
-                    VendorLedgEntry.SETRANGE("Posting Date", 0D, EndingDate);
+                    VendorLedgEntry.SETRANGE("Posting Date", 0D, EndingDateV);
                     if VendorLedgEntry.FINDSET(false, false) then
                         repeat
                             InsertTemp(VendorLedgEntry);
@@ -139,7 +139,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
 
                     VendorLedgEntry.RESET();
                     VendorLedgEntry.SETRANGE("Entry No.", "Closed by Entry No.");
-                    VendorLedgEntry.SETRANGE("Posting Date", 0D, EndingDate);
+                    VendorLedgEntry.SETRANGE("Posting Date", 0D, EndingDateV);
                     if VendorLedgEntry.FINDSET(false, false) then
                         repeat
                             InsertTemp(VendorLedgEntry);
@@ -148,7 +148,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
 
                 trigger OnPreDataItem()
                 begin
-                    SETRANGE("Posting Date", EndingDate + 1, 99991231D);
+                    SETRANGE("Posting Date", EndingDateV + 1, 99991231D);
                 end;
             }
             dataitem(OpenVendorLedgEntry; "Vendor Ledger Entry")
@@ -169,8 +169,8 @@ report 50058 "BC6_Vendor : summary aging VSC"
                 trigger OnPreDataItem()
                 begin
                     if AgingBy = AgingBy::"Posting Date" then begin
-                        SETRANGE("Posting Date", 0D, EndingDate);
-                        SETRANGE("Date Filter", 0D, EndingDate);
+                        SETRANGE("Posting Date", 0D, EndingDateV);
+                        SETRANGE("Date Filter", 0D, EndingDateV);
                     end
                 end;
             }
@@ -274,22 +274,22 @@ report 50058 "BC6_Vendor : summary aging VSC"
                             repeat
                                 if (DetailedVendorLedgerEntry."Entry Type" =
                                     DetailedVendorLedgerEntry."Entry Type"::"Initial Entry") and
-                                   (VendorLedgEntryEndingDate."Posting Date" > EndingDate) and
+                                   (VendorLedgEntryEndingDate."Posting Date" > EndingDateV) and
                                    (AgingBy <> AgingBy::"Posting Date")
                                 then
-                                    if VendorLedgEntryEndingDate."Document Date" <= EndingDate then
+                                    if VendorLedgEntryEndingDate."Document Date" <= EndingDateV then
                                         DetailedVendorLedgerEntry."Posting Date" :=
                                           VendorLedgEntryEndingDate."Document Date"
                                     else
-                                        if (VendorLedgEntryEndingDate."Due Date" <= EndingDate) and
+                                        if (VendorLedgEntryEndingDate."Due Date" <= EndingDateV) and
                                            (AgingBy = AgingBy::"Due Date")
                                         then
                                             DetailedVendorLedgerEntry."Posting Date" := VendorLedgEntryEndingDate."Due Date";
 
-                                if (DetailedVendorLedgerEntry."Posting Date" <= EndingDate) or
+                                if (DetailedVendorLedgerEntry."Posting Date" <= EndingDateV) or
                                    (TempVendorLedgEntry.Open and
                                     (AgingBy = AgingBy::"Due Date") and
-                                    (VendorLedgEntryEndingDate."Due Date" > EndingDate)) then begin
+                                    (VendorLedgEntryEndingDate."Due Date" > EndingDateV)) then begin
                                     if DetailedVendorLedgerEntry."Entry Type" in
                                        [DetailedVendorLedgerEntry."Entry Type"::"Initial Entry",
                                         DetailedVendorLedgerEntry."Entry Type"::"Unrealized Loss",
@@ -327,7 +327,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
                                 PeriodIndex := GetPeriodIndex(VendorLedgEntryEndingDate."Posting Date");
                             AgingBy::"Document Date":
                                 begin
-                                    if VendorLedgEntryEndingDate."Document Date" > EndingDate then begin
+                                    if VendorLedgEntryEndingDate."Document Date" > EndingDateV then begin
                                         VendorLedgEntryEndingDate."Remaining Amount" := 0;
                                         VendorLedgEntryEndingDate."Remaining Amt. (LCY)" := 0;
                                         VendorLedgEntryEndingDate."Document Date" := VendorLedgEntryEndingDate."Posting Date";
@@ -444,7 +444,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
                 group(Options)
                 {
                     Caption = 'Options', Comment = 'FRA="Options"';
-                    field(EndingDate; EndingDate)
+                    field(EndingDate; EndingDateV)
                     {
                         Caption = 'Aged As Of', Comment = 'FRA="Echéancier à la date du"';
                         ApplicationArea = All;
@@ -454,8 +454,8 @@ report 50058 "BC6_Vendor : summary aging VSC"
         }
         trigger OnOpenPage()
         begin
-            if EndingDate = 0D then
-                EndingDate := WORKDATE();
+            if EndingDateV = 0D then
+                EndingDateV := WORKDATE();
         end;
     }
     trigger OnPreReport()
@@ -488,7 +488,7 @@ report 50058 "BC6_Vendor : summary aging VSC"
         PrintAmountInLCY: Boolean;
         PrintDetails: Boolean;
         CurrencyCode: Code[10];
-        EndingDate: Date;
+        EndingDateV: Date;
         PeriodEndDate: array[5] of Date;
         PeriodStartDate: array[5] of Date;
         NumberOfCurrencies: Integer;
@@ -521,10 +521,10 @@ report 50058 "BC6_Vendor : summary aging VSC"
             ERROR(Text011);
         if AgingBy = AgingBy::"Due Date" then begin
             PeriodEndDate[1] := 99991231D;
-            PeriodStartDate[1] := EndingDate + 1;
+            PeriodStartDate[1] := EndingDateV + 1;
         end else begin
-            PeriodEndDate[1] := EndingDate;
-            PeriodStartDate[1] := CALCDATE(PeriodLength2, EndingDate + 1);
+            PeriodEndDate[1] := EndingDateV;
+            PeriodStartDate[1] := CALCDATE(PeriodLength2, EndingDateV + 1);
         end;
         for i := 2 to ARRAYLEN(PeriodEndDate) do begin
             PeriodEndDate[i] := PeriodStartDate[i - 1] - 1;
@@ -566,10 +566,10 @@ report 50058 "BC6_Vendor : summary aging VSC"
         */
 
         while i < ARRAYLEN(PeriodEndDate) do begin
-            HeaderText[i] := STRSUBSTNO('%1<x<%2 %3', EndingDate - PeriodEndDate[i], EndingDate - PeriodStartDate[i] + 1, Text002);
+            HeaderText[i] := STRSUBSTNO('%1<x<%2 %3', EndingDateV - PeriodEndDate[i], EndingDateV - PeriodStartDate[i] + 1, Text002);
             i := i + 1;
         end;
-        HeaderText[i] := STRSUBSTNO('>=%1 %2', EndingDate - PeriodStartDate[i - 1] + 1, Text002);
+        HeaderText[i] := STRSUBSTNO('>=%1 %2', EndingDateV - PeriodStartDate[i - 1] + 1, Text002);
     end;
 
     local procedure InsertTemp(var VendorLedgEntry: Record "Vendor Ledger Entry")

@@ -1499,7 +1499,7 @@ report 50009 "BC6_Facture vente forfait"
 
     procedure FindPostedShipmentDate(): Date
     var
-        SalesShipmentBuffer2: Record "Sales Shipment Buffer" temporary;
+        TempSalesShipmentBuffer2: Record "Sales Shipment Buffer" temporary;
         SalesShipmentHeader: Record "Sales Shipment Header";
     begin
         NextEntryNo := 1;
@@ -1524,12 +1524,12 @@ report 50009 "BC6_Facture vente forfait"
         TempSalesShipmentBuffer.SETRANGE("Document No.", "Sales Invoice Line"."Document No.");
         TempSalesShipmentBuffer.SETRANGE("Line No.", "Sales Invoice Line"."Line No.");
         IF TempSalesShipmentBuffer.FIND('-') THEN BEGIN
-            SalesShipmentBuffer2 := TempSalesShipmentBuffer;
+            TempSalesShipmentBuffer2 := TempSalesShipmentBuffer;
             IF TempSalesShipmentBuffer.NEXT() = 0 THEN BEGIN
                 TempSalesShipmentBuffer.GET(
-                  SalesShipmentBuffer2."Document No.", SalesShipmentBuffer2."Line No.", SalesShipmentBuffer2."Entry No.");
+                  TempSalesShipmentBuffer2."Document No.", TempSalesShipmentBuffer2."Line No.", TempSalesShipmentBuffer2."Entry No.");
                 TempSalesShipmentBuffer.DELETE();
-                EXIT(SalesShipmentBuffer2."Posting Date");
+                EXIT(TempSalesShipmentBuffer2."Posting Date");
             END;
             TempSalesShipmentBuffer.CALCSUMS(Quantity);
             IF TempSalesShipmentBuffer.Quantity <> "Sales Invoice Line".Quantity THEN BEGIN

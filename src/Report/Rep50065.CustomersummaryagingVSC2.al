@@ -646,7 +646,7 @@ report 50065 "Customer : summary aging VSC 2"
     local procedure CalcDates()
     var
         PeriodLength2: DateFormula;
-        i: Integer;
+        k: Integer;
     begin
         if not EVALUATE(PeriodLength2, '-' + FORMAT(PeriodLength)) then
             ERROR(Text011);
@@ -657,17 +657,17 @@ report 50065 "Customer : summary aging VSC 2"
             PeriodEndDate[1] := EndingDate;
             PeriodStartDate[1] := CALCDATE(PeriodLength2, EndingDate + 1);
         end;
-        for i := 2 to ARRAYLEN(PeriodEndDate) do begin
-            PeriodEndDate[i] := PeriodStartDate[i - 1] - 1;
-            PeriodStartDate[i] := CALCDATE(PeriodLength2, PeriodEndDate[i] + 1);
+        for k := 2 to ARRAYLEN(PeriodEndDate) do begin
+            PeriodEndDate[k] := PeriodStartDate[k - 1] - 1;
+            PeriodStartDate[k] := CALCDATE(PeriodLength2, PeriodEndDate[k] + 1);
         end;
 
-        i := ARRAYLEN(PeriodEndDate);
+        k := ARRAYLEN(PeriodEndDate);
 
-        PeriodStartDate[i] := 0D;
+        PeriodStartDate[k] := 0D;
 
-        for i := 1 to ARRAYLEN(PeriodEndDate) do
-            if PeriodEndDate[i] < PeriodStartDate[i] then
+        for k := 1 to ARRAYLEN(PeriodEndDate) do
+            if PeriodEndDate[k] < PeriodStartDate[k] then
                 ERROR(Text010, PeriodLength);
 
         //Calcul de la période concernant les documents non échus
@@ -682,13 +682,13 @@ report 50065 "Customer : summary aging VSC 2"
 
     local procedure CreateHeadings()
     var
-        i: Integer;
+        k: Integer;
     begin
         if (AgingBy = AgingBy::"Due Date") or (AgingBy = AgingBy::"Posting Date") then begin //Modif JX-AUD du 24/08/11
             HeaderText[1] := Text000;
-            i := 2;
+            k := 2;
         end else
-            i := 1;
+            k := 1;
         /*
         WHILE i < ARRAYLEN(PeriodEndDate) DO BEGIN
           IF HeadingType = HeadingType::"Date Interval" THEN
@@ -751,11 +751,11 @@ report 50065 "Customer : summary aging VSC 2"
 
     local procedure GetPeriodIndex(Date: Date): Integer
     var
-        i: Integer;
+        k: Integer;
     begin
-        for i := 1 to ARRAYLEN(PeriodEndDate) do
-            if Date in [PeriodStartDate[i] .. PeriodEndDate[i]] then
-                exit(i);
+        for k := 1 to ARRAYLEN(PeriodEndDate) do
+            if Date in [PeriodStartDate[k] .. PeriodEndDate[k]] then
+                exit(k);
     end;
 
     local procedure Pct(a: Decimal; b: Decimal): Text[30]
@@ -766,20 +766,20 @@ report 50065 "Customer : summary aging VSC 2"
 
     local procedure UpdateCurrencyTotals()
     var
-        i: Integer;
+        k: Integer;
     begin
         TempCurrency2.Code := CurrencyCode;
         if TempCurrency2.INSERT() then;
-        for i := 1 to ARRAYLEN(TotalVendorLedgEntry) do begin
+        for k := 1 to ARRAYLEN(TotalVendorLedgEntry) do begin
             TempCurrencyAmount."Currency Code" := CurrencyCode;
-            TempCurrencyAmount.Date := PeriodStartDate[i];
+            TempCurrencyAmount.Date := PeriodStartDate[k];
             if TempCurrencyAmount.FIND() then begin
-                TempCurrencyAmount.Amount := TempCurrencyAmount.Amount + TotalVendorLedgEntry[i]."Remaining Amount";
+                TempCurrencyAmount.Amount := TempCurrencyAmount.Amount + TotalVendorLedgEntry[k]."Remaining Amount";
                 TempCurrencyAmount.MODIFY();
             end else begin
                 TempCurrencyAmount."Currency Code" := CurrencyCode;
-                TempCurrencyAmount.Date := PeriodStartDate[i];
-                TempCurrencyAmount.Amount := TotalVendorLedgEntry[i]."Remaining Amount";
+                TempCurrencyAmount.Date := PeriodStartDate[k];
+                TempCurrencyAmount.Amount := TotalVendorLedgEntry[k]."Remaining Amount";
                 TempCurrencyAmount.INSERT();
             end;
         end;

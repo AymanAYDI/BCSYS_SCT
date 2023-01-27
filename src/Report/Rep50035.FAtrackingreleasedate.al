@@ -163,7 +163,7 @@ report 50035 "BC6_F.A. tracking release date"
         Release_dateCaptionLbl: Label 'Release date', Comment = 'FRA="Date de sortie"';
         Serial_No_CaptionLbl: Label 'Serial No.', Comment = 'FRA="N° de  série"';
         Text001: Label 'Track Release Date of fixed asset', Comment = 'FRA="Suivi des dates de sortie immos"';
-        Text002: Label 'Page %1';
+        //Text002: Label 'Page %1';
         Text003: Label 'to', Comment = 'FRA="à"';
         Text004: Label 'There is no record on the date of %1', Comment = 'FRA="Il n''y a aucune écriture à la date du %1"';
         type_of_equipmentCaptionLbl: Label 'type of equipment', Comment = 'FRA="Type de matériel"';

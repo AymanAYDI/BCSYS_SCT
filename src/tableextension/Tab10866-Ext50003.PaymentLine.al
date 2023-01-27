@@ -28,6 +28,9 @@ tableextension 50003 "BC6_PaymentLine" extends "Payment Line" //10866
     }
     keys
     {
+        key(Key1; "BC6_Account Name")
+        {
+        }
         key(Key2; "BC6_Pay Document Type", "BC6_Pay Document No.")
         {
         }

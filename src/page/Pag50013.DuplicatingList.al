@@ -122,7 +122,7 @@ page 50013 "BC6_Duplicating List"
                 var
                     Lint_DuplicationNumber: Integer;
                     Ltxt_Duplication: Text[1024];
-                    Ltxt_Echec: Text[1024];
+                    Ltxt_Echec: Text;
                 begin
                     //DEBUT MODIF JX-AUD du 07/04/14
                     if Gopt_TypeFiche <> Gopt_TypeFiche::User then ERROR(text016);

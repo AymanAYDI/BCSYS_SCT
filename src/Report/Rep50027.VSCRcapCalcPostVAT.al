@@ -78,7 +78,7 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
             column(VAT_Posting_Setup_VAT_Prod__Posting_Group; "VAT Prod. Posting Group")
             {
             }
-            column(UseAmtsInAddCurr; UseAmtsInAddCurr)
+            column(UseAmtsInAddCurr; UseAmtsInAddCurrV)
             {
             }
             column(ReversingEntry; ReversingEntry)
@@ -427,7 +427,7 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
                         END;
                         NextVATEntryNo := NextVATEntryNo + 1;
 
-                        IF NOT UseAmtsInAddCurr THEN BEGIN
+                        IF NOT UseAmtsInAddCurrV THEN BEGIN
                             IF NOT ReversingEntry THEN BEGIN
                                 Gtotal := GenJnlLine."VAT Base Amount" + GenJnlLine."VAT Amount";
                                 Gtotal1 := GenJnlLine."VAT Base Amount";
@@ -621,7 +621,7 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
                     TableRelation = "G/L Account";
                     ApplicationArea = All;
                 }
-                field(UseAmtsInAddCurr; UseAmtsInAddCurr)
+                field(UseAmtsInAddCurr; UseAmtsInAddCurrV)
                 {
                     Caption = 'Show Amounts in Add. Reporting Currency', Comment = 'FRA="Afficher montants en devise report"';
                     ApplicationArea = All;
@@ -647,7 +647,7 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
         VATDateFilter := VATEntry.GETFILTER("Posting Date");
 
         GLSetup.GET();
-        IF UseAmtsInAddCurr THEN
+        IF UseAmtsInAddCurrV THEN
             HeaderText := STRSUBSTNO(Text006, GLSetup."Additional Reporting Currency")
         ELSE BEGIN
             GLSetup.TESTFIELD("LCY Code");
@@ -672,7 +672,7 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
         PostSettlement: Boolean;
         PrintVATEntries: Boolean;
         ReversingEntry: Boolean;
-        UseAmtsInAddCurr: Boolean;
+        UseAmtsInAddCurrV: Boolean;
         DocNo: Code[20];
         EndDateReq: Date;
         EntrdStartDate: Date;
@@ -723,7 +723,7 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
 
     procedure GetCurrency(): Code[10]
     begin
-        IF UseAmtsInAddCurr THEN
+        IF UseAmtsInAddCurrV THEN
             EXIT(GLSetup."Additional Reporting Currency")
         ELSE
             EXIT('');

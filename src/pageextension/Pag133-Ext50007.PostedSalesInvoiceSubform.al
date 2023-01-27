@@ -79,12 +79,12 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
         Gtext_Axe3: Text[30];
         Gtext_Axe4: Text[30];
         Gtext_Axe5: Text[30];
-        Gtext_ColAxe0: Text[30];
-        Gtext_ColAxe1: Text[30];
-        Gtext_ColAxe2: Text[30];
-        Gtext_ColAxe3: Text[30];
-        Gtext_ColAxe4: Text[30];
-        Gtext_ColAxe5: Text[30];
+        Gtext_ColAxe0: Text[80];
+        Gtext_ColAxe1: Text[80];
+        Gtext_ColAxe2: Text[80];
+        Gtext_ColAxe3: Text[80];
+        Gtext_ColAxe4: Text[80];
+        Gtext_ColAxe5: Text[80];
 
     var
         Grec_DimSetEntry: Record "Dimension Set Entry";

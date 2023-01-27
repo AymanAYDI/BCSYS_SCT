@@ -96,7 +96,7 @@ report 50000 "BC6_Devis Achat"
             column(RemImp3; RemImp3lbl)
             {
             }
-            column(VATDetail; VATDetail)
+            column(VATDetail; VATDetailV)
             {
             }
             column(UserSetupName; Grec_UserSetup."BC6_Nom")
@@ -1159,7 +1159,7 @@ report 50000 "BC6_Devis Achat"
                                 ArchiveDocumentV := ArchiveDocumentEnable;
                         end;
                     }
-                    field(VATDetail; VATDetail)
+                    field(VATDetail; VATDetailV)
                     {
                         Caption = 'Détail TVA';
                         ApplicationArea = All;
@@ -1233,7 +1233,7 @@ report 50000 "BC6_Devis Achat"
         LogInteractionEnable: Boolean;
         MoreLines: Boolean;
         ShowInternalInfo: Boolean;
-        VATDetail: Boolean;
+        VATDetailV: Boolean;
         "Gcode_PrécédentUserID": Code[50];
         Gcode_UserID: Code[50];
         PrepmtLineAmount: Decimal;

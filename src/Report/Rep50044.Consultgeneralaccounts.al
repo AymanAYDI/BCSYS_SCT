@@ -118,7 +118,7 @@ report 50044 "BC6_Consult general accounts"
         Reminder_of_the_selectionCaptionLbl: Label 'Reminder of the selection', Comment = 'FRA="Rappel de la sélection"';
         Text001: Label 'Account No. :', Comment = 'FRA="N° compte général :"';
         Text003: Label 'at', Comment = 'FRA="à"';
-        Text004: Label 'Page %1', Comment = 'FRA="Page %1"';
+        //Text004: Label 'Page %1', Comment = 'FRA="Page %1"';
         TotalCaptionLbl: Label 'Total';
         User__CaptionLbl: Label 'User :', Comment = 'FRA="Utilisateur"';
         Gtxt_AccountNoFilter: Text[30];

@@ -15,7 +15,7 @@ codeunit 50003 "BC6_VSC_Mail"
         Gtext_alias: Text;
         Gtext_Mail: Text[100];
 
-    procedure NewMessageAvoir(ToName: Text[80]; CCName: Text[80]; Subject: Text[260]; Body: Text[260]; AttachFileName: Text[260]; OpenDialog: Boolean; LRecPurchaseHeader: Record "Purchase Header"; Ptxt_DocNumber: Text[30]; LtxtUser: Text[30]) MailSent: Boolean;
+    procedure NewMessageAvoir(ToName: Text[100]; CCName: Text[80]; Subject: Text[260]; Body: Text[260]; AttachFileName: Text[260]; OpenDialog: Boolean; LRecPurchaseHeader: Record "Purchase Header"; Ptxt_DocNumber: Text[30]; LtxtUser: Text[30]) MailSent: Boolean;
     var
         LtxtAmount: Text[30];
         LtxtCurrency: Text[30];

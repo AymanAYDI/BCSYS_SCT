@@ -28,5 +28,5 @@
   },
   "runtime": "10.0",
   "target": "OnPrem",
-  "features": ["TranslationFile"]
+  "features": ["NoImplicitWith", "TranslationFile"]
 }

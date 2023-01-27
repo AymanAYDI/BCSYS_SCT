@@ -426,7 +426,7 @@ codeunit 50011 "BC6_FunctionsMgt"
     //---Codeunit 90---
     procedure Fct_OnBeforePostPurchaseDocCodeunit90(var PurchaseHeader: Record "Purchase Header"; PreviewMode: Boolean; CommitIsSupressed: Boolean; var HideProgressWindow: Boolean)
     var
-        Grec_Temp: Record "BC6_Table temporaire" temporary;
+        Temp_Grec: Record "BC6_Table temporaire" temporary;
         Text061: label 'The field "Your reference" in header %1 is mandatory', Comment = 'FRA="Le champs "Votre référence" dans en-tête %1 est obligatoire"';
     begin
         //DEBUT MODIF JX-XAD 20/05/2011
@@ -438,13 +438,13 @@ codeunit 50011 "BC6_FunctionsMgt"
         //FIN MODIF JX-XAD 20/05/2011
 
         //DEBUT MODIF JX-XAD 09/07/2009
-        if Grec_Temp.GET(-1) then begin
-            Grec_Temp.Compte := PurchaseHeader."Assigned User ID";
-            Grec_Temp.MODIFY();
+        if Temp_Grec.GET(-1) then begin
+            Temp_Grec.Compte := PurchaseHeader."Assigned User ID";
+            Temp_Grec.MODIFY();
         end else begin
-            Grec_Temp.Piece := (-1);
-            Grec_Temp.Compte := PurchaseHeader."Assigned User ID";
-            Grec_Temp.INSERT();
+            Temp_Grec.Piece := (-1);
+            Temp_Grec.Compte := PurchaseHeader."Assigned User ID";
+            Temp_Grec.INSERT();
         end;
         //FIN MODIF JX-XAD 09/07/2009
     end;

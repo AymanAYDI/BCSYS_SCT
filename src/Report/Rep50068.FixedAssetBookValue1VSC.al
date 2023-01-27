@@ -26,10 +26,10 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
             column(FAFilter; FAFilter)
             {
             }
-            column(PrintDetails; PrintDetails)
+            column(PrintDetails; PrintDetailsV)
             {
             }
-            column(GroupTotals; SELECTSTR(GroupTotals + 1, GroupTotalsTxt))
+            column(GroupTotals; SELECTSTR(GroupTotalsV + 1, GroupTotalsTxt))
             {
             }
             column(GroupCodeName; GroupCodeName)
@@ -83,7 +83,7 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
             column(HeadLineText14; HeadLineText[14])
             {
             }
-            column(AfficherEnTete; Gbool_AfficherEnTete)
+            column(AfficherEnTete; Gbool_AfficherEnTeteV)
             {
             }
             dataitem("Fixed Asset"; "Fixed Asset")
@@ -171,7 +171,7 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
                 column(DeprBookInfo5; DeprBookInfo[5])
                 {
                 }
-                column(PrintFASetup; PrintFASetup)
+                column(PrintFASetup; PrintFASetupV)
                 {
                 }
                 column(DerogDeprBookInfo1; DerogDeprBookInfo[1])
@@ -285,7 +285,7 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
 
                 trigger OnAfterGetRecord()
                 begin
-                    IF NOT FADeprBook.GET("No.", DeprBookCode) THEN
+                    IF NOT FADeprBook.GET("No.", DeprBookCodeV) THEN
                         CurrReport.SKIP();
                     IF SkipRecord() THEN
                         CurrReport.SKIP();
@@ -296,15 +296,15 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
                     IF FADeprBook2.FIND('-') THEN
                         HasDerogatorySetup := TRUE;
 
-                    IF GroupTotals = GroupTotals::"FA Posting Group" THEN
+                    IF GroupTotalsV = GroupTotalsV::"FA Posting Group" THEN
                         IF "FA Posting Group" <> FADeprBook."FA Posting Group" THEN
                             ERROR(Text007, FIELDCAPTION("FA Posting Group"), "No.");
 
                     BeforeAmount := 0;
                     EndingAmount := 0;
-                    IF BudgetReport THEN
+                    IF BudgetReportV THEN
                         BudgetDepreciation.Calculate(
-                          "No.", GetStartingDate(StartingDate), EndingDate, DeprBookCode, BeforeAmount, EndingAmount);
+                          "No.", GetStartingDate(StartingDateV), EndingDateV, DeprBookCodeV, BeforeAmount, EndingAmount);
 
                     i := 0;
                     WHILE i < NumberOfTypes DO BEGIN
@@ -325,26 +325,26 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
                             7:
                                 PostingType := FADeprBook.FIELDNO(Derogatory);
                         END;
-                        IF StartingDate <= 00000101D THEN
+                        IF StartingDateV <= 00000101D THEN
                             StartAmounts[i] := 0
                         ELSE
-                            StartAmounts[i] := FAGenReport.CalcFAPostedAmount("No.", PostingType, Period1, StartingDate,
-                              EndingDate, DeprBookCode, BeforeAmount, EndingAmount, FALSE, TRUE);
+                            StartAmounts[i] := FAGenReport.CalcFAPostedAmount("No.", PostingType, Period1, StartingDateV,
+                              EndingDateV, DeprBookCodeV, BeforeAmount, EndingAmount, FALSE, TRUE);
                         NetChangeAmounts[i] :=
                           FAGenReport.CalcFAPostedAmount(
-                            "No.", PostingType, Period2, StartingDate, EndingDate,
-                            DeprBookCode, BeforeAmount, EndingAmount, FALSE, TRUE);
+                            "No.", PostingType, Period2, StartingDateV, EndingDateV,
+                            DeprBookCodeV, BeforeAmount, EndingAmount, FALSE, TRUE);
                         IF i = 7 THEN BEGIN
                             FAGenReport.SetSign(TRUE);
                             NetChangeAmounts[i] :=
                               -(FAGenReport.CalcFAPostedAmount(
-                                  "No.", PostingType, Period2, StartingDate, EndingDate,
-                                  DeprBookCode, BeforeAmount, EndingAmount, FALSE, TRUE));
+                                  "No.", PostingType, Period2, StartingDateV, EndingDateV,
+                                  DeprBookCodeV, BeforeAmount, EndingAmount, FALSE, TRUE));
                             FAGenReport.SetSign(FALSE);
                             DisposalAmounts[i] :=
                               FAGenReport.CalcFAPostedAmount(
-                                "No.", PostingType, Period2, StartingDate, EndingDate,
-                                DeprBookCode, BeforeAmount, EndingAmount, FALSE, TRUE);
+                                "No.", PostingType, Period2, StartingDateV, EndingDateV,
+                                DeprBookCodeV, BeforeAmount, EndingAmount, FALSE, TRUE);
                         END;
                         IF GetPeriodDisposal() THEN
                             DisposalAmounts[i] := -(StartAmounts[i] + NetChangeAmounts[i])
@@ -379,24 +379,24 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
                 trigger OnPreDataItem()
                 begin
                     //Modif JX-AUD du 03/08/11
-                    DeprBookCode := "Depreciation Book".Code;
-                    DeprBookText := STRSUBSTNO('%1%2 %3', DeprBook.TABLECAPTION, ':', DeprBookCode);
+                    DeprBookCodeV := "Depreciation Book".Code;
+                    DeprBookText := STRSUBSTNO('%1%2 %3', DeprBook.TABLECAPTION, ':', DeprBookCodeV);
                     //Fin modif JX-AUD du 03/08/11
 
-                    CASE GroupTotals OF
-                        GroupTotals::"FA Class":
+                    CASE GroupTotalsV OF
+                        GroupTotalsV::"FA Class":
                             SETCURRENTKEY("FA Class Code");
-                        GroupTotals::"FA Subclass":
+                        GroupTotalsV::"FA Subclass":
                             SETCURRENTKEY("FA Subclass Code");
-                        GroupTotals::"FA Location":
+                        GroupTotalsV::"FA Location":
                             SETCURRENTKEY("FA Location Code");
-                        GroupTotals::"Main Asset":
+                        GroupTotalsV::"Main Asset":
                             SETCURRENTKEY("Component of Main Asset");
-                        GroupTotals::"Global Dimension 1":
+                        GroupTotalsV::"Global Dimension 1":
                             SETCURRENTKEY("Global Dimension 1 Code");
-                        GroupTotals::"Global Dimension 2":
+                        GroupTotalsV::"Global Dimension 2":
                             SETCURRENTKEY("Global Dimension 2 Code");
-                        GroupTotals::"FA Posting Group":
+                        GroupTotalsV::"FA Posting Group":
                             SETCURRENTKEY("FA Posting Group");
                     END;
                 end;
@@ -415,59 +415,59 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
                 group(Options)
                 {
                     Caption = 'Options', Comment = 'FRA="Options"';
-                    field(DeprBookCode; DeprBookCode)
+                    field(DeprBookCode; DeprBookCodeV)
                     {
                         Caption = 'Depreciation Book', Comment = 'FRA="Lois d''amortissement"';
                         TableRelation = "Depreciation Book";
                         Visible = false;
                         ApplicationArea = All;
                     }
-                    field(StartingDate; StartingDate)
+                    field(StartingDate; StartingDateV)
                     {
                         Caption = 'Starting Date', Comment = 'FRA="Date début"';
                         ApplicationArea = All;
                     }
-                    field(EndingDate; EndingDate)
+                    field(EndingDate; EndingDateV)
                     {
                         Caption = 'Ending Date', Comment = 'FRA="Date fin"';
                         ApplicationArea = All;
                     }
-                    field(GroupTotals; GroupTotals)
+                    field(GroupTotals; GroupTotalsV)
                     {
                         Caption = 'Group Totals', Comment = 'FRA="Sous-totaux"';
                         OptionCaption = ' ,FA Class,FA Subclass,FA Location,Main Asset,Global Dimension 1,Global Dimension 2,FA Posting Group', Comment = 'FRA=" ,Classe immo.,Sous-classe immo.,Emplacement immo.,Immo. principale,Axe principal 1,Axe principal 2,Groupe compta. immo."';
                         ApplicationArea = All;
                     }
-                    field(PrintDetails; PrintDetails)
+                    field(PrintDetails; PrintDetailsV)
                     {
                         Caption = 'Print per Fixed Asset', Comment = 'FRA="Imprimer par immobilisation"';
                         ApplicationArea = All;
 
                         trigger OnValidate()
                         begin
-                            IF NOT PrintDetails THEN
-                                IF PrintFASetup THEN
-                                    PrintFASetup := FALSE;
+                            IF NOT PrintDetailsV THEN
+                                IF PrintFASetupV THEN
+                                    PrintFASetupV := FALSE;
                         end;
                     }
-                    field(BudgetReport; BudgetReport)
+                    field(BudgetReport; BudgetReportV)
                     {
                         Caption = 'Budget Report', Comment = 'FRA="État budget"';
                         ApplicationArea = All;
                     }
-                    field(PrintFASetup; PrintFASetup)
+                    field(PrintFASetup; PrintFASetupV)
                     {
                         Caption = 'Print FA Setup', Comment = 'FRA="Imprimer Paramètres immobilisations"';
                         ApplicationArea = All;
 
                         trigger OnValidate()
                         begin
-                            IF PrintFASetup THEN
-                                IF NOT PrintDetails THEN
-                                    PrintDetails := TRUE;
+                            IF PrintFASetupV THEN
+                                IF NOT PrintDetailsV THEN
+                                    PrintDetailsV := TRUE;
                         end;
                     }
-                    field(Gbool_AfficherEnTete; Gbool_AfficherEnTete)
+                    field(Gbool_AfficherEnTete; Gbool_AfficherEnTeteV)
                     {
                         Caption = 'Display the header', Comment = 'FRA="Afficher l''en-tête"';
                         ApplicationArea = All;
@@ -479,13 +479,13 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
         begin
             GetDepreciationBookCode();
             //Modif JX-AUD du 03/08/11
-            Gbool_AfficherEnTete := TRUE;
+            Gbool_AfficherEnTeteV := TRUE;
         end;
     }
     trigger OnInitReport()
     begin
         //Modif JX-AUD du 03/08/11
-        Gbool_AfficherEnTete := TRUE;
+        Gbool_AfficherEnTeteV := TRUE;
         Gint_NbSaisies := 0; //Modif JX-AUD du 18/11/11
         CLEAR(Gvariant_Tableau);//Modif JX-AUD du 18/11/11
         //Fin modif JX-AUD du 03/08/11
@@ -495,22 +495,22 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
     begin
         NumberOfTypes := 7;
         CLEAR(DerogDeprBook);
-        DeprBook.GET(DeprBookCode);
-        DerogDeprBook.SETRANGE("Derogatory Calculation", DeprBookCode);
+        DeprBook.GET(DeprBookCodeV);
+        DerogDeprBook.SETRANGE("Derogatory Calculation", DeprBookCodeV);
         IF DerogDeprBook.FIND('-') THEN;
-        IF GroupTotals = GroupTotals::"FA Posting Group" THEN
+        IF GroupTotalsV = GroupTotalsV::"FA Posting Group" THEN
             FAGenReport.SetFAPostingGroup("Fixed Asset", DeprBook.Code);
-        FAGenReport.AppendFAPostingFilter("Fixed Asset", StartingDate, EndingDate);
+        FAGenReport.AppendFAPostingFilter("Fixed Asset", StartingDateV, EndingDateV);
         FAFilter := "Fixed Asset".GETFILTERS;
         MainHeadLineText := Text000;
-        IF BudgetReport THEN
+        IF BudgetReportV THEN
             MainHeadLineText := STRSUBSTNO('%1 %2', MainHeadLineText, Text001);
-        DeprBookText := STRSUBSTNO('%1%2 %3', DeprBook.TABLECAPTION, ':', DeprBookCode);
+        DeprBookText := STRSUBSTNO('%1%2 %3', DeprBook.TABLECAPTION, ':', DeprBookCodeV);
         MakeGroupTotalText();
-        FAGenReport.ValidateDates(StartingDate, EndingDate);
+        FAGenReport.ValidateDates(StartingDateV, EndingDateV);
         MakeDateText();
         MakeHeadLine();
-        IF PrintDetails THEN BEGIN
+        IF PrintDetailsV THEN BEGIN
             FANo := "Fixed Asset".FIELDCAPTION("No.");
             FADescription := "Fixed Asset".FIELDCAPTION(Description);
         END;
@@ -528,16 +528,16 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
         FA: Record "Fixed Asset";
         BudgetDepreciation: Codeunit "Budget Depreciation";
         FAGenReport: Codeunit "FA General Report";
-        BudgetReport: Boolean;
-        Gbool_AfficherEnTete: Boolean;
+        BudgetReportV: Boolean;
+        Gbool_AfficherEnTeteV: Boolean;
         HasDerogatorySetup: Boolean;
-        PrintDetails: Boolean;
-        PrintFASetup: Boolean;
-        DeprBookCode: Code[10];
+        PrintDetailsV: Boolean;
+        PrintFASetupV: Boolean;
+        DeprBookCodeV: Code[10];
         AcquisitionDate: Date;
         DisposalDate: Date;
-        EndingDate: Date;
-        StartingDate: Date;
+        EndingDateV: Date;
+        StartingDateV: Date;
         BeforeAmount: Decimal;
         BookValueAtEndingDate: Decimal;
         BookValueAtStartingDate: Decimal;
@@ -570,7 +570,7 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
         Text10800: Label 'Increased in Period', Comment = 'FRA="Augmenté au cours de la période"';
         Text10801: Label 'Decreased in Period', Comment = 'FRA="Diminué au cours de la période"';
         TotalCaptionLbl: Label 'Total', Comment = 'FRA="Total"';
-        GroupTotals: Option " ","FA Class","FA Subclass","FA Location","Main Asset","Global Dimension 1","Global Dimension 2","FA Posting Group";
+        GroupTotalsV: Option " ","FA Class","FA Subclass","FA Location","Main Asset","Global Dimension 1","Global Dimension 2","FA Posting Group";
         Period1: Option "Before Starting Date","Net Change","at Ending Date";
         Period2: Option "Before Starting Date","Net Change","at Ending Date";
         FAFilter: Text;
@@ -589,32 +589,32 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
 
     local procedure AddPostingType(PostingType: Option "Write-Down",Appreciation,"Custom 1","Custom 2")
     var
-        i: Integer;
-        j: Integer;
+        k: Integer;
+        L: Integer;
     begin
-        i := PostingType + 3;
+        k := PostingType + 3;
         CASE PostingType OF
             PostingType::"Write-Down":
-                FAPostingTypeSetup.GET(DeprBookCode, FAPostingTypeSetup."FA Posting Type"::"Write-Down");
+                FAPostingTypeSetup.GET(DeprBookCodeV, FAPostingTypeSetup."FA Posting Type"::"Write-Down");
             PostingType::Appreciation:
-                FAPostingTypeSetup.GET(DeprBookCode, FAPostingTypeSetup."FA Posting Type"::Appreciation);
+                FAPostingTypeSetup.GET(DeprBookCodeV, FAPostingTypeSetup."FA Posting Type"::Appreciation);
             PostingType::"Custom 1":
-                FAPostingTypeSetup.GET(DeprBookCode, FAPostingTypeSetup."FA Posting Type"::"Custom 1");
+                FAPostingTypeSetup.GET(DeprBookCodeV, FAPostingTypeSetup."FA Posting Type"::"Custom 1");
             PostingType::"Custom 2":
-                FAPostingTypeSetup.GET(DeprBookCode, FAPostingTypeSetup."FA Posting Type"::"Custom 2");
+                FAPostingTypeSetup.GET(DeprBookCodeV, FAPostingTypeSetup."FA Posting Type"::"Custom 2");
         END;
         IF FAPostingTypeSetup."Depreciation Type" THEN
-            j := 2
+            L := 2
         ELSE
             IF FAPostingTypeSetup."Acquisition Type" THEN
-                j := 1;
-        IF j > 0 THEN BEGIN
-            StartAmounts[j] := StartAmounts[j] + StartAmounts[i];
-            StartAmounts[i] := 0;
-            NetChangeAmounts[j] := NetChangeAmounts[j] + NetChangeAmounts[i];
-            NetChangeAmounts[i] := 0;
-            DisposalAmounts[j] := DisposalAmounts[j] + DisposalAmounts[i];
-            DisposalAmounts[i] := 0;
+                L := 1;
+        IF L > 0 THEN BEGIN
+            StartAmounts[L] := StartAmounts[L] + StartAmounts[k];
+            StartAmounts[k] := 0;
+            NetChangeAmounts[L] := NetChangeAmounts[L] + NetChangeAmounts[k];
+            NetChangeAmounts[k] := 0;
+            DisposalAmounts[L] := DisposalAmounts[L] + DisposalAmounts[k];
+            DisposalAmounts[k] := 0;
         END;
     end;
 
@@ -625,34 +625,34 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
         EXIT(
           "Fixed Asset".Inactive OR
           (AcquisitionDate = 0D) OR
-          (AcquisitionDate > EndingDate) AND (EndingDate > 0D) OR
-          (DisposalDate > 0D) AND (DisposalDate < StartingDate))
+          (AcquisitionDate > EndingDateV) AND (EndingDateV > 0D) OR
+          (DisposalDate > 0D) AND (DisposalDate < StartingDateV))
     end;
 
     local procedure GetPeriodDisposal(): Boolean
     begin
         IF DisposalDate > 0D THEN
-            IF (EndingDate = 0D) OR (DisposalDate <= EndingDate) THEN
+            IF (EndingDateV = 0D) OR (DisposalDate <= EndingDateV) THEN
                 EXIT(TRUE);
         EXIT(FALSE);
     end;
 
     local procedure MakeGroupTotalText()
     begin
-        CASE GroupTotals OF
-            GroupTotals::"FA Class":
+        CASE GroupTotalsV OF
+            GroupTotalsV::"FA Class":
                 GroupCodeName := FORMAT("Fixed Asset".FIELDCAPTION("FA Class Code"));
-            GroupTotals::"FA Subclass":
+            GroupTotalsV::"FA Subclass":
                 GroupCodeName := FORMAT("Fixed Asset".FIELDCAPTION("FA Subclass Code"));
-            GroupTotals::"FA Location":
+            GroupTotalsV::"FA Location":
                 GroupCodeName := FORMAT("Fixed Asset".FIELDCAPTION("FA Location Code"));
-            GroupTotals::"Main Asset":
+            GroupTotalsV::"Main Asset":
                 GroupCodeName := FORMAT("Fixed Asset".FIELDCAPTION("Main Asset/Component"));
-            GroupTotals::"Global Dimension 1":
+            GroupTotalsV::"Global Dimension 1":
                 GroupCodeName := FORMAT("Fixed Asset".FIELDCAPTION("Global Dimension 1 Code"));
-            GroupTotals::"Global Dimension 2":
+            GroupTotalsV::"Global Dimension 2":
                 GroupCodeName := FORMAT("Fixed Asset".FIELDCAPTION("Global Dimension 2 Code"));
-            GroupTotals::"FA Posting Group":
+            GroupTotalsV::"FA Posting Group":
                 GroupCodeName := FORMAT("Fixed Asset".FIELDCAPTION("FA Posting Group"));
         END;
         IF GroupCodeName <> '' THEN
@@ -661,8 +661,8 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
 
     local procedure MakeDateText()
     begin
-        StartText := STRSUBSTNO('%1', StartingDate - 1);
-        EndText := STRSUBSTNO('%1', EndingDate);
+        StartText := STRSUBSTNO('%1', StartingDateV - 1);
+        EndText := STRSUBSTNO('%1', EndingDateV);
     end;
 
     local procedure MakeHeadLine()
@@ -696,14 +696,14 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
             GroupNetChangeAmounts[j] := 0;
             GroupDisposalAmounts[j] := 0;
         END;
-        CASE GroupTotals OF
-            GroupTotals::"FA Class":
+        CASE GroupTotalsV OF
+            GroupTotalsV::"FA Class":
                 GroupHeadLine := FORMAT("Fixed Asset"."FA Class Code");
-            GroupTotals::"FA Subclass":
+            GroupTotalsV::"FA Subclass":
                 GroupHeadLine := FORMAT("Fixed Asset"."FA Subclass Code");
-            GroupTotals::"FA Location":
+            GroupTotalsV::"FA Location":
                 GroupHeadLine := FORMAT("Fixed Asset"."FA Location Code");
-            GroupTotals::"Main Asset":
+            GroupTotalsV::"Main Asset":
                 BEGIN
                     FA."Main Asset/Component" := FA."Main Asset/Component"::"Main Asset";
                     GroupHeadLine :=
@@ -711,11 +711,11 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
                     IF "Fixed Asset"."Component of Main Asset" = '' THEN
                         GroupHeadLine := FORMAT(STRSUBSTNO('%1 %2', GroupHeadLine, '*****'));
                 END;
-            GroupTotals::"Global Dimension 1":
+            GroupTotalsV::"Global Dimension 1":
                 GroupHeadLine := FORMAT("Fixed Asset"."Global Dimension 1 Code");
-            GroupTotals::"Global Dimension 2":
+            GroupTotalsV::"Global Dimension 2":
                 GroupHeadLine := FORMAT("Fixed Asset"."Global Dimension 2 Code");
-            GroupTotals::"FA Posting Group":
+            GroupTotalsV::"FA Posting Group":
                 GroupHeadLine := FORMAT("Fixed Asset"."FA Posting Group");
         END;
         IF GroupHeadLine = '' THEN
@@ -771,29 +771,29 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
 
     procedure SetMandatoryFields(DepreciationBookCodeFrom: Code[10]; StartingDateFrom: Date; EndingDateFrom: Date)
     begin
-        DeprBookCode := DepreciationBookCodeFrom;
-        StartingDate := StartingDateFrom;
-        EndingDate := EndingDateFrom;
+        DeprBookCodeV := DepreciationBookCodeFrom;
+        StartingDateV := StartingDateFrom;
+        EndingDateV := EndingDateFrom;
     end;
 
     procedure SetTotalFields(GroupTotalsFrom: Option; PrintDetailsFrom: Boolean; BudgetReportFrom: Boolean)
     begin
-        GroupTotals := GroupTotalsFrom;
-        PrintDetails := PrintDetailsFrom;
-        BudgetReport := BudgetReportFrom;
+        GroupTotalsV := GroupTotalsFrom;
+        PrintDetailsV := PrintDetailsFrom;
+        BudgetReportV := BudgetReportFrom;
     end;
 
     procedure GetDepreciationBookCode()
     begin
-        IF DeprBookCode = '' THEN BEGIN
+        IF DeprBookCodeV = '' THEN BEGIN
             FASetup.GET();
-            DeprBookCode := FASetup."Default Depr. Book";
+            DeprBookCodeV := FASetup."Default Depr. Book";
         END;
     end;
 
     procedure GetDeprBookInfo()
     begin
-        DeprBookInfo[1] := DeprBookCode;
+        DeprBookInfo[1] := DeprBookCodeV;
         DeprBookInfo[2] := FORMAT(FADeprBook."Depreciation Method");
         DeprBookInfo[3] := FORMAT(FADeprBook."Depreciation Starting Date");
         DeprBookInfo[4] := FORMAT(FADeprBook."Depreciation Ending Date");

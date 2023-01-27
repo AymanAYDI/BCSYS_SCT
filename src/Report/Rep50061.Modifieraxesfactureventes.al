@@ -102,8 +102,8 @@ report 50061 "Modifier axes facture ventes"
     trigger OnInitReport()
     var
         Lrec_Dimension: Record Dimension;
-        Lrec_DimensionValue: Record "Dimension Value";
-        Lint_CompteurSection: Integer;
+    // Lrec_DimensionValue: Record "Dimension Value";
+    // Lint_CompteurSection: Integer;
     begin
         //Test existence axe analytique
         Gcode_AxeReserve := 'RESERVE';

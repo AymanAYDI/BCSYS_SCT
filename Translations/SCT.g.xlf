@@ -1240,7 +1240,7 @@
         </trans-unit>
         <trans-unit id="Codeunit 3822108280 - Method 2283919174 - NamedType 2247286032" size-unit="char" translate="yes" xml:space="preserve">
           <source>%1 must be within the allowed posting range: %2..%3</source>
-          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Developer" annotates="general" priority="2">FRA="Erreur validation société %4 \\"%1" = %5 doit se situer dans la plage de validation autorisée : %2..%3\\Veuillez changer les périodes de validation dans la table "Paramètres comptabilité" de la société %4 et recommencer le traitement."</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Duplicating records - Method CopierPeriodesValidation - NamedType Text10800</note>
         </trans-unit>
         <trans-unit id="Codeunit 425552203 - Method 1087487994 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve">
@@ -6503,11 +6503,6 @@
           <note from="Developer" annotates="general" priority="2">FRA="à"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Consult general accounts - NamedType Text003</note>
         </trans-unit>
-        <trans-unit id="Report 837768404 - NamedType 732759939" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Page %1</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Page %1"</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Consult general accounts - NamedType Text004</note>
-        </trans-unit>
         <trans-unit id="Report 837768404 - NamedType 1583171122" size-unit="char" translate="yes" xml:space="preserve">
           <source>Total</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -7467,11 +7462,6 @@
           <source>Track Release Date of fixed asset</source>
           <note from="Developer" annotates="general" priority="2">FRA="Suivi des dates de sortie immos"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_F.A. tracking release date - NamedType Text001</note>
-        </trans-unit>
-        <trans-unit id="Report 4205237775 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Page %1</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_F.A. tracking release date - NamedType Text002</note>
         </trans-unit>
         <trans-unit id="Report 4205237775 - NamedType 95063322" size-unit="char" translate="yes" xml:space="preserve">
           <source>to</source>
@@ -9222,11 +9212,6 @@
           <source>Reminder of the selection</source>
           <note from="Developer" annotates="general" priority="2">FRA="Rappel de la sélection"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Listing achats - NamedType Reminder_of_the_selectionCaptionLbl</note>
-        </trans-unit>
-        <trans-unit id="Report 3937722146 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Page %1</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Listing achats - NamedType Text001</note>
         </trans-unit>
         <trans-unit id="Report 3937722146 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
           <source>Document type :</source>
@@ -12687,11 +12672,6 @@
           <source>at</source>
           <note from="Developer" annotates="general" priority="2">FRA="à "</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report Consult general accounts (FNP) - NamedType Text003</note>
-        </trans-unit>
-        <trans-unit id="Report 2695478283 - NamedType 732759939" size-unit="char" translate="yes" xml:space="preserve">
-          <source>Page %1</source>
-          <note from="Developer" annotates="general" priority="2"></note>
-          <note from="Xliff Generator" annotates="general" priority="3">Report Consult general accounts (FNP) - NamedType Text004</note>
         </trans-unit>
         <trans-unit id="Report 2695478283 - NamedType 1583171122" size-unit="char" translate="yes" xml:space="preserve">
           <source>Total</source>

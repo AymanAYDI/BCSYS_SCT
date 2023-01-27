@@ -1128,8 +1128,8 @@ codeunit 50000 "BC6_Duplicating records"
     var
         Grec_Society: Record Company;
         GLSetup: Record "General Ledger Setup";
-        Text001: label 'Users have been updated on all companies', Comment = 'FRA="Les utilisateurs ont été mis à jour sur toutes les sociétés"';
-        Text10800: label '%1 must be within the allowed posting range: %2..%3';//, Comment = 'FRA="Erreur validation société %4 \\"%1" = %5 doit se situer dans la plage de validation autorisée : %2..%3\\Veuillez changer les périodes de validation dans la table "Paramètres comptabilité" de la société %4 et recommencer le traitement."';
+        Text001V: label 'Users have been updated on all companies', Comment = 'FRA="Les utilisateurs ont été mis à jour sur toutes les sociétés"';
+        Text10800: label '%1 must be within the allowed posting range: %2..%3', Comment = 'FRA="Erreur validation société %4 \\"%1" = %5 doit se situer dans la plage de validation autorisée : %2..%3\\Veuillez changer les périodes de validation dans la table "Paramètres comptabilité" de la société %4 et recommencer le traitement."';
     begin
         //MODIF JX-AUD 28/03/14
         if Grec_Society.FIND('-') then
@@ -1157,7 +1157,7 @@ codeunit 50000 "BC6_Duplicating records"
                 end;
             until Grec_Society.NEXT() = 0;
 
-        MESSAGE(Text001);
+        MESSAGE(Text001V);
         //Fin MODIF JX-AUD 28/03/14
     end;
 

@@ -199,7 +199,7 @@ report 50011 "BC6_Listing achats"
         QtyCaptionLbl: Label 'Qty', Comment = 'FRA="Qté"';
         Receiv_CaptionLbl: Label 'Receiv.', Comment = 'FRA="Reçue"';
         Reminder_of_the_selectionCaptionLbl: Label 'Reminder of the selection', Comment = 'FRA="Rappel de la sélection"';
-        Text001: Label 'Page %1';
+        //Text001: Label 'Page %1';
         Text002: Label 'Document type :', Comment = 'FRA="Type document :"';
         Text003: Label 'Vendor :', Comment = 'FRA="Fournisseur :"';
         Text004: Label 'at', Comment = 'FRA="à"';
@@ -208,8 +208,8 @@ report 50011 "BC6_Listing achats"
         User__CaptionLbl: Label 'User :', Comment = 'FRA="Utilisateur :"';
         VATCaptionLbl: Label 'VAT', Comment = 'FRA="TVA"';
         Vendor__CaptionLbl: Label 'Vendor :', Comment = 'FRA="Fournisseur :"';
-        Gtxt_DateDocFilter: Text[50];
-        Gtxt_FournisseurFilter: Text[50];
-        Gtxt_TypeDocFilter: Text[50];
+        Gtxt_DateDocFilter: Text;
+        Gtxt_FournisseurFilter: Text;
+        Gtxt_TypeDocFilter: Text;
 }
 

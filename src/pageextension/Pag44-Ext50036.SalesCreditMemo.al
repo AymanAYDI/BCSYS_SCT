@@ -227,8 +227,6 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
     end;
 
     trigger OnOpenPage()
-    var
-        EnvironmentInfo: Codeunit "Environment Information";
     begin
         SetIsCustomerOrContactNotEmpty();
     end;

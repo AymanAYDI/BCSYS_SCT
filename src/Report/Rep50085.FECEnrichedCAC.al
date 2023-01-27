@@ -76,7 +76,7 @@ report 50085 "BC6_FEC Enriched CAC"
     trigger OnPostReport()
     begin
         ToFileName := GetFileName();
-        Writer.Close;
+        Writer.Close();
         FileManagement.DownloadHandler(OutputFileName, '', '', '', ToFileName);
         Clear(oStream);
         ERASE(OutputFileName);
@@ -121,9 +121,9 @@ report 50085 "BC6_FEC Enriched CAC"
         NoEntriestoExportErr: label 'There are no entries to export within the defined filter. The file was not created.', Comment = 'FRA="Il n''y a pas d''écriture à exporter dans le filtre défini. Le fichier n''a pas été créé."';
         ServerFileExtensionTxt: label 'TXT';
         oStream: OutStream;
-        CustVendLedgEntryPartyName: Text[50];
+        CustVendLedgEntryPartyName: Text[100];
         CustVendLedgEntryFCYAmount: Text[250];
-        OutputFileName: Text[250];
+        OutputFileName: Text;
         ToFileFullName: Text[250];
         ToFileName: Text[250];
 
@@ -175,7 +175,7 @@ report 50085 "BC6_FEC Enriched CAC"
         end
     end;
 
-    local procedure GetCustomerLedgerEntryData(CustLedgerEntry: Record "Cust. Ledger Entry"; var PartyNo: Code[20]; var PartyName: Text[50]; var Amount: Text[250]; var CurrencyCode: Code[10])
+    local procedure GetCustomerLedgerEntryData(CustLedgerEntry: Record "Cust. Ledger Entry"; var PartyNo: Code[20]; var PartyName: Text[100]; var Amount: Text[250]; var CurrencyCode: Code[10])
     var
         Customer: Record "Customer";
         CountOfGLEntriesInTransaction: Integer;
@@ -237,7 +237,7 @@ report 50085 "BC6_FEC Enriched CAC"
         exit(CustomerPostingGroup."Receivables Account")
     end;
 
-    local procedure GetSourceCodeDesc("Code": Code[10]): Text[50]
+    local procedure GetSourceCodeDesc("Code": Code[10]): Text[100]
     var
         SourceCode: Record "Source Code";
     begin
@@ -263,7 +263,7 @@ report 50085 "BC6_FEC Enriched CAC"
         end
     end;
 
-    procedure GetLedgerEntryDataForCustVend(TransactionNo: Integer; var PartyNo: Code[20]; var PartyName: Text[50]; var FCYAmount: Text[250]; var CurrencyCode: Code[10])
+    procedure GetLedgerEntryDataForCustVend(TransactionNo: Integer; var PartyNo: Code[20]; var PartyName: Text[100]; var FCYAmount: Text[250]; var CurrencyCode: Code[10])
     var
         CustLedgerEntry: Record "Cust. Ledger Entry";
         VendorLedgerEntry: Record "Vendor Ledger Entry";
@@ -312,7 +312,7 @@ report 50085 "BC6_FEC Enriched CAC"
         GLRegister: Record "G/L Register";
         CurrencyCode: Code[10];
         PartyNo: Code[20];
-        PartyName: Text[50];
+        PartyName: Text[100];
         FCYAmount: Text[250];
     begin
         if GLEntry."Transaction No." <> CurrentTransactionNo then begin

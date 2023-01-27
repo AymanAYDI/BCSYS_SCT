@@ -402,11 +402,11 @@ codeunit 50005 "BC6_EventsMgt"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post (Yes/No)", 'OnAfterPost', '', false, false)]
     local procedure Codeunit91_OnAfterPost_PurchPost(var PurchaseHeader: Record "Purchase Header")
     var
-        Grec_Temp: Record "BC6_Table temporaire" temporary;
+        TempGrec_Temp: Record "BC6_Table temporaire" temporary;
     begin
         //DEBUT MODIF JX-XAD 10/07/2009
-        if Grec_Temp.GET(-1) then
-            Grec_Temp.DELETE();
+        if TempGrec_Temp.GET(-1) then
+            TempGrec_Temp.DELETE();
         //FIN MODIF JX-XAD 10/07/2009
     end;
     // ---Codeunit/92---

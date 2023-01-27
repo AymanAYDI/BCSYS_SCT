@@ -993,7 +993,7 @@ report 50055 "BC6_Ventes : Avoir"
 
                 trigger OnPreDataItem()
                 begin
-                    NoOfLoops := ABS(NoOfCopies) + Cust."Invoice Copies" + 1;
+                    NoOfLoops := ABS(NoOfCopiesV) + Cust."Invoice Copies" + 1;
                     IF NoOfLoops <= 0 THEN
                         NoOfLoops := 1;
                     CopyText := '';
@@ -1210,7 +1210,7 @@ report 50055 "BC6_Ventes : Avoir"
                 group(Options)
                 {
                     Caption = 'Options', Comment = 'FRA="Options"';
-                    field(NoOfCopies; NoOfCopies)
+                    field(NoOfCopies; NoOfCopiesV)
                     {
                         Caption = 'No. of Copies', Comment = 'FRA="Nombre de copies"';
                         ApplicationArea = All;
@@ -1346,7 +1346,7 @@ report 50055 "BC6_Ventes : Avoir"
         FirstValueEntryNo: Integer;
         i: Integer;
         NextEntryNo: Integer;
-        NoOfCopies: Integer;
+        NoOfCopiesV: Integer;
         NoOfLoops: Integer;
         NoShipmentNumLoop: Integer;
         OutputNo: Integer;
@@ -1519,7 +1519,7 @@ report 50055 "BC6_Ventes : Avoir"
 
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewLogInteraction: Boolean; IncludeShptNo: Boolean; DisplAsmInfo: Boolean)
     begin
-        NoOfCopies := NewNoOfCopies;
+        NoOfCopiesV := NewNoOfCopies;
         ShowInternalInfoV := NewShowInternalInfo;
         LogInteractionV := NewLogInteraction;
         IncludeShptNo := IncludeShptNo;

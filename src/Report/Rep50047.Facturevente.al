@@ -438,7 +438,7 @@ report 50047 "BC6_Facture vente"
                             AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                             AutoFormatType = 1;
                         }
-                        column(VATAmtText_SalesInvLine; VATAmountLine.VATAmountText())
+                        column(VATAmtText_SalesInvLine; TempVATAmountLine.VATAmountText())
                         {
                         }
                         column(TotalExclVATText; TotalExclVATText)
@@ -507,10 +507,10 @@ report 50047 "BC6_Facture vente"
                         dataitem("Sales Shipment Buffer"; Integer)
                         {
                             DataItemTableView = SORTING(Number);
-                            column(SalesShipmentBufferPostingDate; FORMAT(SalesShipmentBuffer."Posting Date"))
+                            column(SalesShipmentBufferPostingDate; FORMAT(TempSalesShipmentBuffer."Posting Date"))
                             {
                             }
-                            column(SalesShipmentBufferQty; SalesShipmentBuffer.Quantity)
+                            column(SalesShipmentBufferQty; TempSalesShipmentBuffer.Quantity)
                             {
                                 DecimalPlaces = 0 : 5;
                             }
@@ -521,17 +521,17 @@ report 50047 "BC6_Facture vente"
                             trigger OnAfterGetRecord()
                             begin
                                 IF Number = 1 THEN
-                                    SalesShipmentBuffer.FIND('-')
+                                    TempSalesShipmentBuffer.FIND('-')
                                 ELSE
-                                    SalesShipmentBuffer.NEXT();
+                                    TempSalesShipmentBuffer.NEXT();
                             end;
 
                             trigger OnPreDataItem()
                             begin
-                                SalesShipmentBuffer.SETRANGE("Document No.", "Sales Invoice Line"."Document No.");
-                                SalesShipmentBuffer.SETRANGE("Line No.", "Sales Invoice Line"."Line No.");
+                                TempSalesShipmentBuffer.SETRANGE("Document No.", "Sales Invoice Line"."Document No.");
+                                TempSalesShipmentBuffer.SETRANGE("Line No.", "Sales Invoice Line"."Line No.");
 
-                                SETRANGE(Number, 1, SalesShipmentBuffer.COUNT);
+                                SETRANGE(Number, 1, TempSalesShipmentBuffer.COUNT);
                             end;
                         }
                         dataitem(DimensionLoop2; Integer)
@@ -682,19 +682,19 @@ report 50047 "BC6_Facture vente"
                             IF (Type = Type::"G/L Account") AND (NOT ShowInternalInfo) THEN
                                 "No." := '';
 
-                            VATAmountLine.INIT();
-                            VATAmountLine."VAT Identifier" := "VAT Identifier";
-                            VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
-                            VATAmountLine."Tax Group Code" := "Tax Group Code";
-                            VATAmountLine."VAT %" := "VAT %";
-                            VATAmountLine."VAT Base" := Amount;
-                            VATAmountLine."Amount Including VAT" := "Amount Including VAT";
-                            VATAmountLine."Line Amount" := "Line Amount";
+                            TempVATAmountLine.INIT();
+                            TempVATAmountLine."VAT Identifier" := "VAT Identifier";
+                            TempVATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
+                            TempVATAmountLine."Tax Group Code" := "Tax Group Code";
+                            TempVATAmountLine."VAT %" := "VAT %";
+                            TempVATAmountLine."VAT Base" := Amount;
+                            TempVATAmountLine."Amount Including VAT" := "Amount Including VAT";
+                            TempVATAmountLine."Line Amount" := "Line Amount";
                             IF "Allow Invoice Disc." THEN
-                                VATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
-                            VATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
-                            VATAmountLine."VAT Clause Code" := "VAT Clause Code";
-                            VATAmountLine.InsertLine();
+                                TempVATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
+                            TempVATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
+                            TempVATAmountLine."VAT Clause Code" := "VAT Clause Code";
+                            TempVATAmountLine.InsertLine();
 
                             TotalSubTotal += "Line Amount";
                             TotalInvoiceDiscountAmount -= "Inv. Discount Amount";
@@ -712,9 +712,9 @@ report 50047 "BC6_Facture vente"
 
                         trigger OnPreDataItem()
                         begin
-                            VATAmountLine.DELETEALL();
-                            SalesShipmentBuffer.RESET();
-                            SalesShipmentBuffer.DELETEALL();
+                            TempVATAmountLine.DELETEALL();
+                            TempSalesShipmentBuffer.RESET();
+                            TempSalesShipmentBuffer.DELETEALL();
                             FirstValueEntryNo := 0;
                             MoreLines := FIND('+');
                             WHILE MoreLines AND (Description = '') AND ("No." = '') AND (Quantity = 0) AND (Amount = 0) DO
@@ -732,36 +732,36 @@ report 50047 "BC6_Facture vente"
                     dataitem(VATCounter; Integer)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATAmtLineVATBase; VATAmountLine."VAT Base")
+                        column(VATAmtLineVATBase; TempVATAmountLine."VAT Base")
                         {
                             AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATAmt; VATAmountLine."VAT Amount")
+                        column(VATAmtLineVATAmt; TempVATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineLineAmt; VATAmountLine."Line Amount")
+                        column(VATAmtLineLineAmt; TempVATAmountLine."Line Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscBaseAmt; VATAmountLine."Inv. Disc. Base Amount")
+                        column(VATAmtLineInvDiscBaseAmt; TempVATAmountLine."Inv. Disc. Base Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvoiceDiscAmt; VATAmountLine."Invoice Discount Amount")
+                        column(VATAmtLineInvoiceDiscAmt; TempVATAmountLine."Invoice Discount Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVAT; VATAmountLine."VAT %")
+                        column(VATAmtLineVAT; TempVATAmountLine."VAT %")
                         {
                             DecimalPlaces = 0 : 5;
                         }
-                        column(VATAmtLineVATIdentifier; VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVATIdentifier; TempVATAmountLine."VAT Identifier")
                         {
                         }
                         column(VATPercentCaption; VATPercentCaptionLbl)
@@ -794,21 +794,21 @@ report 50047 "BC6_Facture vente"
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
+                            TempVATAmountLine.GetLine(Number);
                         end;
 
                         trigger OnPreDataItem()
                         begin
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
                         end;
                     }
                     dataitem(VATClauseEntryCounter; Integer)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATClauseVATIdentifier; VATAmountLine."VAT Identifier")
+                        column(VATClauseVATIdentifier; TempVATAmountLine."VAT Identifier")
                         {
                         }
-                        column(VATClauseCode; VATAmountLine."VAT Clause Code")
+                        column(VATClauseCode; TempVATAmountLine."VAT Clause Code")
                         {
                         }
                         column(VATClauseDescription; VATClause.Description)
@@ -817,7 +817,7 @@ report 50047 "BC6_Facture vente"
                         column(VATClauseDescription2; VATClause."Description 2")
                         {
                         }
-                        column(VATClauseAmount; VATAmountLine."VAT Amount")
+                        column(VATClauseAmount; TempVATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
@@ -834,8 +834,8 @@ report 50047 "BC6_Facture vente"
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
-                            IF NOT VATClause.GET(VATAmountLine."VAT Clause Code") THEN
+                            TempVATAmountLine.GetLine(Number);
+                            IF NOT VATClause.GET(TempVATAmountLine."VAT Clause Code") THEN
                                 CurrReport.SKIP();
                             VATClause.TranslateDescription("Sales Invoice Header"."Language Code");
                         end;
@@ -843,7 +843,7 @@ report 50047 "BC6_Facture vente"
                         trigger OnPreDataItem()
                         begin
                             CLEAR(VATClause);
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
                         end;
                     }
                     dataitem(VatCounterLCY; Integer)
@@ -863,23 +863,23 @@ report 50047 "BC6_Facture vente"
                         {
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVAT1; VATAmountLine."VAT %")
+                        column(VATAmtLineVAT1; TempVATAmountLine."VAT %")
                         {
                             DecimalPlaces = 0 : 5;
                         }
-                        column(VATAmtLineVATIdentifier1; VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVATIdentifier1; TempVATAmountLine."VAT Identifier")
                         {
                         }
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
+                            TempVATAmountLine.GetLine(Number);
                             VALVATBaseLCY :=
-                              VATAmountLine.GetBaseLCY(
+                              TempVATAmountLine.GetBaseLCY(
                                 "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
                                 "Sales Invoice Header"."Currency Factor");
                             VALVATAmountLCY :=
-                              VATAmountLine.GetAmountLCY(
+                              TempVATAmountLine.GetAmountLCY(
                                 "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
                                 "Sales Invoice Header"."Currency Factor");
                         end;
@@ -891,7 +891,7 @@ report 50047 "BC6_Facture vente"
                             THEN
                                 CurrReport.BREAK();
 
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
 
                             IF GLSetup."LCY Code" = '' THEN
                                 VALSpecLCYHeader := Text007 + Text008
@@ -1310,11 +1310,11 @@ report 50047 "BC6_Facture vente"
         RespCenter: Record "Responsibility Center";
         SalesSetup: Record "Sales & Receivables Setup";
         SalesPurchPerson: Record "Salesperson/Purchaser";
-        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
+        TempSalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         ShipmentInvoiced: Record "Shipment Invoiced";
         ShipmentMethod: Record "Shipment Method";
         UserSetup: Record "User Setup";
-        VATAmountLine: Record "VAT Amount Line" temporary;
+        TempVATAmountLine: Record "VAT Amount Line" temporary;
         VATClause: Record "VAT Clause";
         FormatAddr: Codeunit "Format Address";
         Language: Codeunit Language;
@@ -1458,7 +1458,7 @@ report 50047 "BC6_Facture vente"
 
     procedure FindPostedShipmentDate(): Date
     var
-        SalesShipmentBuffer2: Record "Sales Shipment Buffer" temporary;
+        TempSalesShipmentBuffer2: Record "Sales Shipment Buffer" temporary;
         SalesShipmentHeader: Record "Sales Shipment Header";
     begin
         NextEntryNo := 1;
@@ -1479,20 +1479,20 @@ report 50047 "BC6_Facture vente"
                 EXIT(0D);
         END;
 
-        SalesShipmentBuffer.RESET();
-        SalesShipmentBuffer.SETRANGE("Document No.", "Sales Invoice Line"."Document No.");
-        SalesShipmentBuffer.SETRANGE("Line No.", "Sales Invoice Line"."Line No.");
-        IF SalesShipmentBuffer.FIND('-') THEN BEGIN
-            SalesShipmentBuffer2 := SalesShipmentBuffer;
-            IF SalesShipmentBuffer.NEXT() = 0 THEN BEGIN
-                SalesShipmentBuffer.GET(
-                  SalesShipmentBuffer2."Document No.", SalesShipmentBuffer2."Line No.", SalesShipmentBuffer2."Entry No.");
-                SalesShipmentBuffer.DELETE();
-                EXIT(SalesShipmentBuffer2."Posting Date");
+        TempSalesShipmentBuffer.RESET();
+        TempSalesShipmentBuffer.SETRANGE("Document No.", "Sales Invoice Line"."Document No.");
+        TempSalesShipmentBuffer.SETRANGE("Line No.", "Sales Invoice Line"."Line No.");
+        IF TempSalesShipmentBuffer.FIND('-') THEN BEGIN
+            TempSalesShipmentBuffer2 := TempSalesShipmentBuffer;
+            IF TempSalesShipmentBuffer.NEXT() = 0 THEN BEGIN
+                TempSalesShipmentBuffer.GET(
+                  TempSalesShipmentBuffer2."Document No.", TempSalesShipmentBuffer2."Line No.", TempSalesShipmentBuffer2."Entry No.");
+                TempSalesShipmentBuffer.DELETE();
+                EXIT(TempSalesShipmentBuffer2."Posting Date");
             END;
-            SalesShipmentBuffer.CALCSUMS(Quantity);
-            IF SalesShipmentBuffer.Quantity <> "Sales Invoice Line".Quantity THEN BEGIN
-                SalesShipmentBuffer.DELETEALL();
+            TempSalesShipmentBuffer.CALCSUMS(Quantity);
+            IF TempSalesShipmentBuffer.Quantity <> "Sales Invoice Line".Quantity THEN BEGIN
+                TempSalesShipmentBuffer.DELETEALL();
                 EXIT("Sales Invoice Header"."Posting Date");
             END;
         END ELSE
@@ -1603,23 +1603,23 @@ report 50047 "BC6_Facture vente"
 
     procedure AddBufferEntry(SalesInvoiceLine: Record "Sales Invoice Line"; QtyOnShipment: Decimal; PostingDate: Date)
     begin
-        SalesShipmentBuffer.SETRANGE("Document No.", SalesInvoiceLine."Document No.");
-        SalesShipmentBuffer.SETRANGE("Line No.", SalesInvoiceLine."Line No.");
-        SalesShipmentBuffer.SETRANGE("Posting Date", PostingDate);
-        IF SalesShipmentBuffer.FIND('-') THEN BEGIN
-            SalesShipmentBuffer.Quantity := SalesShipmentBuffer.Quantity + QtyOnShipment;
-            SalesShipmentBuffer.MODIFY();
+        TempSalesShipmentBuffer.SETRANGE("Document No.", SalesInvoiceLine."Document No.");
+        TempSalesShipmentBuffer.SETRANGE("Line No.", SalesInvoiceLine."Line No.");
+        TempSalesShipmentBuffer.SETRANGE("Posting Date", PostingDate);
+        IF TempSalesShipmentBuffer.FIND('-') THEN BEGIN
+            TempSalesShipmentBuffer.Quantity := TempSalesShipmentBuffer.Quantity + QtyOnShipment;
+            TempSalesShipmentBuffer.MODIFY();
             EXIT;
         END;
 
-        SalesShipmentBuffer."Document No." := SalesInvoiceLine."Document No.";
-        SalesShipmentBuffer."Line No." := SalesInvoiceLine."Line No.";
-        SalesShipmentBuffer."Entry No." := NextEntryNo;
-        SalesShipmentBuffer.Type := SalesInvoiceLine.Type;
-        SalesShipmentBuffer."No." := SalesInvoiceLine."No.";
-        SalesShipmentBuffer.Quantity := QtyOnShipment;
-        SalesShipmentBuffer."Posting Date" := PostingDate;
-        SalesShipmentBuffer.INSERT();
+        TempSalesShipmentBuffer."Document No." := SalesInvoiceLine."Document No.";
+        TempSalesShipmentBuffer."Line No." := SalesInvoiceLine."Line No.";
+        TempSalesShipmentBuffer."Entry No." := NextEntryNo;
+        TempSalesShipmentBuffer.Type := SalesInvoiceLine.Type;
+        TempSalesShipmentBuffer."No." := SalesInvoiceLine."No.";
+        TempSalesShipmentBuffer.Quantity := QtyOnShipment;
+        TempSalesShipmentBuffer."Posting Date" := PostingDate;
+        TempSalesShipmentBuffer.INSERT();
         NextEntryNo := NextEntryNo + 1
     end;
 

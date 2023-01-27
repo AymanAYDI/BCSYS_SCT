@@ -145,7 +145,7 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
                     var
                         Lrec_Historic: Record "BC6_VSC historic";
                         Lrec_UserSetup: Record "User Setup";
-                        Ltxt_Email: Text[50];
+                        Ltxt_Email: Text[100];
                         Ltxt_subject: Text[100];
                         Ltxt_body: Text[260];
                     begin

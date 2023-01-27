@@ -454,7 +454,7 @@ report 50013 "Draft recapitulation Internat."
         TotalCaptionLbl: Label 'Total';
         Vendor_NameCaptionLbl: Label 'Name', Comment = 'FRA="Nom"';
         CopyText: Text[30];
-        Gtxt_IBAN: Text[30];
+        Gtxt_IBAN: Text[50];
         Gtxt_SWIFT: Text[30];
         BankAccountAddr: array[8] of Text[50];
         CompanyAddr: array[8] of Text[50];

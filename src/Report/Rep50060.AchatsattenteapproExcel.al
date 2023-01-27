@@ -279,7 +279,7 @@ report 50060 "Achats attente appro. (Excel)"
         Gcode_ChoixApprobateur: Code[20];
         Gcode_Devis: Code[20];
         Gdec_MontantTotalTTC: Decimal;
-        Gdec_MontantTTC: Decimal;
+        //Gdec_MontantTTC: Decimal;
         AmountCaptionLbl: Label 'Amount', Comment = 'FRA="Montant HT"';
         DescriptionCaptionLbl: Label 'Description', Comment = 'FRA="Désignation"';
         Direct_Unit_CostCaptionLbl: Label 'Direct Unit Cost', Comment = 'FRA="Coût unitaire"';
