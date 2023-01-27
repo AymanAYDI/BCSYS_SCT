@@ -142,13 +142,13 @@ pageextension 50032 "BC6_SalesOrder" extends "Sales Order" //42
     }
     var
         ApplicationAreaMgmtFacade: Codeunit "Application Area Mgmt. Facade";
+        DocumentIsPosted: Boolean;
+        DocumentIsScheduledForPosting: Boolean;
+        ShortcutDimCode: array[10] of Code[20];
+        OpenPostedSalesOrderQst: Label 'The order is posted as number %1 and moved to the Posted Sales Invoices window.\\Do you want to open the posted invoice?', Comment = 'FRA="La commande est affichée sous le numéro %1 et déplacée dans la fenêtre Factures ventes enregistrées.\\Voulez-vous ouvrir la facture enregistrée ?"';
         Text001: Label 'Do you want to change %1 in all related records in the warehouse?', Comment = 'FRA="Souhaitez-vous modifier %1 dans tous les enregistrements associés de l''entrepôt?"';
         Text002: Label 'The update has been interrupted to respect the warning.', Comment = 'FRA="La mise à jour a été interrompue pour respecter l''alerte."';
         Text003: Label 'Please enter field External Document No.', Comment = 'FRA="Veuillez saisir le champ N° doc. externe"';
-        ShortcutDimCode: array[10] of Code[20];
-        DocumentIsPosted: Boolean;
-        OpenPostedSalesOrderQst: Label 'The order is posted as number %1 and moved to the Posted Sales Invoices window.\\Do you want to open the posted invoice?', Comment = 'FRA="La commande est affichée sous le numéro %1 et déplacée dans la fenêtre Factures ventes enregistrées.\\Voulez-vous ouvrir la facture enregistrée ?"';
-        DocumentIsScheduledForPosting: Boolean;
 
     trigger OnAfterGetRecord()
     begin
@@ -170,8 +170,8 @@ pageextension 50032 "BC6_SalesOrder" extends "Sales Order" //42
     local procedure PostSalesOrder(PostingCodeunitID: Integer; Navigate: Enum "Navigate After Posting")
     var
         SalesHeader: Record "Sales Header";
-        LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
         InstructionMgt: Codeunit "Instruction Mgt.";
+        LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
     begin
         if ApplicationAreaMgmtFacade.IsFoundationEnabled() then
             LinesInstructionMgt.SalesCheckAllLinesHaveQuantityAssigned(Rec);

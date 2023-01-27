@@ -58,13 +58,12 @@ xmlport 50035 "BC6_Sales_CR.Memo_Export"
                         IF UserSetup.GET("Salescr.MemoHeader"."User ID") THEN
                             UserMail := UserSetup."E-Mail";
 
-                        IF UserSetup.GET("Salescr.MemoHeader"."User ID") THEN BEGIN
-                            // Gtext_UserName := UserSetup."User ID";
-                            UserMail := UserSetup."E-Mail";
-                        END ELSE BEGIN
-                            //  Gtext_UserName := '';
-                            UserMail := '';
-                        END;
+                        // IF UserSetup.GET("Salescr.MemoHeader"."User ID") THEN
+                        //     // Gtext_UserName := UserSetup."User ID";
+                        //     UserMail := UserSetup."E-Mail"
+                        // ELSE
+                        //     //  Gtext_UserName := '';
+                        //     UserMail := '';
                     end;
                 }
                 fieldelement(Date; "Salescr.MemoHeader"."Posting Date")
@@ -223,7 +222,6 @@ xmlport 50035 "BC6_Sales_CR.Memo_Export"
                 {
 
                 }
-
             }
         }
     }

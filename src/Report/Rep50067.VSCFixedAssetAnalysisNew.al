@@ -59,9 +59,6 @@ report 50067 "VSC Fixed Asset - Analysis New"
                 column("USERID"; USERID)
                 {
                 }
-                column(CurrReport_PAGENO; CurrReport.PAGENO())
-                {
-                }
                 column(DeprBookText; DeprBookText)
                 {
                 }
@@ -381,12 +378,11 @@ report 50067 "VSC Fixed Asset - Analysis New"
                     IF Grec_PlanAmortissement.GET("Fixed Asset"."No.", DeprBookCode) THEN BEGIN
                         IF Grec_PlanAmortissement."No. of Depreciation Years" <> 0 THEN
                             Gdec_NbAnnéeAmt := Grec_PlanAmortissement."No. of Depreciation Years"
-                        ELSE BEGIN
+                        ELSE
                             //DEBUT MODIF JX-XAD 04/01/2010
                             IF (Grec_PlanAmortissement."Depreciation Ending Date" <> 0D) AND (Grec_PlanAmortissement."Depreciation Starting Date" <> 0D) THEN
                                 //FIN MODIF JX-XAD 04/01/2010
                                 Gdec_NbAnnéeAmt := (Grec_PlanAmortissement."Depreciation Ending Date" - Grec_PlanAmortissement."Depreciation Starting Date");
-                        END;
                         IF Gdec_NbAnnéeAmt <> 0 THEN
                             Gdec_TxAmtCompt := 100 / Gdec_NbAnnéeAmt;
                         Gdate_DébutAmort := Grec_PlanAmortissement."Depreciation Starting Date";
@@ -522,6 +518,68 @@ report 50067 "VSC Fixed Asset - Analysis New"
     end;
 
     var
+        Grec_AxeAnalytique: Record "Default Dimension";
+        DeprBook: Record "Depreciation Book";
+        FADateType: Record "FA Date Type";
+        FADeprBook: Record "FA Depreciation Book";
+        Grec_PlanAmortissement: Record "FA Depreciation Book";
+        Grec_LedgerEntry: Record "FA Ledger Entry";
+        FAPostingType: Record "FA Posting Type";
+        FASetup: Record "FA Setup";
+        Grec_PurchInvHeader: Record "Purch. Inv. Header";
+        BudgetDepreciation: Codeunit "Budget Depreciation";
+        FAGenReport: Codeunit "FA General Report";
+        BudgetReport: Boolean;
+        Gbool_AfficherEnTete: Boolean;
+        PrintDetails: Boolean;
+        SalesReport: Boolean;
+        TypeExist: Boolean;
+        DeprBookCode: Code[10];
+        Gcode_Axe1: Code[20];
+        Gcode_Axe2: Code[20];
+        Gcode_Axe3: Code[20];
+        Gcode_Axe4: Code[20];
+        Gcode_CodeFournisseur: Code[20];
+        AcquisitionDate: Date;
+        Date: array[2] of Date;
+        DisposalDate: Date;
+        EndingDate: Date;
+        "Gdate_DébutAmort": Date;
+        Gdate_FinAmort: Date;
+        StartingDate: Date;
+        Amounts: array[4] of Decimal;
+        BeforeAmount: Decimal;
+        EndingAmount: Decimal;
+        "Gdec_NbAnnéeAmt": Decimal;
+        Gdec_TxAmtCompt: Decimal;
+        GroupAmounts: array[4] of Decimal;
+        TotalAmounts: array[4] of Decimal;
+        DateTypeNo1: Integer;
+        DateTypeNo2: Integer;
+        PostingTypeNo1: Integer;
+        PostingTypeNo2: Integer;
+        PostingTypeNo3: Integer;
+        PostingTypeNo4: Integer;
+        AccountCaptionLbl: Label 'Account', Comment = 'FRA="Compte"';
+        Accumulated_depreciation_earlier_periodCaptionLbl: Label 'Accumulated depreciation earlier period', Comment = 'FRA="Cumul amt antérieur période"';
+        Accumulated_depreciation_periodCaptionLbl: Label 'Accumulated depreciation period', Comment = 'FRA="Cumul amt période"';
+        Acq__dateCaptionLbl: Label 'Acq. date', Comment = 'FRA="Date acq."';
+        Card_No_CaptionLbl: Label 'Card No.', Comment = 'FRA="N° de fiche"';
+        Count__Deprec__DurationCaptionLbl: Label 'Count. Deprec. Duration', Comment = 'FRA="Durée Amt Compt"';
+        Count__deprec__rateCaptionLbl: Label 'Count. deprec. rate', Comment = 'FRA="Tx Amt Compt"';
+        Countable_basisCaptionLbl: Label 'Countable basis', Comment = 'FRA="Base comptable"';
+        CurrReport_PAGENOCaptionLbl: Label 'Page', Comment = 'FRA="Page"';
+        Deprec__ending__dateCaptionLbl: Label 'Deprec. ending date', Comment = 'FRA="Date fin amort."';
+        Deprec__start__dateCaptionLbl: Label 'Deprec. start. date', Comment = 'FRA="Date début amort."';
+        DescriptionCaptionLbl: Label 'Description', Comment = 'FRA="Libellé"';
+        Dim__1CaptionLbl: Label 'Dim. 1', Comment = 'FRA="AXE 1"';
+        Dim__2CaptionLbl: Label 'Dim. 2', Comment = 'FRA="AXE 2"';
+        Dim__3CaptionLbl: Label 'Dim. 3', Comment = 'FRA="AXE 3"';
+        Dim__4CaptionLbl: Label 'Dim. 4', Comment = 'FRA="AXE 4"';
+        Disposal_dateCaptionLbl: Label 'Disposal date', Comment = 'FRA="Date de cession"';
+        Loc__codeCaptionLbl: Label 'Loc. code', Comment = 'FRA="Code empl"';
+        Serial_No_CaptionLbl: Label 'Serial No.', Comment = 'FRA="N° Série"';
+        Subclass_codeCaptionLbl: Label 'Subclass code', Comment = 'FRA="Code sous-classe immo"';
         Text000: Label 'Fixed Asset - Analysis', Comment = 'FRA="Immobilisations - Analyse"';
         Text001: Label '(Budget Report)', Comment = 'FRA="(Etat budget)"';
         Text002: Label 'Group Total', Comment = 'FRA="Sous-total"';
@@ -532,101 +590,37 @@ report 50067 "VSC Fixed Asset - Analysis New"
         Text007: Label 'The date type %1 is not a valid option.', Comment = 'FRA="Le type date %1 n''est pas une option valide."';
         Text008: Label 'The posting type %1 is not a valid option.', Comment = 'FRA="Le type de comptabilisation %1 n''est pas une option valide."';
         Text009: Label '%1 has been modified in fixed asset %2', Comment = 'FRA="%1 a été modifié(e) dans l''immobilisation %2"';
-        FASetup: Record "FA Setup";
-        DeprBook: Record "Depreciation Book";
-        FADeprBook: Record "FA Depreciation Book";
-        FAPostingType: Record "FA Posting Type";
-        FADateType: Record "FA Date Type";
-        FAGenReport: Codeunit "FA General Report";
-        BudgetDepreciation: Codeunit "Budget Depreciation";
-        FAFilter: Text[250];
-        MainHeadLineText: Text[100];
-        DeprBookText: Text[50];
-        GroupCodeName: Text[50];
-        GroupHeadLine: Text[50];
-        FANo: Text[50];
-        FADescription: Text[50];
-        GroupTotals: Option " ","FA Class","FA Subclass","FA Location","Main Asset","Global Dimension 1","Global Dimension 2","FA Posting Group";
-        GroupAmounts: array[4] of Decimal;
-        TotalAmounts: array[4] of Decimal;
-        HeadLineText: array[6] of Text[50];
-        Amounts: array[4] of Decimal;
-        Date: array[2] of Date;
-        i: Integer;
-        Period1: Option "before Starting Date","Net Change","at Ending Date";
-        Period2: Option "before Starting Date","Net Change","at Ending Date";
-        Period3: Option "before Starting Date","Net Change","at Ending Date";
-        Period4: Option "before Starting Date","Net Change","at Ending Date";
-        PostingType1: Text[30];
-        PostingType2: Text[30];
-        PostingType3: Text[30];
-        PostingType4: Text[30];
-        PostingTypeNo1: Integer;
-        PostingTypeNo2: Integer;
-        PostingTypeNo3: Integer;
-        PostingTypeNo4: Integer;
-        DateType1: Text[30];
-        DateType2: Text[30];
-        DateTypeNo1: Integer;
-        DateTypeNo2: Integer;
-        StartingDate: Date;
-        EndingDate: Date;
-        DeprBookCode: Code[10];
-        PrintDetails: Boolean;
-        BudgetReport: Boolean;
-        BeforeAmount: Decimal;
-        EndingAmount: Decimal;
-        AcquisitionDate: Date;
-        DisposalDate: Date;
-        SalesReport: Boolean;
-        TypeExist: Boolean;
         Text010: Label 'before Starting Date,Net Change,at Ending Date', Comment = 'FRA="Avant date début,Solde période,En date fin"';
         Text011: Label ' ,FA Class,FA Subclass,FA Location,Main Asset,Global Dimension 1,Global Dimension 2,FA Posting Group', Comment = 'FRA=" ,Classe immo.,Sous-classe immo.,Emplacement immo.,Immo. principale,Axe principal 1,Axe principal 2,Groupe compta. immo."';
-        Grec_AxeAnalytique: Record "Default Dimension";
-        Gcode_Axe1: Code[20];
-        Gcode_Axe2: Code[20];
-        Gcode_Axe3: Code[20];
-        Gcode_Axe4: Code[20];
-        Grec_PlanAmortissement: Record "FA Depreciation Book";
-        "Gdec_NbAnnéeAmt": Decimal;
-        Gdec_TxAmtCompt: Decimal;
-        "Gdate_DébutAmort": Date;
-        Grec_CompanyInfo: Record "Company Information";
-        Gtxt_CompanyName: Text[50];
+        Text014: Label 'Vendor Code', Comment = 'FRA="Code fournisseur"';
         Text_DateType1: Label 'Disposal Date', Comment = 'FRA="Date cession"';
         Text_DateType2: Label 'Acquisition Date', Comment = 'FRA="Date acquisition"';
         Text_PostingType1: Label 'Depreciation', Comment = 'FRA="Amortissement"';
         Text_PostingType2: Label 'Depreciation', Comment = 'FRA="Amortissement"';
         Text_PostingType3: Label 'Depreciation', Comment = 'FRA="Amortissement"';
         Text_PostingType4: Label 'Acquisition Cost', Comment = 'FRA="Coût acquisition"';
-        Gbool_AfficherEnTete: Boolean;
-        CurrReport_PAGENOCaptionLbl: Label 'Page', Comment = 'FRA="Page"';
-        Dim__1CaptionLbl: Label 'Dim. 1', Comment = 'FRA="AXE 1"';
-        Dim__2CaptionLbl: Label 'Dim. 2', Comment = 'FRA="AXE 2"';
-        Dim__3CaptionLbl: Label 'Dim. 3', Comment = 'FRA="AXE 3"';
-        Dim__4CaptionLbl: Label 'Dim. 4', Comment = 'FRA="AXE 4"';
-        Serial_No_CaptionLbl: Label 'Serial No.', Comment = 'FRA="N° Série"';
-        Subclass_codeCaptionLbl: Label 'Subclass code', Comment = 'FRA="Code sous-classe immo"';
-        AccountCaptionLbl: Label 'Account', Comment = 'FRA="Compte"';
-        Count__Deprec__DurationCaptionLbl: Label 'Count. Deprec. Duration', Comment = 'FRA="Durée Amt Compt"';
-        Count__deprec__rateCaptionLbl: Label 'Count. deprec. rate', Comment = 'FRA="Tx Amt Compt"';
-        Deprec__start__dateCaptionLbl: Label 'Deprec. start. date', Comment = 'FRA="Date début amort."';
-        Loc__codeCaptionLbl: Label 'Loc. code', Comment = 'FRA="Code empl"';
-        Card_No_CaptionLbl: Label 'Card No.', Comment = 'FRA="N° de fiche"';
-        Disposal_dateCaptionLbl: Label 'Disposal date', Comment = 'FRA="Date de cession"';
-        DescriptionCaptionLbl: Label 'Description', Comment = 'FRA="Libellé"';
-        Countable_basisCaptionLbl: Label 'Countable basis', Comment = 'FRA="Base comptable"';
-        Acq__dateCaptionLbl: Label 'Acq. date', Comment = 'FRA="Date acq."';
-        Accumulated_depreciation_earlier_periodCaptionLbl: Label 'Accumulated depreciation earlier period', Comment = 'FRA="Cumul amt antérieur période"';
-        Accumulated_depreciation_periodCaptionLbl: Label 'Accumulated depreciation period', Comment = 'FRA="Cumul amt période"';
         Total_depreciationCaptionLbl: Label 'Total depreciation', Comment = 'FRA="Total AMT"';
         TotalCaptionLbl: Label 'Total', Comment = 'FRA="Total"';
-        Gdate_FinAmort: Date;
-        Deprec__ending__dateCaptionLbl: Label 'Deprec. ending date', Comment = 'FRA="Date fin amort."';
-        Grec_LedgerEntry: Record "FA Ledger Entry";
-        Grec_PurchInvHeader: Record "Purch. Inv. Header";
-        Gcode_CodeFournisseur: Code[20];
-        Text014: Label 'Vendor Code', Comment = 'FRA="Code fournisseur"';
+        GroupTotals: Option " ","FA Class","FA Subclass","FA Location","Main Asset","Global Dimension 1","Global Dimension 2","FA Posting Group";
+        Period1: Option "before Starting Date","Net Change","at Ending Date";
+        Period2: Option "before Starting Date","Net Change","at Ending Date";
+        Period3: Option "before Starting Date","Net Change","at Ending Date";
+        Period4: Option "before Starting Date","Net Change","at Ending Date";
+        DateType1: Text[30];
+        DateType2: Text[30];
+        PostingType1: Text[30];
+        PostingType2: Text[30];
+        PostingType3: Text[30];
+        PostingType4: Text[30];
+        DeprBookText: Text[50];
+        FADescription: Text[50];
+        FANo: Text[50];
+        GroupCodeName: Text[50];
+        GroupHeadLine: Text[50];
+        Gtxt_CompanyName: Text[50];
+        HeadLineText: array[6] of Text[50];
+        MainHeadLineText: Text[100];
+        FAFilter: Text[250];
 
     local procedure SkipRecord(): Boolean
     begin

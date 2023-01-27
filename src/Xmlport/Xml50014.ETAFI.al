@@ -14,6 +14,42 @@ xmlport 50014 "BC6_ETAFI"
             tableelement(GLAccountList; "G/L Account")
             {
                 SourceTableView = sorting("No.");
+                textelement(Gtext_Compte)
+                {
+                    Width = 12;
+                }
+                textelement(Gtext_Description)
+                {
+                    Width = 35;
+                }
+                textelement(Gtext_A_Nouveau)
+                {
+                    Width = 16;
+                }
+                textelement(Gtext_Debit)
+                {
+                    Width = 16;
+                }
+                textelement(Gtext_Credit)
+                {
+                    Width = 12;
+                }
+                textelement(Gtext_SoldeAnnee0)
+                {
+                    Width = 16;
+                }
+                textelement(Gtext_SoldeAnnee1)
+                {
+                    Width = 16;
+                }
+                textelement(Gtext_SoldeAnnee2)
+                {
+                    Width = 12;
+                }
+                textelement(Gtext_SoldeAnnee3)
+                {
+                    Width = 12;
+                }
                 trigger OnPreXMLItem()
                 begin
                     //Initialisation des dates pour le Filtre date
@@ -53,9 +89,10 @@ xmlport 50014 "BC6_ETAFI"
                     //Fin Ajout ecritures isolées
                     Gtext_A_Nouveau := FORMAT(Gdec_MontantANouveau, 16, '<Sign,1><Integer><Decimals,3>');
 
-                    //TODO Field removed :GLAccountList.SETFILTER("G/L Entry Type Filter", '%1', GLAccountList."G/L Entry Type Filter"::Definitive);
+                    //TODO Field removed :
+                    //GLAccountList.SETFILTER("G/L Entry Type Filter", '%1', GLAccountList."G/L Entry Type Filter"::Definitive);
                     //SETRANGE("Date Filter",Gdate_StartDate,Gdate_EndDate);
-                    GLAccountList.SETFILTER("Date Filter", '%1..%2&<>%3', Gdate_StartDate, Gdate_EndDate, Gdate_DateIsolation);  //Filtre sur ecritures isol‚es
+                    GLAccountList.SETFILTER("Date Filter", '%1..%2&<>%3', Gdate_StartDate, Gdate_EndDate, Gdate_DateIsolation);  //Filtre sur ecritures isolées
 
                     //Calcul DEBIT
                     GLAccountList.CALCFIELDS("Debit Amount");
@@ -85,43 +122,6 @@ xmlport 50014 "BC6_ETAFI"
                     GLAccountList.CALCFIELDS(GLAccountList."Net Change");
                     Gtext_SoldeAnnee3 := FORMAT(GLAccountList."Net Change", 16, '<Sign,1><Integer><Decimals,3>');
                 end;
-            }
-            textelement(Gtext_Compte)
-
-            {
-                Width = 12;
-            }
-            textelement(Gtext_Description)
-            {
-                Width = 35;
-            }
-            textelement(Gtext_A_Nouveau)
-            {
-                Width = 16;
-            }
-            textelement(Gtext_Debit)
-            {
-                Width = 16;
-            }
-            textelement(Gtext_Credit)
-            {
-                Width = 12;
-            }
-            textelement(Gtext_SoldeAnnee0)
-            {
-                Width = 16;
-            }
-            textelement(Gtext_SoldeAnnee1)
-            {
-                Width = 16;
-            }
-            textelement(Gtext_SoldeAnnee2)
-            {
-                Width = 12;
-            }
-            textelement(Gtext_SoldeAnnee3)
-            {
-                Width = 12;
             }
         }
     }

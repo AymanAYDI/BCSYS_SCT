@@ -50,8 +50,10 @@ pageextension 50029 "BC6_ItemList" extends "Item List" //31
     }
 
     var
-        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
         Grecord_LedgerDefaultDimension: Record "Default Dimension";
+        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
+        Grec_UserSetup: Record "User Setup";
+        Gcode_Service: Code[2];
         Gcode_Axe1: Code[20];
         Gcode_Axe2: Code[20];
         Gcode_Axe3: Code[20];
@@ -59,8 +61,6 @@ pageextension 50029 "BC6_ItemList" extends "Item List" //31
         Gcode_Axe5: Code[20];
         Gcode_Axe6: Code[20];
         ShortcutDimCode: array[8] of Code[20];
-        Gcode_Service: Code[2];
-        Grec_UserSetup: Record "User Setup";
 
     trigger OnAfterGetRecord()
     var
@@ -98,7 +98,6 @@ pageextension 50029 "BC6_ItemList" extends "Item List" //31
         ELSE
             ShortcutDimCode[8] := '';
         //Fin modif JX-AUD du 08/01/2013
-        //SetSocialListeningFactboxVisibility(); TODO
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
@@ -109,8 +108,6 @@ pageextension 50029 "BC6_ItemList" extends "Item List" //31
     end;
 
     trigger OnOpenPage()
-    var
-        myInt: Integer;
     begin
         //Modif JX-AUD du 08/01/2013
         IF Grecord_GeneralLedgerSetup.FIND('-') THEN BEGIN
@@ -128,16 +125,8 @@ pageextension 50029 "BC6_ItemList" extends "Item List" //31
             IF Grec_UserSetup.GET(USERID) THEN
                 IF Grec_UserSetup."BC6_Service" <> '' THEN
                     Gcode_Service := COPYSTR(Grec_UserSetup."BC6_Service", 1, 2);
-        //SETFILTER("Product Group Code", FORMAT(Gcode_Service) + '*'); TODO
+        //SETFILTER("Product Group Code", FORMAT(Gcode_Service) + '*'); //TODO:Field 'Product Group Code' is removed
         //FIN MODIF JX-AUD du 23/05/2014
     end;
-    //TODO:
-    // local procedure SetSocialListeningFactboxVisibility()
-    // var
-    //   SocialListeningMgt: Codeunit "Social Listening Management"; 
-    // begin
-    //      SocialListeningMgt.GetItemFactboxVisibility(Rec, SocialListeningSetupVisible, SocialListeningVisible);
-    // end;
-
 }
 

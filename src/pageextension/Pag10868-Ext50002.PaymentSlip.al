@@ -13,6 +13,10 @@ pageextension 50002 "BC6_PaymentSlip" extends "Payment Slip" //10868
                 ApplicationArea = All;
             }
         }
+        modify("No.")
+        {
+            Editable = true;
+        }
     }
     actions
     {
@@ -89,9 +93,9 @@ pageextension 50002 "BC6_PaymentSlip" extends "Payment Slip" //10868
         }
     }
     var
-        YoozNo_G: Text;
         Text001: Label 'This payment class does not authorize vendor suggestions.', Comment = 'FRA="Ce type de règlement n''autorise pas les propositions fournisseur."';
         Text003: Label 'You cannot suggest payments on a posted header.', Comment = 'FRA="Vous n''êtes pas autorisé à faire des propositions de paiement sur un bordereau validé."';
+        YoozNo_G: Text;
 
     procedure FctYoozNo()
     var

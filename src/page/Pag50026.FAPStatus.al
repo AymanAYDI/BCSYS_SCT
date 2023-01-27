@@ -4,7 +4,7 @@ page 50026 "BC6_FAP Status"
     ApplicationArea = All;
     UsageCategory = Lists;
     Caption = 'FAP Status', Comment = 'FRA="Statuts FAP"';
-    PageType = Card;
+    PageType = List;
     SourceTable = "BC6_FAP Status";
 
     layout

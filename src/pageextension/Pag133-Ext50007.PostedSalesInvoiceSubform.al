@@ -11,7 +11,6 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
             {
                 CaptionClass = Gtext_ColAxe0;
                 Caption = 'Axe 0';
-                MultiLine = true;
                 Visible = "Axe 0Visible";
                 ApplicationArea = All;
             }
@@ -19,7 +18,6 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
             {
                 CaptionClass = Gtext_ColAxe1;
                 Caption = 'Axe 1';
-                MultiLine = true;
                 Visible = "Axe 1Visible";
                 ApplicationArea = All;
             }
@@ -27,7 +25,6 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
             {
                 CaptionClass = Gtext_ColAxe2;
                 Caption = 'Axe 2';
-                MultiLine = true;
                 Visible = "Axe 2Visible";
                 ApplicationArea = All;
             }
@@ -35,7 +32,6 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
             {
                 CaptionClass = Gtext_ColAxe3;
                 Caption = 'Axe 3';
-                MultiLine = true;
                 Visible = "Axe 3Visible";
                 ApplicationArea = All;
             }
@@ -43,7 +39,6 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
             {
                 CaptionClass = Gtext_ColAxe4;
                 Caption = 'Axe 4';
-                MultiLine = true;
                 Visible = "Axe 4Visible";
                 ApplicationArea = All;
             }
@@ -51,7 +46,6 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
             {
                 CaptionClass = Gtext_ColAxe5;
                 Caption = 'Axe 5';
-                MultiLine = true;
                 Visible = "Axe 5Visible";
                 ApplicationArea = All;
             }
@@ -59,26 +53,8 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
 
     }
     var
-        Gtext_Axe0: Text[30];
-        Gtext_Axe1: Text[30];
-        Gtext_Axe2: Text[30];
-        Gtext_Axe3: Text[30];
-        Gtext_Axe4: Text[30];
-        Gtext_Axe5: Text[30];
-        Gcode_Axe1: Code[20];
-        Gcode_Axe2: Code[20];
-        Gcode_Axe3: Code[20];
-        Gcode_Axe4: Code[20];
-        Gcode_Axe5: Code[20];
-        Gcode_Axe6: Code[20];
-        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
-        Gtext_ColAxe0: Text[30];
-        Gtext_ColAxe1: Text[30];
-        Gtext_ColAxe2: Text[30];
-        Gtext_ColAxe3: Text[30];
-        Gtext_ColAxe4: Text[30];
-        Gtext_ColAxe5: Text[30];
         Grec_Dimension: Record Dimension;
+        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
         [InDataSet]
         "Axe 0Visible": Boolean;
         [InDataSet]
@@ -91,6 +67,24 @@ pageextension 50007 "BC6_PostedSalesInvoiceSubform" extends "Posted Sales Invoic
         "Axe 4Visible": Boolean;
         [InDataSet]
         "Axe 5Visible": Boolean;
+        Gcode_Axe1: Code[20];
+        Gcode_Axe2: Code[20];
+        Gcode_Axe3: Code[20];
+        Gcode_Axe4: Code[20];
+        Gcode_Axe5: Code[20];
+        Gcode_Axe6: Code[20];
+        Gtext_Axe0: Text[30];
+        Gtext_Axe1: Text[30];
+        Gtext_Axe2: Text[30];
+        Gtext_Axe3: Text[30];
+        Gtext_Axe4: Text[30];
+        Gtext_Axe5: Text[30];
+        Gtext_ColAxe0: Text[30];
+        Gtext_ColAxe1: Text[30];
+        Gtext_ColAxe2: Text[30];
+        Gtext_ColAxe3: Text[30];
+        Gtext_ColAxe4: Text[30];
+        Gtext_ColAxe5: Text[30];
 
     var
         Grec_DimSetEntry: Record "Dimension Set Entry";

@@ -29,6 +29,7 @@ page 50054 "BC6_New Mail FAP"
                 {
                     Visible = bvisible;
                     ApplicationArea = All;
+                    Caption = 'Montant 1';
 
                     trigger OnValidate()
                     begin
@@ -38,6 +39,7 @@ page 50054 "BC6_New Mail FAP"
                 field("Montant 2"; Amount2)
                 {
                     Visible = bvisible;
+                    Caption = 'Montant 2';
                     ApplicationArea = All;
 
                     trigger OnValidate()
@@ -48,12 +50,14 @@ page 50054 "BC6_New Mail FAP"
                 field("Différence"; Amount3)
                 {
                     Editable = false;
+                    Caption = 'Différence';
                     Visible = bvisible;
                     ApplicationArea = All;
                 }
                 field(Nombre1; Nombre1)
                 {
                     Visible = bvisibleint;
+                    Caption = 'Nombre1';
                     ApplicationArea = All;
 
                     trigger OnValidate()
@@ -65,6 +69,7 @@ page 50054 "BC6_New Mail FAP"
                 {
                     Visible = bvisibleint;
                     ApplicationArea = All;
+                    Caption = 'Nombre2';
 
                     trigger OnValidate()
                     begin
@@ -86,9 +91,6 @@ page 50054 "BC6_New Mail FAP"
                     Caption = 'Mail', Comment = 'FRA="Mail"';
                     Image = SendApprovalRequest;
                     InFooterBar = true;
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    PromotedIsBig = true;
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -169,9 +171,9 @@ page 50054 "BC6_New Mail FAP"
         URLNavBC: Text;
         URLNavDA: Text;
         URLNavFAC: Text;
-        Gtext_alias: Text[30];
-        Gtext_Mail: Text[50];
-        Gtext_VendorName: Text[50];
+        Gtext_alias: Text;
+        Gtext_Mail: Text[100];
+        Gtext_VendorName: Text[100];
 
     local procedure CalcAmount()
     var
@@ -695,13 +697,13 @@ page 50054 "BC6_New Mail FAP"
 
     local procedure SendMail()
     var
-        MAIL: codeunit Email;
+        MAILV: codeunit Email;
         EmailMessage: codeunit "Email Message";
         TempBlob: codeunit "Temp Blob";
         InStream: InStream;
         i: Integer;
     begin
-        CLEAR(MAIL);
+        CLEAR(MAILV);
 
         //recherche du mail de l'utilisateur
         if Grec_UserSetup.GET(USERID) then
@@ -751,7 +753,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();
@@ -772,7 +774,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();
@@ -799,7 +801,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();
@@ -825,7 +827,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();
@@ -851,7 +853,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();
@@ -882,7 +884,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();
@@ -908,7 +910,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();
@@ -929,7 +931,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();
@@ -956,7 +958,7 @@ page 50054 "BC6_New Mail FAP"
 
                     if CONFIRM('Validez-vous le message suivant ?\' + Aff_Corps) then begin
                         //Envoi du mail
-                        MAIL.Send(EmailMessage);
+                        MAILV.Send(EmailMessage);
                         MESSAGE(Text002);
                         CurrPage.CLOSE();
                         InsertHistorique();

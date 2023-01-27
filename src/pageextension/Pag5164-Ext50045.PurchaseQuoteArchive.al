@@ -44,14 +44,12 @@ pageextension 50045 "BC6_PurchaseQuoteArchive" extends "Purchase Quote Archive" 
             {
                 Caption = 'Approbations', Comment = 'FRA="Approbations"';
                 ApplicationArea = All;
+                Image = Approval;
 
                 trigger OnAction()
                 var
-                    //ApprovalEntries: Page "Approval Request Entries";
                     ApprovalEntries: Page "Approval Entries";
                 begin
-                    //TODO: La page "Approval Request Entries" ne contient pas la fonction SetFilter(on peut remplacer par la page "Approval Entries"?)
-                    //ApprovalEntries.SetFilter(DATABASE::"Purchase Header", Rec."Document Type", Rec."No.");
                     ApprovalEntries.SetRecordFilters(DATABASE::"Purchase Header", Rec."Document Type", Rec."No.");
                     ApprovalEntries.RUN();
 

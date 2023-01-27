@@ -21,6 +21,7 @@ report 50019 "Achats en attente approbation"
     RDLCLayout = './src/Report/RDLC/Achatsenattenteapprobation.rdl';
     ApplicationArea = All;
     UsageCategory = ReportsAndAnalysis;
+    Caption = 'Achats en attente approbation';
 
     dataset
     {
@@ -35,9 +36,6 @@ report 50019 "Achats en attente approbation"
             {
             }
             column(EntDate; FORMAT(TODAY))
-            {
-            }
-            column(EntPage; STRSUBSTNO(Text001, FORMAT(CurrReport)))
             {
             }
             column(EntTime; Text007 + ' ' + FORMAT(TIME))
@@ -56,7 +54,7 @@ report 50019 "Achats en attente approbation"
                     Gtxt_NomApprobateur := Grec_UserSetup."BC6_Nom";
             end;
         }
-        dataitem("Purchase Header"; 38)
+        dataitem("Purchase Header"; "Purchase Header")
         {
             DataItemTableView = SORTING("Document Type", "No.");
             PrintOnlyIfDetail = true;
@@ -392,16 +390,10 @@ report 50019 "Achats en attente approbation"
                     LookupPageID = "User Setup";
                     TableRelation = "User Setup"."User ID" WHERE("BC6_Approbateur" = CONST(true));
                     ApplicationArea = All;
+                    Caption = 'Filtre Approbateur';
                 }
             }
         }
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     trigger OnInitReport()
@@ -410,69 +402,63 @@ report 50019 "Achats en attente approbation"
     end;
 
     var
-        CompanyInfo: Record "Company Information";
-        Text001: Label 'Page %1', Comment = 'FRA="Page %1"';
-        Gtxt_DateDocFilter: Text[50];
-        Gtxt_TypeDocFilter: Text[50];
-        Gtxt_FournisseurFilter: Text[50];
-        "Gtxt_QuantitéFilter": Text[30];
-        Grec_PurchaseLine: Record "Purchase Line";
-        Gdec_TotalDocument: Decimal;
-        Gint_CompteurTotal: Decimal;
-        UserMgt: Codeunit "User Setup Management";
         Grec_ApprovalEntry: Record "Approval Entry";
-        "Gcode_ApprobateurPrécédent": Code[50];
-        Gcode_ApprAssigned: Code[50];
-        Gcode_ChoixApprobateur: Code[50];
+        CompanyInfo: Record "Company Information";
+        Grec_DocumentDimension: Record "Dimension Set Entry";
+        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
         Grec_UserSetup: Record "User Setup";
         Gbool_ApproOuverte: Boolean;
-        Gtxt_NomApprobateur: Text[50];
-        Gtxt_Titre: Text[30];
+        Gcode_Axe: array[6] of Code[20];
+        Gcode_ApprAssigned: Code[50];
+        "Gcode_ApprobateurPrécédent": Code[50];
+        Gcode_ChoixApprobateur: Code[50];
+        Gdec_MontantDocumentTTC: Decimal;
+        "Gdec_MontantTotalAffichéTTC": Decimal;
+        Gdec_MontantTotalTTC: Decimal;
+        Gdec_MontantTTC: Decimal;
+        Gdec_TotalDocument: Decimal;
+        Gint_CompteurTotal: Decimal;
+        EntDateCapLbl: Label 'Date :', Comment = 'FRA="Date :"';
+        EntFiltreLbl: Label 'Reminder of the selection :', Comment = 'FRA="Rappel de la sélection :"';
+        EntUserCapLbl: Label 'User :', Comment = 'FRA="Utilisateur :"';
+        LigAppCapLbl: Label 'Orig. approver', Comment = 'FRA="Approb. initial"';
+        LigAppPrevCapLbl: Label 'Prev. approver', Comment = 'FRA="Approb. précédent"';
+        LigDateCapLbl: Label 'Doc. Date :', Comment = 'FRA="Date doc. :"';
+        LigEntAmtCapLbl: Label 'Amount', Comment = 'FRA="Montant HT"';
+        LigEntAmtTTCCapLbl: Label 'Including VAT', Comment = 'FRA="Montant TTC"';
+        LigEntCostCapLbl: Label 'Direct Unit Cost', Comment = 'FRA="Coût unit."';
+        LigEntDescCapLbl: Label 'Description', Comment = 'FRA="Désignation"';
+        LigEntDiscCapLbl: Label 'Disc. %', Comment = 'FRA="% Rem."';
+        LigEntDocNoCapLbl: Label 'No.', Comment = 'FRA="N°"';
+        LigEntInvCapLbl: Label 'Invoiced', Comment = 'FRA="Facturée"';
+        LigEntQtyCapLbl: Label 'Quantity', Comment = 'FRA="Quantité"';
+        LigEntUnitCapLbl: Label 'Unit', Comment = 'FRA="Unité"';
+        LigFourCapLbl: Label 'Vend. : ', Comment = 'FRA="Fourn. :"';
+        PiedDateLbl: Label 'Date :', Comment = 'FRA="Date :"';
+        PiedSignLbl: Label 'Signature :', Comment = 'FRA="Signature :"';
         Text002: Label 'QUOTES TO POST', Comment = 'FRA="DEVIS A VALIDER"';
         Text003: Label 'INVOICES TO POST', Comment = 'FRA="FACTURES A VALIDER"';
         Text004: Label 'CREDIT MEMO TO POST', Comment = 'FRA="AVOIRS A VALIDER"';
-        Gdec_MontantTTC: Decimal;
-        Gdec_MontantDocumentTTC: Decimal;
-        Gdec_MontantTotalTTC: Decimal;
-        "Gdec_MontantTotalAffichéTTC": Decimal;
         Text005: Label 'Type Document :', Comment = 'FRA="Type Document :"';
         Text006: Label 'Vendor :', Comment = 'FRA="Fournisseur :"';
         Text007: Label 'at', Comment = 'FRA="à"';
         Text008: Label 'Listing of purchases awaiting approval for', Comment = 'FRA="Listing des achats en attente d''approbation"';
-        Gcode_Axe: array[6] of Code[20];
-        Gtext_Axe6: Text[30];
         Gtext_Axe1: Text[30];
         Gtext_Axe2: Text[30];
         Gtext_Axe3: Text[30];
         Gtext_Axe4: Text[30];
         Gtext_Axe5: Text[30];
+        Gtext_Axe6: Text[30];
         GtextPos0: Text[30];
         GtextPos1: Text[30];
         GtextPos2: Text[30];
         GtextPos3: Text[30];
         GtextPos4: Text[30];
         GtextPos5: Text[30];
-        Gint_NbAxe: Integer;
-        Grec_DocumentDimension: Record "Dimension Set Entry";
-        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
-        EntFiltreLbl: Label 'Reminder of the selection :', Comment = 'FRA="Rappel de la sélection :"';
-        EntUserCapLbl: Label 'User :', Comment = 'FRA="Utilisateur :"';
-        EntDateCapLbl: Label 'Date :', Comment = 'FRA="Date :"';
-        LigFourCapLbl: Label 'Vend. : ', Comment = 'FRA="Fourn. :"';
-        LigDateCapLbl: Label 'Doc. Date :', Comment = 'FRA="Date doc. :"';
-        LigEntDocNoCapLbl: Label 'No.', Comment = 'FRA="N°"';
-        LigEntDescCapLbl: Label 'Description', Comment = 'FRA="Désignation"';
-        LigEntQtyCapLbl: Label 'Quantity', Comment = 'FRA="Quantité"';
-        LigEntUnitCapLbl: Label 'Unit', Comment = 'FRA="Unité"';
-        LigEntCostCapLbl: Label 'Direct Unit Cost', Comment = 'FRA="Coût unit."';
-        LigEntDiscCapLbl: Label 'Disc. %', Comment = 'FRA="% Rem."';
-        LigEntAmtCapLbl: Label 'Amount', Comment = 'FRA="Montant HT"';
-        LigEntInvCapLbl: Label 'Invoiced', Comment = 'FRA="Facturée"';
-        LigAppPrevCapLbl: Label 'Prev. approver', Comment = 'FRA="Approb. précédent"';
-        LigEntAmtTTCCapLbl: Label 'Including VAT', Comment = 'FRA="Montant TTC"';
-        LigAppCapLbl: Label 'Orig. approver', Comment = 'FRA="Approb. initial"';
-        PiedDateLbl: Label 'Date :', Comment = 'FRA="Date :"';
-        PiedSignLbl: Label 'Signature :', Comment = 'FRA="Signature :"';
-        PreReport: Boolean;
+        Gtxt_Titre: Text[30];
+        Gtxt_DateDocFilter: Text;
+        Gtxt_FournisseurFilter: Text;
+        Gtxt_NomApprobateur: Text[50];
+        Gtxt_TypeDocFilter: Text;
 }
 

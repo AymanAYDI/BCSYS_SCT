@@ -5,15 +5,16 @@ xmlport 50032 "BC6_LISAM (quick) VAT"
     TextEncoding = WINDOWS;
     Format = VariableText;
     FieldDelimiter = '<None>';
-    FieldSeparator = '[;]';
+    FieldSeparator = ';';
     TableSeparator = '<NewLine>';
     FileName = 'LISAMQUICK.CSV';
     schema
     {
         textelement(RootNodeName)
         {
-            tableelement(Header; 2000000026)
+            tableelement(Header; Integer)
             {
+                SourceTableView = SORTING(Number) WHERE(Number = CONST(1));
                 textelement(Gtext_NomChamp)
                 {
                 }
@@ -22,8 +23,10 @@ xmlport 50032 "BC6_LISAM (quick) VAT"
                     Gtext_NomChamp := 'Date;Origine;Pièce;Compte;Libellé;Période;Axe 1;Axe 2;Axe 3;Axe 4;Conso;Débit;Crédit;Solde;Tiers-Contrepartie;N° doc;Groupe compta. marché;Montant TVA;Groupe compta. produit TVA';
                 end;
             }
-            tableelement(GLEntry; 17)
+            tableelement(GLEntry; "G/L Entry")
             {
+                RequestFilterFields = "Posting Date", "G/L Account No.";
+                SourceTableView = sorting("Entry No.");
                 fieldelement(PostingDate; GLEntry."Posting Date")
                 {
                 }
@@ -251,22 +254,23 @@ xmlport 50032 "BC6_LISAM (quick) VAT"
             }
         }
     }
-    var
-        Grecord_LedgerEntryDimension: Record "Dimension Set Entry";
+    VAR
         Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
-        Grec_PurchCrMemoHeader: Record "Purch. Cr. Memo Hdr.";
-        Grec_PurchCrMemoLine: Record "Purch. Cr. Memo Line";
-        Grec_PurchInvHeader: Record "Purch. Inv. Header";
-        Grec_PurchInvoiceHeader: Record "Purch. Inv. Header";
-        Grec_PurchInvoiceLine: Record "Purch. Inv. Line";
+        Grecord_LedgerEntryDimension: Record "Dimension Set Entry";
         Grec_PurchHeader: Record "Purchase Header";
-        Grec_SalesCrMemoHeader: Record "Sales Cr.Memo Header";
-        Grec_SalesCrMemoLine: Record "Sales Cr.Memo Line";
+        Grec_PurchInvHeader: Record "Purch. Inv. Header";
         Grec_SalesHeader: Record "Sales Header";
         Grec_SalesInvHeader: Record "Sales Invoice Header";
         Grec_SalesInvoiceHeader: Record "Sales Invoice Header";
         Grec_SalesInvoiceLine: Record "Sales Invoice Line";
+        Grec_SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+        Grec_SalesCrMemoLine: Record "Sales Cr.Memo Line";
+        Grec_PurchInvoiceHeader: Record "Purch. Inv. Header";
+        Grec_PurchInvoiceLine: Record "Purch. Inv. Line";
+        Grec_PurchCrMemoHeader: Record "Purch. Cr. Memo Hdr.";
+        Grec_PurchCrMemoLine: Record "Purch. Cr. Memo Line";
         "Gcu_ANSI-ASCII": Codeunit "BC6_ANSI_ASCII converter";
+        Gtext_ExtDoc: Text;
         Gcode_Axe1: Code[20];
         Gcode_Axe2: Code[20];
         Gcode_Axe3: Code[20];
@@ -276,7 +280,6 @@ xmlport 50032 "BC6_LISAM (quick) VAT"
         Gcode_Axe7: Code[20];
         Gcode_Axe8: Code[20];
         Gcode_AxeReserve: Code[20];
-        Gtext_ExtDoc: Text[50];
 
     local procedure FctRetrieveDim(piDimSetID: Integer);
     begin

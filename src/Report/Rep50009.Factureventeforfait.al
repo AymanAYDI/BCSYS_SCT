@@ -53,7 +53,7 @@ report 50009 "BC6_Facture vente forfait"
             column(DocDateCaption; DocDateCaptionLbl)
             {
             }
-            column(DisplayAdditionalFeeNote; DisplayAdditionalFeeNote)
+            column(DisplayAdditionalFeeNote; DisplayAdditionalFeeNoteV)
             {
             }
             dataitem(CopyLoop; 2000000026)
@@ -343,7 +343,7 @@ report 50009 "BC6_Facture vente forfait"
 
                         trigger OnPreDataItem()
                         begin
-                            IF NOT ShowInternalInfo THEN
+                            IF NOT ShowInternalInfoV THEN
                                 CurrReport.BREAK();
                         end;
                     }
@@ -430,7 +430,7 @@ report 50009 "BC6_Facture vente forfait"
                             AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                             AutoFormatType = 1;
                         }
-                        column(VATAmtText_SalesInvLine; VATAmountLine.VATAmountText())
+                        column(VATAmtText_SalesInvLine; TempVATAmountLine.VATAmountText())
                         {
                         }
                         column(TotalExclVATText; TotalExclVATText)
@@ -578,7 +578,7 @@ report 50009 "BC6_Facture vente forfait"
 
                             trigger OnPreDataItem()
                             begin
-                                IF NOT ShowInternalInfo THEN
+                                IF NOT ShowInternalInfoV THEN
                                     CurrReport.BREAK();
 
                                 DimSetEntry2.SETRANGE("Dimension Set ID", "Sales Invoice Line"."Dimension Set ID");
@@ -695,22 +695,22 @@ report 50009 "BC6_Facture vente forfait"
                             IF Quantity <> 0 THEN
                                 PostedShipmentDate := FindPostedShipmentDate();
 
-                            IF (Type = Type::"G/L Account") AND (NOT ShowInternalInfo) THEN
+                            IF (Type = Type::"G/L Account") AND (NOT ShowInternalInfoV) THEN
                                 "No." := '';
 
-                            VATAmountLine.INIT();
-                            VATAmountLine."VAT Identifier" := "VAT Identifier";
-                            VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
-                            VATAmountLine."Tax Group Code" := "Tax Group Code";
-                            VATAmountLine."VAT %" := "VAT %";
-                            VATAmountLine."VAT Base" := Amount;
-                            VATAmountLine."Amount Including VAT" := "Amount Including VAT";
-                            VATAmountLine."Line Amount" := "Line Amount";
+                            TempVATAmountLine.INIT();
+                            TempVATAmountLine."VAT Identifier" := "VAT Identifier";
+                            TempVATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
+                            TempVATAmountLine."Tax Group Code" := "Tax Group Code";
+                            TempVATAmountLine."VAT %" := "VAT %";
+                            TempVATAmountLine."VAT Base" := Amount;
+                            TempVATAmountLine."Amount Including VAT" := "Amount Including VAT";
+                            TempVATAmountLine."Line Amount" := "Line Amount";
                             IF "Allow Invoice Disc." THEN
-                                VATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
-                            VATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
-                            VATAmountLine."VAT Clause Code" := "VAT Clause Code";
-                            VATAmountLine.InsertLine();
+                                TempVATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
+                            TempVATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
+                            TempVATAmountLine."VAT Clause Code" := "VAT Clause Code";
+                            TempVATAmountLine.InsertLine();
 
                             TotalSubTotal += "Line Amount";
                             TotalInvoiceDiscountAmount -= "Inv. Discount Amount";
@@ -744,7 +744,7 @@ report 50009 "BC6_Facture vente forfait"
 
                         trigger OnPreDataItem()
                         begin
-                            VATAmountLine.DELETEALL();
+                            TempVATAmountLine.DELETEALL();
                             TempSalesShipmentBuffer.RESET();
                             TempSalesShipmentBuffer.DELETEALL();
                             FirstValueEntryNo := 0;
@@ -754,7 +754,6 @@ report 50009 "BC6_Facture vente forfait"
                             IF NOT MoreLines THEN
                                 CurrReport.BREAK();
                             SETRANGE("Line No.", 0, "Line No.");
-                            CurrReport.CREATETOTALS("Line Amount", Amount, "Amount Including VAT", "Inv. Discount Amount");
 
                             GetTotalLineAmount := 0;
                             GetTotalInvDiscAmount := 0;
@@ -765,36 +764,36 @@ report 50009 "BC6_Facture vente forfait"
                     dataitem(VATCounter; 2000000026)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATAmtLineVATBase; VATAmountLine."VAT Base")
+                        column(VATAmtLineVATBase; TempVATAmountLine."VAT Base")
                         {
                             AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATAmt; VATAmountLine."VAT Amount")
+                        column(VATAmtLineVATAmt; TempVATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineLineAmt; VATAmountLine."Line Amount")
+                        column(VATAmtLineLineAmt; TempVATAmountLine."Line Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscBaseAmt; VATAmountLine."Inv. Disc. Base Amount")
+                        column(VATAmtLineInvDiscBaseAmt; TempVATAmountLine."Inv. Disc. Base Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvoiceDiscAmt; VATAmountLine."Invoice Discount Amount")
+                        column(VATAmtLineInvoiceDiscAmt; TempVATAmountLine."Invoice Discount Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVAT; VATAmountLine."VAT %")
+                        column(VATAmtLineVAT; TempVATAmountLine."VAT %")
                         {
                             DecimalPlaces = 0 : 5;
                         }
-                        column(VATAmtLineVATIdentifier; VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVATIdentifier; TempVATAmountLine."VAT Identifier")
                         {
                         }
                         column(VATPercentCaption; VATPercentCaptionLbl)
@@ -827,24 +826,21 @@ report 50009 "BC6_Facture vente forfait"
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
+                            TempVATAmountLine.GetLine(Number);
                         end;
 
                         trigger OnPreDataItem()
                         begin
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(
-                              VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
-                              VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount");
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
                         end;
                     }
                     dataitem(VATClauseEntryCounter; Integer)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATClauseVATIdentifier; VATAmountLine."VAT Identifier")
+                        column(VATClauseVATIdentifier; TempVATAmountLine."VAT Identifier")
                         {
                         }
-                        column(VATClauseCode; VATAmountLine."VAT Clause Code")
+                        column(VATClauseCode; TempVATAmountLine."VAT Clause Code")
                         {
                         }
                         column(VATClauseDescription; VATClause.Description)
@@ -853,7 +849,7 @@ report 50009 "BC6_Facture vente forfait"
                         column(VATClauseDescription2; VATClause."Description 2")
                         {
                         }
-                        column(VATClauseAmount; VATAmountLine."VAT Amount")
+                        column(VATClauseAmount; TempVATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
@@ -870,8 +866,8 @@ report 50009 "BC6_Facture vente forfait"
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
-                            IF NOT VATClause.GET(VATAmountLine."VAT Clause Code") THEN
+                            TempVATAmountLine.GetLine(Number);
+                            IF NOT VATClause.GET(TempVATAmountLine."VAT Clause Code") THEN
                                 CurrReport.SKIP();
                             VATClause.TranslateDescription("Sales Invoice Header"."Language Code");
                         end;
@@ -879,8 +875,7 @@ report 50009 "BC6_Facture vente forfait"
                         trigger OnPreDataItem()
                         begin
                             CLEAR(VATClause);
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(VATAmountLine."VAT Amount");
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
                         end;
                     }
                     dataitem(VatCounterLCY; 2000000026)
@@ -900,23 +895,23 @@ report 50009 "BC6_Facture vente forfait"
                         {
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVAT1; VATAmountLine."VAT %")
+                        column(VATAmtLineVAT1; TempVATAmountLine."VAT %")
                         {
                             DecimalPlaces = 0 : 5;
                         }
-                        column(VATAmtLineVATIdentifier1; VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVATIdentifier1; TempVATAmountLine."VAT Identifier")
                         {
                         }
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
+                            TempVATAmountLine.GetLine(Number);
                             VALVATBaseLCY :=
-                              VATAmountLine.GetBaseLCY(
+                              TempVATAmountLine.GetBaseLCY(
                                 "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
                                 "Sales Invoice Header"."Currency Factor");
                             VALVATAmountLCY :=
-                              VATAmountLine.GetAmountLCY(
+                              TempVATAmountLine.GetAmountLCY(
                                 "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
                                 "Sales Invoice Header"."Currency Factor");
                         end;
@@ -928,8 +923,7 @@ report 50009 "BC6_Facture vente forfait"
                             THEN
                                 CurrReport.BREAK();
 
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(VALVATBaseLCY, VALVATAmountLCY);
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
 
                             IF GLSetup."LCY Code" = '' THEN
                                 VALSpecLCYHeader := Text007 + Text008
@@ -997,7 +991,7 @@ report 50009 "BC6_Facture vente forfait"
 
                         trigger OnAfterGetRecord()
                         begin
-                            IF NOT DisplayAdditionalFeeNote THEN
+                            IF NOT DisplayAdditionalFeeNoteV THEN
                                 CurrReport.BREAK();
 
                             IF Number = 1 THEN BEGIN
@@ -1016,7 +1010,6 @@ report 50009 "BC6_Facture vente forfait"
                         CopyText := Text003;
                         OutputNo += 1;
                     END;
-                    CurrReport.PAGENO := 1;
 
                     TotalSubTotal := 0;
                     TotalInvoiceDiscountAmount := 0;
@@ -1034,7 +1027,7 @@ report 50009 "BC6_Facture vente forfait"
 
                 trigger OnPreDataItem()
                 begin
-                    NoOfLoops := ABS(NoOfCopies) + Cust."Invoice Copies" + 1;
+                    NoOfLoops := ABS(NoOfCopiesV) + Cust."Invoice Copies" + 1;
                     IF NoOfLoops <= 0 THEN
                         NoOfLoops := 1;
                     CopyText := '';
@@ -1075,11 +1068,10 @@ report 50009 "BC6_Facture vente forfait"
                     Gtext_PostCode := '';
                 END;
 
-                IF SalesPurchPerson.GET("Sales Invoice Header"."Salesperson Code") THEN BEGIN
-                    Gtext_ContactAgence := SalesPurchPerson.Name;
-                END ELSE BEGIN
+                IF SalesPurchPerson.GET("Sales Invoice Header"."Salesperson Code") THEN
+                    Gtext_ContactAgence := SalesPurchPerson.Name
+                ELSE
                     Gtext_ContactAgence := '';
-                END;
 
 
                 IF UserSetup.GET("Sales Invoice Header"."User ID") THEN BEGIN
@@ -1108,7 +1100,7 @@ report 50009 "BC6_Facture vente forfait"
                         CustAddr[5] := '';
                     COMPRESSARRAY(CustAddr);
 
-                END ELSE BEGIN
+                END ELSE
                     IF Cust.GET("Sales Invoice Header"."BC6_Agent") THEN BEGIN
                         IF "BC6_Paying agent" = TRUE THEN BEGIN
                             CustAddr[1] := Cust.Name;
@@ -1162,10 +1154,8 @@ report 50009 "BC6_Facture vente forfait"
                                 BillAddr[5] := '';
                             COMPRESSARRAY(BillAddr);
                         END;
-                    END ELSE BEGIN
+                    END ELSE
                         MESSAGE(Text020);
-                    END;
-                END;
 
                 //fin dev AUD
 
@@ -1173,9 +1163,8 @@ report 50009 "BC6_Facture vente forfait"
                     FormatAddr.RespCenter(CompanyAddr, RespCenter);
                     CompanyInfo."Phone No." := RespCenter."Phone No.";
                     CompanyInfo."Fax No." := RespCenter."Fax No.";
-                END ELSE BEGIN
+                END ELSE
                     FormatAddr.Company(CompanyAddr, CompanyInfo);
-                END;
 
                 DimSetEntry1.SETRANGE("Dimension Set ID", "Dimension Set ID");
 
@@ -1232,8 +1221,8 @@ report 50009 "BC6_Facture vente forfait"
 
                 GetLineFeeNoteOnReportHist("No.");
 
-                IF LogInteraction THEN
-                    IF NOT CurrReport.PREVIEW THEN BEGIN
+                IF LogInteractionV THEN
+                    IF NOT CurrReport.PREVIEW THEN
                         IF "Bill-to Contact No." <> '' THEN
                             SegManagement.LogDocument(
                               4, "No.", 0, 0, DATABASE::Contact, "Bill-to Contact No.", "Salesperson Code",
@@ -1242,7 +1231,6 @@ report 50009 "BC6_Facture vente forfait"
                             SegManagement.LogDocument(
                               4, "No.", 0, 0, DATABASE::Customer, "Bill-to Customer No.", "Salesperson Code",
                               "Campaign No.", "Posting Description", '');
-                    END;
             end;
 
             trigger OnPreDataItem()
@@ -1263,17 +1251,17 @@ report 50009 "BC6_Facture vente forfait"
                 group(Options)
                 {
                     Caption = 'Options', Comment = 'FRA="Options"';
-                    field(NoOfCopies; NoOfCopies)
+                    field(NoOfCopies; NoOfCopiesV)
                     {
                         Caption = 'No. of Copies', Comment = 'FRA="Nombre de copies"';
                         ApplicationArea = All;
                     }
-                    field(ShowInternalInfo; ShowInternalInfo)
+                    field(ShowInternalInfo; ShowInternalInfoV)
                     {
                         Caption = 'Show Internal Information', Comment = 'FRA="Afficher info. internes"';
                         ApplicationArea = All;
                     }
-                    field(LogInteraction; LogInteraction)
+                    field(LogInteraction; LogInteractionV)
                     {
                         Caption = 'Log Interaction', Comment = 'FRA="Journal interaction"';
                         Enabled = LogInteractionEnable;
@@ -1289,7 +1277,7 @@ report 50009 "BC6_Facture vente forfait"
                         Caption = 'Show Assembly Components', Comment = 'FRA="Afficher composants d''assemblage"';
                         ApplicationArea = All;
                     }
-                    field(DisplayAdditionalFeeNote; DisplayAdditionalFeeNote)
+                    field(DisplayAdditionalFeeNote; DisplayAdditionalFeeNoteV)
                     {
                         Caption = 'Show Additional Fee Note', Comment = 'FRA="Afficher la note de frais supplémentaires"';
                         ApplicationArea = All;
@@ -1305,7 +1293,7 @@ report 50009 "BC6_Facture vente forfait"
         trigger OnOpenPage()
         begin
             InitLogInteraction();
-            LogInteractionEnable := LogInteraction;
+            LogInteractionEnable := LogInteractionV;
         end;
     }
 
@@ -1317,9 +1305,8 @@ report 50009 "BC6_Facture vente forfait"
         CompanyInfo.VerifyAndSetPaymentInfo();
         CASE SalesSetup."Logo Position on Documents" OF
             SalesSetup."Logo Position on Documents"::Left:
-                BEGIN
-                    CompanyInfo3.CALCFIELDS(Picture);
-                END;
+
+                CompanyInfo3.CALCFIELDS(Picture);
             SalesSetup."Logo Position on Documents"::Center:
                 BEGIN
                     CompanyInfo1.GET();
@@ -1341,91 +1328,106 @@ report 50009 "BC6_Facture vente forfait"
     end;
 
     var
-        UserSetup: Record "User Setup";
-        GLSetup: Record "General Ledger Setup";
-        ShipmentMethod: Record "Shipment Method";
-        PaymentTerms: Record "Payment Terms";
-        SalesPurchPerson: Record "Salesperson/Purchaser";
+        DefaultBank: Record "Bank Account";
         CompanyInfo: Record "Company Information";
         CompanyInfo1: Record "Company Information";
         CompanyInfo2: Record "Company Information";
         CompanyInfo3: Record "Company Information";
-        SalesSetup: Record "Sales & Receivables Setup";
+        Grec_CodePays: Record "Country/Region";
+        CurrExchRate: Record "Currency Exchange Rate";
         Cust: Record Customer;
-        VATAmountLine: Record "VAT Amount Line" temporary;
         DimSetEntry1: Record "Dimension Set Entry";
         DimSetEntry2: Record "Dimension Set Entry";
-        RespCenter: Record "Responsibility Center";
-        TempSalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
-        CurrExchRate: Record "Currency Exchange Rate";
-        TempPostedAsmLine: Record "Posted Assembly Line" temporary;
-        VATClause: Record "VAT Clause";
+        GLSetup: Record "General Ledger Setup";
         TempLineFeeNoteOnReportHist: Record "Line Fee Note on Report Hist." temporary;
-        SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
-        Language: Codeunit Language;
+        PaymentTerms: Record "Payment Terms";
+        TempPostedAsmLine: Record "Posted Assembly Line" temporary;
+        RespCenter: Record "Responsibility Center";
+        SalesSetup: Record "Sales & Receivables Setup";
+        Grec_SalesLineArchive: Record "Sales Line Archive";
+        SalesPurchPerson: Record "Salesperson/Purchaser";
+        TempSalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
+        ShipmentInvoiced: Record "Shipment Invoiced";
+        ShipmentMethod: Record "Shipment Method";
+        UserSetup: Record "User Setup";
+        TempVATAmountLine: Record "VAT Amount Line" temporary;
+        VATClause: Record "VAT Clause";
         FormatAddr: Codeunit "Format Address";
+        Language: Codeunit Language;
+        SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
         SegManagement: Codeunit SegManagement;
-        PostedShipmentDate: Date;
-        CustAddr: array[8] of Text[50];
-        BillAddr: array[8] of Text[50];
-        ShipToAddr: array[8] of Text[50];
-        CompanyAddr: array[8] of Text[50];
-        OrderNoText: Text[80];
-        SalesPersonText: Text[30];
-        VATNoText: Text[80];
-        ReferenceText: Text[80];
-        TotalText: Text[50];
-        TotalExclVATText: Text[50];
-        TotalInclVATText: Text[50];
-        MoreLines: Boolean;
-        NoOfCopies: Integer;
-        NoOfLoops: Integer;
-        CopyText: Text[30];
-        ShowShippingAddr: Boolean;
-        i: Integer;
-        NextEntryNo: Integer;
-        FirstValueEntryNo: Integer;
-        DimText: Text[120];
-        OldDimText: Text[75];
-        ShowInternalInfo: Boolean;
         Continue: Boolean;
-        LogInteraction: Boolean;
-        VALVATBaseLCY: Decimal;
-        VALVATAmountLCY: Decimal;
-        VALSpecLCYHeader: Text[80];
-        Text000: Label 'Salesperson', Comment = 'FRA="Vendeur"';
-        Text001: Label 'Total %1', Comment = 'FRA="Total %1"';
-        Text002: Label 'Total %1 Incl. VAT', Comment = 'FRA="Total %1 TTC"';
-        Text003: Label 'COPY', Comment = 'FRA="COPIE"';
-        Text004: Label 'Sales - Invoice %1', Comment = 'FRA="FACTURE"';
-        PageCaptionCap: Label 'Page %1 of %2', Comment = 'FRA="Page %1 de %2"';
-        Text006: Label 'Total %1 Excl. VAT', Comment = 'FRA="Total %1 HT"';
-        Text007: Label 'VAT Amount Specification in ', Comment = 'FRA="Détail TVA dans"';
-        Text008: Label 'Local Currency', Comment = 'FRA="Devise société"';
-        VALExchRate: Text[50];
-        Text009: Label 'Exchange rate: %1/%2', Comment = 'FRA="Taux de change : %1/%2"';
+        DisplayAdditionalFeeNoteV: Boolean;
+        DisplayAssemblyInformation: Boolean;
+        IncludeShptNo: Boolean;
+        LogInteractionV: Boolean;
+        [InDataSet]
+        LogInteractionEnable: Boolean;
+        MoreLines: Boolean;
+        ShowInternalInfoV: Boolean;
+        ShowShippingAddr: Boolean;
+        PostedShipmentDate: Date;
         CalculatedExchRate: Decimal;
-        Text010: Label 'Sales - Prepayment Invoice %1', Comment = 'FRA="Ventes - Facture acompte %1"';
-        OutputNo: Integer;
-        TotalSubTotal: Decimal;
+        Gdec_DejaFacture: Decimal;
+        Gdec_ResteAFacture: Decimal;
+        GetTotalAmount: Decimal;
+        GetTotalAmountIncVAT: Decimal;
+        GetTotalInvDiscAmount: Decimal;
+        GetTotalLineAmount: Decimal;
         TotalAmount: Decimal;
         TotalAmountInclVAT: Decimal;
         TotalAmountVAT: Decimal;
         TotalInvoiceDiscountAmount: Decimal;
         TotalPaymentDiscountOnVAT: Decimal;
-        Text10800: Label 'ShipmentNo', Comment = 'FRA="NoExpédition"';
-        ShipmentInvoiced: Record "Shipment Invoiced";
+        TotalSubTotal: Decimal;
+        VALVATAmountLCY: Decimal;
+        VALVATBaseLCY: Decimal;
+        FirstValueEntryNo: Integer;
+        Gint_version: Integer;
+        i: Integer;
+        NextEntryNo: Integer;
+        NoOfCopiesV: Integer;
+        NoOfLoops: Integer;
         NoShipmentNumLoop: Integer;
-        NoShipmentDatas: array[3] of Text[20];
-        NoShipmentText: Text[30];
-        IncludeShptNo: Boolean;
-        GetTotalLineAmount: Decimal;
-        GetTotalInvDiscAmount: Decimal;
-        GetTotalAmount: Decimal;
-        GetTotalAmountIncVAT: Decimal;
-        [InDataSet]
-        LogInteractionEnable: Boolean;
-        DisplayAssemblyInformation: Boolean;
+        OutputNo: Integer;
+        AmtCaptionLbl: Label 'Amount', Comment = 'FRA="Facturé"';
+        BankAccNoCaptionLbl: Label 'Account No.', Comment = 'FRA="N° compte"';
+        BankNameCaptionLbl: Label 'Bank', Comment = 'FRA="Banque"';
+        DejaFactureLbl: Label 'Already invoiced', Comment = 'FRA="Déjà facturé"';
+        DiscPercentCaptionLbl: Label 'Discount %', Comment = 'FRA="% remise"';
+        DocDateCaptionLbl: Label 'Document Date', Comment = 'FRA="Date document"';
+        DueDateCaptionLbl: Label 'Due Date', Comment = 'FRA="Date d''échéance"';
+        EMailCaptionLbl: Label 'E-Mail', Comment = 'FRA="E-mail"';
+        GiroNoCaptionLbl: Label 'Giro No.', Comment = 'FRA="N° CCP"';
+        HdrDimsCaptionLbl: Label 'Header Dimensions', Comment = 'FRA="Analytique en-tête"';
+        HomePageCaptionCap: Label 'Home Page', Comment = 'FRA="Page d''accueil"';
+        InvDiscAmtCaption1Lbl: Label 'Invoice Discount Amount', Comment = 'FRA="Montant remise facture"';
+        InvDiscAmtCaptionLbl: Label 'Inv. Discount Amount', Comment = 'FRA="Montant remise facture"';
+        InvDiscBaseAmtCaptionLbl: Label 'Invoice Discount Base Amount', Comment = 'FRA="Montant base remise facture"';
+        InvoiceNoCaptionLbl: Label 'Invoice No.', Comment = 'FRA="N° facture"';
+        LineAmtCaptionLbl: Label 'Line Amount', Comment = 'FRA="Montant ligne"';
+        LineDimsCaptionLbl: Label 'Line Dimensions', Comment = 'FRA="Analytique ligne"';
+        PageCaptionCap: Label 'Page %1 of %2', Comment = 'FRA="Page %1 de %2"';
+        PhoneNoCaptionLbl: Label 'Phone No.', Comment = 'FRA="N° téléphone"';
+        PmtDiscVATCaptionLbl: Label 'Payment Discount on VAT', Comment = 'FRA="Escompte sur TVA"';
+        PmtTermsDescCaptionLbl: Label 'Payment Terms', Comment = 'FRA="Conditions de paiement"';
+        PostedShpDateCaptionLbl: Label 'Posted Shipment Date', Comment = 'FRA="Date expédition validée"';
+        PostingDateCaptionLbl: Label 'Posting Date', Comment = 'FRA="Date comptabilisation"';
+        ResteAFacturerLbl: Label 'Unit Price', Comment = 'FRA="Reste à facturer"';
+        ShiptoAddrCaptionLbl: Label 'Ship-to Address', Comment = 'FRA="Adresse destinataire"';
+        ShpCaptionLbl: Label 'Shipment', Comment = 'FRA="Expédition"';
+        ShpMethodDescCaptionLbl: Label 'Shipment Method', Comment = 'FRA="Conditions de livraison"';
+        SubtotalCaptionLbl: Label 'Subtotal', Comment = 'FRA="Sous-total"';
+        Text000: Label 'Salesperson', Comment = 'FRA="Vendeur"';
+        Text001: Label 'Total %1', Comment = 'FRA="Total %1"';
+        Text002: Label 'Total %1 Incl. VAT', Comment = 'FRA="Total %1 TTC"';
+        Text003: Label 'COPY', Comment = 'FRA="COPIE"';
+        Text004: Label 'Sales - Invoice %1', Comment = 'FRA="FACTURE"';
+        Text006: Label 'Total %1 Excl. VAT', Comment = 'FRA="Total %1 HT"';
+        Text007: Label 'VAT Amount Specification in ', Comment = 'FRA="Détail TVA dans"';
+        Text008: Label 'Local Currency', Comment = 'FRA="Devise société"';
+        Text009: Label 'Exchange rate: %1/%2', Comment = 'FRA="Taux de change : %1/%2"';
+        Text010: Label 'Sales - Prepayment Invoice %1', Comment = 'FRA="Ventes - Facture acompte %1"';
         Text011: Label 'with capital of', Comment = 'FRA="au capital de"';
         Text012: Label 'VAT identification No. :', Comment = 'FRA="N° d''identification TVA :"';
         Text013: Label 'Tél. : ';
@@ -1433,7 +1435,6 @@ report 50009 "BC6_Facture vente forfait"
         Text016: Label 'à';
         Text017: Label 'Toute somme non payée à l''échéance pour quelque cause que ce soit, portera intérêt de plein droit, à compter de ladite échéance et jusqu''au paiement intégral de la facture, à un taux égal au';
         Text018: Label 'taux d''intérêt appliqué par la Banque centrale européenne à son opération de refinancement la plus récente majoré de dix (10) points de pourcentage, sans qu''une mise en demeure ne soit';
-        Text0181: Label 'nécessaire, conformément au dispositions de l''article L 441-6 du Code de Commerce.Toute situation de retard de paiement entrainera, de plein droit, la facturation d''une indemnité forfaitaire';
         Text019: Label 'd''un montant de 40 € couvrant les frais de recouvrement.';
         Text020: Label 'Agent doesn''t exist', Comment = 'FRA="Le mandataire n''existe pas"';
         Text021: Label 'AGENT', Comment = 'FRA="MANDATAIRE"';
@@ -1444,89 +1445,62 @@ report 50009 "BC6_Facture vente forfait"
         Text028: Label 'les frais de recouvrement exposés sont supérieurs au montant de l''indemnité forfaitaire. Nos conditions de vente ne prévoient pas d''escompte pour paiement anticipé. ';
         Text029: Label 'payer', Comment = 'FRA="payeur"';
         Text030: Label 'not payer', Comment = 'FRA="non payeur"';
-        PhoneNoCaptionLbl: Label 'Phone No.', Comment = 'FRA="N° téléphone"';
-        VATRegNoCaptionLbl: Label 'VAT Registration No.', Comment = 'FRA="N° identif. intracomm."';
-        GiroNoCaptionLbl: Label 'Giro No.', Comment = 'FRA="N° CCP"';
-        BankNameCaptionLbl: Label 'Bank', Comment = 'FRA="Banque"';
-        BankAccNoCaptionLbl: Label 'Account No.', Comment = 'FRA="N° compte"';
-        DueDateCaptionLbl: Label 'Due Date', Comment = 'FRA="Date d''échéance"';
-        InvoiceNoCaptionLbl: Label 'Invoice No.', Comment = 'FRA="N° facture"';
-        PostingDateCaptionLbl: Label 'Posting Date', Comment = 'FRA="Date comptabilisation"';
-        HdrDimsCaptionLbl: Label 'Header Dimensions', Comment = 'FRA="Analytique en-tête"';
+        Text0181: Label 'nécessaire, conformément au dispositions de l''article L 441-6 du Code de Commerce.Toute situation de retard de paiement entrainera, de plein droit, la facturation d''une indemnité forfaitaire';
+        Text10800: Label 'ShipmentNo', Comment = 'FRA="NoExpédition"';
+        TotalCaptionLbl: Label 'Total', Comment = 'FRA="Total"';
         UnitPriceCaptionLbl: Label 'Unit Price', Comment = 'FRA="Prix unitaire"';
-        DiscPercentCaptionLbl: Label 'Discount %', Comment = 'FRA="% remise"';
-        AmtCaptionLbl: Label 'Amount', Comment = 'FRA="Facturé"';
-        VATClausesCap: Label 'VAT Clause', Comment = 'FRA="Clause TVA"';
-        PostedShpDateCaptionLbl: Label 'Posted Shipment Date', Comment = 'FRA="Date expédition validée"';
-        InvDiscAmtCaptionLbl: Label 'Inv. Discount Amount', Comment = 'FRA="Montant remise facture"';
-        SubtotalCaptionLbl: Label 'Subtotal', Comment = 'FRA="Sous-total"';
-        PmtDiscVATCaptionLbl: Label 'Payment Discount on VAT', Comment = 'FRA="Escompte sur TVA"';
-        ShpCaptionLbl: Label 'Shipment', Comment = 'FRA="Expédition"';
-        LineDimsCaptionLbl: Label 'Line Dimensions', Comment = 'FRA="Analytique ligne"';
-        VATPercentCaptionLbl: Label 'VAT %', Comment = 'FRA="% TVA"';
-        VATBaseCaptionLbl: Label 'VAT Base', Comment = 'FRA="Base TVA"';
+        UserMailLbl: Label 'Mail';
+        UserNameLbl: Label 'Emetteur';
         VATAmtCaptionLbl: Label 'VAT Amount', Comment = 'FRA="Montant TVA"';
         VATAmtSpecCaptionLbl: Label 'VAT Amount Specification', Comment = 'FRA="Détail montant TVA"';
+        VATBaseCaptionLbl: Label 'VAT Base', Comment = 'FRA="Base TVA"';
+        VATClausesCap: Label 'VAT Clause', Comment = 'FRA="Clause TVA"';
         VATIdentCaptionLbl: Label 'VAT Identifier', Comment = 'FRA="Identifiant TVA"';
-        InvDiscBaseAmtCaptionLbl: Label 'Invoice Discount Base Amount', Comment = 'FRA="Montant base remise facture"';
-        LineAmtCaptionLbl: Label 'Line Amount', Comment = 'FRA="Montant ligne"';
-        InvDiscAmtCaption1Lbl: Label 'Invoice Discount Amount', Comment = 'FRA="Montant remise facture"';
-        TotalCaptionLbl: Label 'Total', Comment = 'FRA="Total"';
-        ShiptoAddrCaptionLbl: Label 'Ship-to Address', Comment = 'FRA="Adresse destinataire"';
-        PmtTermsDescCaptionLbl: Label 'Payment Terms', Comment = 'FRA="Conditions de paiement"';
-        ShpMethodDescCaptionLbl: Label 'Shipment Method', Comment = 'FRA="Conditions de livraison"';
-        HomePageCaptionCap: Label 'Home Page', Comment = 'FRA="Page d''accueil"';
-        EMailCaptionLbl: Label 'E-Mail', Comment = 'FRA="E-mail"';
-        DocDateCaptionLbl: Label 'Document Date', Comment = 'FRA="Date document"';
-        DisplayAdditionalFeeNote: Boolean;
-        Gtext_LName: Text[50];
-        Gtext_LAddress: Text[50];
-        Gtext_LAddress2: Text[50];
-        Gtext_LCity: Text[30];
-        Gtext_LPostCode: Code[20];
-        Gtext_RName: Text[50];
-        Gtext_RAddress: Text[50];
-        Gtext_RAddress2: Text[50];
-        Gtext_RCity: Text[30];
-        Gtext_RPostCode: Code[20];
-        Gtext_UserName: Text[50];
-        Gtext_UserMail: Text[100];
-        Gtext_ContactAgence: Text[50];
+        VATPercentCaptionLbl: Label 'VAT %', Comment = 'FRA="% TVA"';
+        VATRegNoCaptionLbl: Label 'VAT Registration No.', Comment = 'FRA="N° identif. intracomm."';
+        Gtext_CodeEtabl: Text[20];
+        NoShipmentDatas: array[3] of Text[20];
+        CopyText: Text[30];
+        Gtext_CleRIB: Text[30];
+        Gtext_NumCompte: Text[30];
+        Gtext_PostCode: Text[30];
         Gtext_TitreL: Text[30];
         Gtext_TitreR: Text[30];
-        DefaultBank: Record "Bank Account";
-        Gtext_NameBanque: Text[50];
-        Gtext_CodeEtabl: Text[20];
-        Gtext_CodeAgence: Text[50];
-        Gtext_NumCompte: Text[30];
-        Gtext_CleRIB: Text[30];
-        Gtext_Adresse: Text[100];
+        NoShipmentText: Text[30];
+        SalesPersonText: Text[30];
+        BillAddr: array[8] of Text[50];
+        CompanyAddr: array[8] of Text[50];
+        CustAddr: array[8] of Text[50];
         Gtext_City: Text[50];
-        Gtext_PostCode: Text[30];
-        Gtext_Adresse2: Text[100];
-        Gtext_LCountry: Text[30];
-        Gtext_RCountry: Text[30];
-        Grec_CodePays: Record "Country/Region";
+        Gtext_CodeAgence: Text[50];
+        Gtext_ContactAgence: Text[50];
+        Gtext_NameBanque: Text[50];
         Gtext_RvatRegistrationNo: Text[50];
-        UserNameLbl: Label 'Emetteur';
-        UserMailLbl: Label 'Mail';
-        Gdec_DejaFacture: Decimal;
-        Gdec_ResteAFacture: Decimal;
-        Grec_SalesLines: Record "Sales Line";
-        Grec_SalesLineArchive: Record "Sales Line Archive";
-        Gint_version: Integer;
-        DejaFactureLbl: Label 'Already invoiced', Comment = 'FRA="Déjà facturé"';
-        ResteAFacturerLbl: Label 'Unit Price', Comment = 'FRA="Reste à facturer"';
+        Gtext_UserName: Text[50];
+        ShipToAddr: array[8] of Text[50];
+        TotalExclVATText: Text[50];
+        TotalInclVATText: Text[50];
+        TotalText: Text[50];
+        VALExchRate: Text[50];
+        OldDimText: Text[75];
+        OrderNoText: Text[80];
+        ReferenceText: Text[80];
+        VALSpecLCYHeader: Text[80];
+        VATNoText: Text[80];
+        Gtext_Adresse: Text[100];
+        Gtext_Adresse2: Text[100];
+        Gtext_UserMail: Text[100];
+        DimText: Text[120];
 
     procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        LogInteractionV := SegManagement.FindInteractTmplCode(4) <> '';
     end;
 
     procedure FindPostedShipmentDate(): Date
     var
-        SalesShipmentHeader: Record "Sales Shipment Header";
         SalesShipmentBuffer2: Record "Sales Shipment Buffer" temporary;
+        SalesShipmentHeader: Record "Sales Shipment Header";
     begin
         NextEntryNo := 1;
         IF "Sales Invoice Line"."Shipment No." <> '' THEN
@@ -1568,10 +1542,10 @@ report 50009 "BC6_Facture vente forfait"
 
     procedure GenerateBufferFromValueEntry(SalesInvoiceLine2: Record "Sales Invoice Line")
     var
-        ValueEntry: Record "Value Entry";
         ItemLedgerEntry: Record "Item Ledger Entry";
-        TotalQuantity: Decimal;
+        ValueEntry: Record "Value Entry";
         Quantity: Decimal;
+        TotalQuantity: Decimal;
     begin
         TotalQuantity := SalesInvoiceLine2."Quantity (Base)";
         ValueEntry.SETCURRENTKEY("Document No.");
@@ -1602,8 +1576,8 @@ report 50009 "BC6_Facture vente forfait"
         SalesInvoiceLine2: Record "Sales Invoice Line";
         SalesShipmentHeader: Record "Sales Shipment Header";
         SalesShipmentLine: Record "Sales Shipment Line";
-        TotalQuantity: Decimal;
         Quantity: Decimal;
+        TotalQuantity: Decimal;
     begin
         TotalQuantity := 0;
         SalesInvoiceHeader.SETCURRENTKEY("Order No.");
@@ -1646,12 +1620,11 @@ report 50009 "BC6_Facture vente forfait"
                     TotalQuantity := TotalQuantity - SalesShipmentLine.Quantity;
                     SalesInvoiceLine.Quantity := SalesInvoiceLine.Quantity - Quantity;
 
-                    IF SalesShipmentHeader.GET(SalesShipmentLine."Document No.") THEN BEGIN
+                    IF SalesShipmentHeader.GET(SalesShipmentLine."Document No.") THEN
                         AddBufferEntry(
                           SalesInvoiceLine,
                           Quantity,
                           SalesShipmentHeader."Posting Date");
-                    END;
                 END;
             UNTIL (SalesShipmentLine.NEXT() = 0) OR (TotalQuantity = 0);
     end;
@@ -1700,20 +1673,20 @@ report 50009 "BC6_Facture vente forfait"
 
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewLogInteraction: Boolean; IncludeShptNo: Boolean; DisplAsmInfo: Boolean)
     begin
-        NoOfCopies := NewNoOfCopies;
-        ShowInternalInfo := NewShowInternalInfo;
-        LogInteraction := NewLogInteraction;
+        NoOfCopiesV := NewNoOfCopies;
+        ShowInternalInfoV := NewShowInternalInfo;
+        LogInteractionV := NewLogInteraction;
         IncludeShptNo := IncludeShptNo;
         DisplayAssemblyInformation := DisplAsmInfo;
     end;
 
     procedure CollectAsmInformation()
     var
-        ValueEntry: Record "Value Entry";
         ItemLedgerEntry: Record "Item Ledger Entry";
         PostedAsmHeader: Record "Posted Assembly Header";
         PostedAsmLine: Record "Posted Assembly Line";
         SalesShipmentLine: Record "Sales Shipment Line";
+        ValueEntry: Record "Value Entry";
     begin
         TempPostedAsmLine.DELETEALL();
         IF "Sales Invoice Line".Type <> "Sales Invoice Line".Type::Item THEN
@@ -1726,7 +1699,7 @@ report 50009 "BC6_Facture vente forfait"
         IF NOT ValueEntry.FINDSET() THEN
             EXIT;
         REPEAT
-            IF ItemLedgerEntry.GET(ValueEntry."Item Ledger Entry No.") THEN BEGIN
+            IF ItemLedgerEntry.GET(ValueEntry."Item Ledger Entry No.") THEN
                 IF ItemLedgerEntry."Document Type" = ItemLedgerEntry."Document Type"::"Sales Shipment" THEN BEGIN
                     SalesShipmentLine.GET(ItemLedgerEntry."Document No.", ItemLedgerEntry."Document Line No.");
                     IF SalesShipmentLine.AsmToShipmentExists(PostedAsmHeader) THEN BEGIN
@@ -1737,7 +1710,6 @@ report 50009 "BC6_Facture vente forfait"
                             UNTIL PostedAsmLine.NEXT() = 0;
                     END;
                 END;
-            END;
         UNTIL ValueEntry.NEXT() = 0;
     end;
 
@@ -1775,9 +1747,9 @@ report 50009 "BC6_Facture vente forfait"
 
     local procedure GetLineFeeNoteOnReportHist(SalesInvoiceHeaderNo: Code[20])
     var
-        LineFeeNoteOnReportHist: Record "Line Fee Note on Report Hist.";
         CustLedgerEntry: Record "Cust. Ledger Entry";
         Customer: Record Customer;
+        LineFeeNoteOnReportHist: Record "Line Fee Note on Report Hist.";
     begin
         TempLineFeeNoteOnReportHist.DELETEALL();
         CustLedgerEntry.SETRANGE("Document Type", CustLedgerEntry."Document Type"::Invoice);
@@ -1790,13 +1762,13 @@ report 50009 "BC6_Facture vente forfait"
 
         LineFeeNoteOnReportHist.SETRANGE("Cust. Ledger Entry No", CustLedgerEntry."Entry No.");
         LineFeeNoteOnReportHist.SETRANGE("Language Code", Customer."Language Code");
-        IF LineFeeNoteOnReportHist.FINDSET() THEN BEGIN
+        IF LineFeeNoteOnReportHist.FINDSET() THEN
             REPEAT
                 TempLineFeeNoteOnReportHist.INIT();
                 TempLineFeeNoteOnReportHist.COPY(LineFeeNoteOnReportHist);
                 TempLineFeeNoteOnReportHist.INSERT();
-            UNTIL LineFeeNoteOnReportHist.NEXT() = 0;
-        END ELSE BEGIN
+            UNTIL LineFeeNoteOnReportHist.NEXT() = 0
+        ELSE BEGIN
             LineFeeNoteOnReportHist.SETRANGE("Language Code", Language.GetUserLanguageCode());
             IF LineFeeNoteOnReportHist.FINDSET() THEN
                 REPEAT

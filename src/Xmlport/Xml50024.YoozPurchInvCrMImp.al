@@ -4,7 +4,7 @@ xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
     Direction = Import;
     Format = VariableText;
     FieldDelimiter = '<None>';
-    FieldSeparator = '[;]';
+    FieldSeparator = ';';
     UseRequestPage = false;
     FileName = '*.csv';
 
@@ -14,21 +14,45 @@ xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
         {
             tableelement("Yooz"; Integer)
             {
-                textelement(Gtext_Champ1) { }
-                textelement(Gtext_Champ2) { }
-                textelement(Gtext_Champ3) { }
-                textelement(Gtext_Champ4) { }
-                textelement(Gtext_Champ5) { }
-                textelement(Gtext_Champ6) { }
-                textelement(Gtext_Champ7) { }
-                textelement(Gtext_Champ8) { }
-                textelement(Gtext_Champ9) { }
-                textelement(Gtext_Champ10) { }
-                textelement(Gtext_Champ11) { }
-                textelement(Gtext_Champ12) { }
-                // AutoSave = false;
-                // AutoUpdate = false;
-                // AutoReplace = false;
+                AutoSave = false;
+                AutoUpdate = false;
+                AutoReplace = false;
+                textelement(Gtext_Champ1)
+                {
+                }
+                textelement(Gtext_Champ2)
+                {
+                }
+                textelement(Gtext_Champ3)
+                {
+                }
+                textelement(Gtext_Champ4)
+                {
+                }
+                textelement(Gtext_Champ5)
+                {
+                }
+                textelement(Gtext_Champ6)
+                {
+                }
+                textelement(Gtext_Champ7)
+                {
+                }
+                textelement(Gtext_Champ8)
+                {
+                }
+                textelement(Gtext_Champ9)
+                {
+                }
+                textelement(Gtext_Champ10)
+                {
+                }
+                textelement(Gtext_Champ11)
+                {
+                }
+                textelement(Gtext_Champ12)
+                {
+                }
                 trigger OnBeforeInsertRecord()
                 begin
                     Gint_Compteur := Gint_Compteur + 1;

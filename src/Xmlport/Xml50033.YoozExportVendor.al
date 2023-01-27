@@ -19,7 +19,6 @@ xmlport 50033 "BC6_Yooz Export Vendor"
                 textattribute(GTextHeader)
                 {
                 }
-
                 trigger OnPreXMLItem()
                 begin
                     Header.SETRANGE(Number, 1, 2);
@@ -100,8 +99,8 @@ xmlport 50033 "BC6_Yooz Export Vendor"
                 }
                 trigger OnAfterGetRecord()
                 begin
-                    Vendor.Address := "Gcu_ANSI-ASCII".Ascii2Ansi(Vendor.Address);
-                    Vendor.Name := "Gcu_ANSI-ASCII".Ascii2Ansi(Vendor.Name);
+                    //Vendor.Address := "Gcu_ANSI-ASCII".Ascii2Ansi(Vendor.Address);
+                    //Vendor.Name := "Gcu_ANSI-ASCII".Ascii2Ansi(Vendor.Name);
                 end;
             }
         }
@@ -109,20 +108,20 @@ xmlport 50033 "BC6_Yooz Export Vendor"
 
     var
         Grec_YoozParameters: Record "BC6_Yooz Parameters";
-        "Gcu_ANSI-ASCII": Codeunit "BC6_ANSI_ASCII converter";
+        //"Gcu_ANSI-ASCII": Codeunit "BC6_ANSI_ASCII converter";
         Text001: label 'Export vendor has been realized in folder %1', Comment = 'FRA="L''export des fournisseurs s''est bien effectué dans le dossier %1"';
         GTextBlank: Text[2];
         Gtext_PathFolder: Text[250];
 
     trigger OnPreXMLport()
     var
-        Gtext_PathFolder: text[250];
+        Gtext_PathFolderV: text[250];
     begin
         Grec_YoozParameters.GET();
-        Gtext_PathFolder := Grec_YoozParameters."Yooz Export Path" + '\' +
+        Gtext_PathFolderV := Grec_YoozParameters."Yooz Export Path" + '\' +
         FORMAT(CURRENTDATETIME, 0, '<Year><Month,2><Day,2><Hours24><Minutes,2><Seconds,2>') + '_Yooz_Export_Vendors.csv';
 
-        currXMLport.FILENAME := Gtext_PathFolder;
+        currXMLport.FILENAME := Gtext_PathFolderV;
 
         GTextBlank := '';
     end;

@@ -404,7 +404,6 @@ page 50005 "BC6_Purchase Credit Memo VSC"
             group("Fa&cture")
             {
                 Caption = '&Invoice', Comment = 'FRA="Fa&cture"';
-                Visible = false;
                 action(Statistiques)
                 {
                     Caption = 'Statistics', Comment = 'FRA="Statistiques"';
@@ -481,6 +480,7 @@ page 50005 "BC6_Purchase Credit Memo VSC"
                 {
                     Caption = 'Get St&d. Vend. Purchase Codes', Comment = 'FRA="Extraire codes &achat fourn. std"';
                     Ellipsis = true;
+                    Image = Action;
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -508,6 +508,7 @@ page 50005 "BC6_Purchase Credit Memo VSC"
                 {
                     Caption = 'Move Negative Lines', Comment = 'FRA="Déplacer lignes négatives"';
                     Ellipsis = true;
+                    Image = MoveNegativeLines;
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -538,6 +539,7 @@ page 50005 "BC6_Purchase Credit Memo VSC"
                 {
                     Caption = 'Cancel Approval Re&quest', Comment = 'FRA="Annuler l''approbation"';
                     ApplicationArea = All;
+                    Image = CancelApprovalRequest;
 
                     trigger OnAction()
                     var
@@ -577,8 +579,7 @@ page 50005 "BC6_Purchase Credit Memo VSC"
             action("A&pprobation d'avoir")
             {
                 Caption = 'A&pproval Invoice', Comment = 'FRA="A&pprobation d''avoir"';
-                Promoted = true;
-                PromotedCategory = Process;
+                Image = Approval;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -593,8 +594,7 @@ page 50005 "BC6_Purchase Credit Memo VSC"
             action("Annuler l'appro&bation")
             {
                 Caption = 'Cancel Approval', Comment = 'FRA="Annuler l''appro&bation"';
-                Promoted = true;
-                PromotedCategory = Process;
+                Image = CancelApprovalRequest;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -611,6 +611,7 @@ page 50005 "BC6_Purchase Credit Memo VSC"
                 Caption = '&Contacts', Comment = 'FRA="&Contacts"';
                 Promoted = true;
                 PromotedCategory = Process;
+                Image = ContactPerson;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -624,6 +625,7 @@ page 50005 "BC6_Purchase Credit Memo VSC"
                 Promoted = true;
                 PromotedCategory = Process;
                 ApplicationArea = All;
+                Image = Addresses;
 
                 trigger OnAction()
                 begin
@@ -639,13 +641,13 @@ page 50005 "BC6_Purchase Credit Memo VSC"
         EXIT(Rec.ConfirmDeletion());
     end;
 
-    trigger OnInit()
-    begin
-        PurchHistoryBtn1Visible := TRUE;
-        PayToCommentBtnVisible := TRUE;
-        PayToCommentPictVisible := TRUE;
-        PurchHistoryBtnVisible := TRUE;
-    end;
+    // trigger OnInit()
+    // begin
+    //     PurchHistoryBtn1Visible := TRUE;
+    //     PayToCommentBtnVisible := TRUE;
+    //     PayToCommentPictVisible := TRUE;
+    //     PurchHistoryBtnVisible := TRUE;
+    // end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
@@ -672,18 +674,18 @@ page 50005 "BC6_Purchase Credit Memo VSC"
         PurchSetup: Record "Purchases & Payables Setup";
         CopyPurchDoc: Report "Copy Purchase Document";
         MoveNegPurchLines: Report "Move Negative Purchase Lines";
+        FunctionsMgt: Codeunit "BC6_FunctionsMgt";
         ReportPrint: Codeunit "Test Report-Print";
         UserMgt: Codeunit "User Setup Management";
-        FunctionsMgt: Codeunit "BC6_FunctionsMgt";
         ChangeExchangeRate: Page "Change Exchange Rate";
-        [InDataSet]
-        PurchHistoryBtnVisible: Boolean;
-        [InDataSet]
-        PayToCommentPictVisible: Boolean;
-        [InDataSet]
-        PayToCommentBtnVisible: Boolean;
-        [InDataSet]
-        PurchHistoryBtn1Visible: Boolean;
+    // [InDataSet]
+    // PayToCommentBtnVisible: Boolean;
+    // [InDataSet]
+    // PayToCommentPictVisible: Boolean;
+    // [InDataSet]
+    // PurchHistoryBtn1Visible: Boolean;
+    // [InDataSet]
+    // PurchHistoryBtnVisible: Boolean;
 
     // local procedure UpdateInfoPanel()
     // var

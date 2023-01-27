@@ -91,7 +91,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 field("ShortcutDimCode[9]"; ShortcutDimCode[9])
                 {
                     CaptionClass = '1,2,9';
-                    Visible = true;
+                    Visible = false;
                     ApplicationArea = All;
 
                     trigger OnLookup(var Text: Text): Boolean
@@ -507,6 +507,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                     AccessByPermission = tabledata "Item Charge" = R;
                     Caption = 'Item Charge &Assignment', Comment = 'FRA="&Affectation frais annexes"';
                     ApplicationArea = All;
+                    Image = Item;
 
                     trigger OnAction()
                     begin

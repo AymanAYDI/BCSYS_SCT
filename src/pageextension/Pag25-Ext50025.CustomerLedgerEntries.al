@@ -28,15 +28,15 @@ pageextension 50025 "BC6_CustomerLedgerEntries" extends "Customer Ledger Entries
 
 
     var
-        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
         Grec_Dimension: Record Dimension;
-        Grec_SalesInvoiceLine: Record "Sales Invoice Line";
         Grec_DimSetEntry: Record "Dimension Set Entry";
-        Gtext_CodeAxe: Text[30];
-        Gcode_Axe: Code[20];
-        Gtext_ColAxe: Text[80];
-        StyleTxt: Text;
+        Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
+        Grec_SalesInvoiceLine: Record "Sales Invoice Line";
         RemainingAmtLCYVisible: Boolean;
+        Gcode_Axe: Code[20];
+        StyleTxt: Text;
+        Gtext_CodeAxe: Text[30];
+        Gtext_ColAxe: Text[80];
 
     trigger OnAfterGetRecord()
     begin

@@ -7,21 +7,18 @@ pageextension 50009 "BC6_PostedSalesCrMemoSubform" extends "Posted Sales Cr. Mem
             field("BC6_Axe 0"; Gtext_Axe0)
             {
                 CaptionClass = Gtext_ColAxe0;
-                MultiLine = true;
                 Visible = "Axe 0Visible";
                 ApplicationArea = All;
             }
             field("BC6_Axe 1"; Gtext_Axe1)
             {
                 CaptionClass = Gtext_ColAxe1;
-                MultiLine = true;
                 Visible = "Axe 1Visible";
                 ApplicationArea = All;
             }
             field("BC6_Axe 2"; Gtext_Axe2)
             {
                 CaptionClass = Gtext_ColAxe2;
-                MultiLine = true;
                 Visible = "Axe 2Visible";
                 ApplicationArea = All;
             }
@@ -29,21 +26,18 @@ pageextension 50009 "BC6_PostedSalesCrMemoSubform" extends "Posted Sales Cr. Mem
             {
                 CaptionClass = Gtext_ColAxe3;
                 Caption = '<Axe 3>';
-                MultiLine = true;
                 Visible = "Axe 3Visible";
                 ApplicationArea = All;
             }
             field("BC6_Axe 4"; Gtext_Axe4)
             {
                 CaptionClass = Gtext_ColAxe4;
-                MultiLine = true;
                 Visible = "Axe 4Visible";
                 ApplicationArea = All;
             }
             field("BC6_Axe 5"; Gtext_Axe5)
             {
                 CaptionClass = Gtext_ColAxe5;
-                MultiLine = true;
                 Visible = "Axe 5Visible";
                 ApplicationArea = All;
             }
@@ -76,12 +70,12 @@ pageextension 50009 "BC6_PostedSalesCrMemoSubform" extends "Posted Sales Cr. Mem
         Gtext_Axe3: Text[30];
         Gtext_Axe4: Text[30];
         Gtext_Axe5: Text[30];
-        Gtext_ColAxe0: Text[30];
-        Gtext_ColAxe1: Text[30];
-        Gtext_ColAxe2: Text[30];
-        Gtext_ColAxe3: Text[30];
-        Gtext_ColAxe4: Text[30];
-        Gtext_ColAxe5: Text[30];
+        Gtext_ColAxe0: Text[80];
+        Gtext_ColAxe1: Text[80];
+        Gtext_ColAxe2: Text[80];
+        Gtext_ColAxe3: Text[80];
+        Gtext_ColAxe4: Text[80];
+        Gtext_ColAxe5: Text[80];
 
     var
         Grec_DimSetEntry: Record "Dimension Set Entry";

@@ -361,6 +361,7 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
             {
                 Caption = 'List of invoices associated', Comment = 'FRA="Liste des factures associées"';
                 Visible = false;
+                Image = Action;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -405,8 +406,7 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
             if Grec_Dimension.GET(Gcode_Axe4) then Gtext_Axe4 := Grec_Dimension.Name;
         end;
 
-        if Rec."Document Type" = Rec."Document Type"::Quote then//DA
-        begin
+        if Rec."Document Type" = Rec."Document Type"::Quote then begin//DA
             Grec_PurchaseLine.SETFILTER("Document No.", Rec."No.");
             if Grec_PurchaseLine.FIND('-') then
                 repeat
@@ -427,8 +427,7 @@ pageextension 50042 "BC6_PurchaseOrder" extends "Purchase Order" //50
                 until Grec_PurchaseLine.NEXT() = 0;
         end;
 
-        if Rec."Document Type" = Rec."Document Type"::Order then//Commande
-        begin
+        if Rec."Document Type" = Rec."Document Type"::Order then begin//Commande
             Grec_PurchaseLine.SETFILTER("Document No.", Rec."No.");
             if Grec_PurchaseLine.FIND('-') then
                 repeat

@@ -2,7 +2,7 @@ tableextension 50003 "BC6_PaymentLine" extends "Payment Line" //10866
 {
     fields
     {
-        field(50000; "BC6_Account Name"; Text[50])
+        field(50000; "BC6_Account Name"; Text[100])
         {
             Caption = 'Nom du compte', Comment = 'FRA="Nom du compte"';
             Description = 'JX-YOOZ2';

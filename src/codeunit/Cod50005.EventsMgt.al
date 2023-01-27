@@ -141,7 +141,6 @@ codeunit 50005 "BC6_EventsMgt"
     end;
     //---TAB23---
     [EventSubscriber(ObjectType::Table, DataBase::Vendor, 'OnAfterInsertEvent', '', false, false)]
-
     local procedure TAB23_OnAfterInsertEvent_Vendor(var Rec: Record Vendor; RunTrigger: Boolean)
     var
         FunctionsMgt: Codeunit "BC6_FunctionsMgt";
@@ -150,7 +149,6 @@ codeunit 50005 "BC6_EventsMgt"
             exit;
         if Rec.IsTemporary then
             exit;
-
         FunctionsMgt.OnAfterInsertVendor(Rec);
         Rec.Modify();
     end;
@@ -172,18 +170,19 @@ codeunit 50005 "BC6_EventsMgt"
         if Gbool_ImportGroupInvoice_SalesHeader then begin
             SalesHeader."Prepayment Due Date" := CALCDATE(PaymentTerms."Due Date Calculation", TODAY);
             IsHandled := true;
-        end;
+        end
+        else
+            SalesHeader."Prepayment Due Date" := CalcDate(PaymentTerms."Due Date Calculation", SalesHeader."Document Date");
     end;
 
     //---TAB38---
-    [EventSubscriber(ObjectType::Table, DataBase::"Purchase Header", 'OnAfterInitRecord', '', false, false)]
-    local procedure TAB38_OnAfterInitRecord_PurchaseHeader(var PurchHeader: Record "Purchase Header")
-    var
+    [EventSubscriber(ObjectType::Table, DataBase::"Purchase Header", 'OnInitInsertOnBeforeInitRecord', '', false, false)]
+    local procedure TAB38_OnInitInsertOnBeforeInitRecord_PurchaseHeader(var PurchaseHeader: Record "Purchase Header"; var xPurchaseHeader: Record "Purchase Header")
     begin
         if not Gbool_ImportGroupInvoice_PurchHeader then begin
-            PurchHeader.VALIDATE(PurchHeader."Assigned User ID", USERID);
-            PurchHeader.VALIDATE(PurchHeader."BC6_Original user", USERID);
-            PurchHeader.VALIDATE(PurchHeader."BC6_Creation date", TODAY);
+            PurchaseHeader.VALIDATE(PurchaseHeader."Assigned User ID", USERID);
+            PurchaseHeader.VALIDATE(PurchaseHeader."BC6_Original user", USERID);
+            PurchaseHeader.VALIDATE(PurchaseHeader."BC6_Creation date", TODAY);
         end;
     end;
 
@@ -214,6 +213,14 @@ codeunit 50005 "BC6_EventsMgt"
     begin
         PurchLine."BC6_Matricule No." := PurchHeader."BC6_Matricule No.";
     end;
+    //---TAB49---
+    [EventSubscriber(ObjectType::Table, DataBase::"Invoice Posting Buffer", 'OnAfterPrepareSales', '', false, false)]
+    local procedure TAB49_OnAfterPrepareSales_InvoicePostBuffer(var SalesLine: Record "Sales Line"; var InvoicePostingBuffer: Record "Invoice Posting Buffer")
+    begin
+        //DEBUT AJOUT JX-XAD 26/05/2009
+        InvoicePostingBuffer."BC6_Description" := SalesLine.Description;  // Modif JX-XAD 05/08/2010 suite migration
+        //FIN AJOUT JX-XAD 26/05/2009
+    end;
 
     //---PAG146
     [EventSubscriber(ObjectType::Page, Page::"Posted Purchase Invoices", 'OnOpenPageEvent', '', false, false)]
@@ -236,7 +243,7 @@ codeunit 50005 "BC6_EventsMgt"
         VendorLedgerEntry."BC6_Document Type Prepaid" := GenJournalLine."BC6_Document Type Prepaid";
         VendorLedgerEntry."BC6_Document Prepaid" := GenJournalLine."BC6_Document Prepaid";
     end;
-    //(CopyToVendLedgEntry TAB 382) //TODO: à vérifier
+    //(CopyToVendLedgEntry TAB 382) 
     [EventSubscriber(ObjectType::Table, DataBase::"Vendor Ledger Entry", 'OnAfterCopyVendLedgerEntryFromCVLedgEntryBuffer', '', false, false)]
     local procedure TAB25_OnAfterCopyVendLedgerEntryFromCVLedgEntryBuffer_VendorLedgerEntry(var VendorLedgerEntry: Record "Vendor Ledger Entry"; CVLedgerEntryBuffer: Record "CV Ledger Entry Buffer")
     begin
@@ -455,6 +462,28 @@ codeunit 50005 "BC6_EventsMgt"
     [EventSubscriber(ObjectType::Table, DataBase::"Payment Header", 'OnBeforeInsertEvent', '', false, false)]
     local procedure TAB10865_OnBeforeInsertEvent_PaymentHeader(var Rec: Record "Payment Header"; RunTrigger: Boolean)
     var
+        GLSetup: Record "General Ledger Setup";
+        Process: Record "Payment Class";
+        xRec: Record "Payment Header";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+    begin
+        if not RunTrigger then
+            exit;
+        if Rec.IsTemporary then
+            exit;
+        if Rec."No." = '' then begin
+            GLSetup.GET();
+            IF GLSetup."BC6_Default Payment Class" <> '' THEN
+                Process.GET(GLSetup."BC6_Default Payment Class");
+            Process.TestField("Header No. Series");
+            NoSeriesMgt.InitSeries(Process."Header No. Series", xRec."No. Series", 0D, Rec."No.", Rec."No. Series");
+            Rec.Validate("Payment Class", Process.Code);
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, DataBase::"Payment Header", 'OnAfterInsertEvent', '', false, false)]
+    local procedure TAB10865_OnAfterInsertEvent_PaymentHeader(var Rec: Record "Payment Header"; RunTrigger: Boolean)
+    var
         CompanyInfo: Record "Company Information";
     begin
         if not RunTrigger then
@@ -467,28 +496,6 @@ codeunit 50005 "BC6_EventsMgt"
         //
         Rec.Modify();
     end;
-    //TODO: Code spécifique dans le trigger OnInsert
-    // [EventSubscriber(ObjectType::Table, DataBase::"Payment Header", 'OnAfterInsertEvent', '', false, false)]
-    // local procedure TAB10865_OnAfterInsertEvent_PaymentHeader(var Rec: Record "Payment Header"; RunTrigger: Boolean)
-    // var
-    //     GLSetup: Record "General Ledger Setup";
-    //     Process: Record "Payment Class";
-    //     NoSeriesMgt: codeunit NoSeriesManagement;
-    //     xRec: Record "Payment Header";
-    // begin
-    //     if Rec."No." = '' then begin
-    //         // PBE  VIRAUTO 21/07/16
-    //         GLSetup.GET;
-    //         IF GLSetup."BC6_Default Payment Class" <> '' THEN
-    //             if Process.GET(GLSetup."BC6_Default Payment Class") then begin
-    //                 xRec.FindLast();
-    //                 Process.TestField("Header No. Series");
-    //                 NoSeriesMgt.InitSeries(Process."Header No. Series", xRec."No. Series", 0D, Rec."No.", Rec."No. Series");
-    //                 Rec.Validate("Payment Class", Process.Code);
-    //             end;
-    //         //
-    //     end;
-    // end;
     //---TAB10866---
     [EventSubscriber(ObjectType::Table, DataBase::"Payment Line", 'OnAfterModifyEvent', '', false, false)]
     local procedure TAB10866_OnAfterModifyEvent_PaymentLine(var Rec: Record "Payment Line"; RunTrigger: Boolean)
@@ -519,9 +526,8 @@ codeunit 50005 "BC6_EventsMgt"
         if Rec.IsTemporary then
             exit;
         BC6_FunctMgt.OnAfterModifyEventT288(xRec, Rec);
-        Rec.Modify();
     end;
-    //---tab36
+    //---TAB36
     procedure SetCompany_SalesHeader(NameSociety: Text[30])
     var
         BankAcc: Record "Bank Account";
@@ -591,7 +597,7 @@ codeunit 50005 "BC6_EventsMgt"
         //FIN MODIF JX-AUD du 12/05/14
     end;
     //---tab38
-    procedure SetCompany(NameSociety: Text[30])
+    procedure SetCompany_PurchaseHeader(NameSociety: Text[30])
     var
         BankAcc: Record "Bank Account";
         Grec_QualificationFAP: Record "BC6_FAP Status";
@@ -710,7 +716,7 @@ codeunit 50005 "BC6_EventsMgt"
         Rec.FILTERGROUP(0);
         //Fin Modif JX-XAD du 05/08/2008
     end;
-    //TAB121 
+    //---TAB121 
     [EventSubscriber(ObjectType::Table, DataBase::"Purch. Rcpt. Line", 'OnAfterCopyFromPurchRcptLine', '', false, false)]
     local procedure TAB121_OnAfterCopyFromPurchRcptLine_PurchRcptLine(var PurchaseLine: Record "Purchase Line"; PurchRcptLine: Record "Purch. Rcpt. Line"; var TempPurchLine: Record "Purchase Line")
     var
@@ -733,7 +739,7 @@ codeunit 50005 "BC6_EventsMgt"
         PurchLine.Description := STRSUBSTNO(Text000, PurchRcptLine."Document No.", PurchRcptLine."Order No.");
         //fin modif LAB du 11/12/2008
     end;
-    //PAG6650
+    //---PAG6650
     [EventSubscriber(ObjectType::Page, Page::"Posted Return Shipment", 'OnOpenPageEvent', '', false, false)]
     local procedure PAG6650_OnOpenPageEvent_PostedReturnShipment(var Rec: Record "Return Shipment Header")
     var
@@ -744,7 +750,7 @@ codeunit 50005 "BC6_EventsMgt"
         Rec.FILTERGROUP(0);
         Rec.SetSecurityFilterOnRespCenter();
     end;
-    //PAG10868
+    //---PAG10868
     [EventSubscriber(ObjectType::Page, Page::"Payment Slip", 'OnAfterGetRecordEvent', '', false, false)]
     local procedure PAG10868_OnAfterGetRecord_PaymentSlip(var Rec: Record "Payment Header")
     var
@@ -759,6 +765,87 @@ codeunit 50005 "BC6_EventsMgt"
         PaymentSlip: Page "Payment Slip";
     begin
         PaymentSlip.FctYoozNo();
+    end;
+    //---TAB296---
+    [EventSubscriber(ObjectType::Table, DataBase::"Reminder Line", 'OnAfterModifyEvent', '', false, false)]
+    local procedure TAB296_OnAfterModifyEvent_ReminderLine(var xRec: Record "Reminder Line"; var Rec: Record "Reminder Line"; RunTrigger: Boolean)
+    var
+        BC6_FunctMgt: Codeunit "BC6_FunctionsMgt";
+    begin
+        if not RunTrigger then
+            exit;
+        if Rec.IsTemporary then
+            exit;
+        BC6_FunctMgt.OnAfterModifyEventT296(Rec);
+        Rec.Modify();
+    end;
+
+    [EventSubscriber(ObjectType::Table, DataBase::"Reminder Line", 'OnAfterInsertEvent', '', false, false)]
+    local procedure TAB296_OnAfterInsertEvent_ReminderLine(var Rec: Record "Reminder Line"; RunTrigger: Boolean)
+    var
+        BC6_FunctMgt: Codeunit "BC6_FunctionsMgt";
+    begin
+        if not RunTrigger then
+            exit;
+        if Rec.IsTemporary then
+            exit;
+        BC6_FunctMgt.OnAfterInsertEventT296(Rec);
+        Rec.Modify();
+    end;
+
+    [EventSubscriber(ObjectType::Table, DataBase::"Reminder Line", 'OnAfterCopyFromCustLedgEntry', '', false, false)]
+    local procedure TAB296_OnAfterCopyFromCustLedgEntry_ReminderLine(var ReminderLine: Record "Reminder Line"; CustLedgerEntry: Record "Cust. Ledger Entry")
+    var
+        Grec_SalesInvoiceHeader: Record "Sales Invoice Header";
+    begin
+        //DEBUT JX-XAD 03/09/2010
+        IF Grec_SalesInvoiceHeader.GET(ReminderLine."Document No.") THEN BEGIN
+            ReminderLine."BC6_Agent" := Grec_SalesInvoiceHeader."BC6_Agent";
+            ReminderLine."BC6_Paying agent" := Grec_SalesInvoiceHeader."BC6_Paying agent";
+        END;
+        //FIN JX-XAD 03/09/2010
+    end;
+    //---TAB480---
+    [EventSubscriber(ObjectType::Table, DataBase::"Dimension Set Entry", 'OnAfterInsertEvent', '', false, false)]
+    local procedure TAB480_OnAfterInsertEvent_DimensionSetEntry(var Rec: Record "Dimension Set Entry"; RunTrigger: Boolean)
+    var
+        DimVal: Record "Dimension Value";
+    begin
+        if not RunTrigger then
+            exit;
+        if Rec.IsTemporary then
+            exit;
+        IF DimVal.GET(Rec."Dimension Code", Rec."Dimension Value Code") THEN
+            Rec."Dimension Value ID" := DimVal."Dimension Value ID"
+        ELSE BEGIN
+            DimVal.INIT();
+            DimVal.VALIDATE("Dimension Code", Rec."Dimension Code");
+            DimVal.VALIDATE(Code, Rec."Dimension Value Code");
+            DimVal.VALIDATE("Dimension Value Type", DimVal."Dimension Value Type"::Standard);
+            DimVal.INSERT(TRUE);
+            DimVal.GET(Rec."Dimension Code", Rec."Dimension Value Code");
+            Rec."Dimension Value ID" := DimVal."Dimension Value ID";
+            Rec.Modify();
+        END;
+    end;
+    //---CDU74
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Get Receipt", 'OnBeforeTestPurchRcptLineVATBusPostingGroup', '', false, false)]
+    local procedure Cdu74_OnBeforeTestPurchRcptLineVATBusPostingGroup_PurchGetReceipt(PurchRcptLine: Record "Purch. Rcpt. Line"; PurchHeader: Record "Purchase Header"; var IsHandled: Boolean)
+    begin
+        IsHandled := true;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Get Receipt", 'OnCreateInvLinesOnAfterCalcShowNotSameVendorsMessage', '', false, false)]
+    local procedure Cdu74_OnCreateInvLinesOnAfterCalcShowNotSameVendorsMessage_PurchGetReceipt(PurchHeader: Record "Purchase Header"; PurchRcptHeader: Record "Purch. Rcpt. Header"; var TransferLine: Boolean; var ShowDifferentPayToVendMsg: Boolean)
+    var
+        Text000: Label 'The %1 on the %2 %3 and the %4 %5 must be the same.', Comment = 'FRA="Le %1 de l''%2 %3 et de l''%4 %5 doit être le même. %6 %7"';
+    begin
+        if ShowDifferentPayToVendMsg then begin
+            Message(Text000, PurchHeader.FieldCaption("Pay-to Vendor No."), PurchHeader.TableCaption(), PurchHeader."No.",
+            PurchRcptHeader.TableCaption(), PurchRcptHeader."No.", PurchHeader."Pay-to Vendor No.", PurchRcptHeader."Pay-to Vendor No.");
+            TransferLine := false;
+        end;
+        ShowDifferentPayToVendMsg := false;
     end;
 
     var

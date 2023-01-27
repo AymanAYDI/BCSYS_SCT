@@ -1,6 +1,6 @@
 report 50085 "BC6_FEC Enriched CAC"
 {
-    Caption = 'FEC Enriched CAC ', Comment = 'FRA="FEC Enrichi  CAC"';
+    Caption = 'FEC Enriched CAC ', Comment = 'FRA="FEC Enrichi CAC"';
     ProcessingOnly = true;
     ApplicationArea = All;
     UsageCategory = Tasks;
@@ -34,7 +34,7 @@ report 50085 "BC6_FEC Enriched CAC"
 
             trigger OnPreDataItem()
             begin
-                SETRANGE("Posting Date", StartingDate, EndingDate);
+                SETRANGE("Posting Date", StartingDateV, EndingDateV);
                 //   SETRANGE("Entry Type", "Entry Type"::Definitive);
                 SETFILTER("G/L Account No.", GLAccount.GETFILTER("No."));
             end;
@@ -52,13 +52,13 @@ report 50085 "BC6_FEC Enriched CAC"
                 group(Options)
                 {
                     Caption = 'Options', Comment = 'FRA="Options"';
-                    field(StartingDate; StartingDate)
+                    field(StartingDate; StartingDateV)
                     {
                         Caption = 'Starting Date', Comment = 'FRA="Date début"';
                         ClosingDates = true;
                         ApplicationArea = All;
                     }
-                    field(EndingDate; EndingDate)
+                    field(EndingDate; EndingDateV)
                     {
                         Caption = 'Ending Date', Comment = 'FRA="Date fin"';
                         ClosingDates = true;
@@ -85,13 +85,13 @@ report 50085 "BC6_FEC Enriched CAC"
 
     trigger OnPreReport()
     begin
-        if StartingDate = 0D then
+        if StartingDateV = 0D then
             ERROR(MissingStartingDateErr);
-        if EndingDate = 0D then
+        if EndingDateV = 0D then
             ERROR(MissingEndingDateErr);
         if GLAccount.GETFILTER("No.") <> '' then
             GLAccNoFilter := GLAccount.GETFILTER("No.");
-        GLEntry.SETRANGE("Posting Date", StartingDate, EndingDate);
+        GLEntry.SETRANGE("Posting Date", StartingDateV, EndingDateV);
         //      GLEntry.SETRANGE("Entry Type", GLEntry."Entry Type"::Definitive);
         GLEntry.SETFILTER("G/L Account No.", GLAccNoFilter);
         if GLEntry.ISEMPTY then
@@ -108,8 +108,8 @@ report 50085 "BC6_FEC Enriched CAC"
         CustVendLedgEntryPartyNo: Code[20];
         PayRecAccount: Code[20];
         GLAccNoFilter: Code[250];
-        EndingDate: Date;
-        StartingDate: Date;
+        EndingDateV: Date;
+        StartingDateV: Date;
         encoding: DotNet Encoding;
         Writer: DotNet StreamWriter;
         OutputFile: File;
@@ -129,8 +129,8 @@ report 50085 "BC6_FEC Enriched CAC"
 
     procedure Init(StartingDateValue: Date; EndingDateValue: Date; IncludeOpeningBalancesValue: Boolean; AccNoFilter: Code[250]; ReportFileNameValue: Text[250])
     begin
-        StartingDate := StartingDateValue;
-        EndingDate := EndingDateValue;
+        StartingDateV := StartingDateValue;
+        EndingDateV := EndingDateValue;
         IncludeOpeningBalances := IncludeOpeningBalancesValue;
         GLAccNoFilter := AccNoFilter;
         ToFileFullName := ReportFileNameValue;
@@ -202,7 +202,7 @@ report 50085 "BC6_FEC Enriched CAC"
         CompanyInformation.GET();
         FileName := FORMAT(CompanyInformation.GetSIREN()) +
           'FEC' +
-          GetFormattedDate(EndingDate) +
+          GetFormattedDate(EndingDateV) +
           '.txt';
         exit(DELCHR(FileName, '=', InvalidWindowsChrStringTxt));
     end;
@@ -216,7 +216,7 @@ report 50085 "BC6_FEC Enriched CAC"
 
     local procedure GetOpeningBalance(): Decimal
     begin
-        GLAccount.SETFILTER("Date Filter", STRSUBSTNO('..%1', CLOSINGDATE(CALCDATE('<-1D>', StartingDate))));
+        GLAccount.SETFILTER("Date Filter", STRSUBSTNO('..%1', CLOSINGDATE(CALCDATE('<-1D>', StartingDateV))));
         GLAccount.CALCFIELDS("Balance at Date");
         exit(GLAccount."Balance at Date")
     end;
@@ -294,15 +294,15 @@ report 50085 "BC6_FEC Enriched CAC"
 
     local procedure GetTransPayRecEntriesCount(TransactionNo: Integer; PayRecAccount: Code[20]): Integer
     var
-        GLAccNoFilter: Code[250];
+        GLAccNoFilterV: Code[250];
         GLEntryCount: Integer;
     begin
-        GLAccNoFilter := GLEntry.GETFILTER("G/L Account No.");
+        GLAccNoFilterV := GLEntry.GETFILTER("G/L Account No.");
         GLEntry.SETRANGE("G/L Account No.", PayRecAccount);
         GLEntry.SETRANGE("Transaction No.", TransactionNo);
         GLEntryCount := GLEntry.COUNT;
         GLEntry.SETRANGE("Transaction No.");
-        GLEntry.SETFILTER("G/L Account No.", GLAccNoFilter);
+        GLEntry.SETFILTER("G/L Account No.", GLAccNoFilterV);
         exit(GLEntryCount)
     end;
 
@@ -384,17 +384,17 @@ report 50085 "BC6_FEC Enriched CAC"
         Writer.WriteLine('00000|' +
           'BALANCE OUVERTURE|' +
           '0|' +
-          GetFormattedDate(StartingDate) + '|' +
+          GetFormattedDate(StartingDateV) + '|' +
           GLAccount."No." + '|' +
           GLAccount.Name + '|' +
           '||' +
           '00000|' +
-          GetFormattedDate(StartingDate) + '|' +
+          GetFormattedDate(StartingDateV) + '|' +
           'BAL OUV ' + GLAccount.Name + '|' +
           FormatAmount(DebitAmount) + '|' +
           FormatAmount(CreditAmount) + '|' +
           '||' +
-          GetFormattedDate(StartingDate) +
+          GetFormattedDate(StartingDateV) +
           '||');
     end;
 

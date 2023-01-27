@@ -57,16 +57,10 @@ tableextension 50002 "BC6_PaymentHeader" extends "Payment Header" //10865
             DataClassification = CustomerContent;
         }
     }
-    keys
-    {
-        // key(Key50000; "BC6_User ID", "Status No.")
-        // {
-        // } TODO
-    }
     procedure FctYooz(ReCalc: Boolean)
     var
-        YoozTable: Record "BC6_No. Yooz" TEMPORARY;
-        SortTable: Record "Excel Buffer" temporary;
+        TempYoozTable: Record "BC6_No. Yooz" temporary;
+        TempSortTable: Record "Excel Buffer" temporary;
         PayLine: Record "Payment Line";
         IntYooz: Integer;
         LineNo: Integer;
@@ -86,10 +80,10 @@ tableextension 50002 "BC6_PaymentHeader" extends "Payment Header" //10865
                         x := StrPos(TextYooz, ';');
                         if x <> 0 then
                             if Evaluate(IntYooz, CopyStr(TextYooz, 1, x - 1)) then begin
-                                SortTable.Init();
-                                SortTable."Row No." := IntYooz;
-                                SortTable."Cell Value as Text" := CopyStr(TextYooz, 1, x - 1);
-                                if SortTable.Insert() then;
+                                TempSortTable.Init();
+                                TempSortTable."Row No." := IntYooz;
+                                TempSortTable."Cell Value as Text" := CopyStr(TextYooz, 1, x - 1);
+                                if TempSortTable.Insert() then;
                             end;
                         TextYooz := CopyStr(TextYooz, x + 1);
                     until x = 0;
@@ -97,26 +91,26 @@ tableextension 50002 "BC6_PaymentHeader" extends "Payment Header" //10865
             until PayLine.Next() = 0;
 
         Get("No.");
-        YoozTable.Reset();
-        YoozTable.SetRange("No.", "No.");
-        YoozTable.DeleteAll();
-        YoozTable.Reset();
+        TempYoozTable.Reset();
+        TempYoozTable.SetRange("No.", "No.");
+        TempYoozTable.DeleteAll();
+        TempYoozTable.Reset();
         YoozNo := '';
         LineNo := 0;
-        if SortTable.FindFirst() then
+        if TempSortTable.FindSet() then
             repeat
-                if StrLen(YoozNo + SortTable."Cell Value as Text" + ';') <= 250 then
-                    YoozNo := YoozNo + SortTable."Cell Value as Text" + ';'
+                if StrLen(YoozNo + TempSortTable."Cell Value as Text" + ';') <= 250 then
+                    YoozNo := YoozNo + TempSortTable."Cell Value as Text" + ';'
                 else begin
                     FctInsertYoozNo(YoozNo, LineNo);
-                    YoozNo := SortTable."Cell Value as Text" + ';';
+                    YoozNo := TempSortTable."Cell Value as Text" + ';';
                 end;
-            until SortTable.Next() = 0;
+            until TempSortTable.Next() = 0;
         FctInsertYoozNo(YoozNo, LineNo);
         Modify();
     end;
 
-    local procedure FctInsertYoozNo(var YoozNo: Text; var LineNo: Integer)
+    local procedure FctInsertYoozNo(var YoozNoV: Text; var LineNo: Integer)
     var
         YoozTable: Record "BC6_No. Yooz";
     begin
@@ -124,7 +118,7 @@ tableextension 50002 "BC6_PaymentHeader" extends "Payment Header" //10865
         YoozTable.Init();
         YoozTable."No." := "No.";
         YoozTable."Line No." := LineNo;
-        YoozTable."Applied Yooz No." := YoozNo;
+        YoozTable."Applied Yooz No." := YoozNoV;
         YoozTable.Insert();
     end;
 }

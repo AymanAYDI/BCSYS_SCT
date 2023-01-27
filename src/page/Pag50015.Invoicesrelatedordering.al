@@ -5,7 +5,7 @@ page 50015 "BC6_Invoices related  ordering"
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
-    PageType = Card;
+    PageType = List;
     SourceTable = "Integer";
 
     layout
@@ -94,12 +94,12 @@ page 50015 "BC6_Invoices related  ordering"
     }
     trigger OnAfterGetRecord()
     begin
-        OnAfterGetCurrRecord();
+        OnAfterGetCurrRecordV();
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
-        OnAfterGetCurrRecord();
+        OnAfterGetCurrRecordV();
     end;
 
     trigger OnOpenPage()
@@ -124,7 +124,7 @@ page 50015 "BC6_Invoices related  ordering"
         gCode_Commande := pCode_Commande;
     end;
 
-    local procedure OnAfterGetCurrRecord()
+    local procedure OnAfterGetCurrRecordV()
     begin
         xRec := Rec;
         if Rec.Number <> 0 then

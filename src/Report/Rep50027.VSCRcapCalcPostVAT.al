@@ -297,55 +297,54 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
                                     GDec_VATBaseAddCurr := GDec_VATBaseAddCurr + VATEntry."Additional-Currency Base";
                                 END;
                             "VAT Posting Setup"."VAT Calculation Type"::"Reverse Charge VAT":
-                                BEGIN
-                                    CASE VATType OF
-                                        VATEntry.Type::Purchase.AsInteger():
-                                            begin
-                                                "VAT Posting Setup".TESTFIELD("Purchase VAT Account");
-                                                GenJnlLine."Account No." := "VAT Posting Setup"."Purchase VAT Account";
-                                                GenJnlLine.Amount := -VATEntry.Amount;
-                                                GenJnlLine."VAT Amount" := -VATEntry.Amount;
-                                                GenJnlLine."VAT Base Amount" := -VATEntry.Base;
-                                                GenJnlLine."Source Currency Code" := GLSetup."Additional Reporting Currency";
-                                                GenJnlLine."Source Currency Amount" := -VATEntry."Additional-Currency Amount";
-                                                GenJnlLine."Source Curr. VAT Amount" := -VATEntry."Additional-Currency Amount";
-                                                GenJnlLine."Source Curr. VAT Base Amount" := -VATEntry."Additional-Currency Base";
-                                                IF PostSettlement THEN
-                                                    PostGenJnlLine(GenJnlLine);
 
-                                                "VAT Posting Setup".TESTFIELD("Reverse Chrg. VAT Acc.");
-                                                CLEAR(GenJnlLine2);
-                                                GenJnlLine2."System-Created Entry" := TRUE;
-                                                GenJnlLine2."Account Type" := GenJnlLine2."Account Type"::"G/L Account";
-                                                GenJnlLine2.Description := GenJnlLine.Description;
-                                                GenJnlLine2."Posting Date" := PostingDate;
-                                                GenJnlLine2."Document Type" := GenJnlLine."Document Type"::" ";
-                                                GenJnlLine2."Document No." := DocNo;
-                                                GenJnlLine2."Source Code" := SourceCodeSetup."VAT Settlement";
-                                                GenJnlLine2."VAT Posting" := GenJnlLine2."VAT Posting"::"Manual VAT Entry";
-                                                GenJnlLine2."Account No." := "VAT Posting Setup"."Reverse Chrg. VAT Acc.";
-                                                GenJnlLine2.Amount := VATEntry.Amount;
-                                                GenJnlLine2."Source Currency Code" := GLSetup."Additional Reporting Currency";
-                                                GenJnlLine2."Source Currency Amount" := VATEntry."Additional-Currency Amount";
-                                                IF PostSettlement THEN
-                                                    PostGenJnlLine(GenJnlLine2);
-                                                ReversingEntry := TRUE;
-                                            end;
-                                        VATEntry.Type::Sale.AsInteger():
-                                            begin
-                                                "VAT Posting Setup".TESTFIELD("Sales VAT Account");
-                                                GenJnlLine."Account No." := "VAT Posting Setup"."Sales VAT Account";
-                                                GenJnlLine.Amount := -VATEntry.Amount;
-                                                GenJnlLine."VAT Amount" := -VATEntry.Amount;
-                                                GenJnlLine."VAT Base Amount" := -VATEntry.Base;
-                                                GenJnlLine."Source Currency Code" := GLSetup."Additional Reporting Currency";
-                                                GenJnlLine."Source Currency Amount" := -VATEntry."Additional-Currency Amount";
-                                                GenJnlLine."Source Curr. VAT Amount" := -VATEntry."Additional-Currency Amount";
-                                                GenJnlLine."Source Curr. VAT Base Amount" := -VATEntry."Additional-Currency Base";
-                                                IF PostSettlement THEN
-                                                    PostGenJnlLine(GenJnlLine);
-                                            end;
-                                    END;
+                                CASE VATType OF
+                                    VATEntry.Type::Purchase.AsInteger():
+                                        begin
+                                            "VAT Posting Setup".TESTFIELD("Purchase VAT Account");
+                                            GenJnlLine."Account No." := "VAT Posting Setup"."Purchase VAT Account";
+                                            GenJnlLine.Amount := -VATEntry.Amount;
+                                            GenJnlLine."VAT Amount" := -VATEntry.Amount;
+                                            GenJnlLine."VAT Base Amount" := -VATEntry.Base;
+                                            GenJnlLine."Source Currency Code" := GLSetup."Additional Reporting Currency";
+                                            GenJnlLine."Source Currency Amount" := -VATEntry."Additional-Currency Amount";
+                                            GenJnlLine."Source Curr. VAT Amount" := -VATEntry."Additional-Currency Amount";
+                                            GenJnlLine."Source Curr. VAT Base Amount" := -VATEntry."Additional-Currency Base";
+                                            IF PostSettlement THEN
+                                                PostGenJnlLine(GenJnlLine);
+
+                                            "VAT Posting Setup".TESTFIELD("Reverse Chrg. VAT Acc.");
+                                            CLEAR(GenJnlLine2);
+                                            GenJnlLine2."System-Created Entry" := TRUE;
+                                            GenJnlLine2."Account Type" := GenJnlLine2."Account Type"::"G/L Account";
+                                            GenJnlLine2.Description := GenJnlLine.Description;
+                                            GenJnlLine2."Posting Date" := PostingDate;
+                                            GenJnlLine2."Document Type" := GenJnlLine."Document Type"::" ";
+                                            GenJnlLine2."Document No." := DocNo;
+                                            GenJnlLine2."Source Code" := SourceCodeSetup."VAT Settlement";
+                                            GenJnlLine2."VAT Posting" := GenJnlLine2."VAT Posting"::"Manual VAT Entry";
+                                            GenJnlLine2."Account No." := "VAT Posting Setup"."Reverse Chrg. VAT Acc.";
+                                            GenJnlLine2.Amount := VATEntry.Amount;
+                                            GenJnlLine2."Source Currency Code" := GLSetup."Additional Reporting Currency";
+                                            GenJnlLine2."Source Currency Amount" := VATEntry."Additional-Currency Amount";
+                                            IF PostSettlement THEN
+                                                PostGenJnlLine(GenJnlLine2);
+                                            ReversingEntry := TRUE;
+                                        end;
+                                    VATEntry.Type::Sale.AsInteger():
+                                        begin
+                                            "VAT Posting Setup".TESTFIELD("Sales VAT Account");
+                                            GenJnlLine."Account No." := "VAT Posting Setup"."Sales VAT Account";
+                                            GenJnlLine.Amount := -VATEntry.Amount;
+                                            GenJnlLine."VAT Amount" := -VATEntry.Amount;
+                                            GenJnlLine."VAT Base Amount" := -VATEntry.Base;
+                                            GenJnlLine."Source Currency Code" := GLSetup."Additional Reporting Currency";
+                                            GenJnlLine."Source Currency Amount" := -VATEntry."Additional-Currency Amount";
+                                            GenJnlLine."Source Curr. VAT Amount" := -VATEntry."Additional-Currency Amount";
+                                            GenJnlLine."Source Curr. VAT Base Amount" := -VATEntry."Additional-Currency Base";
+                                            IF PostSettlement THEN
+                                                PostGenJnlLine(GenJnlLine);
+                                        end;
                                 END;
                             "VAT Posting Setup"."VAT Calculation Type"::"Sales Tax":
                                 BEGIN
@@ -438,7 +437,7 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
                                 Gtotal1 := GenJnlLine."VAT Base Amount" + VATEntry.Base;
                                 Gtotal2 := GenJnlLine."VAT Amount" + GenJnlLine2.Amount;
                             END;
-                        END ELSE BEGIN
+                        END ELSE
                             IF NOT ReversingEntry THEN BEGIN
                                 Gtotal := GenJnlLine."Source Curr. VAT Base Amount" + GenJnlLine."Source Curr. VAT Amount";
                                 Gtotal1 := GenJnlLine."Source Curr. VAT Base Amount";
@@ -448,7 +447,6 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
                                 Gtotal1 := GenJnlLine."Source Curr. VAT Base Amount" + VATEntry."Additional-Currency Base";
                                 Gtotal2 := GenJnlLine."Source Curr. VAT Amount" + GenJnlLine2."Source Currency Amount";
                             END;
-                        END;
 
                         // Close current VAT entries
                         IF PostSettlement THEN
@@ -489,13 +487,12 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
                                             VATEntry.SETRANGE(Type, VATType);
                                         UNTIL (VATType = VATEntry.Type::Settlement.AsInteger()) OR VATEntry.FindSet();
                                     FindFirstEntry := FALSE;
-                                END ELSE BEGIN
+                                END ELSE
                                     IF VATEntry.NEXT() = 0 THEN
                                         REPEAT
                                             VATType := VATType + 1;
                                             VATEntry.SETRANGE(Type, VATType);
                                         UNTIL (VATType = VATEntry.Type::Settlement.AsInteger()) OR VATEntry.FindSet();
-                                END;
                                 IF VATType < VATEntry.Type::Settlement.AsInteger() THEN
                                     VATEntry.FindLast();
                             END;
@@ -659,6 +656,42 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
     end;
 
     var
+        GLAccSettle: Record "G/L Account";
+        GLEntry: Record "G/L Entry";
+        GenJnlLine: Record "Gen. Journal Line";
+        GenJnlLine2: Record "Gen. Journal Line";
+        GLSetup: Record "General Ledger Setup";
+        SourceCodeSetup: Record "Source Code Setup";
+        TaxJurisdiction: Record "Tax Jurisdiction";
+        VATEntry: Record "VAT Entry";
+        VATEntry2: Record "VAT Entry";
+        VATPostingSetup: Record "VAT Posting Setup";
+        GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
+        FindFirstEntry: Boolean;
+        Initialized: Boolean;
+        PostSettlement: Boolean;
+        PrintVATEntries: Boolean;
+        ReversingEntry: Boolean;
+        UseAmtsInAddCurr: Boolean;
+        DocNo: Code[20];
+        EndDateReq: Date;
+        EntrdStartDate: Date;
+        PostingDate: Date;
+        GDec_VATBase: Decimal;
+        GDec_VATBaseAddCurr: Decimal;
+        Gtotal: Decimal;
+        Gtotal1: Decimal;
+        Gtotal2: Decimal;
+        VATAmount: Decimal;
+        VATAmountAddCurr: Decimal;
+        NextVATEntryNo: Integer;
+        VATType: Integer;
+        Calc__and_Post_VAT_SettlementCaptionLbl: Label 'Calc. and Post VAT Settlement', Comment = 'FRA="RECAPITULATIF DE DECLARATION DE TVA"';
+        CurrReport_PAGENOCaptionLbl: Label 'Page', Comment = 'FRA="Page"';
+        DocNoCaptionLbl: Label 'Document No.', Comment = 'FRA="N° document"';
+        GLAccSettle__No__CaptionLbl: Label 'Settlement Account', Comment = 'FRA="Compte de déclaration"';
+        HTCaptionLbl: Label 'HT', Comment = 'FRA="HT"';
+        PostingDateCaptionLbl: Label 'Posting Date', Comment = 'FRA="Date comptabilisation"';
         Text000: Label 'Please enter the posting date.', Comment = 'FRA="Veuillez saisir une date de comptabilisation."';
         Text001: Label 'Please enter the document no.', Comment = 'FRA="Veuillez saisir un numéro de document."';
         Text002: Label 'Please enter the settlement account', Comment = 'FRA="Veuillez saisir un compte de déclaration."';
@@ -668,49 +701,13 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
         Text006: Label 'All amounts are in %1', Comment = 'FRA="Tous les montants sont en %1"';
         Text007: Label 'Purchase VAT settlement: #1######## #2########', Comment = 'FRA="Déclaration de TVA achats: #1######## #2########"';
         Text008: Label 'Sales VAT settlement  : #1######## #2########', Comment = 'FRA="Déclaration de TVA ventes  : #1######## #2########"';
-        GLAccSettle: Record "G/L Account";
-        SourceCodeSetup: Record "Source Code Setup";
-        GenJnlLine: Record "Gen. Journal Line";
-        GenJnlLine2: Record "Gen. Journal Line";
-        GLEntry: Record "G/L Entry";
-        VATEntry: Record "VAT Entry";
-        VATEntry2: Record "VAT Entry";
-        TaxJurisdiction: Record "Tax Jurisdiction";
-        GLSetup: Record "General Ledger Setup";
-        VATPostingSetup: Record "VAT Posting Setup";
-        GenJnlPostLine: Codeunit "Gen. Jnl.-Post Line";
-        EntrdStartDate: Date;
-        EndDateReq: Date;
-        PrintVATEntries: Boolean;
-        NextVATEntryNo: Integer;
-        PostingDate: Date;
-        DocNo: Code[20];
-        VATType: Integer;
-        VATAmount: Decimal;
-        VATAmountAddCurr: Decimal;
-        PostSettlement: Boolean;
-        FindFirstEntry: Boolean;
-        ReversingEntry: Boolean;
-        Initialized: Boolean;
-        VATPostingSetupFilter: Text[250];
-        VATDateFilter: Text[30];
-        UseAmtsInAddCurr: Boolean;
-        HeaderText: Text[30];
-        GDec_VATBase: Decimal;
-        GDec_VATBaseAddCurr: Decimal;
-        Calc__and_Post_VAT_SettlementCaptionLbl: Label 'Calc. and Post VAT Settlement', Comment = 'FRA="RECAPITULATIF DE DECLARATION DE TVA"';
-        CurrReport_PAGENOCaptionLbl: Label 'Page', Comment = 'FRA="Page"';
-        PostingDateCaptionLbl: Label 'Posting Date', Comment = 'FRA="Date comptabilisation"';
-        DocNoCaptionLbl: Label 'Document No.', Comment = 'FRA="N° document"';
-        GLAccSettle__No__CaptionLbl: Label 'Settlement Account', Comment = 'FRA="Compte de déclaration"';
-        TVACaptionLbl: Label 'TVA', Comment = 'FRA="TVA"';
-        HTCaptionLbl: Label 'HT', Comment = 'FRA="HT"';
-        TTCCaptionLbl: Label 'TTC', Comment = 'FRA="TTC"';
-        TOTALCaptionLbl: Label 'TOTAL', Comment = 'FRA="TOTAL"';
         TOTALCaption_Control67Lbl: Label 'TOTAL', Comment = 'FRA="TOTAL"';
-        Gtotal: Decimal;
-        Gtotal1: Decimal;
-        Gtotal2: Decimal;
+        TOTALCaptionLbl: Label 'TOTAL', Comment = 'FRA="TOTAL"';
+        TTCCaptionLbl: Label 'TTC', Comment = 'FRA="TTC"';
+        TVACaptionLbl: Label 'TVA', Comment = 'FRA="TVA"';
+        HeaderText: Text[30];
+        VATDateFilter: Text[30];
+        VATPostingSetupFilter: Text[250];
 
     procedure InitializeRequest(NewStartDate: Date; NewEndDate: Date; NewPostingDate: Date; NewDocNo: Code[20]; NewSettlementAcc: Code[20]; ShowVATEntries: Boolean; Post: Boolean)
     begin
@@ -735,8 +732,8 @@ report 50027 "BC6_VSC- Récap. Calc. Post VAT"
     local procedure PostGenJnlLine(var GenJnlLine: Record "Gen. Journal Line")
     var
         DimMgt: Codeunit DimensionManagement;
-        TableID: array[10] of Integer;
         No: array[10] of Code[20];
+        TableID: array[10] of Integer;
     begin
         TableID[1] := DATABASE::"G/L Account";
         TableID[2] := DATABASE::"G/L Account";

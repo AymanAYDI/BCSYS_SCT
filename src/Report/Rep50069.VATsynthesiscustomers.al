@@ -7,8 +7,9 @@ report 50069 "BC6_VAT synthesis customers"
     // //Agrandissement logo
     DefaultLayout = RDLC;
     RDLCLayout = './src/Report/RDLC/VATsynthesiscustomers.rdl';
-
     Caption = 'VAT synthesis customers', Comment = 'FRA="Synthèse TVA clients"';
+    ApplicationArea = all;
+    UsageCategory = ReportsAndAnalysis;
     dataset
     {
         dataitem(DataItem1000000002; Integer)
@@ -25,9 +26,6 @@ report 50069 "BC6_VAT synthesis customers"
             {
             }
             column(FORMAT_TODAY_; FORMAT(TODAY))
-            {
-            }
-            column(STRSUBSTNO_Text001_FORMAT_CurrReport_PAGENO__; STRSUBSTNO(Text001, FORMAT(CurrReport)))
             {
             }
             column(Text014_____FORMAT_TIME_; Text014 + ' ' + FORMAT(TIME))
@@ -272,7 +270,7 @@ report 50069 "BC6_VAT synthesis customers"
                                     DetailedCustomerLedgerEntry."Entry Type"::"Initial Entry") AND
                                    (CustomerLedgEntryEndingDate."Posting Date" > EndingDate) AND
                                    (AgingBy <> AgingBy::"Posting Date")
-                                THEN BEGIN
+                                THEN
                                     IF CustomerLedgEntryEndingDate."Document Date" <= EndingDate THEN
                                         DetailedCustomerLedgerEntry."Posting Date" :=
                                           CustomerLedgEntryEndingDate."Document Date"
@@ -281,8 +279,7 @@ report 50069 "BC6_VAT synthesis customers"
                                            (AgingBy = AgingBy::"Due Date")
                                         THEN
                                             DetailedCustomerLedgerEntry."Posting Date" :=
-                                              CustomerLedgEntryEndingDate."Due Date"
-                                END;
+                                              CustomerLedgEntryEndingDate."Due Date";
 
                                 IF DetailedCustomerLedgerEntry."Posting Date" <= EndingDate THEN BEGIN
                                     IF DetailedCustomerLedgerEntry."Entry Type" IN
@@ -360,39 +357,37 @@ report 50069 "BC6_VAT synthesis customers"
                                 IF Grec_VAT_Entry.GET(Grec_GL_Register."From VAT Entry No.") THEN BEGIN
                                     Gcode_GrComptaProduitTVA := Grec_VAT_Entry."VAT Prod. Posting Group";
                                     Gcode_GrComptaMarcheTVA := Grec_VAT_Entry."VAT Bus. Posting Group";
-                                    IF Gbool_NePasInclureTVAdéclarée THEN BEGIN
+                                    IF "Gbool_NePasInclureTVAdéclaréeV" THEN BEGIN
                                         IF Grec_VAT_Entry."Closed by Entry No." = 0 THEN BEGIN
                                             Grec_GL_Entry.SETFILTER(Grec_GL_Entry."G/L Account No.", Gtxt_FiltreCompteTVA);
-                                            IF Gbool_NePasInclureTVAlettrée THEN
+                                            IF "Gbool_NePasInclureTVAlettréeV" THEN
                                                 Grec_GL_Entry.SETFILTER(Grec_GL_Entry.Letter, '=%1', '');
                                             IF Grec_GL_Entry.FIND('-') THEN
                                                 REPEAT
                                                     Gdec_MontantTVA += (Grec_GL_Entry.Amount);
                                                 UNTIL Grec_GL_Entry.NEXT() = 0;
-                                            IF Gbool_NePasInclureTVAzéro AND (Gdec_MontantTVA = 0) THEN
+                                            IF "Gbool_NePasInclureTVAzéroV" AND (Gdec_MontantTVA = 0) THEN
                                                 CurrReport.SKIP();
                                             Gdec_MontantTotalTVA += Gdec_MontantTVA;
-                                        END ELSE BEGIN
-                                            IF Gbool_NePasInclureTVAzéro AND (Gdec_MontantTVA = 0) THEN
+                                        END ELSE
+                                            IF "Gbool_NePasInclureTVAzéroV" AND (Gdec_MontantTVA = 0) THEN
                                                 CurrReport.SKIP();
-                                        END;
                                     END ELSE BEGIN
                                         Grec_GL_Entry.SETFILTER(Grec_GL_Entry."G/L Account No.", Gtxt_FiltreCompteTVA);
-                                        IF Gbool_NePasInclureTVAlettrée THEN
+                                        IF "Gbool_NePasInclureTVAlettréeV" THEN
                                             Grec_GL_Entry.SETFILTER(Grec_GL_Entry.Letter, '=%1', '');
                                         IF Grec_GL_Entry.FIND('-') THEN
                                             REPEAT
                                                 Gdec_MontantTVA += (Grec_GL_Entry.Amount);
                                             UNTIL Grec_GL_Entry.NEXT() = 0;
-                                        IF Gbool_NePasInclureTVAzéro AND (Gdec_MontantTVA = 0) THEN
+                                        IF "Gbool_NePasInclureTVAzéroV" AND (Gdec_MontantTVA = 0) THEN
                                             CurrReport.SKIP();
                                         Gdec_MontantTotalTVA += Gdec_MontantTVA;
                                     END;
                                 END;
-                            END ELSE BEGIN
-                                IF Gbool_NePasInclureTVAzéro AND (Gdec_MontantTVA = 0) THEN
+                            END ELSE
+                                IF "Gbool_NePasInclureTVAzéroV" AND (Gdec_MontantTVA = 0) THEN
                                     CurrReport.SKIP();
-                            END;
                         END;
                         //FIN AJOUT JX-XAD 17/11/2010
                     end;
@@ -503,17 +498,17 @@ report 50069 "BC6_VAT synthesis customers"
                         Caption = 'Filtre Compte de TVA', Comment = 'FRA="Filtre Compte de TVA"';
                         ApplicationArea = all;
                     }
-                    field("Gbool_NePasInclureTVAdéclarée"; Gbool_NePasInclureTVAdéclarée)
+                    field("Gbool_NePasInclureTVAdéclarée"; "Gbool_NePasInclureTVAdéclaréeV")
                     {
                         Caption = 'Ne pas inclure les montants des écritures de TVA déclarée', Comment = 'FRA="Ne pas inclure les montants des écritures de TVA déclarée"';
                         ApplicationArea = all;
                     }
-                    field("Gbool_NePasInclureTVAlettrée"; Gbool_NePasInclureTVAlettrée)
+                    field("Gbool_NePasInclureTVAlettrée"; "Gbool_NePasInclureTVAlettréeV")
                     {
                         Caption = 'Ne pas inclure les montants des écritures de TVA lettrée', Comment = 'FRA="Ne pas inclure les montants des écritures de TVA lettrée"';
                         ApplicationArea = all;
                     }
-                    field("Gbool_NePasInclureTVAzéro"; Gbool_NePasInclureTVAzéro)
+                    field("Gbool_NePasInclureTVAzéro"; "Gbool_NePasInclureTVAzéroV")
                     {
                         Caption = 'Ne pas faire apparaître les lignes où le montant TVA est à zéro', Comment = 'FRA="Ne pas faire apparaître les lignes où le montant TVA est à zéro"';
                         ApplicationArea = all;
@@ -544,11 +539,11 @@ report 50069 "BC6_VAT synthesis customers"
     trigger OnPreReport()
     begin
         Gtext_Sélection := '';
-        IF Gbool_NePasInclureTVAdéclarée THEN
+        IF "Gbool_NePasInclureTVAdéclaréeV" THEN
             Gtext_Sélection += Text018;
-        IF Gbool_NePasInclureTVAlettrée THEN
+        IF "Gbool_NePasInclureTVAlettréeV" THEN
             Gtext_Sélection += '\' + Text019;
-        IF Gbool_NePasInclureTVAzéro THEN
+        IF "Gbool_NePasInclureTVAzéroV" THEN
             Gtext_Sélection += '\' + Text020;
         IF Gtxt_FiltreCompteTVA = '' THEN
             ERROR(Text016);
@@ -559,92 +554,81 @@ report 50069 "BC6_VAT synthesis customers"
     end;
 
     var
-        GLSetup: Record "General Ledger Setup";
-        TempCustomerLedgEntry: Record "Cust. Ledger Entry" temporary;
-        CustomerLedgEntryEndingDate: Record "Cust. Ledger Entry";
-        TotalCustomerLedgEntry: array[5] of Record "Cust. Ledger Entry";
-        GrandTotalCustomerLedgEntry: array[5] of Record "Cust. Ledger Entry";
-        AgedCustomerLedgEntry: array[6] of Record "Cust. Ledger Entry";
+        CompanyInfo: Record "Company Information";
         TempCurrency: Record Currency temporary;
         TempCurrency2: Record Currency temporary;
         TempCurrencyAmount: Record "Currency Amount" temporary;
-        DetailedCustomerLedgerEntry: Record "Detailed Cust. Ledg. Entry";
-        CustomerFilter: Text[250];
-        PrintAmountInLCY: Boolean;
-        EndingDate: Date;
-        AgingBy: Option "Due Date","Posting Date","Document Date";
-        PeriodLength: DateFormula;
-        PrintDetails: Boolean;
-        HeadingType: Option "Date Interval","Number of Days";
-        NewPagePerCustomer: Boolean;
-        PeriodStartDate: array[5] of Date;
-        PeriodEndDate: array[5] of Date;
-        HeaderText: array[5] of Text[30];
-        Text000: Label 'Not Due', Comment = 'FRA="Non échu"';
-        Text001: Label 'Before', Comment = 'FRA="Avant"';
-        CurrencyCode: Code[10];
-        Text002: Label 'days', Comment = 'FRA="jours"';
-        Text003: Label 'More than', Comment = 'FRA="Plus de"';
-        Text004: Label 'Aged by %1', Comment = 'FRA="Agée par %1"';
-        Text005: Label 'Total for %1', Comment = 'FRA="Total de %1"';
-        Text006: Label 'Aged as of %1', Comment = 'FRA="Agée en date du %1"';
-        Text007: Label 'Aged by %1', Comment = 'FRA="Agée par %1"';
-        Text008: Label 'All Amounts in LCY', Comment = 'FRA="Tous les montants DS"';
-        NumberOfCurrencies: Integer;
-        Text009: Label 'Due Date,Posting Date,Document Date', Comment = 'FRA="Date d''échéance,Date comptabilisation,Date document"';
-        Text010: Label 'The Date Formula %1 cannot be used. Try to restate it. E.g. 1M+CM instead of CM+1M.', Comment = 'FRA="La formule date %1 ne peut pas être utilisée. Veuillez la redéfinir en utilisant, par exemple, 1M+CM au lieu de CM+1M."';
-        Gdec_MontantTotal: Decimal;
-        Gdec_SoldeTotal: Decimal;
-        CompanyInfo: Record "Company Information";
-        Text011: Label 'Page %1', Comment = 'FRA="Page %1"';
-        Text012: Label 'Account :', Comment = 'FRA="Compte :"';
-        Text013: Label 'Customer :', Comment = 'FRA="Client :"';
-        Text014: Label 'at', Comment = 'FRA="à"';
-        Text015: Label 'VAT synthesis customers', Comment = 'FRA="Synthèse de TVA clients"';
+        AgedCustomerLedgEntry: array[6] of Record "Cust. Ledger Entry";
+        CustomerLedgEntryEndingDate: Record "Cust. Ledger Entry";
+        GrandTotalCustomerLedgEntry: array[5] of Record "Cust. Ledger Entry";
+        TempCustomerLedgEntry: Record "Cust. Ledger Entry" temporary;
+        TotalCustomerLedgEntry: array[5] of Record "Cust. Ledger Entry";
         Grec_Customer: Record Customer;
         Grec_CustomerPostingGroup: Record "Customer Posting Group";
-        GCode_CompteCentralisateur: Code[20];
-        Gtxt_FiltreCompteTVA: Text[200];
-        Text016: Label 'Filter VAT account must not be empty', Comment = 'FRA="Filtre compte TVA ne doit pas être vide"';
-        Text017: Label 'Filter VAT account', Comment = 'FRA="Filtre compte TVA"';
-        Grec_VAT_Entry: Record "VAT Entry";
+        DetailedCustomerLedgerEntry: Record "Detailed Cust. Ledg. Entry";
         Grec_GL_Entry: Record "G/L Entry";
         Grec_GL_Register: Record "G/L Register";
-        Gdec_MontantTVA: Decimal;
-        Gdec_MontantTotalTVA: Decimal;
-        Gcode_GrComptaProduitTVA: Code[20];
-        Gcode_GrComptaMarcheTVA: Code[20];
-        "Gbool_NePasInclureTVAdéclarée": Boolean;
-        "Gbool_NePasInclureTVAlettrée": Boolean;
-        "Gbool_NePasInclureTVAzéro": Boolean;
+        GLSetup: Record "General Ledger Setup";
+        Grec_VAT_Entry: Record "VAT Entry";
+        PeriodLength: DateFormula;
+        Gbool_NePasInclureTVAdéclaréeV: Boolean;
+        Gbool_NePasInclureTVAlettréeV: Boolean;
+        Gbool_NePasInclureTVAzéroV: Boolean;
         Gbool_TotalParClient: Boolean;
-        Text018: Label 'Does not include amounts declared VAT entries', Comment = 'FRA="N''inclut pas les montants des écritures de TVA déclarée"';
-        "Gtext_Sélection": Text[200];
-        Text019: Label 'N''inclut pas les montants des écritures de TVA lettrée', Comment = 'FRA="N''inclut pas les montants des écritures de TVA lettrée"';
-        Text020: Label 'N''inclut les écritures dont le montant TVA est à zéro', Comment = 'FRA="N''inclut les écritures dont le montant TVA est à zéro"';
-        Gtext_Compte: Text[50];
-        Reminder_of_the_selectionCaptionLbl: Label 'Reminder of the selection', Comment = 'FRA="Rappel de la sélection"';
-        User__CaptionLbl: Label 'User :', Comment = 'FRA="Utilisateur :"';
-        Date__CaptionLbl: Label 'Date :', Comment = 'FRA="Date :"';
-        External_Document_No_CaptionLbl: Label 'External Document No.', Comment = 'FRA="Référence lettrage"';
-        Accounting_DateCaptionLbl: Label 'Accounting Date', Comment = 'FRA="Date comptable"';
-        VAT_Bus__Posting_GroupCaptionLbl: Label 'VAT Bus. Posting Group', Comment = 'FRA="Groupe Compta. Marché TVA"';
-        VAT_Prod__Posting_GroupCaptionLbl: Label 'VAT Prod. Posting Group', Comment = 'FRA="Groupe Compta. Produit TVA"';
-        DescriptionCaptionLbl: Label 'Description', Comment = 'FRA="Libellé de l''écriture"';
-        VAT_AmountCaptionLbl: Label 'VAT Amount', Comment = 'FRA="Montant TVA"';
-        Amount_including_VATCaptionLbl: Label 'Amount including VAT', Comment = 'FRA="Montant TTC"';
-        VAT_____Am__Inc__VAT__VAT_CaptionLbl: Label 'VAT / ((Am. Inc. VAT)-VAT)', Comment = 'FRA="TVA / (TTC-TVA)"';
-        Piece_NumberCaptionLbl: Label 'Piece Number', Comment = 'FRA="Numéro pièce"';
-        Journal__CodeCaptionLbl: Label 'Journal  Code', Comment = 'FRA="Code journal"';
+        PrintAmountInLCY: Boolean;
+        PrintDetails: Boolean;
+        CurrencyCode: Code[10];
+        GCode_CompteCentralisateur: Code[20];
+        Gcode_GrComptaMarcheTVA: Code[20];
+        Gcode_GrComptaProduitTVA: Code[20];
+        EndingDate: Date;
+        PeriodEndDate: array[5] of Date;
+        PeriodStartDate: array[5] of Date;
+        Gdec_MontantTotalTVA: Decimal;
+        Gdec_MontantTVA: Decimal;
+        Gdec_SoldeTotal: Decimal;
+        NumberOfCurrencies: Integer;
         Account_DescriptionCaptionLbl: Label 'Account Description', Comment = 'FRA="Libellé du compte"';
         Account_NumberCaptionLbl: Label 'Account Number', Comment = 'FRA="Numéro Compte"';
+        Accounting_DateCaptionLbl: Label 'Accounting Date', Comment = 'FRA="Date comptable"';
+        Amount_including_VATCaptionLbl: Label 'Amount including VAT', Comment = 'FRA="Montant TTC"';
         Centralizer_accountCaptionLbl: Label 'Centralizer account', Comment = 'FRA="Centralisateur"';
+        Date__CaptionLbl: Label 'Date :', Comment = 'FRA="Date :"';
+        DescriptionCaptionLbl: Label 'Description', Comment = 'FRA="Libellé de l''écriture"';
+        External_Document_No_CaptionLbl: Label 'External Document No.', Comment = 'FRA="Référence lettrage"';
+        Journal__CodeCaptionLbl: Label 'Journal  Code', Comment = 'FRA="Code journal"';
+        Piece_NumberCaptionLbl: Label 'Piece Number', Comment = 'FRA="Numéro pièce"';
+        Reminder_of_the_selectionCaptionLbl: Label 'Reminder of the selection', Comment = 'FRA="Rappel de la sélection"';
+        Text000: Label 'Not Due', Comment = 'FRA="Non échu"';
+        Text001: Label 'Before', Comment = 'FRA="Avant"';
+        Text002: Label 'days', Comment = 'FRA="jours"';
+        Text003: Label 'More than', Comment = 'FRA="Plus de"';
+        Text010: Label 'The Date Formula %1 cannot be used. Try to restate it. E.g. 1M+CM instead of CM+1M.', Comment = 'FRA="La formule date %1 ne peut pas être utilisée. Veuillez la redéfinir en utilisant, par exemple, 1M+CM au lieu de CM+1M."';
+        Text014: Label 'at', Comment = 'FRA="à"';
+        Text015: Label 'VAT synthesis customers', Comment = 'FRA="Synthèse de TVA clients"';
+        Text016: Label 'Filter VAT account must not be empty', Comment = 'FRA="Filtre compte TVA ne doit pas être vide"';
+        Text017: Label 'Filter VAT account', Comment = 'FRA="Filtre compte TVA"';
+        Text018: Label 'Does not include amounts declared VAT entries', Comment = 'FRA="N''inclut pas les montants des écritures de TVA déclarée"';
+        Text019: Label 'N''inclut pas les montants des écritures de TVA lettrée', Comment = 'FRA="N''inclut pas les montants des écritures de TVA lettrée"';
+        Text020: Label 'N''inclut les écritures dont le montant TVA est à zéro', Comment = 'FRA="N''inclut les écritures dont le montant TVA est à zéro"';
         TOTALCaptionLbl: Label 'TOTAL', Comment = 'FRA="TOTAL"';
+        User__CaptionLbl: Label 'User :', Comment = 'FRA="Utilisateur :"';
+        VAT_____Am__Inc__VAT__VAT_CaptionLbl: Label 'VAT / ((Am. Inc. VAT)-VAT)', Comment = 'FRA="TVA / (TTC-TVA)"';
+        VAT_AmountCaptionLbl: Label 'VAT Amount', Comment = 'FRA="Montant TVA"';
+        VAT_Bus__Posting_GroupCaptionLbl: Label 'VAT Bus. Posting Group', Comment = 'FRA="Groupe Compta. Marché TVA"';
+        VAT_Prod__Posting_GroupCaptionLbl: Label 'VAT Prod. Posting Group', Comment = 'FRA="Groupe Compta. Produit TVA"';
+        HeadingType: Option "Date Interval","Number of Days";
+        AgingBy: Option "Due Date","Posting Date","Document Date";
+        HeaderText: array[5] of Text[30];
+        Gtext_Compte: Text[50];
+        "Gtext_Sélection": Text[200];
+        Gtxt_FiltreCompteTVA: Text[200];
+        CustomerFilter: Text[250];
 
     local procedure CalcDates()
     var
-        i: Integer;
         PeriodLength2: DateFormula;
+        i: Integer;
     begin
         EVALUATE(PeriodLength2, '-' + FORMAT(PeriodLength));
         IF AgingBy = AgingBy::"Due Date" THEN BEGIN

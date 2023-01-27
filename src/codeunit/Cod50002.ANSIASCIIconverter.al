@@ -2,8 +2,8 @@ codeunit 50002 "BC6_ANSI_ASCII converter"
 {
     var
         CharVar: array[33] of Char;
-        AnsiStr: Text[250];
-        AsciiStr: Text[250];
+        AnsiStr: Text;
+        AsciiStr: Text;
 
     procedure Ansi2Ascii(_Text: Text[250]): Text[250];
     begin
@@ -61,7 +61,9 @@ codeunit 50002 "BC6_ANSI_ASCII converter"
         AnsiStr := AnsiStr + FORMAT(CharVar[14]) + FORMAT(CharVar[15]) + FORMAT(CharVar[16]) + 'i' + FORMAT(CharVar[17]) + FORMAT(CharVar[18]);
         AnsiStr := AnsiStr + '¤++__ª' + FORMAT(CharVar[19]) + FORMAT(CharVar[20]) + 'Ë' + FORMAT(CharVar[21]) + 'ÈÊ§';
         AnsiStr := AnsiStr + FORMAT(CharVar[22]) + 'Á' + FORMAT(CharVar[23]) + 'Ì' + FORMAT(CharVar[24]) + FORMAT(CharVar[25]);
-        AnsiStr := AnsiStr + FORMAT(CharVar[26]) + '²¦»' + FORMAT(CharVar[27]) + '¡­' + FORMAT(CharVar[28]) + '=¥Âº¸©' + FORMAT(CharVar[29]);
+
+        AnsiStr := AnsiStr + FORMAT(CharVar[26]) + '²¦»' + FORMAT(CharVar[27]) + '¡' + FORMAT(CharVar[28]) + '=¥Âº¸©' + FORMAT(CharVar[29]);
+        //AnsiStr := AnsiStr + FORMAT(CharVar[26]) + '²¦»' + FORMAT(CharVar[27]) + '¡­' + FORMAT(CharVar[28]) + '=¥Âº¸©' + FORMAT(CharVar[29]);
         AnsiStr := AnsiStr + '¿À' + FORMAT(CharVar[30]) + FORMAT(CharVar[31]) + FORMAT(CharVar[32]) + '_ ' + FORMAT(CharVar[33]);
     end;
 }

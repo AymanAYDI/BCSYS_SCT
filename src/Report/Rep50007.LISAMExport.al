@@ -1,6 +1,6 @@
 report 50007 "BC6_LISAM Export"
 {
-    Caption = 'LISAM', Comment = 'FRA="LISAM"';
+    Caption = 'LISAM', Comment = 'FRA="Export LISAM"';
     ApplicationArea = All;
     UsageCategory = Tasks;
     UseRequestPage = false;

@@ -156,17 +156,17 @@ report 50038 "BC6_Modifier axes avoir"
 
     var
         Grec_DimSetEntry: Record "Dimension Set Entry";
-        Text002: Label 'Operation canceled !', Comment = 'FRA="Opération annulée !"';
-        Gcode_DocumentNo: Code[20];
-        Gcode_LineNo: Integer;
-        Gcode_ItemNo: Code[20];
-        Text005: Label 'To use the change function of analytics, you must create an analytical axis named ''RESERVE''', Comment = 'FRA="Pour utiliser la fonction de modification de l''analytique,\\vous devez créer un axe analytique nommé ''RESERVE''"';
-        Text006: Label 'This document was created before the introduction of the modified analytical functionality.\\The accounting entries will not be updated.\\Would you still continue?', Comment = 'FRA="Ce document a été créé avant la mise en place de la fonctionnalité de modification analytique.\\Les écritures comptables ne pourront pas être mises à jour.\\Souhaitez-vous tout de même poursuivre ?"';
         Gcode_AxeReserve: Code[20];
         Gcode_AxeReserveLigneFacture: Code[20];
-        Gnew_DimSetID: Integer;
+        Gcode_DocumentNo: Code[20];
+        Gcode_ItemNo: Code[20];
         Window: Dialog;
+        Gcode_LineNo: Integer;
         GLast_DimSetID: Integer;
+        Gnew_DimSetID: Integer;
+        Text002: Label 'Operation canceled !', Comment = 'FRA="Opération annulée !"';
+        Text005: Label 'To use the change function of analytics, you must create an analytical axis named ''RESERVE''', Comment = 'FRA="Pour utiliser la fonction de modification de l''analytique,\\vous devez créer un axe analytique nommé ''RESERVE''"';
+        Text006: Label 'This document was created before the introduction of the modified analytical functionality.\\The accounting entries will not be updated.\\Would you still continue?', Comment = 'FRA="Ce document a été créé avant la mise en place de la fonctionnalité de modification analytique.\\Les écritures comptables ne pourront pas être mises à jour.\\Souhaitez-vous tout de même poursuivre ?"';
 
     procedure SetPostedInvoice(Prec_PurchCrMemoLine: Record "Purch. Cr. Memo Line"; pi_NewDimSetID: Integer)
     begin

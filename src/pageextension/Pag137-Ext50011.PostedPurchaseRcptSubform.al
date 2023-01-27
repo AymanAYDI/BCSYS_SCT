@@ -1,6 +1,6 @@
 pageextension 50011 "BC6_PostedPurchaseRcptSubform" extends "Posted Purchase Rcpt. Subform" //137
 {
-    //Permissions=TableData 17=rm; TODO
+    //Permissions=TableData 17=rm; //TODO: Permissions TableData17
     // MODIF JX-XAD 04/05/2010
     // Ajout d'une fonction dans le cadre de la modification analytique
     actions

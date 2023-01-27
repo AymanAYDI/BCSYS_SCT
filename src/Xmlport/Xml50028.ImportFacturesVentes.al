@@ -2,7 +2,7 @@ xmlport 50028 "BC6_Import Factures Ventes"
 {
     Direction = Import;
     Format = VariableText;
-    FieldSeparator = '[;]';
+    FieldSeparator = ';';
     UseRequestPage = false;
     FileName = '*.csv';
     Caption = 'Import Factures Ventes', Comment = 'FRA="Import Factures Ventes"';
@@ -13,27 +13,58 @@ xmlport 50028 "BC6_Import Factures Ventes"
         {
             tableelement(ImportFactureVente; Integer)
             {
-                textelement(Gtext_Champ1) { }
-                textelement(Gtext_Champ2) { }
-                textelement(Gtext_Champ3) { }
-                textelement(Gtext_Champ4) { }
-                textelement(Gtext_Champ5) { }
-                textelement(Gtext_Champ6) { }
-                textelement(Gtext_Champ7) { }
-                textelement(Gtext_Champ8) { }
-                textelement(Gtext_Champ9) { }
-                textelement(Gtext_Champ10) { }
-                textelement(Gtext_Champ11) { }
-                textelement(Gtext_Champ12) { }
-                textelement(Gtext_Champ13) { }
-                textelement(Gtext_Champ14) { }
-                textelement(Gtext_Champ15) { }
-                textelement(Gtext_Champ16) { }
+                AutoSave = false;
+                AutoUpdate = false;
+                AutoReplace = false;
+                textelement(Gtext_Champ1)
+                {
+                }
+                textelement(Gtext_Champ2)
+                {
+                }
+                textelement(Gtext_Champ3)
+                {
+                }
+                textelement(Gtext_Champ4)
+                {
+                }
+                textelement(Gtext_Champ5)
+                {
+                }
+                textelement(Gtext_Champ6)
+                {
+                }
+                textelement(Gtext_Champ7)
+                {
+                }
+                textelement(Gtext_Champ8)
+                {
+                }
+                textelement(Gtext_Champ9)
+                {
+                }
+                textelement(Gtext_Champ10)
+                {
+                }
+                textelement(Gtext_Champ11)
+                {
+                }
+                textelement(Gtext_Champ12)
+                {
+                }
+                textelement(Gtext_Champ13)
+                {
+                }
+                textelement(Gtext_Champ14)
+                {
+                }
+                textelement(Gtext_Champ15)
+                {
+                }
+                textelement(Gtext_Champ16)
+                {
+                }
 
-                //SourceTable =2000000026;
-                // AutoSave =No;
-                // AutoUpdate =No;
-                // AutoReplace =No;
                 trigger OnBeforeInsertRecord()
                 begin
                     Gint_Compteur += 1;//pour passer l'en tˆte du fichier
@@ -65,11 +96,11 @@ xmlport 50028 "BC6_Import Factures Ventes"
 
                     //*****************************création de l'entˆte de facture***********************************
                     EVALUATE(Gint_NumLigne, COPYSTR(Gtext_Champ14, 1, (STRPOS(Gtext_Champ14, '_') - 1)));
-                    Gtemporaire.RESET();
-                    Gtemporaire.SETFILTER(Gtemporaire.Piece, FORMAT(Gint_NumLigne));
-                    Gtemporaire.SETFILTER(Gtemporaire.Compte, '');
+                    TempGtemporaire.RESET();
+                    TempGtemporaire.SETFILTER(TempGtemporaire.Piece, FORMAT(Gint_NumLigne));
+                    TempGtemporaire.SETFILTER(TempGtemporaire.Compte, '');
 
-                    if not (Gtemporaire.FindFirst()) then begin //si la facture n'existe pas on la créer
+                    if not (TempGtemporaire.FindFirst()) then begin //si la facture n'existe pas on la créer
                         //traitement pour avoir le numéro de facture
                         if Grec_LastNoSeriesLine.GET('VAP', 10000) then begin
                             Gcode_No := INCSTR(Grec_LastNoSeriesLine."Last No. Used");
@@ -90,13 +121,13 @@ xmlport 50028 "BC6_Import Factures Ventes"
 
                         Grec_LastNoSeriesLine.MODIFY();
 
-                        Gtemporaire.INIT();
-                        Gtemporaire.Piece := Gint_NumLigne;
-                        Gtemporaire.Compte := Gcode_No;
-                        Gtemporaire.INSERT();
+                        TempGtemporaire.INIT();
+                        TempGtemporaire.Piece := Gint_NumLigne;
+                        TempGtemporaire.Compte := Gcode_No;
+                        TempGtemporaire.INSERT();
 
                     end else
-                        Gcode_No := Gtemporaire.Compte;
+                        Gcode_No := TempGtemporaire.Compte;
 
                     //****************************insertion des lignes de la facture*********************************
                     //pour les lignes article : travail sur le N_ligne_facture
@@ -130,7 +161,7 @@ xmlport 50028 "BC6_Import Factures Ventes"
     }
 
     var
-        Gtemporaire: Record "BC6_Table temporaire" temporary;
+        TempGtemporaire: Record "BC6_Table temporaire" temporary;
         Grec_Customer: Record Customer;
         Grec_DimensionValue: Record "Dimension Value";
         Grec_GLAccount: Record "G/L Account";
@@ -190,7 +221,7 @@ xmlport 50028 "BC6_Import Factures Ventes"
             Gcode_Axe[8] := Grecord_GeneralLedgerSetup."BC6_Shortcut Dimension 10 Code";
         end;
 
-        Gtemporaire.DELETEALL();
+        TempGtemporaire.DELETEALL();
     end;
 
     trigger OnPostXMLport()
@@ -227,14 +258,15 @@ xmlport 50028 "BC6_Import Factures Ventes"
                     ERROR(STRSUBSTNO(Text013, Gcode_Section[i], Gcode_Axe[i], Gint_Compteur));
             //Correction aprŠs lecture du fichier Excel si des 0 sont manquants lors d'une mise … jour par l'utilisateur.
             if Gcode_Axe[i] = 'PERIODE' then
-                if STRLEN(Gcode_Section[i]) = 3 then
-                    Gcode_Section[i] := '0' + Gcode_Section[i]
-                else
-                    if STRLEN(Gcode_Section[i]) = 2 then
-                        Gcode_Section[i] := '00' + Gcode_Section[i]
-                    else
-                        if STRLEN(Gcode_Section[i]) = 1 then
-                            Gcode_Section[i] := '000' + Gcode_Section[i];
+                case
+                    STRLEN(Gcode_Section[i]) of
+                    3:
+                        Gcode_Section[i] := '0' + Gcode_Section[i];
+                    2:
+                        Gcode_Section[i] := '00' + Gcode_Section[i];
+                    1:
+                        Gcode_Section[i] := '000' + Gcode_Section[i];
+                end;
             //Fin correction
         end;
 

@@ -12,8 +12,8 @@ tableextension 50013 "BC6_PurchCrMemoLine" extends "Purch. Cr. Memo Line" //125
     procedure "BC6_ModifyDimensions"()
     VAR
         lUpdateDim: Report "BC6_Modifier axes avoir";
-        lNewDimSet: Integer;
         DimMgt: Codeunit DimensionManagement;
+        lNewDimSet: Integer;
     begin
         lNewDimSet := DimMgt.EditDimensionSet("Dimension Set ID", STRSUBSTNO('%1 %2 %3', TABLECAPTION, "Document No.", "Line No."));
         IF "Dimension Set ID" <> lNewDimSet THEN BEGIN

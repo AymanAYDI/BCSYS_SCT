@@ -111,7 +111,7 @@ codeunit 50000 "BC6_Duplicating records"
     var
         Lint_NbSte: Integer;
         Ltxt_TypeFiche: Text[30];
-        Ltxt_Confirmation: Text[1024];
+        Ltxt_Confirmation: Text;
     begin
         // Créer un message afin de demander la confirmation de la duplication à l'utilisateur
         Lint_DuplicationNumber := 0;
@@ -1082,8 +1082,7 @@ codeunit 50000 "BC6_Duplicating records"
         Lrec_DestUnitItem: Record "Item Unit of Measure";
         Lrec_SourceUnitItem: Record "Item Unit of Measure";
     begin
-        if (Lcode_Unit <> '') then // si pas de code unit‚, inutile de le dupliquer
-        begin
+        if (Lcode_Unit <> '') then begin // si pas de code unit‚, inutile de le dupliquer
             Lrec_DestUnitItem.CHANGECOMPANY(Grec_DuplicatingList.Name);
             if not Lrec_DestUnitItem.GET(Lcode_Item, Lcode_Unit) then begin
                 if Lrec_SourceUnitItem.GET(Lcode_Item, Lcode_Unit) then begin

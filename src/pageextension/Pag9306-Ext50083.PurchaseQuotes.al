@@ -229,8 +229,7 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
             if Grec_Dimension.GET(Gcode_Axe4) then Gtext_Axe4 := Grec_Dimension.Name;
         end;
 
-        if Rec."Document Type" = Rec."Document Type"::Quote then//DA
-        begin
+        if Rec."Document Type" = Rec."Document Type"::Quote then begin//DA
             Grec_PurchaseLine.SETFILTER("Document No.", Rec."No.");
             if Grec_PurchaseLine.FIND('-') then
                 repeat
@@ -251,8 +250,7 @@ pageextension 50083 "BC6_PurchaseQuotes" extends "Purchase Quotes" //9306
                 until Grec_PurchaseLine.NEXT() = 0;
         end;
 
-        if Rec."Document Type" = Rec."Document Type"::Order then//Commande
-        begin
+        if Rec."Document Type" = Rec."Document Type"::Order then begin//Commande
             Grec_PurchaseLine.SETFILTER("Document No.", Rec."No.");
             if Grec_PurchaseLine.FIND('-') then
                 repeat

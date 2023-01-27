@@ -12,9 +12,6 @@ report 50050 "BC6_LISAM"
             column("USERID"; USERID)
             {
             }
-            column(STRSUBSTNO_TEXT001_FORMAT_CurrReport_PAGENO__; STRSUBSTNO(TEXT001, FORMAT(CurrReport)))
-            {
-            }
             column(Text002; Text002)
             {
             }
@@ -343,7 +340,6 @@ report 50050 "BC6_LISAM"
         PeriodCaptionLbl: label 'Period', Comment = 'FRA="Periode"';
         PieceCaptionLbl: label 'Piece', Comment = 'FRA="Piece"';
         Source_CodeCaptionLbl: label 'Source Code', Comment = 'FRA="Origine"';
-        TEXT001: label 'Page %1', Comment = 'FRA="Page %1"';
         Text002: label 'Vendor Statement', Comment = 'FRA="LISAM"';
         Text004: label 'at', Comment = 'FRA="à"';
         User__CaptionLbl: label 'User :', Comment = 'FRA="Utilisateur :"';
@@ -353,7 +349,7 @@ report 50050 "BC6_LISAM"
         Gtext_Axe4: Text[30];
         Gtext_Axe5: Text[30];
         Gtext_Axe6: Text[30];
-        Gtext_Description: Text[100];
         Gtext_ExtDoc: Text[50];
+        Gtext_Description: Text[100];
         Gtext_ListeBC: Text[1024];
 }

@@ -86,6 +86,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
                 {
                     Caption = 'reverse invoices not received', Comment = 'FRA="Contrepasser les CCA"';
                     Ellipsis = true;
+                    Image = Action;
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -99,6 +100,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
                 {
                     Caption = 'generate invoices not received', Comment = 'FRA="Générer les CCA"';
                     ApplicationArea = All;
+                    Image = Action;
 
                     trigger OnAction()
                     begin
@@ -116,6 +118,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
                     Caption = 'reverse invoices not received', Comment = 'FRA="Contrepasser les FNP"';
                     Ellipsis = true;
                     ApplicationArea = All;
+                    Image = Action;
 
                     trigger OnAction()
                     begin
@@ -128,6 +131,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
                 {
                     Caption = 'generate invoices not received', Comment = 'FRA="Générer les FNP"';
                     ApplicationArea = All;
+                    Image = Action;
 
                     trigger OnAction()
                     begin
@@ -143,6 +147,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
             action("BC6_Import fichier compta. externe")
             {
                 Caption = 'Import fichier compta. externe', Comment = 'FRA="Import fichier compta. externe"';
+                Image = Import;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -226,6 +231,6 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
         GenererFNP: Report "BC6_Génération des FNP";
         Gcu_CheckJnlLine: Codeunit "BC6_CheckJnlLine";
         ReportPrint: Codeunit "Test Report-Print";
-        "GénérerImportOD": XMLport "BC6_Import OD Paye";
+        GénérerImportOD: XMLport "BC6_Import OD Paye";
         CurrentJnlBatchName: Code[10];
 }

@@ -8,6 +8,7 @@
         <ConnectString />
       </ConnectionProperties>
       <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>5ab1e93a-feb3-4ee3-888d-3b00d08f491b</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <ReportSections>
@@ -2087,7 +2088,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Date__Caption.Value, "DataSet_Result") &amp; " " &amp; cstr(Globals!ExecutionTime)</Value>
+                      <Value>=Globals!ExecutionTime</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -2095,9 +2096,9 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.423cm</Top>
-              <Left>23.14238cm</Left>
+              <Left>21.70305cm</Left>
               <Height>0.423cm</Height>
-              <Width>2.44227cm</Width>
+              <Width>2.6116cm</Width>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
               </Style>
@@ -2108,7 +2109,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!User__Caption.Value, "DataSet_Result") &amp; " " &amp; User!UserID</Value>
+                      <Value>=Fields!User__Caption.Value &amp; " " &amp; User!UserID</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -2116,9 +2117,9 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.846cm</Top>
-              <Left>20.47305cm</Left>
-              <Height>0.423cm</Height>
-              <Width>5.1116cm</Width>
+              <Left>18.50455cm</Left>
+              <Height>0.76167cm</Height>
+              <Width>7.0801cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2130,7 +2131,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Reminder_of_the_selectionCaption.Value, "DataSet_Result")</Value>
+                      <Value>=Fields!Reminder_of_the_selectionCaption.Value</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -2153,7 +2154,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Text017_______Gtxt_FiltreCompteTVA.Value, "DataSet_Result")</Value>
+                      <Value>=Fields!Text017_______Gtxt_FiltreCompteTVA.Value</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -2174,7 +2175,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Text014_____FORMAT_TIME_.Value, "DataSet_Result")</Value>
+                      <Value>=Fields!Text014_____FORMAT_TIME_.Value</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -2182,9 +2183,9 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.423cm</Top>
-              <Left>25.58465cm</Left>
+              <Left>24.31465cm</Left>
               <Height>0.423cm</Height>
-              <Width>1.28292cm</Width>
+              <Width>2.55292cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2196,7 +2197,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Text015.Value, "DataSet_Result")</Value>
+                      <Value>=Fields!Text015.Value</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -2221,6 +2222,7 @@
               <Source>Database</Source>
               <Value>=First(Fields!CompanyInfo_Picture.Value, "DataSet_Result")</Value>
               <MIMEType>image/bmp</MIMEType>
+              <Sizing>FitProportional</Sizing>
               <Height>3.5cm</Height>
               <Width>6cm</Width>
               <ZIndex>6</ZIndex>
@@ -2247,11 +2249,42 @@
               </Paragraphs>
               <Top>0.846cm</Top>
               <Left>25.58465cm</Left>
-              <Height>0.423cm</Height>
+              <Height>0.76167cm</Height>
               <Width>1.28292cm</Width>
               <ZIndex>7</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Fields!Date__Caption.Value</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0.423cm</Top>
+              <Left>19.20305cm</Left>
+              <Height>0.423cm</Height>
+              <Width>2.5cm</Width>
+              <ZIndex>8</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
           </ReportItems>
@@ -2304,6 +2337,7 @@ End Function
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>dc364f69-064a-4f80-94c8-228592923b4d</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
@@ -2318,9 +2352,6 @@ End Function
         </Field>
         <Field Name="FORMAT_TODAY_">
           <DataField>FORMAT_TODAY_</DataField>
-        </Field>
-        <Field Name="STRSUBSTNO_Text001_FORMAT_CurrReport_PAGENO__">
-          <DataField>STRSUBSTNO_Text001_FORMAT_CurrReport_PAGENO__</DataField>
         </Field>
         <Field Name="Text014_____FORMAT_TIME_">
           <DataField>Text014_____FORMAT_TIME_</DataField>

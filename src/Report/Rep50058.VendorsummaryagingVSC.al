@@ -378,11 +378,6 @@ report 50058 "BC6_Vendor : summary aging VSC"
                     NumberOfCurrencies := NumberOfCurrencies + 1;
                 end;
 
-                trigger OnPostDataItem()
-                begin
-                    if NewPagePerVendor and (NumberOfCurrencies > 0) then
-                        CurrReport.NEWPAGE();
-                end;
 
                 trigger OnPreDataItem()
                 begin
@@ -514,8 +509,8 @@ report 50058 "BC6_Vendor : summary aging VSC"
         VendorLedgEntryEndingDate__Posting_Date_CaptionLbl: label 'Posting date', Comment = 'FRA="Date de comptabilisation"';
         HeadingType: Option "Date Interval","Number of Days";
         AgingBy: Option "Due Date","Posting Date","Document Date";
-        HeaderText: array[5] of Text[30];
         VendorFilter: Text;
+        HeaderText: array[5] of Text[30];
 
     local procedure CalcDates()
     var

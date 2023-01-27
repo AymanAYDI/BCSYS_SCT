@@ -8,6 +8,7 @@
         <ConnectString />
       </ConnectionProperties>
       <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>0519e2c5-4ebc-40cb-9bb9-4d354bb764a0</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <ReportSections>
@@ -4565,7 +4566,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=ReportItems!COMPANYNAME.Value</Value>
+                      <Value>=Fields!COMPANYNAME.Value</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -4587,7 +4588,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=ReportItems!Calc__and_Post_VAT_SettlementCaption.Value</Value>
+                      <Value>=Fields!Calc__and_Post_VAT_SettlementCaption.Value</Value>
                       <Style>
                         <FontSize>11pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -4610,7 +4611,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=ReportItems!CurrReport_PAGENOCaption.Value</Value>
+                      <Value>=Fields!CurrReport_PAGENOCaption.Value</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -4634,7 +4635,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=ReportItems!STRSUBSTNO_Text005_VATDateFilter_.Value</Value>
+                      <Value>=Fields!STRSUBSTNO_Text005_VATDateFilter_.Value</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -4695,9 +4696,9 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.846cm</Top>
-              <Left>15.65cm</Left>
-              <Height>0.423cm</Height>
-              <Width>3.25cm</Width>
+              <Left>14.634cm</Left>
+              <Height>0.66961cm</Height>
+              <Width>4.266cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -4779,6 +4780,7 @@ End Function
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>9960f371-9c32-46b9-a25b-525c3778c80b</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>

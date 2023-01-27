@@ -46,20 +46,24 @@ pageextension 50038 "BC6_SalesOrderSubform" extends "Sales Order Subform" //46
         {
             Visible = false;
         }
+        modify("Planned Delivery Date")
+        {
+            Visible = false;
+        }
         modify("Shipment Date")
         {
             Visible = false;
         }
         modify(ShortcutDimCode5)
         {
-            Visible = true;
+            visible = true;
         }
         addafter(Description)
         {
-            field("ShortcutDimCode[9]"; ShortcutDimCode[9])
+            field(BC6_ShortcutDimCode9; ShortcutDimCode[9])
             {
                 CaptionClass = '1,2,9';
-                Visible = true;
+                Visible = false;
                 ApplicationArea = All;
 
                 trigger OnLookup(var Text: Text): Boolean
@@ -93,26 +97,5 @@ pageextension 50038 "BC6_SalesOrderSubform" extends "Sales Order Subform" //46
                 end;
             }
         }
-        addafter("Total Amount Incl. VAT")
-        {
-            field(BC6_RefreshTotals; RefreshMessageText)
-            {
-                DrillDown = true;
-                Editable = false;
-                Enabled = RefreshMessageEnabled;
-                ShowCaption = false;
-                ApplicationArea = All;
-
-                trigger OnDrillDown()
-                begin
-                    DocumentTotals.SalesRedistributeInvoiceDiscountAmounts(Rec, VATAmount, TotalSalesLine);
-                    CurrPage.UPDATE(false);
-                end;
-            }
-        }
     }
-    var
-        DocumentTotals: Codeunit "Document Totals";
-        RefreshMessageEnabled: Boolean;
-        RefreshMessageText: Text;
 }

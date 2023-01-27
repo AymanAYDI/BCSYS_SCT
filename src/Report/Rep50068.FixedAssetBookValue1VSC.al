@@ -348,10 +348,9 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
                         END;
                         IF GetPeriodDisposal() THEN
                             DisposalAmounts[i] := -(StartAmounts[i] + NetChangeAmounts[i])
-                        ELSE BEGIN
+                        ELSE
                             IF i <> 7 THEN
                                 DisposalAmounts[i] := 0;
-                        END;
                         IF (i >= 3) AND (i <> 7) THEN
                             AddPostingType(i - 3);
                     END;
@@ -359,12 +358,11 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
                         TotalEndingAmounts[j] := StartAmounts[j] + NetChangeAmounts[j] + DisposalAmounts[j];
                     BookValueAtEndingDate := 0;
                     BookValueAtStartingDate := 0;
-                    FOR j := 1 TO NumberOfTypes DO BEGIN
+                    FOR j := 1 TO NumberOfTypes DO
                         IF NOT ((j = 7) AND HasDerogatorySetup) THEN BEGIN
                             BookValueAtEndingDate := BookValueAtEndingDate + TotalEndingAmounts[j];
                             BookValueAtStartingDate := BookValueAtStartingDate + StartAmounts[j];
                         END;
-                    END;
 
                     MakeGroupHeadLine();
                     UpdateTotals();
@@ -521,6 +519,46 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
     end;
 
     var
+        DeprBook: Record "Depreciation Book";
+        DerogDeprBook: Record "Depreciation Book";
+        FADeprBook: Record "FA Depreciation Book";
+        FADeprBook2: Record "FA Depreciation Book";
+        FAPostingTypeSetup: Record "FA Posting Type Setup";
+        FASetup: Record "FA Setup";
+        FA: Record "Fixed Asset";
+        BudgetDepreciation: Codeunit "Budget Depreciation";
+        FAGenReport: Codeunit "FA General Report";
+        BudgetReport: Boolean;
+        Gbool_AfficherEnTete: Boolean;
+        HasDerogatorySetup: Boolean;
+        PrintDetails: Boolean;
+        PrintFASetup: Boolean;
+        DeprBookCode: Code[10];
+        AcquisitionDate: Date;
+        DisposalDate: Date;
+        EndingDate: Date;
+        StartingDate: Date;
+        BeforeAmount: Decimal;
+        BookValueAtEndingDate: Decimal;
+        BookValueAtStartingDate: Decimal;
+        DisposalAmounts: array[7] of Decimal;
+        EndingAmount: Decimal;
+        GroupDisposalAmounts: array[7] of Decimal;
+        GroupNetChangeAmounts: array[7] of Decimal;
+        GroupStartAmounts: array[7] of Decimal;
+        NetChangeAmounts: array[7] of Decimal;
+        StartAmounts: array[7] of Decimal;
+        TotalDisposalAmounts: array[7] of Decimal;
+        TotalEndingAmounts: array[7] of Decimal;
+        TotalNetChangeAmounts: array[7] of Decimal;
+        TotalStartAmounts: array[7] of Decimal;
+        Gint_NbSaisies: Integer;
+        i: Integer;
+        j: Integer;
+        NumberOfTypes: Integer;
+        PostingType: Integer;
+        CurrReportPAGENOCaptionLbl: Label 'Page', Comment = 'FRA="Page"';
+        GroupTotalsTxt: Label ' ,FA Class,FA Subclass,FA Location,Main Asset,Global Dimension 1,Global Dimension 2,FA Posting Group', Comment = 'FRA=" ,Classe immo.,Sous-classe immo.,Emplacement immo.,Immo. principale,Axe principal 1,Axe principal 2,Groupe compta. immo."';
         Text000: Label 'Fixed Asset - Book Value 01', Comment = 'FRA="Immo. - Valeur comptable 01"';
         Text001: Label '(Budget Report)', Comment = 'FRA="(Etat budget)"';
         Text002: Label 'Group Total', Comment = 'FRA="Sous-total"';
@@ -529,87 +567,25 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
         Text005: Label 'Disposal', Comment = 'FRA="Cession"';
         Text006: Label 'Addition', Comment = 'FRA="Ajout"';
         Text007: Label '%1 has been modified in fixed asset %2.', Comment = 'FRA="%1 a été modifié(e) dans l''immobilisation %2."';
-        FASetup: Record "FA Setup";
-        DeprBook: Record "Depreciation Book";
-        FADeprBook: Record "FA Depreciation Book";
-        FA: Record "Fixed Asset";
-        FAPostingTypeSetup: Record "FA Posting Type Setup";
-        FAGenReport: Codeunit "FA General Report";
-        BudgetDepreciation: Codeunit "Budget Depreciation";
-        DeprBookCode: Code[10];
-        FAFilter: Text;
-        MainHeadLineText: Text[100];
-        DeprBookText: Text[50];
-        GroupCodeName: Text[50];
-        GroupHeadLine: Text[50];
-        FANo: Text[50];
-        FADescription: Text[50];
-        GroupTotals: Option " ","FA Class","FA Subclass","FA Location","Main Asset","Global Dimension 1","Global Dimension 2","FA Posting Group";
-        HeadLineText: array[14] of Text[50];
-        StartAmounts: array[7] of Decimal;
-        NetChangeAmounts: array[7] of Decimal;
-        DisposalAmounts: array[7] of Decimal;
-        GroupStartAmounts: array[7] of Decimal;
-        GroupNetChangeAmounts: array[7] of Decimal;
-        GroupDisposalAmounts: array[7] of Decimal;
-        TotalStartAmounts: array[7] of Decimal;
-        TotalNetChangeAmounts: array[7] of Decimal;
-        TotalDisposalAmounts: array[7] of Decimal;
-        TotalEndingAmounts: array[7] of Decimal;
-        BookValueAtStartingDate: Decimal;
-        BookValueAtEndingDate: Decimal;
-        i: Integer;
-        j: Integer;
-        NumberOfTypes: Integer;
-        PostingType: Integer;
-        Period1: Option "Before Starting Date","Net Change","at Ending Date";
-        Period2: Option "Before Starting Date","Net Change","at Ending Date";
-        StartingDate: Date;
-        EndingDate: Date;
-        PrintDetails: Boolean;
-        BudgetReport: Boolean;
-        BeforeAmount: Decimal;
-        EndingAmount: Decimal;
-        AcquisitionDate: Date;
-        DisposalDate: Date;
-        StartText: Text[30];
-        EndText: Text[30];
-        DerogDeprBook: Record "Depreciation Book";
-        FADeprBook2: Record "FA Depreciation Book";
-        DeprBookInfo: array[5] of Text[30];
-        DerogDeprBookInfo: array[5] of Text[30];
-        PrintFASetup: Boolean;
-        HasDerogatorySetup: Boolean;
         Text10800: Label 'Increased in Period', Comment = 'FRA="Augmenté au cours de la période"';
         Text10801: Label 'Decreased in Period', Comment = 'FRA="Diminué au cours de la période"';
-        CurrReportPAGENOCaptionLbl: Label 'Page', Comment = 'FRA="Page"';
         TotalCaptionLbl: Label 'Total', Comment = 'FRA="Total"';
-        GroupTotalsTxt: Label ' ,FA Class,FA Subclass,FA Location,Main Asset,Global Dimension 1,Global Dimension 2,FA Posting Group', Comment = 'FRA=" ,Classe immo.,Sous-classe immo.,Emplacement immo.,Immo. principale,Axe principal 1,Axe principal 2,Groupe compta. immo."';
-        Gbool_AfficherEnTete: Boolean;
-        Gdec_TotalLois: Decimal;
-        Gdec_StartAmount: Decimal;
+        GroupTotals: Option " ","FA Class","FA Subclass","FA Location","Main Asset","Global Dimension 1","Global Dimension 2","FA Posting Group";
+        Period1: Option "Before Starting Date","Net Change","at Ending Date";
+        Period2: Option "Before Starting Date","Net Change","at Ending Date";
+        FAFilter: Text;
+        DeprBookInfo: array[5] of Text[30];
+        DerogDeprBookInfo: array[5] of Text[30];
+        EndText: Text[30];
+        StartText: Text[30];
+        DeprBookText: Text[50];
+        FADescription: Text[50];
+        FANo: Text[50];
+        GroupCodeName: Text[50];
+        GroupHeadLine: Text[50];
+        HeadLineText: array[14] of Text[50];
+        MainHeadLineText: Text[100];
         Gvariant_Tableau: array[30000, 15] of Variant;
-        Gint_NbSaisies: Integer;
-        Gtext_Col1: Text[30];
-        Gint_nblignes: Integer;
-        Gdec_Total: array[14] of Decimal;
-        Gtext_NumeroFAPosting: Text[30];
-        Gbool_Trouve: Boolean;
-        Gdec_Col2: Decimal;
-        Gdec_Col3: Decimal;
-        Gdec_Col4: Decimal;
-        Gdec_Col5: Decimal;
-        Gdec_Col6: Decimal;
-        Gdec_Col7: Decimal;
-        Gdec_Col8: Decimal;
-        Gdec_Col9: Decimal;
-        Gdec_Col10: Decimal;
-        Gdec_Col11: Decimal;
-        Gdec_Col12: Decimal;
-        Gdec_Col13: Decimal;
-        Gdec_Col14: Decimal;
-        Gdec_Col15: Decimal;
-        Gdec_TotalCol: Decimal;
 
     local procedure AddPostingType(PostingType: Option "Write-Down",Appreciation,"Custom 1","Custom 2")
     var
@@ -691,8 +667,8 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
 
     local procedure MakeHeadLine()
     var
-        InPeriodText: Text[30];
         DisposalText: Text[30];
+        InPeriodText: Text[30];
     begin
         InPeriodText := Text004;
         DisposalText := Text005;
@@ -765,12 +741,11 @@ report 50068 "Fixed Asset - Book Value 1 VSC"
               GroupStartAmounts[j] + GroupNetChangeAmounts[j] + GroupDisposalAmounts[j];
         BookValueAtEndingDate := 0;
         BookValueAtStartingDate := 0;
-        FOR j := 1 TO NumberOfTypes DO BEGIN
+        FOR j := 1 TO NumberOfTypes DO
             IF NOT ((j = 7) AND HasDerogatorySetup) THEN BEGIN
                 BookValueAtEndingDate := BookValueAtEndingDate + TotalEndingAmounts[j];
                 BookValueAtStartingDate := BookValueAtStartingDate + GroupStartAmounts[j];
             END;
-        END;
     end;
 
     local procedure CreateTotals()

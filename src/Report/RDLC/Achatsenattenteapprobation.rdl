@@ -8,6 +8,7 @@
         <ConnectString />
       </ConnectionProperties>
       <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>9f0d5b4d-a1e2-43f5-a1b0-0d331a72e660</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <ReportSections>
@@ -3390,6 +3391,7 @@
               <Source>Database</Source>
               <Value>=First(Fields!CompanyInfo_Picture.Value, "DataSet_Result")</Value>
               <MIMEType>image/bmp</MIMEType>
+              <Sizing>FitProportional</Sizing>
               <Height>3.5cm</Height>
               <Width>6cm</Width>
               <ZIndex>7</ZIndex>
@@ -3526,6 +3528,7 @@ End Function
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>96ba0e48-195f-456c-ae12-99d22fa635c5</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
@@ -3537,9 +3540,6 @@ End Function
         </Field>
         <Field Name="EntDate">
           <DataField>EntDate</DataField>
-        </Field>
-        <Field Name="EntPage">
-          <DataField>EntPage</DataField>
         </Field>
         <Field Name="EntTime">
           <DataField>EntTime</DataField>

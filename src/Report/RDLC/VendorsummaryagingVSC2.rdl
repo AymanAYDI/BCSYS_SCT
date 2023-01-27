@@ -8,6 +8,7 @@
         <ConnectString />
       </ConnectionProperties>
       <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>8a1bb3a2-8aad-4325-92fa-39324e958996</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <ReportSections>
@@ -102,7 +103,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>2</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -138,7 +138,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>3</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -3457,9 +3456,9 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.846cm</Top>
-              <Left>24cm</Left>
+              <Left>21.3965cm</Left>
               <Height>0.423cm</Height>
-              <Width>3.25cm</Width>
+              <Width>5.8535cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -3541,6 +3540,7 @@ End Function
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>6f6c8939-aac8-4cf1-abfd-d6c4e793554a</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
@@ -3549,9 +3549,6 @@ End Function
         </Field>
         <Field Name="EnteteCompany">
           <DataField>EnteteCompany</DataField>
-        </Field>
-        <Field Name="EntetePageno">
-          <DataField>EntetePageno</DataField>
         </Field>
         <Field Name="EnteteUserid">
           <DataField>EnteteUserid</DataField>

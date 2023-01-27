@@ -17,9 +17,6 @@ report 50065 "Customer : summary aging VSC 2"
             column(EnteteCompany; COMPANYNAME)
             {
             }
-            column(EntetePageno; CurrReport.PAGENO())
-            {
-            }
             column(EnteteUserid; USERID)
             {
             }
@@ -458,8 +455,6 @@ report 50065 "Customer : summary aging VSC 2"
 
                 trigger OnPostDataItem()
                 begin
-                    if NewPagePerVendor and (NumberOfCurrencies > 0) then
-                        CurrReport.NEWPAGE();
                 end;
 
                 trigger OnPreDataItem()
@@ -642,11 +637,11 @@ report 50065 "Customer : summary aging VSC 2"
         HeadingType: Option "Date Interval","Number of Days";
         AgingBy: Option "Due Date","Posting Date","Document Date";
         Gopt_ComptesFourn: Option Tous,Comptes401;
-        Gtext_Compte: Text[10];
+        Gtext_Compte: Text[20];
         Gtext_Selection: Text[30];
         Gtext_NonEchu: array[3] of Text[50];
         HeaderText: array[5] of Text[50];
-        VendorFilter: Text[250];
+        VendorFilter: Text;
 
     local procedure CalcDates()
     var
@@ -667,8 +662,7 @@ report 50065 "Customer : summary aging VSC 2"
             PeriodStartDate[i] := CALCDATE(PeriodLength2, PeriodEndDate[i] + 1);
         end;
 
-        if ISSERVICETIER then
-            i := ARRAYLEN(PeriodEndDate);
+        i := ARRAYLEN(PeriodEndDate);
 
         PeriodStartDate[i] := 0D;
 

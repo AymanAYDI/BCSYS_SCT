@@ -31,15 +31,12 @@ page 50037 "BC6 Envoi BC Mail Automatique"
             action("Lancement des envois")
             {
                 Image = SendEmailPDF;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 ApplicationArea = All;
 
                 trigger OnAction()
                 var
-                    InStream: InStream;
                     TempBlob: codeunit "Temp Blob";
+                    InStream: InStream;
                 begin
                     //mail expéditeur
                     IF Grec_UserSetup.GET(USERID) THEN
@@ -202,41 +199,30 @@ page 50037 "BC6 Envoi BC Mail Automatique"
     end;
 
     var
-        FileDirectory: Text;
-        FileName: Text;
-        ReportID: Integer;
         VSCSettings: Record "BC6_VSC Settings";
         "Object": Record "Object";
-        EMailTest, Gtext_FournisseurList : list of [Text];
-        // [WithEvents]
-        // PDFCreator: Automation;
-        // PDFCreatorOption: Automation;
-        // PDFCreatorError: Automation;
-        DefaultPrinter: Text[200];
-        Window: Dialog;
-        WindowisOpen: Boolean;
         //FileDialog: Codeunit "SMTP Test Mail";
         Grec_PurchaseHeader: Record "Purchase Header";
-        Tofile: Text;
         Grec_PurchaseHeader2: Record "Purchase Header";
+        Grec_PurchaseHeader3: Record "Purchase Header";
+        Grec_UserSetup: Record "User Setup";
         //SMAIL: Codeunit "SMTP Mail";
         Mail: codeunit Email;
         EmailMessage: codeunit "Email Message";
-        Gtext_Mail: Text[50];
-        Grec_UserSetup: Record "User Setup";
-        Gtext_Fournisseur: Text[250];
-        Gtext_text: Text;
+        Gdate_DateCompta: Date;
+        ReportID: Integer;
+        EMailTest, Gtext_FournisseurList : list of [Text];
+        Corps: Text;
+        FileDirectory: Text;
+        FileName: Text;
         Name: Text;
         ObjetMail: Text;
-        Corps: Text;
-        Gdate_DateCompta: Date;
-        Grec_PurchaseHeader3: Record "Purchase Header";
-        //Grec_Contract: Record "BC6 Contract";
-        Gtext_NomPresta: Text[100];
         Gtext_DebutContrat: Text[10];
         Gtext_FinContrat: Text[10];
+        Gtext_Mail: Text[100];
+        //Grec_Contract: Record "BC6 Contract";
+        Gtext_NomPresta: Text[100];
         Gtext_PrenomPresta: Text[100];
-        Gtext_CheminDossierBC: Label '\\10.16.34.109\Pdf\Suppliers \', Comment = 'FRA="\\10.16.34.109\Pdf\Suppliers \"';
-        Gtext_CheminDossierBC1: Label 'C:\Users\aurelie\Desktop\temp\', Comment = 'FRA="C:\Users\aurelie\Desktop\temp\"';
+        Gtext_Fournisseur: Text[250];
 }
 

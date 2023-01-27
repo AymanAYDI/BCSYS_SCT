@@ -116,7 +116,6 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
                 Enabled = Rec."Buy-from Vendor No." <> '';
                 Image = Vendor;
                 Promoted = true;
-                PromotedCategory = Category11;
                 RunObject = page "Vendor List";
                 RunPageLink = "No." = field("Buy-from Vendor No."),
                                   "Date Filter" = field("Date Filter");
@@ -140,6 +139,7 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
                 {
                     Caption = 'Send mail credit memo', Comment = 'FRA="Envoi mail avoir"';
                     ApplicationArea = All;
+                    Image = SendMail;
 
                     trigger OnAction()
                     var
@@ -147,7 +147,7 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
                         Lrec_UserSetup: Record "User Setup";
                         Ltxt_Email: Text[50];
                         Ltxt_subject: Text[100];
-                        Ltxt_body: Text[1024];
+                        Ltxt_body: Text[260];
                     begin
                         //Début Ajout JX-XAD le 15/01/2010
                         Lrec_Historic.INIT();
@@ -181,6 +181,7 @@ pageextension 50047 "BC6_PurchaseCreditMemo" extends "Purchase Credit Memo" //52
                 {
                     Caption = 'Historic', Comment = 'FRA="Historique"';
                     ApplicationArea = All;
+                    Image = History;
 
                     trigger OnAction()
                     var

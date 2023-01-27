@@ -260,6 +260,7 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
         Grec_DimSetEntry: Record "Dimension Set Entry";
         Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
         Grec_PurchaseLine: Record "Purchase Line";
+        CanCancelApprovalForRecord: Boolean;
         Gcode_Axe1: Code[20];
         Gcode_Axe2: Code[20];
         Gcode_Axe3: Code[20];
@@ -268,7 +269,6 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
         Gtext_Axe2: Text[50];
         Gtext_Axe3: Text[50];
         Gtext_Axe4: Text[50];
-        CanCancelApprovalForRecord: Boolean;
 
     procedure VerifSaisieAxesAnalytiques()
     begin
@@ -283,8 +283,7 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
             if Grec_Dimension.GET(Gcode_Axe4) then Gtext_Axe4 := Grec_Dimension.Name;
         end;
 
-        if Rec."Document Type" = Rec."Document Type"::Quote then//DA
-        begin
+        if Rec."Document Type" = Rec."Document Type"::Quote then begin//DA
             Grec_PurchaseLine.SETFILTER("Document No.", Rec."No.");
             if Grec_PurchaseLine.FIND('-') then
                 repeat
@@ -305,8 +304,7 @@ pageextension 50041 "BC6_PurchaseQuote" extends "Purchase Quote" //49
                 until Grec_PurchaseLine.NEXT() = 0;
         end;
 
-        if Rec."Document Type" = Rec."Document Type"::Order then//Commande
-        begin
+        if Rec."Document Type" = Rec."Document Type"::Order then begin//Commande
             Grec_PurchaseLine.SETFILTER("Document No.", Rec."No.");
             if Grec_PurchaseLine.FIND('-') then
                 repeat

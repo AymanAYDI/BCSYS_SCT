@@ -55,7 +55,6 @@ pageextension 50055 "BC6_GetReceiptLines" extends "Get Receipt Lines" //5709
             field("BC6_Axe 0"; Gtext_Axe0)
             {
                 CaptionClass = Gtext_ColAxe0;
-                MultiLine = true;
                 Visible = "Axe 0Visible";
                 ApplicationArea = All;
                 Caption = 'Axe 0';
@@ -88,16 +87,16 @@ pageextension 50055 "BC6_GetReceiptLines" extends "Get Receipt Lines" //5709
         }
     }
     var
+        Grec_Dimension: Record Dimension;
         Grec_DimSetEntry: Record "Dimension Set Entry";
         Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
-        Grec_Dimension: Record Dimension;
-        Gtext_Axe0: Text[30];
-        Gcode_Axe1: Code[20];
-        Gtext_ColAxe0: Text[80];
         [InDataSet]
         "Axe 0Visible": Boolean;
         [InDataSet]
         "Document No.HideValue": Boolean;
+        Gcode_Axe1: Code[20];
+        Gtext_Axe0: Text[30];
+        Gtext_ColAxe0: Text[80];
 
 
     trigger OnAfterGetRecord()

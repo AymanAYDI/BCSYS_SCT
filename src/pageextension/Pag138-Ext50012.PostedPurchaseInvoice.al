@@ -83,6 +83,7 @@ pageextension 50012 "BC6_PostedPurchaseInvoice" extends "Posted Purchase Invoice
                 {
                     Caption = 'Period', Comment = 'FRA="Période"';
                     ApplicationArea = All;
+                    Image = Period;
 
                     trigger OnAction()
                     begin
@@ -96,6 +97,7 @@ pageextension 50012 "BC6_PostedPurchaseInvoice" extends "Posted Purchase Invoice
             {
                 Caption = 'Historic', Comment = 'FRA="Historique"';
                 ApplicationArea = All;
+                Image = History;
 
                 trigger OnAction()
                 var

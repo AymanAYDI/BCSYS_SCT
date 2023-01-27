@@ -4,7 +4,7 @@ page 50027 "BC6_FAP Status list"
 
     Caption = 'FAP Status list', Comment = 'FRA="Liste des statuts FAP"';
     Editable = false;
-    PageType = Card;
+    PageType = List;
     SourceTable = "BC6_FAP Status";
     SourceTableView = sorting("Status No.") where(Bloked = filter(false));
 

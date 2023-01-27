@@ -6621,9 +6621,6 @@ End Function
         <Field Name="EnteteCompany">
           <DataField>EnteteCompany</DataField>
         </Field>
-        <Field Name="EntetePageno">
-          <DataField>EntetePageno</DataField>
-        </Field>
         <Field Name="EnteteUserid">
           <DataField>EnteteUserid</DataField>
         </Field>

@@ -1,12 +1,20 @@
 xmlport 50015 "BC6_Export Magnitude"
 {
     Caption = 'Export Magnitude', Comment = 'FRA="Export Magnitude"';
+    Direction = Export;
+    TextEncoding = WINDOWS;
+    Format = VariableText;
+    FieldDelimiter = '<None>';
+    FieldSeparator = ';';
+    TableSeparator = '<NewLine>';
+    UseRequestPage = false;
     schema
     {
         textelement(Root)
         {
             tableelement(Header; Integer)
             {
+                SourceTableView = SORTING(Number) WHERE(Number = CONST(1));
                 textelement(Gtext_NomChamp)
                 {
                 }
@@ -19,21 +27,112 @@ xmlport 50015 "BC6_Export Magnitude"
             }
             tableelement(GlobalTempTable; "BC6_Global temporary table")
             {
+                SourceTableView = SORTING("Document No.", "Line No.");
+                textelement(d_ca)
+                {
+                }
+                textelement(d_dp)
+                {
+                }
+                textelement(d_ru)
+                {
+                }
+                textelement(d_tftr)
+                {
+                }
+                textelement(d_metier)
+                {
+                }
+                textelement(d_libre1)
+                {
+                }
+                textelement(d_libre2)
+                {
+                }
+                textelement(d_libre3)
+                {
+                }
+                textelement(d_echeances)
+                {
+                }
+                textelement(d_dossiers)
+                {
+                }
+                textelement(d_geoactivite)
+                {
+                }
+                textelement(d_pe)
+                {
+                }
+                textelement(d_oru)
+                {
+                }
+                textelement(d_ac)
+                {
+                }
+                textelement(d_fl)
+                {
+                }
+                textelement(d_au)
+                {
+                }
+                textelement(d_t1)
+                {
+                }
+                textelement(d_t2)
+                {
+                }
+                textelement(d_cu)
+                {
+                }
+                textelement(d_to)
+                {
+                }
+                textelement(d_go)
+                {
+                }
+                textelement(d_le)
+                {
+                }
+                textelement(d_nu)
+                {
+                }
+                textelement(d_libre5)
+                {
+                }
+                textelement(d_dest)
+                {
+                }
+                textelement(d_area)
+                {
+                }
+                textelement(d_geosite)
+                {
+                }
+                textelement(d_geocontrat)
+                {
+                }
+                textelement(P_COMMENT)
+                {
+                }
+                textelement(P_AMOUNT)
+                {
+                }
                 trigger OnPreXMLItem()
                 var
 
                     Grec_MagnitudeCorrespondence: Record "BC6_Magnitude correspondence";
                     Grec_MagnitudeCorrespondence1: Record "BC6_Magnitude correspondence";
                     Grec_MagnitudeCorrespondence2: Record "BC6_Magnitude correspondence";
-                    Grec_Temporary: Record "BC6_Table temporaire" TEMPORARY;
-                    Grec_Temporary1: Record "BC6_Table temporaire" TEMPORARY;
-                    Grec_Societe: Record "Company Information";
+                    TempGrec_Temporary: Record "BC6_Table temporaire" TEMPORARY;
+                    TempGrec_Temporary1: Record "BC6_Table temporaire" TEMPORARY;
+                    //Grec_Societe: Record "Company Information";
                     Grec_GL_Account: Record "G/L Account";
                     Gbool_exit: Boolean;
                     Gdate_Comptabilisation: Date;
                     i: Integer;
-                    Text001: label 'No company code found', Comment = 'FRA="Aucun code société trouvé"';
-                    Text002: label 'Error on the company code', Comment = 'FRA="Erreur sur le code société"';
+                // Text001: label 'No company code found', Comment = 'FRA="Aucun code société trouvé"';
+                // Text002: label 'Error on the company code', Comment = 'FRA="Erreur sur le code société"';
                 begin
                     //mettre tous les montants … 0 de la table MagnitudeCorrespondence
                     if Grec_MagnitudeCorrespondence1.FindSet() then
@@ -45,7 +144,7 @@ xmlport 50015 "BC6_Export Magnitude"
                     i := 0;
 
                     //MODIFICATION DU 26/10/10 JX-AUD
-                    if Grec_MagnitudeCorrespondence2.FindFirst() then
+                    if Grec_MagnitudeCorrespondence2.FindSet() then
                         repeat
                             Grec_GL_Account.RESET();
                             Grec_GL_Account.SETFILTER(Grec_GL_Account."No.", Grec_MagnitudeCorrespondence2."Account No.");
@@ -53,48 +152,48 @@ xmlport 50015 "BC6_Export Magnitude"
                             Grec_GL_Account.SETFILTER(Grec_GL_Account."Date Filter", '..%1', Gdate_Comptabilisation);
                             // Grec_GL_Account.SETFILTER(Grec_GL_Account."G/L Entry Type Filter", '%1', Grec_GL_Account."G/L Entry Type Filter"::Definitive);
 
-                            Grec_Temporary.RESET();
-                            Grec_Temporary.DELETEALL();
+                            TempGrec_Temporary.RESET();
+                            TempGrec_Temporary.DELETEALL();
                             //INITIALISATION DE LA TABLE TEMPORAIRE AVEC LE PREMIER FILTRE
                             if Grec_GL_Account.FindSet() then
                                 repeat
                                     i += 1;
-                                    Grec_Temporary.INIT();
-                                    Grec_Temporary.Piece := i;
-                                    Grec_Temporary.Compte := Grec_GL_Account."No.";
-                                    Grec_Temporary.INSERT();
+                                    TempGrec_Temporary.INIT();
+                                    TempGrec_Temporary.Piece := i;
+                                    TempGrec_Temporary.Compte := Grec_GL_Account."No.";
+                                    TempGrec_Temporary.INSERT();
                                 until Grec_GL_Account.NEXT() = 0;
 
                             //FILTRE SUR LES COMPTES DE NIVEAU S'IL Y EN A
                             if Grec_MagnitudeCorrespondence.GET(Grec_MagnitudeCorrespondence2."Line No.") then
                                 if Grec_MagnitudeCorrespondence.FIND('>') then
                                     while (Grec_MagnitudeCorrespondence.Level > Grec_MagnitudeCorrespondence2.Level) and (Gbool_exit) do begin
-                                        Grec_Temporary.SETFILTER(Grec_Temporary.Compte, Grec_MagnitudeCorrespondence."Account No.");
-                                        Grec_Temporary1.DELETEALL();
+                                        TempGrec_Temporary.SETFILTER(TempGrec_Temporary.Compte, Grec_MagnitudeCorrespondence."Account No.");
+                                        TempGrec_Temporary1.DELETEALL();
 
-                                        if Grec_Temporary.FindSet() then
+                                        if TempGrec_Temporary.FindSet() then
                                             repeat
-                                                Grec_Temporary1.INIT();
-                                                Grec_Temporary1.Piece := Grec_Temporary.Piece;
-                                                Grec_Temporary1.Compte := Grec_Temporary.Compte;
-                                                Grec_Temporary1.INSERT();
-                                            until Grec_Temporary.NEXT() = 0;
+                                                TempGrec_Temporary1.INIT();
+                                                TempGrec_Temporary1.Piece := TempGrec_Temporary.Piece;
+                                                TempGrec_Temporary1.Compte := TempGrec_Temporary.Compte;
+                                                TempGrec_Temporary1.INSERT();
+                                            until TempGrec_Temporary.NEXT() = 0;
 
-                                        Grec_Temporary.RESET();
+                                        TempGrec_Temporary.RESET();
 
-                                        if Grec_Temporary1.FindSet() then
+                                        if TempGrec_Temporary1.FindSet() then
                                             repeat
-                                                if Grec_Temporary.GET(Grec_Temporary1.Piece) then
-                                                    Grec_Temporary.DELETE();
-                                            until Grec_Temporary1.NEXT() = 0;
+                                                if TempGrec_Temporary.GET(TempGrec_Temporary1.Piece) then
+                                                    TempGrec_Temporary.DELETE();
+                                            until TempGrec_Temporary1.NEXT() = 0;
 
                                         if not Grec_MagnitudeCorrespondence.FIND('>') then Gbool_exit := false;
                                     end;
 
                             //CALCUL MONTANT
-                            if Grec_Temporary.FindSet() then
+                            if TempGrec_Temporary.FindSet() then
                                 repeat
-                                    if Grec_GL_Account.GET(Grec_Temporary.Compte) then begin
+                                    if Grec_GL_Account.GET(TempGrec_Temporary.Compte) then begin
                                         Grec_GL_Account.CALCFIELDS(Grec_GL_Account."Net Change");
 
                                         case Grec_MagnitudeCorrespondence2.Sign of
@@ -115,7 +214,7 @@ xmlport 50015 "BC6_Export Magnitude"
                                         else
                                             Grec_MagnitudeCorrespondence2.Amount += (Grec_GL_Account."Net Change" / (-1000));
                                     end;
-                                until Grec_Temporary.NEXT() = 0;
+                                until TempGrec_Temporary.NEXT() = 0;
                             Grec_MagnitudeCorrespondence2.MODIFY();
                         until Grec_MagnitudeCorrespondence2.NEXT() = 0;
 
@@ -140,24 +239,24 @@ xmlport 50015 "BC6_Export Magnitude"
                         until Grec_MagnitudeCorrespondence.NEXT() = 0;
 
                     d_ru := '';
-                    case Grec_Societe."IC Partner Code" of
-                        'TEC':
-                            d_ru := 'GLI85';
-                        'COM':
-                            d_ru := 'GLI80';
-                        'GLI':
-                            d_ru := 'GLI81';
-                        'EXP', 'AGE':
-                            d_ru := 'GLI82';
-                        'HEX':
-                            d_ru := 'GLI99';
-                        'C25':
-                            d_ru := 'GLI112';
-                        '':
-                            ERROR(Text001);
-                        else
-                            ERROR(Text002);
-                    end;
+                    // case Grec_Societe."IC Partner Code" of //TODO: Field 'IC Partner Code' is marked for removal.
+                    //     'TEC':
+                    //         d_ru := 'GLI85';
+                    //     'COM':
+                    //         d_ru := 'GLI80';
+                    //     'GLI':
+                    //         d_ru := 'GLI81';
+                    //     'EXP', 'AGE':
+                    //         d_ru := 'GLI82';
+                    //     'HEX':
+                    //         d_ru := 'GLI99';
+                    //     'C25':
+                    //         d_ru := 'GLI112';
+                    //     '':
+                    //         ERROR(Text001);
+                    //     else
+                    //         ERROR(Text002);
+                    // end;
                 end;
 
                 trigger OnAfterGetRecord()
@@ -207,96 +306,6 @@ xmlport 50015 "BC6_Export Magnitude"
                     P_AMOUNT := CONVERTSTR(P_AMOUNT, ',', '.');
                     //FIN MODIFICATION DU 26/10/10 JX-AUD
                 end;
-            }
-            textelement(d_ca)
-            {
-            }
-            textelement(d_dp)
-            {
-            }
-            textelement(d_ru)
-            {
-            }
-            textelement(d_tftr)
-            {
-            }
-            textelement(d_metier)
-            {
-            }
-            textelement(d_libre1)
-            {
-            }
-            textelement(d_libre2)
-            {
-            }
-            textelement(d_libre3)
-            {
-            }
-            textelement(d_echeances)
-            {
-            }
-            textelement(d_dossiers)
-            {
-            }
-            textelement(d_geoactivite)
-            {
-            }
-            textelement(d_pe)
-            {
-            }
-            textelement(d_oru)
-            {
-            }
-            textelement(d_ac)
-            {
-            }
-            textelement(d_fl)
-            {
-            }
-            textelement(d_au)
-            {
-            }
-            textelement(d_t1)
-            {
-            }
-            textelement(d_t2)
-            {
-            }
-            textelement(d_cu)
-            {
-            }
-            textelement(d_to)
-            {
-            }
-            textelement(d_go)
-            {
-            }
-            textelement(d_le)
-            {
-            }
-            textelement(d_nu)
-            {
-            }
-            textelement(d_libre5)
-            {
-            }
-            textelement(d_dest)
-            {
-            }
-            textelement(d_area)
-            {
-            }
-            textelement(d_geosite)
-            {
-            }
-            textelement(d_geocontrat)
-            {
-            }
-            textelement(P_COMMENT)
-            {
-            }
-            textelement(P_AMOUNT)
-            {
             }
         }
     }

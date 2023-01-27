@@ -41,6 +41,7 @@ pageextension 50014 "BC6_PostedPurchaseCreditMemo" extends "Posted Purchase Cred
                 {
                     Caption = 'period', Comment = 'FRA="période"';
                     ApplicationArea = All;
+                    Image = Period;
 
                     trigger OnAction()
                     begin

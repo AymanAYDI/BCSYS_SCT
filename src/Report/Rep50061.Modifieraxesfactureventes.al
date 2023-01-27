@@ -102,8 +102,8 @@ report 50061 "Modifier axes facture ventes"
     trigger OnInitReport()
     var
         Lrec_Dimension: Record Dimension;
-        Lint_CompteurSection: Integer;
         Lrec_DimensionValue: Record "Dimension Value";
+        Lint_CompteurSection: Integer;
     begin
         //Test existence axe analytique
         Gcode_AxeReserve := 'RESERVE';
@@ -123,25 +123,20 @@ report 50061 "Modifier axes facture ventes"
 
     var
         Grec_DimSetEntry: Record "Dimension Set Entry";
+        Grec_FALedgerEntry: Record "FA Ledger Entry";
         Grec_GLEntry: Record "G/L Entry";
         Grec_ValueEntry: Record "Value Entry";
-        Grec_FALedgerEntry: Record "FA Ledger Entry";
-        Text001: Label 'All accounting will be updated to the invoice %1', Comment = 'FRA="Toute la comptabilité analytique sera mise à jour pour la facture %1"';
-        Text002: Label 'Operation canceled !', Comment = 'FRA="Opération annulée !"';
-        Text003: Label 'Posted invoice No. : ', Comment = 'FRA="Facture enregistrée n° : "';
-        Text004: Label 'Error ! line is empty', Comment = 'FRA="Erreur ! cette ligne est vide"';
-        Text005: Label 'To use the change function of analytics, you must create an analytical axis named ''RESERVE''', Comment = 'FRA="Pour utiliser la fonction de modification de l''analytique,\\vous devez créer un axe analytique nommé ''RESERVE''"';
-        Text006: Label 'This document was created before the introduction of the modified analytical functionality.\\The accounting entries will not be updated.\\Would you still continue?', Comment = 'FRA="Ce document a été créé avant la mise en place de la fonctionnalité de modification analytique.\\Les écritures comptables ne pourront pas être mises à jour.\\Souhaitez-vous tout de même poursuivre ?"';
-        Text007: Label 'Invoice', Comment = 'FRA="Facture"';
-        Text008: Label 'No.', Comment = 'FRA="N°"';
-        Gcode_DocumentNo: Code[20];
-        Gcode_ItemNo: Code[20];
-        Gcode_LineNo: Integer;
         Gcode_AxeReserve: Code[20];
         Gcode_AxeReserveLigneFacture: Code[20];
+        Gcode_DocumentNo: Code[20];
+        Gcode_ItemNo: Code[20];
+        Window: Dialog;
+        Gcode_LineNo: Integer;
         Gnew_DimSetID: Integer;
         Gold_DimSetID: Integer;
-        Window: Dialog;
+        Text002: Label 'Operation canceled !', Comment = 'FRA="Opération annulée !"';
+        Text005: Label 'To use the change function of analytics, you must create an analytical axis named ''RESERVE''', Comment = 'FRA="Pour utiliser la fonction de modification de l''analytique,\\vous devez créer un axe analytique nommé ''RESERVE''"';
+        Text006: Label 'This document was created before the introduction of the modified analytical functionality.\\The accounting entries will not be updated.\\Would you still continue?', Comment = 'FRA="Ce document a été créé avant la mise en place de la fonctionnalité de modification analytique.\\Les écritures comptables ne pourront pas être mises à jour.\\Souhaitez-vous tout de même poursuivre ?"';
 
     procedure SetPostedInvoice(Prec_SalesInvLine: Record "Sales Invoice Line"; pi_NewDimSetID: Integer)
     begin

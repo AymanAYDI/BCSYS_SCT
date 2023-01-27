@@ -63,8 +63,9 @@ pageextension 50022 "BC6_GeneralLedgerEntries" extends "General Ledger Entries" 
         {
             action("BC6_Modifier axes analytiques")
             {
-                Caption = 'Modify dimensions', Comment = 'FRA="Axes analytiques"';
+                Caption = 'Modify dimensions', Comment = 'FRA="Modifier Axes analytiques"';
                 ApplicationArea = All;
+                Image = ChangeDimensions;
 
                 trigger OnAction()
                 begin
@@ -78,8 +79,8 @@ pageextension 50022 "BC6_GeneralLedgerEntries" extends "General Ledger Entries" 
 
     var
         Grec_DefaultDimension: Record "Default Dimension";
-        Grec_NEntetefacturefournisseur: Record "Purch. Inv. Header";
         Grecord_GeneralLedgerSetup: Record "General Ledger Setup";
+        Grec_NEntetefacturefournisseur: Record "Purch. Inv. Header";
         Gcode_Axe: Code[20];
         Text001: label 'This type of G/L Entry is blocked by modification of dimensions', Comment = 'FRA="Ce type d''écriture est bloqué en modification analytique"';
         Gtext_CodeAxe: Text[30];

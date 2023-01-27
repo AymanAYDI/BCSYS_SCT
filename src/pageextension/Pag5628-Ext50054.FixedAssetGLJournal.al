@@ -7,8 +7,9 @@ pageextension 50054 "BC6_FixedAssetGLJournal" extends "Fixed Asset G/L Journal" 
         {
             action("Mise à jour Axe Période")
             {
-                Caption = 'Mise à jour Axe Période', Comment = 'FRA="se à jour Axe Période"';
+                Caption = 'Mise à jour Axe Période';
                 RunObject = report "BC6_Period axe update on GJL";
+                Image = UpdateXML;
                 ApplicationArea = All;
             }
         }

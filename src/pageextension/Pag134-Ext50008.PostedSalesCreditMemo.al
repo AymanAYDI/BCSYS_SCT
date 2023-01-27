@@ -35,6 +35,7 @@ pageextension 50008 "BC6_PostedSalesCreditMemo" extends "Posted Sales Credit Mem
                 {
                     Caption = 'Modify dimensions', Comment = 'FRA="Modifier axes analytiques"';
                     ApplicationArea = All;
+                    Image = ChangeDimensions;
 
                     trigger OnAction()
                     begin
@@ -48,7 +49,7 @@ pageextension 50008 "BC6_PostedSalesCreditMemo" extends "Posted Sales Credit Mem
                 {
                     Caption = 'Modify description', Comment = 'FRA="Modifier désignation"';
                     ApplicationArea = All;
-
+                    Image = ChangeTo;
                     trigger OnAction()
                     begin
                         //MODIF JX-AUD 24/05/2011

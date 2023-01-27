@@ -1,7 +1,7 @@
 page 50025 "BC6_Matricule list"
 {
     Caption = 'Matricule list', Comment = 'FRA="Liste matricule"';
-    PageType = Card;
+    PageType = List;
     SourceTable = "BC6_Matricule";
     ApplicationArea = All;
     UsageCategory = Lists;

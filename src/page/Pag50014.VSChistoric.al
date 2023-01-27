@@ -2,7 +2,7 @@ page 50014 "BC6_VSC historic"
 {
     Caption = 'VSC historic', Comment = 'FRA="Historique VSC"';
     InsertAllowed = false;
-    PageType = Card;
+    PageType = List;
     SourceTable = "BC6_VSC historic";
 
     layout

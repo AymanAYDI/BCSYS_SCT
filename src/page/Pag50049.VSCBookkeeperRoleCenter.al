@@ -41,11 +41,11 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
                     Visible = false;
                     ApplicationArea = All;
                 }
-                part(Control1903012608; "Copy Profile")
-                {
-                    Visible = false;
-                    ApplicationArea = All;
-                }
+                // part(Control1903012608; "Copy Profile")
+                // {
+                //     Visible = false;
+                //     ApplicationArea = All;
+                // }
                 systempart(Control1901377608; MyNotes)
                 {
                     ApplicationArea = All;
@@ -60,7 +60,7 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
         {
             action("Récapitulatif de déclaration de TVA")
             {
-                Caption = 'Calc. and Post VAT Settlement';
+                Caption = 'Calc. and Post VAT Settlement', Comment = 'FRA="Récapitulatif de déclaration de TVA"';
                 Image = "Report";
                 RunObject = Report "BC6_VSC- Récap. Calc. Post VAT";
                 ApplicationArea = All;
@@ -134,6 +134,13 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
                 Caption = 'Import Factures Ventes', Comment = 'FRA="Import Factures Ventes"';
                 Image = ImportExport;
                 RunObject = xmlport "BC6_Import Factures Ventes";
+                ApplicationArea = All;
+            }
+            action("Import Factures Groupe")
+            {
+                Caption = 'Import Group Invoice', Comment = 'FRA="Import Factures Groupe"';
+                Image = ImportExport;
+                RunObject = XMLport "BC6_Import Group Invoice";
                 ApplicationArea = All;
             }
             action("Export Magnitude")
@@ -255,9 +262,6 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
                 {
                     Caption = 'Customer', Comment = 'FRA="Client"';
                     Image = Customer;
-                    Promoted = false;
-                    //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                    //PromotedCategory = Process;
                     RunObject = page "Customer List";
                     RunPageMode = Create;
                     ApplicationArea = All;
@@ -266,9 +270,6 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
                 {
                     Caption = 'Sales Invoice', Comment = 'FRA="Facture vente"';
                     Image = Invoice;
-                    Promoted = false;
-                    //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                    //PromotedCategory = Process;
                     RunObject = page "Sales Invoice List";
                     RunPageMode = Create;
                     ApplicationArea = All;
@@ -277,9 +278,6 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
                 {
                     Caption = 'Sales Credit Memo', Comment = 'FRA="Avoir vente"';
                     Image = CreditMemo;
-                    Promoted = false;
-                    //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                    //PromotedCategory = Process;
                     RunObject = page "Sales Credit Memos";
                     RunPageMode = Create;
                     ApplicationArea = All;
@@ -310,20 +308,16 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
             {
                 Caption = 'Vendor Accounting', Comment = 'FRA="Comptabilité Fournisseurs"';
                 Image = Purchasing;
-                //TODO
-                // action("Liste Récapitulatif Fournisseur")
-                // {
-                //     Caption = 'Vendor List Recap';
-                //     RunObject = Page "BC6_Vendor List Recap";
-                //     ApplicationArea = All;
-                // }
+                action("Liste Récapitulatif Fournisseur")
+                {
+                    Caption = 'Vendor List Recap', Comment = 'FRA="Liste Récapitulatif Fournisseur"';
+                    RunObject = Page "BC6_Vendor List Recap";
+                    ApplicationArea = All;
+                }
                 action(Fournisseur)
                 {
                     Caption = 'Vendor', Comment = 'FRA="Fournisseur"';
                     Image = Vendor;
-                    Promoted = false;
-                    //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                    //PromotedCategory = Process;
                     RunObject = page "Vendor List";
                     RunPageMode = Create;
                     ApplicationArea = All;
@@ -334,20 +328,16 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
                     RunObject = page "Purchase Quotes";
                     ApplicationArea = All;
                 }
-                //TODO
-                // action("Commandes achat")
-                // {
-                //     Caption = 'Purchase Orders';
-                //     RunObject = Page "BC6_Purchase Order List VSC";
-                //     ApplicationArea = All;
-                // }
+                action("Commandes achat")
+                {
+                    Caption = 'Purchase Orders';
+                    RunObject = Page "BC6_Purchase Order List VSC";
+                    ApplicationArea = All;
+                }
                 action("Facture achat")
                 {
                     Caption = 'Purchase Invoice', Comment = 'FRA="Facture achat"';
                     Image = Invoice;
-                    Promoted = false;
-                    //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                    //PromotedCategory = Process;
                     RunObject = page "Purchase Invoices";
                     RunPageMode = Create;
                     ApplicationArea = All;
@@ -406,9 +396,6 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
             {
                 Caption = 'C&ustomer', Comment = 'FRA="&Client"';
                 Image = Customer;
-                Promoted = false;
-                //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedCategory = Process;
                 RunObject = page "Customer Card";
                 RunPageMode = Create;
                 ApplicationArea = All;
@@ -417,9 +404,6 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
             {
                 Caption = 'Vendor Card', Comment = 'FRA="Fiche fournisseur"';
                 Image = Customer;
-                Promoted = false;
-                //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedCategory = Process;
                 RunObject = page "Vendor Card";
                 RunPageMode = Create;
                 ApplicationArea = All;
@@ -428,9 +412,6 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
             {
                 Caption = 'Sales &Invoice', Comment = 'FRA="Fac&ture vente"';
                 Image = Invoice;
-                Promoted = false;
-                //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedCategory = Process;
                 RunObject = page "Sales Invoice";
                 RunPageMode = Create;
                 ApplicationArea = All;
@@ -439,9 +420,6 @@ page 50049 "BC6_VSC Bookkeeper Role Center"
             {
                 Caption = 'Sales Credit &Memo', Comment = 'FRA="Avoir &vente"';
                 Image = CreditMemo;
-                Promoted = false;
-                //The property 'PromotedCategory' can only be set if the property 'Promoted' is set to 'true'
-                //PromotedCategory = Process;
                 RunObject = page "Sales Credit Memo";
                 RunPageMode = Create;
                 ApplicationArea = All;

@@ -470,13 +470,13 @@ page 50003 "BC6_Purchase Invoice VSC"
             group("Fonction&s")
             {
                 Caption = 'F&unctions', Comment = 'FRA="Fonction&s"';
-                Visible = false;
                 action("Extraire codes &achat fourn. std")
                 {
                     Caption = 'Get St&d. Vend. Purchase Codes', Comment = 'FRA="Extraire codes &achat fourn. std"';
                     Ellipsis = true;
                     Visible = false;
                     ApplicationArea = All;
+                    Image = Action;
 
                     trigger OnAction()
                     var
@@ -490,6 +490,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                     Caption = 'Move Negative Lines', Comment = 'FRA="Déplacer lignes négatives"';
                     Ellipsis = true;
                     Visible = false;
+                    Image = Action;
                     ApplicationArea = All;
 
                     trigger OnAction()
@@ -748,6 +749,8 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Envoi mail facture - Four non créé', Comment = 'FRA="Envoi mail facture - Four non créé"';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
+
 
                     trigger OnAction()
                     begin
@@ -770,6 +773,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Envoi mail facture - DA à créer', Comment = 'FRA="Envoi mail facture - DA à créer"';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
 
                     trigger OnAction()
                     begin
@@ -793,6 +797,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Envoi mail facture - DA non envoyé en appro.', Comment = 'FRA="Envoi mail facture - DA non envoyé en appro."';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
 
                     trigger OnAction()
                     begin
@@ -816,6 +821,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Envoi mail facture - DA non approuvée', Comment = 'FRA="Envoi mail facture - DA non approuvée"';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
 
                     trigger OnAction()
                     begin
@@ -839,6 +845,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Envoi mail facture - DA non tranform.', Comment = 'FRA="Envoi mail facture - DA non tranform."';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
 
                     trigger OnAction()
                     begin
@@ -862,6 +869,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Send mail invoice', Comment = 'FRA="Envoi mail facture - DA cplmt."';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
 
                     trigger OnAction()
                     begin
@@ -885,6 +893,8 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Envoi mail facture - BC à récept.', Comment = 'FRA="Envoi mail facture - BC à récept."';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
+
 
                     trigger OnAction()
                     begin
@@ -908,6 +918,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Envoi mail facture - Fact. à approuver', Comment = 'FRA="Envoi mail facture - Fact. à approuver"';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
 
                     trigger OnAction()
                     begin
@@ -931,6 +942,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Envoi mail facture - Factures Presta Timé', Comment = 'FRA="Envoi mail facture - Factures Presta Timé"';
                     ApplicationArea = All;
+                    Image = SendEmailPDF;
 
                     trigger OnAction()
                     begin
@@ -954,6 +966,7 @@ page 50003 "BC6_Purchase Invoice VSC"
                 {
                     Caption = 'Historic', Comment = 'FRA="Historique"';
                     ApplicationArea = All;
+                    Image = History;
 
                     trigger OnAction()
                     var
@@ -978,13 +991,13 @@ page 50003 "BC6_Purchase Invoice VSC"
         exit(Rec.ConfirmDeletion());
     end;
 
-    trigger OnInit()
-    begin
-        PurchHistoryBtn1Visible := true;
-        PayToCommentBtnVisible := true;
-        PayToCommentPictVisible := true;
-        PurchHistoryBtnVisible := true;
-    end;
+    // trigger OnInit()
+    // begin
+    //     PurchHistoryBtn1Visible := true;
+    //     PayToCommentBtnVisible := true;
+    //     PayToCommentPictVisible := true;
+    //     PurchHistoryBtnVisible := true;
+    // end;
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
@@ -1016,22 +1029,22 @@ page 50003 "BC6_Purchase Invoice VSC"
         CopyPurchDoc: Report "Copy Purchase Document";
         MoveNegPurchLines: Report "Move Negative Purchase Lines";
         FunctionsMgt: Codeunit "BC6_FunctionsMgt";
-        PurchInfoPaneMgmt: Codeunit "BC6_FunctionsMgt";
+        //PurchInfoPaneMgmt: Codeunit "BC6_FunctionsMgt";
         ReportPrint: Codeunit "Test Report-Print";
         UserMgt: Codeunit "User Setup Management";
         Gform_FAPMail: Page "BC6_New Mail FAP";
         ChangeExchangeRate: Page "Change Exchange Rate";
         [InDataSet]
         JobQueueVisible: Boolean;
-        [InDataSet]
-        PayToCommentBtnVisible: Boolean;
-        [InDataSet]
-        PayToCommentPictVisible: Boolean;
-        [InDataSet]
-        PurchHistoryBtn1Visible: Boolean;
-        [InDataSet]
+        // [InDataSet]
+        // PayToCommentBtnVisible: Boolean;
+        // [InDataSet]
+        // PayToCommentPictVisible: Boolean;
+        // [InDataSet]
+        // PurchHistoryBtn1Visible: Boolean;
+        // [InDataSet]
 
-        PurchHistoryBtnVisible: Boolean;
+        // PurchHistoryBtnVisible: Boolean;
         Grec_MontantApprobation: Decimal;
         Grec_MontantFacture: Decimal;
         Grec_MontantMax: Decimal;
@@ -1053,19 +1066,19 @@ page 50003 "BC6_Purchase Invoice VSC"
         CurrPage.UPDATE(false);
     end;
 
-    local procedure UpdateInfoPanel()
-    var
-        DifferBuyFromPayTo: Boolean;
-    begin
-        DifferBuyFromPayTo := 'Buy-from Vendor No.' <> 'Pay-to Vendor No.';
-        PurchHistoryBtnVisible := DifferBuyFromPayTo;
-        PayToCommentPictVisible := DifferBuyFromPayTo;
-        PayToCommentBtnVisible := DifferBuyFromPayTo;
+    // local procedure UpdateInfoPanel()
+    // var
+    //     DifferBuyFromPayTo: Boolean;
+    // begin
+    //     DifferBuyFromPayTo := 'Buy-from Vendor No.' <> 'Pay-to Vendor No.';
+    //     PurchHistoryBtnVisible := DifferBuyFromPayTo;
+    //     PayToCommentPictVisible := DifferBuyFromPayTo;
+    //     PayToCommentBtnVisible := DifferBuyFromPayTo;
 
-        PurchHistoryBtn1Visible := PurchInfoPaneMgmt.DocExist(Rec, 'Buy-from Vendor No.');
-        if DifferBuyFromPayTo then
-            PurchHistoryBtnVisible := PurchInfoPaneMgmt.DocExist(Rec, 'Pay-to Vendor No.')
-    end;
+    //     PurchHistoryBtn1Visible := PurchInfoPaneMgmt.DocExist(Rec, 'Buy-from Vendor No.');
+    //     if DifferBuyFromPayTo then
+    //         PurchHistoryBtnVisible := PurchInfoPaneMgmt.DocExist(Rec, 'Pay-to Vendor No.')
+    // end;
 
     local procedure BuyfromVendorNoOnAfterValidate()
     begin
@@ -1127,8 +1140,7 @@ page 50003 "BC6_Purchase Invoice VSC"
             Grec_ApprovalEntry.SETFILTER(Grec_ApprovalEntry."Document Type", FORMAT(Grec_ApprovalEntry."Document Type"::Invoice));
             Grec_ApprovalEntry.SETFILTER(Grec_ApprovalEntry.Status, FORMAT(Grec_ApprovalEntry.Status::Approved));
 
-            if Grec_ApprovalEntry.FIND('-') then   //si statut ouvert et lignes approbation présentes
-            begin
+            if Grec_ApprovalEntry.FIND('-') then begin//si statut ouvert et lignes approbation présentes
                 if Grec_ApprovalEntry.FIND('+') then
                     //MESSAGE(FORMAT(Grec_ApprovalEntry."Sequence No."));
                     Grec_MontantApprobation += Grec_ApprovalEntry.Amount

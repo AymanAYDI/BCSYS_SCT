@@ -3,19 +3,21 @@ page 50013 "BC6_Duplicating List"
     Caption = 'Duplicating List', Comment = 'FRA="Liste de duplication"';
     DeleteAllowed = false;
     InsertAllowed = false;
-    PageType = Card;
+    PageType = List;
     SourceTable = "BC6_Duplicating list";
 
     layout
     {
         area(content)
         {
-            field(COMPANYNAME; COMPANYNAME)
+            field(COMPANYNAMEV; COMPANYNAME)
             {
                 Editable = false;
                 Style = Standard;
                 StyleExpr = true;
                 ApplicationArea = All;
+                Caption = 'COMPANYNAME';
+                ShowCaption = false;
             }
             label(Control1000000011)
             {
@@ -54,9 +56,6 @@ page 50013 "BC6_Duplicating List"
             {
                 Caption = 'Validate duplication', Comment = 'FRA="Valider duplication"';
                 Image = PostponedInteractions;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -102,9 +101,6 @@ page 50013 "BC6_Duplicating List"
             {
                 Caption = 'Sélection toutes sociétés', Comment = 'FRA="Sélection toutes sociétés"';
                 Image = SelectEntries;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -120,9 +116,6 @@ page 50013 "BC6_Duplicating List"
             {
                 Caption = 'Validate deletion', Comment = 'FRA="Valider suppression"';
                 Image = Delete;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 ApplicationArea = All;
 
                 trigger OnAction()
@@ -169,9 +162,6 @@ page 50013 "BC6_Duplicating List"
             {
                 Caption = 'Cancel', Comment = 'FRA="Annuler"';
                 Image = CancelAllLines;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 ApplicationArea = All;
 
                 trigger OnAction()

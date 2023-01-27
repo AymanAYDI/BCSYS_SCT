@@ -3624,9 +3624,6 @@ End Function
         <Field Name="USERID">
           <DataField>USERID</DataField>
         </Field>
-        <Field Name="CurrReport_PAGENO">
-          <DataField>CurrReport_PAGENO</DataField>
-        </Field>
         <Field Name="DeprBookText">
           <DataField>DeprBookText</DataField>
         </Field>

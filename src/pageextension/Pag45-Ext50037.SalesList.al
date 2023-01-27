@@ -13,8 +13,6 @@ pageextension 50037 "BC6_SalesList" extends "Sales List" //45
             }
         }
     }
-    var
-        PageID: Integer;
 
 
 }

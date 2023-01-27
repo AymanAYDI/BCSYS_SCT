@@ -1,7 +1,7 @@
 report 50034 "BC6_LISAM (quick) VAT"
 {
     ApplicationArea = All;
-    Caption = 'LISAM (quick) VAT', Comment = 'FRA="LISAM (rapide) TVA"';
+    Caption = 'LISAM (quick) VAT', Comment = 'FRA="Export LISAM TVA (rapide)"';
     UsageCategory = Tasks;
     UseRequestPage = false;
     ProcessingOnly = true;

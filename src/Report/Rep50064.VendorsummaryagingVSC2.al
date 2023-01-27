@@ -4,7 +4,7 @@ report 50064 "Vendor : summary aging VSC 2"
     UsageCategory = ReportsAndAnalysis;
     DefaultLayout = RDLC;
     RDLCLayout = './src/Report/RDLC/VendorsummaryagingVSC2.rdl';
-    Caption = 'Vendor : summary aging VSC', Comment = 'FRA="Fourn. : Echéancier VSC"';
+    Caption = 'Vendor : summary aging VSC', Comment = 'FRA="Fourn. : Echéancier VSC New"';
 
     dataset
     {
@@ -16,9 +16,6 @@ report 50064 "Vendor : summary aging VSC 2"
             {
             }
             column(EnteteCompany; COMPANYNAME)
-            {
-            }
-            column(EntetePageno; CurrReport.PAGENO())
             {
             }
             column(EnteteUserid; USERID)
@@ -621,16 +618,16 @@ report 50064 "Vendor : summary aging VSC 2"
         HeadingType: Option "Date Interval","Number of Days";
         AgingBy: Option "Due Date","Posting Date","Document Date";
         Gopt_ComptesFourn: Option Tous,Comptes401;
-        Gtext_Compte: Text[10];
+        Gtext_Compte: Text[20];
         Gtext_Selection: Text[30];
         Gtext_NonEchu: array[3] of Text[50];
         HeaderText: array[5] of Text[50];
-        VendorFilter: Text[250];
+        VendorFilter: Text;
 
     local procedure CalcDates()
     var
         PeriodLength2: DateFormula;
-        i: Integer;
+        j: Integer;
     begin
         if not EVALUATE(PeriodLength2, '-' + FORMAT(PeriodLength)) then
             ERROR(Text011);
@@ -641,18 +638,17 @@ report 50064 "Vendor : summary aging VSC 2"
             PeriodEndDate[1] := EndingDate;
             PeriodStartDate[1] := CALCDATE(PeriodLength2, EndingDate + 1);
         end;
-        for i := 2 to ARRAYLEN(PeriodEndDate) do begin
-            PeriodEndDate[i] := PeriodStartDate[i - 1] - 1;
-            PeriodStartDate[i] := CALCDATE(PeriodLength2, PeriodEndDate[i] + 1);
+        for j := 2 to ARRAYLEN(PeriodEndDate) do begin
+            PeriodEndDate[j] := PeriodStartDate[j - 1] - 1;
+            PeriodStartDate[j] := CALCDATE(PeriodLength2, PeriodEndDate[j] + 1);
         end;
 
-        if ISSERVICETIER then
-            i := ARRAYLEN(PeriodEndDate);
+        j := ARRAYLEN(PeriodEndDate);
 
-        PeriodStartDate[i] := 0D;
+        PeriodStartDate[j] := 0D;
 
-        for i := 1 to ARRAYLEN(PeriodEndDate) do
-            if PeriodEndDate[i] < PeriodStartDate[i] then
+        for j := 1 to ARRAYLEN(PeriodEndDate) do
+            if PeriodEndDate[j] < PeriodStartDate[j] then
                 ERROR(Text010, PeriodLength);
 
         //Calcul de la période concernant les documents non échus
@@ -667,13 +663,13 @@ report 50064 "Vendor : summary aging VSC 2"
 
     local procedure CreateHeadings()
     var
-        i: Integer;
+        j: Integer;
     begin
         if (AgingBy = AgingBy::"Due Date") or (AgingBy = AgingBy::"Posting Date") then begin //Modif JX-AUD du 24/08/11
             HeaderText[1] := Text000;
-            i := 2;
+            j := 2;
         end else
-            i := 1;
+            j := 1;
         /*
         WHILE i < ARRAYLEN(PeriodEndDate) DO BEGIN
           IF HeadingType = HeadingType::"Date Interval" THEN
@@ -736,11 +732,11 @@ report 50064 "Vendor : summary aging VSC 2"
 
     local procedure GetPeriodIndex(Date: Date): Integer
     var
-        i: Integer;
+        j: Integer;
     begin
-        for i := 1 to ARRAYLEN(PeriodEndDate) do
-            if Date in [PeriodStartDate[i] .. PeriodEndDate[i]] then
-                exit(i);
+        for j := 1 to ARRAYLEN(PeriodEndDate) do
+            if Date in [PeriodStartDate[j] .. PeriodEndDate[j]] then
+                exit(j);
     end;
 
     local procedure Pct(a: Decimal; b: Decimal): Text[30]
@@ -751,20 +747,20 @@ report 50064 "Vendor : summary aging VSC 2"
 
     local procedure UpdateCurrencyTotals()
     var
-        i: Integer;
+        j: Integer;
     begin
         TempCurrency2.Code := CurrencyCode;
         if TempCurrency2.INSERT() then;
-        for i := 1 to ARRAYLEN(TotalVendorLedgEntry) do begin
+        for j := 1 to ARRAYLEN(TotalVendorLedgEntry) do begin
             TempCurrencyAmount."Currency Code" := CurrencyCode;
-            TempCurrencyAmount.Date := PeriodStartDate[i];
+            TempCurrencyAmount.Date := PeriodStartDate[j];
             if TempCurrencyAmount.FIND() then begin
-                TempCurrencyAmount.Amount := TempCurrencyAmount.Amount + TotalVendorLedgEntry[i]."Remaining Amount";
+                TempCurrencyAmount.Amount := TempCurrencyAmount.Amount + TotalVendorLedgEntry[j]."Remaining Amount";
                 TempCurrencyAmount.MODIFY();
             end else begin
                 TempCurrencyAmount."Currency Code" := CurrencyCode;
-                TempCurrencyAmount.Date := PeriodStartDate[i];
-                TempCurrencyAmount.Amount := TotalVendorLedgEntry[i]."Remaining Amount";
+                TempCurrencyAmount.Date := PeriodStartDate[j];
+                TempCurrencyAmount.Amount := TotalVendorLedgEntry[j]."Remaining Amount";
                 TempCurrencyAmount.INSERT();
             end;
         end;

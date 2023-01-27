@@ -154,17 +154,17 @@ pageextension 50036 "BC6_SalesCreditMemo" extends "Sales Credit Memo" //44
     }
 
     var
-        IsCustomerOrContactNotEmpty: Boolean;
         DocumentIsPosted: Boolean;
+        IsCustomerOrContactNotEmpty: Boolean;
 
     local procedure PostDocument(PostingCodeunitID: Integer)
     var
-        SalesHeader: Record "Sales Header";
         SalesCrMemoHeader: Record "Sales Cr.Memo Header";
-        OfficeMgt: Codeunit "Office Management";
+        SalesHeader: Record "Sales Header";
         InstructionMgt: Codeunit "Instruction Mgt.";
-        PreAssignedNo: Code[20];
+        OfficeMgt: Codeunit "Office Management";
         IsScheduledPosting: Boolean;
+        PreAssignedNo: Code[20];
     begin
         CheckSalesCheckAllLinesHaveQuantityAssigned();
         PreAssignedNo := Rec."No.";

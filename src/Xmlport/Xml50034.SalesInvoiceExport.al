@@ -13,60 +13,46 @@ xmlport 50034 "BC6_Sales_Invoice_Export"
                 SourceTableView = SORTING("No.") ORDER(Ascending);
                 fieldelement("DocumentNo."; SalesInvoiceHeader."No.")
                 {
-
                 }
                 textelement(TypeDoc)
                 {
                 }
                 fieldelement(CustNo; SalesInvoiceHeader."Bill-to Customer No.")
                 {
-
                 }
                 fieldelement(CustName; SalesInvoiceHeader."Bill-to Name")
                 {
-
                 }
                 fieldelement(CustAddress1; SalesInvoiceHeader."Bill-to Address")
                 {
-
                 }
                 fieldelement(CustAddress2; SalesInvoiceHeader."Bill-to Address 2")
                 {
-
                 }
                 fieldelement(CustCity; SalesInvoiceHeader."Bill-to City")
                 {
-
                 }
                 fieldelement(CustPostCode; SalesInvoiceHeader."Bill-to Post Code")
                 {
-
                 }
                 fieldelement(CustCountry; SalesInvoiceHeader."Bill-to Country/Region Code")
                 {
-
                 }
                 fieldelement(YourRef; SalesInvoiceHeader."Your Reference")
                 {
-
                 }
                 textelement(UserMail)
                 {
                     trigger OnBeforePassVariable()
-                    var
-                        myInt: Integer;
                     begin
                         IF UserSetup.GET(SalesInvoiceHeader."User ID") THEN
                             UserMail := UserSetup."E-Mail";
-
-                        IF UserSetup.GET(SalesInvoiceHeader."User ID") THEN BEGIN
-                            UserMail := UserSetup."E-Mail";
-                            // Gtext_UserName := UserSetup."User ID";
-                        END
-                        ELSE BEGIN
-                            // Gtext_UserName := '';
-                            UserMail := '';
-                        END;
+                        // IF UserSetup.GET(SalesInvoiceHeader."User ID") THEN
+                        //     UserMail := UserSetup."E-Mail"
+                        // // Gtext_UserName := UserSetup."User ID";
+                        // ELSE
+                        //     // Gtext_UserName := '';
+                        //     UserMail := '';
                     end;
                 }
                 fieldelement(Date; SalesInvoiceHeader."Document Date")
@@ -96,8 +82,6 @@ xmlport 50034 "BC6_Sales_Invoice_Export"
                 textelement(VATAMOUNTheader)
                 {
                     trigger OnBeforePassVariable()
-                    var
-                        myInt: Integer;
                     begin
                         VATAMOUNTheader := FORMAT(SalesInvoiceHeader."Amount Including VAT" - SalesInvoiceHeader.Amount);
                     end;
@@ -108,7 +92,6 @@ xmlport 50034 "BC6_Sales_Invoice_Export"
                 }
                 fieldelement("ExternalNo."; SalesInvoiceHeader."External Document No.")
                 {
-
                 }
                 trigger OnAfterGetRecord()
                 begin
@@ -181,9 +164,7 @@ xmlport 50034 "BC6_Sales_Invoice_Export"
                     trigger OnBeforePassVariable()
                     begin
                         VATAMOUNTline := FORMAT(SalesInvoiceLines."Amount Including VAT" - SalesInvoiceLines.Amount);
-
                     end;
-
                 }
                 fieldelement(LineCustomerVAT; SalesInvoiceLines."VAT Bus. Posting Group")
                 {
@@ -232,15 +213,12 @@ xmlport 50034 "BC6_Sales_Invoice_Export"
                 {
 
                 }
-
-
-
             }
         }
     }
     VAR
+        Grec_CompanyInfo: Record "Company Information";
         GLEntry_G: Record "G/L Entry";
-        CompagnyAdress_G, Grec_CompanyInfo, CompagnyAdress2_G, CompagnyCity_G, CompagnyName_G : Record "Company Information";
         UserSetup: Record "User Setup";
 
     trigger OnInitXMLport()

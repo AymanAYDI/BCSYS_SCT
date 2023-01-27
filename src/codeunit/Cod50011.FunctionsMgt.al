@@ -572,7 +572,7 @@ codeunit 50011 "BC6_FunctionsMgt"
                 end;
             until lrec_FileYooz.NEXT() = 0;
         FileMgt.GetServerDirectoryFilesList(lrec_NameValueBuffer, lrec_YoozParameters."Yooz Import Path");
-        if lrec_NameValueBuffer.FINDFIRST() then
+        if lrec_NameValueBuffer.FindSet() then
             repeat
                 if lrec_NameValueBuffer.Name <> '' then
                     if ImportXmlFile.OPEN(lrec_NameValueBuffer.Name) then begin
@@ -658,5 +658,35 @@ codeunit 50011 "BC6_FunctionsMgt"
             END;
         END;
     end;
+    //---Codeunit7181---
+    procedure LookupItem(PurchLine: Record "Purchase Line")
+    var
+        Item: Record Item;
+    begin
+        PurchLine.TESTFIELD(Type, PurchLine.Type::Item);
+        PurchLine.TESTFIELD("No.");
+        Item.Get(PurchLine."No.");
+        PAGE.RUNMODAL(PAGE::"Item Card", Item);
+    end;
+    //---TAB296---
+    Procedure OnAfterModifyEventT296(var Rec: Record "Reminder Line")
+    var
+        Grec_SalesInvoiceHeader: Record "Sales Invoice Header";
+    begin
+        IF Grec_SalesInvoiceHeader.GET(Rec."Document No.") THEN BEGIN
+            Rec."BC6_Agent" := Grec_SalesInvoiceHeader."BC6_Agent";
+            Rec."BC6_Paying agent" := Grec_SalesInvoiceHeader."BC6_Paying agent";
+        END;
+    END;
+
+    Procedure OnAfterInsertEventT296(var Rec: Record "Reminder Line")
+    var
+        Grec_SalesInvoiceHeader: Record "Sales Invoice Header";
+    begin
+        IF Grec_SalesInvoiceHeader.GET(Rec."Document No.") THEN BEGIN
+            Rec."BC6_Agent" := Grec_SalesInvoiceHeader."BC6_Agent";
+            Rec."BC6_Paying agent" := Grec_SalesInvoiceHeader."BC6_Paying agent";
+        END;
+    END;
 
 }

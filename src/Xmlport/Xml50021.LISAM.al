@@ -5,7 +5,7 @@ xmlport 50021 "BC6_LISAM"
     TextEncoding = WINDOWS;
     Format = VariableText;
     FieldDelimiter = '<None>';
-    FieldSeparator = '[;]';
+    FieldSeparator = ';';
     TableSeparator = '<NewLine>';
     FileName = 'LISAM.CSV';
     schema
@@ -14,15 +14,17 @@ xmlport 50021 "BC6_LISAM"
         {
             tableelement(Header; Integer)
             {
+                SourceTableView = SORTING(Number) WHERE(Number = CONST(1));
+                textelement(Gtext_NomChamp)
+                {
+                }
                 trigger OnAfterGetRecord()
                 begin
                     Gtext_NomChamp := 'Date;Origine;Pièce;Compte;Libellé;Période;Axe 1;Axe 2;Axe 3;Axe 4;Conso;Débit;Crédit;Solde;Tiers-Contrepartie;N° doc;N° de BC';
                 end;
+
             }
-            textelement(Gtext_NomChamp)
-            {
-            }
-            tableelement(GLEntry; 17)
+            tableelement(GLEntry; "G/L Entry")
             {
                 fieldelement(PostingDate; GLEntry."Posting Date")
                 {

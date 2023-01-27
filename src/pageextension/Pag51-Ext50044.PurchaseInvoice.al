@@ -215,7 +215,6 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 ShortCutKey = 'F9';
                 trigger OnAction()
                 var
-                    SalesHeader: Record "Sales Header";
                     ApprovalMgt: Codeunit "Approvals Mgmt.";
                 begin
                     //Modif JX-AUD du 08/07/2013
@@ -258,7 +257,6 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
 
                 trigger OnAction()
                 var
-                    SalesHeader: Record "Sales Header";
                     ApprovalMgt: Codeunit "Approvals Mgmt.";
                 begin
                     //Modif JX-AUD du 08/07/2013
@@ -342,7 +340,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 end;
             }
         }
-        addafter(RemoveFromJobQueue)
+        addafter("P&osting")
         {
             group("BC6_Send mail")
             {
@@ -351,6 +349,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Envoi mail facture - Four non créé', Comment = 'FRA="Envoi mail facture - Four non créé"';
                     ApplicationArea = All;
+                    Image = SendMail;
 
                     trigger OnAction()
                     begin
@@ -374,6 +373,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Envoi mail facture - DA à créer', Comment = 'FRA="Envoi mail facture - DA à créer"';
                     ApplicationArea = All;
+                    Image = SendMail;
 
                     trigger OnAction()
                     begin
@@ -398,7 +398,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Envoi mail facture - DA non envoyé en appro.', Comment = 'FRA="Envoi mail facture - DA non envoyé en appro."';
                     ApplicationArea = All;
-
+                    Image = SendMail;
                     trigger OnAction()
                     begin
                         //Modif JX-AUD du 23/04/2013
@@ -421,7 +421,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Envoi mail facture - DA non approuvée', Comment = 'FRA="Envoi mail facture - DA non approuvée"';
                     ApplicationArea = All;
-
+                    Image = SendMail;
                     trigger OnAction()
                     begin
                         //Modif JX-AUD du 23/04/2013
@@ -444,7 +444,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Envoi mail facture - DA non tranform.', Comment = 'FRA="Envoi mail facture - DA non tranform."';
                     ApplicationArea = All;
-
+                    Image = SendMail;
                     trigger OnAction()
                     begin
                         //Modif JX-AUD du 23/04/2013
@@ -467,6 +467,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Send mail invoice', Comment = 'FRA="Envoi mail facture - DA cplmt."';
                     ApplicationArea = All;
+                    Image = SendMail;
 
                     trigger OnAction()
                     begin
@@ -490,6 +491,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Envoi mail facture - BC à récept.', Comment = 'FRA="Envoi mail facture - BC à récept."';
                     ApplicationArea = All;
+                    Image = SendMail;
 
                     trigger OnAction()
                     begin
@@ -513,6 +515,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Envoi mail facture - Fact. à approuver', Comment = 'FRA="Envoi mail facture - Fact. à approuver"';
                     ApplicationArea = All;
+                    Image = SendMail;
 
                     trigger OnAction()
                     begin
@@ -537,6 +540,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Envoi mail facture - Factures Presta Timé', Comment = 'FRA="Envoi mail facture - Factures Presta Timé"';
                     ApplicationArea = All;
+                    Image = SendMail;
 
                     trigger OnAction()
                     begin
@@ -558,6 +562,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
                 {
                     Caption = 'Historic', Comment = 'FRA="Historique"';
                     ApplicationArea = All;
+                    Image = History;
 
                     trigger OnAction()
                     var
@@ -581,11 +586,11 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         Grec_RcptPurchLine: Record "Purch. Rcpt. Line";
         Grec_PurchaseLine: Record "Purchase Line";
         Grec_PurchPaySetup: Record "Purchases & Payables Setup";
-        PurchCalcDiscByType: Codeunit "Purch - Calc Disc. By Type";
         OfficeMgt: Codeunit "Office Management";
+        UserMgt: Codeunit "BC6_FunctionsMgt";
         Gform_FAPMail: Page "BC6_New Mail FAP";
-        [InDataSet]
-        JobQueueVisible: Boolean;
+        DocumentIsPosted: Boolean;
+        IsOfficeAddin: Boolean;
         Grec_MontantApprobation: Decimal;
         Grec_MontantFacture: Decimal;
         Grec_MontantMax: Decimal;
@@ -598,11 +603,6 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
         Gtext_Param1: Text[1024];
         Gtext_Param2: Text[1024];
         Gtext_Param3: Text[1024];
-        IsOfficeAddin: Boolean;
-        DocumentIsPosted: Boolean;
-
-    var
-        UserMgt: Codeunit "BC6_FunctionsMgt";
 
     trigger OnOpenPage()
     begin
@@ -637,8 +637,7 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
             Grec_ApprovalEntry.SETFILTER(Grec_ApprovalEntry."Document Type", FORMAT(Grec_ApprovalEntry."Document Type"::Invoice));
             Grec_ApprovalEntry.SETFILTER(Grec_ApprovalEntry.Status, FORMAT(Grec_ApprovalEntry.Status::Approved));
 
-            if Grec_ApprovalEntry.FIND('-') then   //si statut ouvert et lignes approbation présentes
-            begin
+            if Grec_ApprovalEntry.FIND('-') then begin   //si statut ouvert et lignes approbation présentes
                 if Grec_ApprovalEntry.FIND('+') then
                     Grec_MontantApprobation += Grec_ApprovalEntry.Amount
                 else begin
@@ -666,7 +665,6 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
             if Grec_PurchaseLine.FIND('-') then
                 //MESSAGE(FORMAT(Grec_PurchaseLine.COUNT));
                 repeat
-
                     //MESSAGE(FORMAT(Grec_PurchaseLine.Type) + '  ' +Grec_PurchaseLine."No.");
                     if (((Grec_PurchaseLine.Type = Grec_PurchaseLine.Type::" ") and (Grec_PurchaseLine."No." = ''))
                     or ((Grec_PurchaseLine.Type <> Grec_PurchaseLine.Type::" ") and (Grec_PurchaseLine."No." = ''))) then begin
@@ -696,10 +694,10 @@ pageextension 50044 "BC6_PurchaseInvoice" extends "Purchase Invoice" //51
 
     local procedure PostDocument(PostingCodeunitID: Integer; Navigate: Enum "Navigate After Posting")
     var
-        PurchaseHeader: Record "Purchase Header";
         PurchInvHeader: Record "Purch. Inv. Header";
-        LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
+        PurchaseHeader: Record "Purchase Header";
         InstructionMgt: Codeunit "Instruction Mgt.";
+        LinesInstructionMgt: Codeunit "Lines Instruction Mgt.";
         IsScheduledPosting: Boolean;
     begin
         LinesInstructionMgt.PurchaseCheckAllLinesHaveQuantityAssigned(Rec);

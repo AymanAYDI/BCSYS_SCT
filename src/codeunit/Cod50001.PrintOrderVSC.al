@@ -36,7 +36,7 @@ codeunit 50001 "BC6_PrintOrderVSC"
                     //         Gbool_ManageContract := FALSE;
 
                     //     IF Gbool_ManageContract THEN
-                    //         REPORT.RUNMODAL(Report::"Commande achat et contrat", TRUE, FALSE, PurchaseHeader)
+                    //         REPORT.RUNMODAL(Report::"BC6_Commande achat et contrat", TRUE, FALSE, PurchaseHeader)
                     //     ELSE BEGIN
                     //         ReportSelection.SETRANGE(Usage, ReportSelection.Usage::"P.Order");
                     //         ReportSelection.SETFILTER("Report ID", '<>0');

@@ -14,19 +14,19 @@ report 50020 "BC6_Period axe update on GJL"
                 Window.UPDATE(1, i);
 
                 if GDimSetEntry.GET("Dimension Set ID", 'PERIODE') then begin
-                    GTempSetEntry.DELETEALL();
+                    TempSetEntry.DELETEALL();
                     GOldID := "Dimension Set ID";
                     GDimSetEntry.SETRANGE("Dimension Set ID");
                     if GDimSetEntry.FINDFIRST() then
                         repeat
-                            GTempSetEntry := GDimSetEntry;
-                            if GTempSetEntry."Dimension Code" = 'PERIODE' then
-                                GTempSetEntry."Dimension Value Code" := Gcode_Periode;
+                            TempSetEntry := GDimSetEntry;
+                            if TempSetEntry."Dimension Code" = 'PERIODE' then
+                                TempSetEntry."Dimension Value Code" := Gcode_Periode;
                             if GDimValue.GET('PERIODE', Gcode_Periode) then
-                                GTempSetEntry."Dimension Value ID" := GDimValue."Dimension Value ID";
-                            GTempSetEntry.INSERT();
+                                TempSetEntry."Dimension Value ID" := GDimValue."Dimension Value ID";
+                            TempSetEntry.INSERT();
                         until GDimSetEntry.NEXT() = 0;
-                    "Dimension Set ID" := Gcu_Dimension.GetDimensionSetID(GTempSetEntry);
+                    "Dimension Set ID" := Gcu_Dimension.GetDimensionSetID(TempSetEntry);
                     MODIFY();
                 end else begin
                     "Dimension Set ID" := Gcu_Dimension1.SetNewDimIDSpec("Dimension Set ID", "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", GCode_DimCode, GCode_DimValueCode);
@@ -71,7 +71,7 @@ report 50020 "BC6_Period axe update on GJL"
 
     var
         GDimSetEntry: Record "Dimension Set Entry";
-        GTempSetEntry: Record "Dimension Set Entry" temporary;
+        TempSetEntry: Record "Dimension Set Entry" temporary;
         GDimValue: Record "Dimension Value";
         Gcu_Dimension1: Codeunit "BC6_FunctionsMgt";
         Gcu_Dimension: Codeunit DimensionManagement;

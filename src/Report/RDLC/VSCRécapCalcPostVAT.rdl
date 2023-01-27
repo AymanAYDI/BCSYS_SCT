@@ -8,6 +8,7 @@
         <ConnectString />
       </ConnectionProperties>
       <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>3ba8f963-9c4e-4f3d-b03b-9b67ced5eae7</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <ReportSections>
@@ -1695,7 +1696,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -2273,7 +2273,7 @@
             </Paragraphs>
             <Left>3.15cm</Left>
             <Height>0.423cm</Height>
-            <Width>1.2cm</Width>
+            <Width>3cm</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>
@@ -2373,7 +2373,7 @@
             <Top>0.423cm</Top>
             <Left>3.15cm</Left>
             <Height>0.423cm</Height>
-            <Width>1.5cm</Width>
+            <Width>3cm</Width>
             <ZIndex>11</ZIndex>
             <Style>
               <VerticalAlign>Middle</VerticalAlign>
@@ -2396,7 +2396,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=ReportItems!COMPANYNAME.Value</Value>
+                      <Value>=Fields!COMPANYNAME.Value</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -2418,7 +2418,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=ReportItems!Calc__and_Post_VAT_SettlementCaption.Value</Value>
+                      <Value>=Fields!Calc__and_Post_VAT_SettlementCaption.Value</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -2440,7 +2440,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=ReportItems!CurrReport_PAGENOCaption.Value</Value>
+                      <Value>=Fields!CurrReport_PAGENOCaption.Value</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -2464,7 +2464,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=ReportItems!STRSUBSTNO_Text005_VATDateFilter_.Value</Value>
+                      <Value>=Fields!STRSUBSTNO_Text005_VATDateFilter_.Value</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -2525,9 +2525,9 @@
                 </Paragraph>
               </Paragraphs>
               <Top>0.846cm</Top>
-              <Left>11.45cm</Left>
-              <Height>0.423cm</Height>
-              <Width>3.25cm</Width>
+              <Left>9.9895cm</Left>
+              <Height>0.66961cm</Height>
+              <Width>4.7105cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2609,6 +2609,7 @@ End Function
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>d454742c-e4dd-413a-bdb8-cd9adf0de610</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>

@@ -15,8 +15,8 @@ tableextension 50033 "BC6_ApprovalEntry" extends "Approval Entry" //545
 
     procedure "BC6 ShowDocument"()
     var
-        SalesHeader: Record "Sales Header";
         PurchHeader: Record "Purchase Header";
+        SalesHeader: Record "Sales Header";
     begin
         case "Table ID" OF
             DATABASE::"Sales Header":

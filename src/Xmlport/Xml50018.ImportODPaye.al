@@ -3,8 +3,9 @@ xmlport 50018 "BC6_Import OD Paye"
     Caption = 'Import OD Paye', Comment = 'FRA="Import OD Paye"';
     Format = VariableText;
     FieldDelimiter = '<None>';
-    FieldSeparator = '[;]';
+    FieldSeparator = ';';
     UseRequestPage = false;
+    Direction = Import;
     FileName = '*.csv';
     schema
     {
@@ -15,12 +16,79 @@ xmlport 50018 "BC6_Import OD Paye"
                 AutoSave = false;
                 AutoUpdate = false;
                 AutoReplace = false;
+                textelement(Gtext_Champ1)
+                {
+                }
+                textelement(Gtext_Champ2)
+                {
+                }
+                textelement(Gtext_Champ3)
+                {
+                }
+                textelement(Gtext_Champ4)
+                {
+                }
+                textelement(Gtext_Champ5)
+                {
+                }
+                textelement(Gtext_Champ6)
+                {
+                }
+                textelement(Gtext_Champ7)
+                {
+                }
+                textelement(Gtext_Champ8)
+                {
+                }
+                textelement(Gtext_Champ9)
+                {
+                }
+                textelement(Gtext_Champ10)
+                {
+                }
+                textelement(Gtext_Champ11)
+                {
+                }
+                textelement(Gtext_Champ12)
+                {
+                }
+                textelement(Gtext_Champ13)
+                {
+                }
+                textelement(Gtext_Champ14)
+                {
+                }
+                textelement(Gtext_Champ15)
+                {
+                }
+                textelement(Gtext_Champ16)
+                {
+                }
+                textelement(Gtext_Champ17)
+                {
+                }
+                textelement(Gtext_Champ18)
+                {
+                }
+                textelement(Gtext_Champ19)
+                {
+                }
+                textelement(Gtext_Champ20)
+                {
+                }
+                textelement(Gtext_Champ21)
+                {
+                }
+                textelement(Gtext_Champ22)
+                {
+                }
+
                 trigger OnBeforeInsertRecord()
                 begin
-                    Gint_Compteur += 1;//pour passer l'en tˆte du fichier
+                    Gint_Compteur += 1;//pour passer l'en tête du fichier
                     if Gint_Compteur > 1 then begin
 
-                        //incr‚mentation du num‚ro de ligne
+                        //incr‚mentation du numéro de ligne
                         Gint_LineNo := Gint_LineNo + 10000;
 
                         //initialisation de la ligne
@@ -212,77 +280,11 @@ xmlport 50018 "BC6_Import OD Paye"
                         //insertion ligne
                         Grec_FeuilleODPaie.INSERT();
 
-                        //appel fonction ins‚r‚r analytique
+                        //appel fonction insérér analytique
                         InsrerAnalytique();
                     end;
                     currXMLport.SKIP();
                 end;
-            }
-            textelement(Gtext_Champ1)
-            {
-            }
-            textelement(Gtext_Champ2)
-            {
-            }
-            textelement(Gtext_Champ3)
-            {
-            }
-            textelement(Gtext_Champ4)
-            {
-            }
-            textelement(Gtext_Champ5)
-            {
-            }
-            textelement(Gtext_Champ6)
-            {
-            }
-            textelement(Gtext_Champ7)
-            {
-            }
-            textelement(Gtext_Champ8)
-            {
-            }
-            textelement(Gtext_Champ9)
-            {
-            }
-            textelement(Gtext_Champ10)
-            {
-            }
-            textelement(Gtext_Champ11)
-            {
-            }
-            textelement(Gtext_Champ12)
-            {
-            }
-            textelement(Gtext_Champ13)
-            {
-            }
-            textelement(Gtext_Champ14)
-            {
-            }
-            textelement(Gtext_Champ15)
-            {
-            }
-            textelement(Gtext_Champ16)
-            {
-            }
-            textelement(Gtext_Champ17)
-            {
-            }
-            textelement(Gtext_Champ18)
-            {
-            }
-            textelement(Gtext_Champ19)
-            {
-            }
-            textelement(Gtext_Champ20)
-            {
-            }
-            textelement(Gtext_Champ21)
-            {
-            }
-            textelement(Gtext_Champ22)
-            {
             }
         }
     }
@@ -303,11 +305,11 @@ xmlport 50018 "BC6_Import OD Paye"
         Grec_PartenaireIC: Record "IC Partner";
         Grec_Fournisseur: Record Vendor;
         Gcu_Converter: Codeunit "BC6_ANSI_ASCII converter";
-        Gcode_ODPaie: Code[14];
+        Gcode_ODPaie: Code[20];
         Gcode_AccountNo: Code[20];
         Gcode_Axe: array[8] of Code[20];
-        Gcode_JournalBatchName: Code[20];
-        Gcode_JournalTemplateName: Code[20];
+        Gcode_JournalBatchName: Code[10];
+        Gcode_JournalTemplateName: Code[10];
         Gcode_ExternalDocumentNo: Code[35];
         Gdate_PostingDate: Date;
         Gdec_CreditAmount: Decimal;
@@ -322,8 +324,8 @@ xmlport 50018 "BC6_Import OD Paye"
         Text003: label '"Account No. %1 does not exist for Account Type: "', Comment = 'FRA="Le compte N° %1 n'' existe pas pour le Type Compte : "';
         Text004: label 'at line no. %2 of file', Comment = 'FRA="à la ligne n° %2 du fichier"';
         Text005: label 'The Account Type %1 does not exist, error on line no. %2', Comment = 'FRA="Le Type Compte %1 n'' existe pas, erreur sur la ligne n° %2"';
-        Gtext_ComptaM: Text[30];
-        Gtext_ComptaP: Text[30];
+        Gtext_ComptaM: Text[250];
+        Gtext_ComptaP: Text[250];
 
     trigger OnInitXMLport()
     begin
@@ -399,14 +401,14 @@ xmlport 50018 "BC6_Import OD Paye"
             end;
             if (Grec_Dimension.GET(Gcode_Axe[i])) and (ValeurChamps <> '') then begin
                 if Grec_Dimension.Code = 'PERIODE' then
-                    if STRLEN(ValeurChamps) = 3 then
-                        ValeurChamps := '0' + ValeurChamps
-                    else
-                        if STRLEN(ValeurChamps) = 2 then
-                            ValeurChamps := '00' + ValeurChamps
-                        else
-                            if STRLEN(ValeurChamps) = 1 then
-                                ValeurChamps := '000' + ValeurChamps;
+                    case STRLEN(ValeurChamps) of
+                        3:
+                            ValeurChamps := '0' + ValeurChamps;
+                        2:
+                            ValeurChamps := '00' + ValeurChamps;
+                        1:
+                            ValeurChamps := '000' + ValeurChamps;
+                    end;
                 if not Grec_DimValue.GET(Grec_Dimension.Code, ValeurChamps) then
                     ERROR('Section analytique %1 inconnue pour l''axe %2', ValeurChamps, Grec_Dimension.Code);
                 j += 1;

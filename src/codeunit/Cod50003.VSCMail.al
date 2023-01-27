@@ -12,14 +12,14 @@ codeunit 50003 "BC6_VSC_Mail"
         Text017: label 'This operation is to be carried out only if you agree with the amount of the credit note issued, otherwise please notify the supplier by putting a copy to us.', Comment = 'FRA="Cette opération est à effectuer uniquement si vous être d''accord avec le montant de l''avoir émis, dans le cas contraire veuillez svp en avertir le fournisseur en nous mettant en copie."';
         Text018: label 'Email has been sent', Comment = 'FRA="Le mail a été envoyé"';
         Gtext_MailUser: List of [Text];
-        Gtext_alias: Text[30];
-        Gtext_Mail: Text[50];
+        Gtext_alias: Text;
+        Gtext_Mail: Text[100];
 
     procedure NewMessageAvoir(ToName: Text[80]; CCName: Text[80]; Subject: Text[260]; Body: Text[260]; AttachFileName: Text[260]; OpenDialog: Boolean; LRecPurchaseHeader: Record "Purchase Header"; Ptxt_DocNumber: Text[30]; LtxtUser: Text[30]) MailSent: Boolean;
     var
         LtxtAmount: Text[30];
         LtxtCurrency: Text[30];
-        LtxtVendorname: Text[50];
+        LtxtVendorname: Text[100];
         Ltxt_body: Text[1024];
     begin
         LRecPurchaseHeader.CALCFIELDS(LRecPurchaseHeader."BC6_Lines Amount");
@@ -70,7 +70,7 @@ codeunit 50003 "BC6_VSC_Mail"
         end;
     end;
 
-    local procedure TrimCode(Code: Code[20]) TrimString: Text[20];
+    local procedure TrimCode(Code: Code[20]) TrimString: Text;
     begin
         TrimString := COPYSTR(Code, 1, 1) + LOWERCASE(COPYSTR(Code, 2, STRLEN(Code) - 1))
     end;
@@ -124,7 +124,7 @@ codeunit 50003 "BC6_VSC_Mail"
             until ContAltAddrDateRange.NEXT() = 0;
     end;
 
-    procedure InsertAvoir(pNumAvoir: Code[20]; var EmailMessage: Codeunit "Email Message"; var TempBlob: codeunit "Temp Blob") AttachFileName: Text[250];
+    procedure InsertAvoir(pNumAvoir: Code[20]; var EmailMessageV: Codeunit "Email Message"; var TempBlobV: codeunit "Temp Blob") AttachFileName: Text[250];
     var
         InStream: InStream;
         FileNameLbl: label 'Avoir_%1%2';
@@ -132,10 +132,10 @@ codeunit 50003 "BC6_VSC_Mail"
     begin
         AttachmentFileName := STRSUBSTNO(FileNameLbl, pNumAvoir, '.pdf');
 
-        if not TempBlob.HasValue() then
+        if not TempBlobV.HasValue() then
             exit;
 
-        TempBlob.CreateInStream(InStream);
-        EmailMessage.AddAttachment(AttachmentFileName, 'SendMail', InStream);
+        TempBlobV.CreateInStream(InStream);
+        EmailMessageV.AddAttachment(AttachmentFileName, 'SendMail', InStream);
     end;
 }

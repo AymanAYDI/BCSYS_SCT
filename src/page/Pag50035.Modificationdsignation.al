@@ -1,7 +1,7 @@
 page 50035 "BC6_Modification désignation"
 {
     Caption = 'Modify description', Comment = 'FRA="Modification désignation"';
-    PageType = Card;
+    PageType = List;
     Permissions = tabledata "Sales Invoice Line" = rm,
                   tabledata "Sales Cr.Memo Line" = rm;
     SourceTable = "Integer";
@@ -36,9 +36,8 @@ page 50035 "BC6_Modification désignation"
             action(Ok)
             {
                 Caption = 'Ok', Comment = 'FRA="Ok"';
-                Promoted = true;
-                PromotedCategory = Process;
                 ApplicationArea = All;
+                Image = Action;
 
                 trigger OnAction()
                 begin
@@ -62,9 +61,8 @@ page 50035 "BC6_Modification désignation"
             action(Annuler)
             {
                 Caption = 'Cancel', Comment = 'FRA="Annuler"';
-                Promoted = true;
-                PromotedCategory = Process;
                 ApplicationArea = All;
+                Image = Cancel;
 
                 trigger OnAction()
                 begin
@@ -95,7 +93,7 @@ page 50035 "BC6_Modification désignation"
         Text003: label 'Credit Memo', Comment = 'FRA="Avoir"';
         Gtext_No: Text[10];
         Gtext_TypeDocument: Text[30];
-        Gtext_Designation: Text[50];
+        Gtext_Designation: Text[100];
 
     procedure SetPostedInvoice(Prec_SalesInvLine: Record "Sales Invoice Line")
     begin
