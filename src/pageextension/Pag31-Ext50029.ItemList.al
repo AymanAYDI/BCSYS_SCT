@@ -66,33 +66,33 @@ pageextension 50029 "BC6_ItemList" extends "Item List" //31
     var
     begin
         //Modif JX-AUD du 08/01/2013
-        IF Grecord_LedgerDefaultDimension.GET(27, "No.", Gcode_Axe1)
+        IF Grecord_LedgerDefaultDimension.GET(27, Rec."No.", Gcode_Axe1)
         THEN
             ShortcutDimCode[3] := Grecord_LedgerDefaultDimension."Dimension Value Code"
         ELSE
             ShortcutDimCode[3] := '';
-        IF Grecord_LedgerDefaultDimension.GET(27, "No.", Gcode_Axe2)
+        IF Grecord_LedgerDefaultDimension.GET(27, Rec."No.", Gcode_Axe2)
         THEN
             ShortcutDimCode[4] := Grecord_LedgerDefaultDimension."Dimension Value Code"
         ELSE
             ShortcutDimCode[4] := '';
-        IF Grecord_LedgerDefaultDimension.GET(27, "No.", Gcode_Axe3)
+        IF Grecord_LedgerDefaultDimension.GET(27, Rec."No.", Gcode_Axe3)
         THEN
             ShortcutDimCode[5] := Grecord_LedgerDefaultDimension."Dimension Value Code"
         ELSE
             ShortcutDimCode[5] := '';
-        IF Grecord_LedgerDefaultDimension.GET(27, "No.", Gcode_Axe4)
+        IF Grecord_LedgerDefaultDimension.GET(27, Rec."No.", Gcode_Axe4)
         THEN
             ShortcutDimCode[6] := Grecord_LedgerDefaultDimension."Dimension Value Code"
         ELSE
             ShortcutDimCode[6] := '';
 
-        IF Grecord_LedgerDefaultDimension.GET(27, "No.", Gcode_Axe5)
+        IF Grecord_LedgerDefaultDimension.GET(27, Rec."No.", Gcode_Axe5)
         THEN
             ShortcutDimCode[7] := Grecord_LedgerDefaultDimension."Dimension Value Code"
         ELSE
             ShortcutDimCode[7] := '';
-        IF Grecord_LedgerDefaultDimension.GET(27, "No.", Gcode_Axe6)
+        IF Grecord_LedgerDefaultDimension.GET(27, Rec."No.", Gcode_Axe6)
         THEN
             ShortcutDimCode[8] := Grecord_LedgerDefaultDimension."Dimension Value Code"
         ELSE

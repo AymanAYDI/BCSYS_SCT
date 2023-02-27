@@ -676,28 +676,26 @@ report 50069 "BC6_VAT synthesis customers"
     var
         Currency: Record Currency;
     begin
-        WITH TempCustomerLedgEntry DO BEGIN
-            IF GET(CustomerLedgEntry."Entry No.") THEN
-                EXIT;
-            TempCustomerLedgEntry := CustomerLedgEntry;
-            INSERT();
-            IF PrintAmountInLCY THEN BEGIN
-                CLEAR(TempCurrency);
-                TempCurrency."Amount Rounding Precision" := GLSetup."Amount Rounding Precision";
-                IF TempCurrency.INSERT() THEN;
-                EXIT;
-            END;
-            IF TempCurrency.GET("Currency Code") THEN
-                EXIT;
-            IF "Currency Code" <> '' THEN
-                Currency.GET("Currency Code")
-            ELSE BEGIN
-                CLEAR(Currency);
-                Currency."Amount Rounding Precision" := GLSetup."Amount Rounding Precision";
-            END;
-            TempCurrency := Currency;
-            TempCurrency.INSERT();
+        IF TempCustomerLedgEntry.GET(CustomerLedgEntry."Entry No.") THEN
+            EXIT;
+        TempCustomerLedgEntry := CustomerLedgEntry;
+        TempCustomerLedgEntry.INSERT();
+        IF PrintAmountInLCY THEN BEGIN
+            CLEAR(TempCurrency);
+            TempCurrency."Amount Rounding Precision" := GLSetup."Amount Rounding Precision";
+            IF TempCurrency.INSERT() THEN;
+            EXIT;
         END;
+        IF TempCurrency.GET(TempCustomerLedgEntry."Currency Code") THEN
+            EXIT;
+        IF TempCustomerLedgEntry."Currency Code" <> '' THEN
+            Currency.GET(TempCustomerLedgEntry."Currency Code")
+        ELSE BEGIN
+            CLEAR(Currency);
+            Currency."Amount Rounding Precision" := GLSetup."Amount Rounding Precision";
+        END;
+        TempCurrency := Currency;
+        TempCurrency.INSERT();
     end;
 
     local procedure GetPeriodIndex(Date: Date): Integer
@@ -721,31 +719,29 @@ report 50069 "BC6_VAT synthesis customers"
     begin
         TempCurrency2.Code := CurrencyCode;
         IF TempCurrency2.INSERT() THEN;
-        WITH TempCurrencyAmount DO BEGIN
-            FOR i := 1 TO ARRAYLEN(TotalCustomerLedgEntry) DO BEGIN
-                "Currency Code" := CurrencyCode;
-                Date := PeriodStartDate[i];
-                IF FIND() THEN BEGIN
-                    Amount := Amount + TotalCustomerLedgEntry[i]."Remaining Amount";
-                    MODIFY();
-                END ELSE BEGIN
-                    "Currency Code" := CurrencyCode;
-                    Date := PeriodStartDate[i];
-                    Amount := TotalCustomerLedgEntry[i]."Remaining Amount";
-                    INSERT();
-                END;
-            END;
-            "Currency Code" := CurrencyCode;
-            Date := 99991231D;
-            IF FIND() THEN BEGIN
-                Amount := Amount + TotalCustomerLedgEntry[1].Amount;
-                MODIFY();
+        FOR i := 1 TO ARRAYLEN(TotalCustomerLedgEntry) DO BEGIN
+            TempCurrencyAmount."Currency Code" := CurrencyCode;
+            TempCurrencyAmount.Date := PeriodStartDate[i];
+            IF TempCurrencyAmount.FIND() THEN BEGIN
+                TempCurrencyAmount.Amount := TempCurrencyAmount.Amount + TotalCustomerLedgEntry[i]."Remaining Amount";
+                TempCurrencyAmount.MODIFY();
             END ELSE BEGIN
-                "Currency Code" := CurrencyCode;
-                Date := 99991231D;
-                Amount := TotalCustomerLedgEntry[1].Amount;
-                INSERT();
+                TempCurrencyAmount."Currency Code" := CurrencyCode;
+                TempCurrencyAmount.Date := PeriodStartDate[i];
+                TempCurrencyAmount.Amount := TotalCustomerLedgEntry[i]."Remaining Amount";
+                TempCurrencyAmount.INSERT();
             END;
+        END;
+        TempCurrencyAmount."Currency Code" := CurrencyCode;
+        TempCurrencyAmount.Date := 99991231D;
+        IF TempCurrencyAmount.FIND() THEN BEGIN
+            TempCurrencyAmount.Amount := TempCurrencyAmount.Amount + TotalCustomerLedgEntry[1].Amount;
+            TempCurrencyAmount.MODIFY();
+        END ELSE BEGIN
+            TempCurrencyAmount."Currency Code" := CurrencyCode;
+            TempCurrencyAmount.Date := 99991231D;
+            TempCurrencyAmount.Amount := TotalCustomerLedgEntry[1].Amount;
+            TempCurrencyAmount.INSERT();
         END;
     end;
 }

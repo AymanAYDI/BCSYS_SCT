@@ -45,11 +45,11 @@ pageextension 50028 "BC6_ItemCard" extends "Item Card" //30
     begin
         //MODIF JX-AUD le 20/08/2012
         Grec_ItemUnitOfMeasure.INIT();
-        Grec_ItemUnitOfMeasure."Item No." := "No.";
+        Grec_ItemUnitOfMeasure."Item No." := Rec."No.";
         Grec_ItemUnitOfMeasure.Code := 'EUROS';
         Grec_ItemUnitOfMeasure."Qty. per Unit of Measure" := 1;
         Grec_ItemUnitOfMeasure.INSERT();
-        "Base Unit of Measure" := 'EUROS';
+        Rec."Base Unit of Measure" := 'EUROS';
         //MODIF JX-AUD le 20/08/2012
     end;
 }

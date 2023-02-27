@@ -101,11 +101,11 @@ page 50016 "BC6_F.A. Tracking"
     begin
         IF ((Rec."User status" = Rec."User status"::"Salarié CDD") OR
            (Rec."User status" = Rec."User status"::Presta)) AND (Rec."Release date" = 0D) THEN BEGIN
-            ERROR(Text001, "Fixed Asset No.");
+            ERROR(Text001, Rec."Fixed Asset No.");
             exit(false);
         END;
-        if "User name" = '' then begin
-            ERROR(Text002, "Fixed Asset No.");
+        if Rec."User name" = '' then begin
+            ERROR(Text002, Rec."Fixed Asset No.");
             exit(false);
         end;
     end;

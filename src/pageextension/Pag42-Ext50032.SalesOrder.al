@@ -21,12 +21,12 @@ pageextension 50032 "BC6_SalesOrder" extends "Sales Order" //42
                 ApplicationArea = All;
                 trigger OnLookup(var Text: Text): Boolean
                 begin
-                    LookupShortcutDimCode(9, ShortcutDimCode[9]);
+                    Rec.LookupShortcutDimCode(9, ShortcutDimCode[9]);
                 end;
 
                 trigger OnValidate()
                 begin
-                    ValidateShortcutDimCode(9, ShortcutDimCode[9]);
+                    Rec.ValidateShortcutDimCode(9, ShortcutDimCode[9]);
                 end;
             }
         }
@@ -74,22 +74,22 @@ pageextension 50032 "BC6_SalesOrder" extends "Sales Order" //42
                 begin
                     //Modif JX-AUD du 07/02/2013
                     IF (COMPANYNAME = 'VSC') OR (COMPANYNAME = 'VSC - RECETTE') THEN
-                        IF "Sell-to Customer No." = 'ASNCFGLX00' THEN
-                            IF "External Document No." = '' THEN
+                        IF Rec."Sell-to Customer No." = 'ASNCFGLX00' THEN
+                            IF Rec."External Document No." = '' THEN
                                 ERROR(Text003);
 
                     IF (COMPANYNAME = 'VSCT') OR (COMPANYNAME = 'VSCT - RECETTE') THEN
-                        IF "Sell-to Customer No." = 'ASNCF00000' THEN
-                            IF "External Document No." = '' THEN
+                        IF Rec."Sell-to Customer No." = 'ASNCF00000' THEN
+                            IF Rec."External Document No." = '' THEN
                                 ERROR(Text003);
                     //Fin modif JX-AUD du 07/02/2013
 
                     IF ApprovalMgt.PrePostApprovalCheckPurch(PurchaseHeader) THEN
                         IF PrepaymentMgt.TestSalesPrepayment(Rec) THEN
-                            ERROR(STRSUBSTNO(Text001, "Document Type", "No."))
+                            ERROR(STRSUBSTNO(Text001, Rec."Document Type", Rec."No."))
                         ELSE
                             IF PrepaymentMgt.TestSalesPayment(Rec) THEN
-                                ERROR(STRSUBSTNO(Text002, "Document Type", "No."))
+                                ERROR(STRSUBSTNO(Text002, Rec."Document Type", Rec."No."))
                             ELSE
                                 PostSalesOrder(CODEUNIT::"Sales-Post (Yes/No)", "Navigate After Posting"::"New Document");
                 END;
@@ -117,22 +117,22 @@ pageextension 50032 "BC6_SalesOrder" extends "Sales Order" //42
                 BEGIN
                     //Modif JX-AUD du 07/02/2013
                     IF (COMPANYNAME = 'VSC') OR (COMPANYNAME = 'VSC - RECETTE') THEN
-                        IF "Sell-to Customer No." = 'ASNCFGLX00' THEN
-                            IF "External Document No." = '' THEN
+                        IF Rec."Sell-to Customer No." = 'ASNCFGLX00' THEN
+                            IF Rec."External Document No." = '' THEN
                                 ERROR(Text003);
 
                     IF (COMPANYNAME = 'VSCT') OR (COMPANYNAME = 'VSCT - RECETTE') THEN
-                        IF "Sell-to Customer No." = 'ASNCF00000' THEN
-                            IF "External Document No." = '' THEN
+                        IF Rec."Sell-to Customer No." = 'ASNCF00000' THEN
+                            IF Rec."External Document No." = '' THEN
                                 ERROR(Text003);
                     //Fin modif JX-AUD du 07/02/2013
 
                     IF ApprovalMgt.PrePostApprovalCheckPurch(PurchaseHeader) THEN
                         IF PrepaymentMgt.TestSalesPrepayment(Rec) THEN
-                            ERROR(STRSUBSTNO(Text001, "Document Type", "No."))
+                            ERROR(STRSUBSTNO(Text001, Rec."Document Type", Rec."No."))
                         ELSE
                             IF PrepaymentMgt.TestSalesPayment(Rec) THEN
-                                ERROR(STRSUBSTNO(Text002, "Document Type", "No."))
+                                ERROR(STRSUBSTNO(Text002, Rec."Document Type", Rec."No."))
                             ELSE
                                 PostSalesOrder(CODEUNIT::"Sales-Post (Yes/No)", "Navigate After Posting"::"Posted Document");
                 END;

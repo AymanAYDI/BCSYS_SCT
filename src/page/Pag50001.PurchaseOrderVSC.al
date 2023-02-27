@@ -216,7 +216,7 @@ page 50001 "BC6_Purchase Order VSC"
             group(Facturation)
             {
                 Caption = 'Invoicing', Comment = 'FRA="Facturation"';
-                field("Pay-to Vendor No."; "Pay-to Vendor No.")
+                field("Pay-to Vendor No."; Rec."Pay-to Vendor No.")
                 {
                     ApplicationArea = All;
 
@@ -225,36 +225,36 @@ page 50001 "BC6_Purchase Order VSC"
                         PaytoVendorNoOnAfterValidate();
                     end;
                 }
-                field("Pay-to Contact No."; "Pay-to Contact No.")
+                field("Pay-to Contact No."; Rec."Pay-to Contact No.")
                 {
                     ApplicationArea = All;
                 }
-                field("Pay-to Name"; "Pay-to Name")
+                field("Pay-to Name"; Rec."Pay-to Name")
                 {
                     ApplicationArea = All;
                 }
-                field("Pay-to Address"; "Pay-to Address")
+                field("Pay-to Address"; Rec."Pay-to Address")
                 {
                     ApplicationArea = All;
                 }
-                field("Pay-to Address 2"; "Pay-to Address 2")
+                field("Pay-to Address 2"; Rec."Pay-to Address 2")
                 {
                     ApplicationArea = All;
                 }
-                field("Pay-to Post Code"; "Pay-to Post Code")
+                field("Pay-to Post Code"; Rec."Pay-to Post Code")
                 {
                     Caption = 'Pay-to Post Code/City', Comment = 'FRA="CP/Ville"';
                     ApplicationArea = All;
                 }
-                field("Pay-to City"; "Pay-to City")
+                field("Pay-to City"; Rec."Pay-to City")
                 {
                     ApplicationArea = All;
                 }
-                field("Pay-to Contact"; "Pay-to Contact")
+                field("Pay-to Contact"; Rec."Pay-to Contact")
                 {
                     ApplicationArea = All;
                 }
-                field("Shortcut Dimension 1 Code"; "Shortcut Dimension 1 Code")
+                field("Shortcut Dimension 1 Code"; Rec."Shortcut Dimension 1 Code")
                 {
                     ApplicationArea = All;
 
@@ -263,7 +263,7 @@ page 50001 "BC6_Purchase Order VSC"
                         ShortcutDimension1CodeOnAfterV();
                     end;
                 }
-                field("Shortcut Dimension 2 Code"; "Shortcut Dimension 2 Code")
+                field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
                 {
                     ApplicationArea = All;
 
@@ -272,31 +272,31 @@ page 50001 "BC6_Purchase Order VSC"
                         ShortcutDimension2CodeOnAfterV();
                     end;
                 }
-                field("Payment Terms Code"; "Payment Terms Code")
+                field("Payment Terms Code"; Rec."Payment Terms Code")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Due Date"; "Due Date")
+                field("BC6 Due Date"; Rec."Due Date")
                 {
                     ApplicationArea = All;
                 }
-                field("Payment Discount %"; "Payment Discount %")
+                field("Payment Discount %"; Rec."Payment Discount %")
                 {
                     ApplicationArea = All;
                 }
-                field("Pmt. Discount Date"; "Pmt. Discount Date")
+                field("Pmt. Discount Date"; Rec."Pmt. Discount Date")
                 {
                     ApplicationArea = All;
                 }
-                field("Payment Method Code"; "Payment Method Code")
+                field("Payment Method Code"; Rec."Payment Method Code")
                 {
                     ApplicationArea = All;
                 }
-                field("On Hold"; "On Hold")
+                field("On Hold"; Rec."On Hold")
                 {
                     ApplicationArea = All;
                 }
-                field("Prices Including VAT"; "Prices Including VAT")
+                field("Prices Including VAT"; Rec."Prices Including VAT")
                 {
                     ApplicationArea = All;
 
@@ -305,7 +305,7 @@ page 50001 "BC6_Purchase Order VSC"
                         PricesIncludingVATOnAfterValid();
                     end;
                 }
-                field("VAT Bus. Posting Group"; "VAT Bus. Posting Group")
+                field("VAT Bus. Posting Group"; Rec."VAT Bus. Posting Group")
                 {
                     ApplicationArea = All;
                 }
@@ -313,69 +313,69 @@ page 50001 "BC6_Purchase Order VSC"
             group(Livraison)
             {
                 Caption = 'Shipping', Comment = 'FRA="Livraison"';
-                field("BC6 Ship-to Name"; "Ship-to Name")
+                field("BC6 Ship-to Name"; Rec."Ship-to Name")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Ship-to Address"; "Ship-to Address")
+                field("BC6 Ship-to Address"; Rec."Ship-to Address")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Ship-to Address 2"; "Ship-to Address 2")
+                field("BC6 Ship-to Address 2"; Rec."Ship-to Address 2")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Ship-to Post Code"; "Ship-to Post Code")
+                field("BC6 Ship-to Post Code"; Rec."Ship-to Post Code")
                 {
                     Caption = 'Ship-to Post Code/City', Comment = 'FRA="CP/Ville destinataire"';
                     ApplicationArea = All;
                 }
-                field("BC6 Ship-to City"; "Ship-to City")
+                field("BC6 Ship-to City"; Rec."Ship-to City")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Ship-to Contact"; "Ship-to Contact")
+                field("BC6 Ship-to Contact"; Rec."Ship-to Contact")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Import Vendor Email"; "BC6_Import Vendor Email")
+                field("BC6 Import Vendor Email"; Rec."BC6_Import Vendor Email")
                 {
                     Importance = Additional;
                     ApplicationArea = All;
                 }
-                field("BC6 Location Code"; "Location Code")
+                field("BC6 Location Code"; Rec."Location Code")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Inbound Whse. Handling Time"; "Inbound Whse. Handling Time")
+                field("BC6 Inbound Whse. Handling Time"; Rec."Inbound Whse. Handling Time")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Shipment Method Code"; "Shipment Method Code")
+                field("BC6 Shipment Method Code"; Rec."Shipment Method Code")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Lead Time Calculation"; "Lead Time Calculation")
+                field("BC6 Lead Time Calculation"; Rec."Lead Time Calculation")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Requested Receipt Date"; "Requested Receipt Date")
+                field("BC6 Requested Receipt Date"; Rec."Requested Receipt Date")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Promised Receipt Date"; "Promised Receipt Date")
+                field("BC6 Promised Receipt Date"; Rec."Promised Receipt Date")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Expected Receipt Date"; "Expected Receipt Date")
+                field("BC6 Expected Receipt Date"; Rec."Expected Receipt Date")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Sell-to Customer No."; "Sell-to Customer No.")
+                field("BC6 Sell-to Customer No."; Rec."Sell-to Customer No.")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Ship-to Code"; "Ship-to Code")
+                field("BC6 Ship-to Code"; Rec."Ship-to Code")
                 {
                     ApplicationArea = All;
                 }
@@ -383,7 +383,7 @@ page 50001 "BC6_Purchase Order VSC"
             group(International)
             {
                 Caption = 'Foreign Trade', Comment = 'FRA="International"';
-                field("BC6 Currency Code"; "Currency Code")
+                field("BC6 Currency Code"; Rec."Currency Code")
                 {
                     ApplicationArea = All;
 
@@ -403,23 +403,23 @@ page 50001 "BC6_Purchase Order VSC"
                         CurrencyCodeOnAfterValidate();
                     end;
                 }
-                field("BC6 Transaction Type"; "Transaction Type")
+                field("BC6 Transaction Type"; Rec."Transaction Type")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Transaction Specification"; "Transaction Specification")
+                field("BC6 Transaction Specification"; Rec."Transaction Specification")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Transport Method"; "Transport Method")
+                field("BC6 Transport Method"; Rec."Transport Method")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Entry Point"; "Entry Point")
+                field("BC6 Entry Point"; Rec."Entry Point")
                 {
                     ApplicationArea = All;
                 }
-                field("BC6 Area"; "Area")
+                field("BC6 Area"; Rec."Area")
                 {
                     ApplicationArea = All;
                 }
@@ -427,7 +427,7 @@ page 50001 "BC6_Purchase Order VSC"
             group(Acompte)
             {
                 Caption = 'Prepayment', Comment = 'FRA="Acompte"';
-                field("Prepayment %"; "Prepayment %")
+                field("Prepayment %"; Rec."Prepayment %")
                 {
                     ApplicationArea = All;
 
@@ -436,27 +436,27 @@ page 50001 "BC6_Purchase Order VSC"
                         Prepayment37OnAfterValidate();
                     end;
                 }
-                field("Compress Prepayment"; "Compress Prepayment")
+                field("Compress Prepayment"; Rec."Compress Prepayment")
                 {
                     ApplicationArea = All;
                 }
-                field("Prepmt. Payment Terms Code"; "Prepmt. Payment Terms Code")
+                field("Prepmt. Payment Terms Code"; Rec."Prepmt. Payment Terms Code")
                 {
                     ApplicationArea = All;
                 }
-                field("Prepayment Due Date"; "Prepayment Due Date")
+                field("Prepayment Due Date"; Rec."Prepayment Due Date")
                 {
                     ApplicationArea = All;
                 }
-                field("Prepmt. Payment Discount %"; "Prepmt. Payment Discount %")
+                field("Prepmt. Payment Discount %"; Rec."Prepmt. Payment Discount %")
                 {
                     ApplicationArea = All;
                 }
-                field("Prepmt. Pmt. Discount Date"; "Prepmt. Pmt. Discount Date")
+                field("Prepmt. Pmt. Discount Date"; Rec."Prepmt. Pmt. Discount Date")
                 {
                     ApplicationArea = All;
                 }
-                field("Vendor Cr. Memo No."; "Vendor Cr. Memo No.")
+                field("Vendor Cr. Memo No."; Rec."Vendor Cr. Memo No.")
                 {
                     ApplicationArea = All;
                 }
@@ -639,7 +639,7 @@ page 50001 "BC6_Purchase Order VSC"
                 var
                     ApprovalEntries: Page "Approval Entries";
                 begin
-                    ApprovalEntries.SetRecordFilters(DATABASE::"Purchase Header", "Document Type", Rec."No.");
+                    ApprovalEntries.SetRecordFilters(DATABASE::"Purchase Header", Rec."Document Type", Rec."No.");
                     ApprovalEntries.RUN();
                 end;
             }

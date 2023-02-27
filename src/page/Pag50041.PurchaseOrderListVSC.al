@@ -478,7 +478,7 @@ page 50041 "BC6_Purchase Order List VSC"
                         WorkflowWebhookManagement: Codeunit "Workflow Webhook Management";
                     begin
                         ApprovalsMgmt.OnCancelPurchaseApprovalRequest(Rec);
-                        WorkflowWebhookManagement.FindAndCancel(RecordId);
+                        WorkflowWebhookManagement.FindAndCancel(Rec.RecordId);
                     end;
                 }
                 action("Envoyer commande achat IC")

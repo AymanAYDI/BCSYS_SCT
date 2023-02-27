@@ -369,7 +369,7 @@ page 50046 "BC6 Pur. Credit Memos List VSC"
                         WorkflowWebhookManagement: Codeunit "Workflow Webhook Management";
                     begin
                         ApprovalsMgmt.OnCancelPurchaseApprovalRequest(Rec);
-                        WorkflowWebhookManagement.FindAndCancel(RecordId);
+                        WorkflowWebhookManagement.FindAndCancel(Rec.RecordId);
                     end;
                 }
             }

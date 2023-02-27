@@ -34,14 +34,14 @@ page 50006 "BC6 Purch. Cr. Memo Subform"
                         NoOnAfterValidate();
                     end;
                 }
-                field("Cross-Reference No."; "Item Reference No.")
+                field("Cross-Reference No."; Rec."Item Reference No.")
                 {
                     Visible = false;
                     ApplicationArea = All;
 
                     trigger OnLookup(var Text: Text): Boolean
                     begin
-                        GetPurchHeader();
+                        Rec.GetPurchHeader();
                         ItemReferenceMgt.PurchaseReferenceNoLookUp(Rec, PurchHeader);
                         InsertExtendedText(FALSE);
                     end;

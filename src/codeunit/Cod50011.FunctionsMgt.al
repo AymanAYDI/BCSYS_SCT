@@ -619,28 +619,26 @@ codeunit 50011 "BC6_FunctionsMgt"
         Cont: Record Contact;
         ContBusRelation: Record "Contact Business Relation";
     begin
-        WITH PurchHeader DO BEGIN
-            IF "Buy-from Vendor No." <> '' THEN BEGIN
-                IF Cont.GET("Buy-from Contact No.") THEN
-                    Cont.SETRANGE("Company No.", Cont."Company No.")
-                ELSE BEGIN
-                    ContBusRelation.RESET();
-                    ContBusRelation.SETCURRENTKEY("Link to Table", "No.");
-                    ContBusRelation.SETRANGE("Link to Table", ContBusRelation."Link to Table"::Vendor);
-                    ContBusRelation.SETRANGE("No.", "Buy-from Vendor No.");
-                    IF ContBusRelation.FINDFIRST() THEN
-                        Cont.SETRANGE("Company No.", ContBusRelation."Contact No.")
-                    ELSE
-                        Cont.SETRANGE("No.", '');
-                END;
-
-                IF Cont.GET("Buy-from Contact No.") THEN;
-            END ELSE
-                Cont.SETRANGE("No.", '');
-            IF PAGE.RUNMODAL(0, Cont) = ACTION::LookupOK THEN BEGIN
-                VALIDATE("Buy-from Contact No.", Cont."No.");
-                MODIFY(TRUE);
+        IF PurchHeader."Buy-from Vendor No." <> '' THEN BEGIN
+            IF Cont.GET(PurchHeader."Buy-from Contact No.") THEN
+                Cont.SETRANGE("Company No.", Cont."Company No.")
+            ELSE BEGIN
+                ContBusRelation.RESET();
+                ContBusRelation.SETCURRENTKEY("Link to Table", "No.");
+                ContBusRelation.SETRANGE("Link to Table", ContBusRelation."Link to Table"::Vendor);
+                ContBusRelation.SETRANGE("No.", PurchHeader."Buy-from Vendor No.");
+                IF ContBusRelation.FINDFIRST() THEN
+                    Cont.SETRANGE("Company No.", ContBusRelation."Contact No.")
+                ELSE
+                    Cont.SETRANGE("No.", '');
             END;
+
+            IF Cont.GET(PurchHeader."Buy-from Contact No.") THEN;
+        END ELSE
+            Cont.SETRANGE("No.", '');
+        IF PAGE.RUNMODAL(0, Cont) = ACTION::LookupOK THEN BEGIN
+            PurchHeader.VALIDATE("Buy-from Contact No.", Cont."No.");
+            PurchHeader.MODIFY(TRUE);
         END;
     end;
 
@@ -649,13 +647,11 @@ codeunit 50011 "BC6_FunctionsMgt"
         OrderAddress: Record "Order Address";
         Text000: Label 'The Ship-to Address has been changed', Comment = 'FRA="L''adresse destinataire a changé."';
     begin
-        WITH PurchHeader DO BEGIN
-            OrderAddress.SETRANGE("Vendor No.", "Buy-from Vendor No.");
-            IF PAGE.RUNMODAL(0, OrderAddress) = ACTION::LookupOK THEN BEGIN
-                VALIDATE("Order Address Code", OrderAddress.Code);
-                MODIFY(TRUE);
-                MESSAGE(Text000);
-            END;
+        OrderAddress.SETRANGE("Vendor No.", PurchHeader."Buy-from Vendor No.");
+        IF PAGE.RUNMODAL(0, OrderAddress) = ACTION::LookupOK THEN BEGIN
+            PurchHeader.VALIDATE("Order Address Code", OrderAddress.Code);
+            PurchHeader.MODIFY(TRUE);
+            MESSAGE(Text000);
         END;
     end;
     //---Codeunit7181---

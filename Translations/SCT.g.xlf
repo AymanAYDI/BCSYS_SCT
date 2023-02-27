@@ -1233,10 +1233,10 @@
           <note from="Developer" annotates="general" priority="2">FRA="Confirmez-vous la validation des périodes sur la société %1 ?"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Duplicating records - NamedType text112</note>
         </trans-unit>
-        <trans-unit id="Codeunit 3822108280 - Method 2283919174 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Codeunit 3822108280 - Method 2283919174 - NamedType 3651676854" size-unit="char" translate="yes" xml:space="preserve">
           <source>Users have been updated on all companies</source>
           <note from="Developer" annotates="general" priority="2">FRA="Les utilisateurs ont été mis à jour sur toutes les sociétés"</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Duplicating records - Method CopierPeriodesValidation - NamedType Text001</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Duplicating records - Method CopierPeriodesValidation - NamedType Text001V</note>
         </trans-unit>
         <trans-unit id="Codeunit 3822108280 - Method 2283919174 - NamedType 2247286032" size-unit="char" translate="yes" xml:space="preserve">
           <source>%1 must be within the allowed posting range: %2..%3</source>

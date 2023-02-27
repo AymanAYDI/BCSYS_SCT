@@ -455,7 +455,7 @@ page 50103 "BC6 Purchase Invoice VSC (Old)"
                     var
                         ApprovalEntries: Page "Approval Entries";
                     begin
-                        ApprovalEntries.SetRecordFilters(DATABASE::"Purchase Header", "Document Type", Rec."No.");
+                        ApprovalEntries.SetRecordFilters(DATABASE::"Purchase Header", Rec."Document Type", Rec."No.");
                         ApprovalEntries.RUN();
                     end;
                 }
@@ -605,7 +605,7 @@ page 50103 "BC6 Purchase Invoice VSC (Old)"
                         WorkflowWebhookManagement: Codeunit "Workflow Webhook Management";
                     begin
                         ApprovalsMgmt.OnCancelPurchaseApprovalRequest(Rec);
-                        WorkflowWebhookManagement.FindAndCancel(RecordId);
+                        WorkflowWebhookManagement.FindAndCancel(Rec.RecordId);
                     end;
                 }
             }
@@ -1164,10 +1164,10 @@ page 50103 "BC6 Purchase Invoice VSC (Old)"
         if ApplicationAreaMgmtFacade.IsFoundationEnabled() then
             LinesInstructionMgt.PurchaseCheckAllLinesHaveQuantityAssigned(Rec);
 
-        SendToPosting(PostingCodeunitID);
+        Rec.SendToPosting(PostingCodeunitID);
 
-        IsScheduledPosting := "Job Queue Status" = "Job Queue Status"::"Scheduled for Posting";
-        DocumentIsPosted := (not PurchaseHeader.Get("Document Type", "No.")) or IsScheduledPosting;
+        IsScheduledPosting := Rec."Job Queue Status" = Rec."Job Queue Status"::"Scheduled for Posting";
+        DocumentIsPosted := (not PurchaseHeader.Get(Rec."Document Type", Rec."No.")) or IsScheduledPosting;
 
         if IsScheduledPosting then
             CurrPage.Close();
@@ -1181,7 +1181,7 @@ page 50103 "BC6 Purchase Invoice VSC (Old)"
             "Navigate After Posting"::"Posted Document":
 
                 if IsOfficeAddin then begin
-                    PurchInvHeader.SetRange("Pre-Assigned No.", "No.");
+                    PurchInvHeader.SetRange("Pre-Assigned No.", Rec."No.");
                     PurchInvHeader.SetRange("Order No.", '');
                     if PurchInvHeader.FindFirst() then
                         PAGE.Run(PAGE::"Posted Purchase Invoice", PurchInvHeader);
@@ -1206,7 +1206,7 @@ page 50103 "BC6 Purchase Invoice VSC (Old)"
         OpenPostedPurchaseInvQst: Label 'The invoice is posted as number %1 and moved to the Posted Purchase Invoices window.\\Do you want to open the posted invoice?', Comment = 'FRA="La facture est validée sous le numéro %1 et déplacée vers la fenêtre Factures d''achat validées.\\Voulez-vous ouvrir la facture validée ?"';
 
     begin
-        PurchInvHeader.SetRange("Pre-Assigned No.", "No.");
+        PurchInvHeader.SetRange("Pre-Assigned No.", Rec."No.");
         PurchInvHeader.SetRange("Order No.", '');
         if PurchInvHeader.FindFirst() then
             if InstructionMgt.ShowConfirm(StrSubstNo(OpenPostedPurchaseInvQst, PurchInvHeader."No."),
@@ -1220,7 +1220,7 @@ page 50103 "BC6 Purchase Invoice VSC (Old)"
         TotalsMismatchErr: Label 'The invoice cannot be posted because the total is different from the total on the related incoming document.', Comment = 'FRA="La facture ne peut pas être affichée parce que le total est différent du total sur le document entrant connexe."';
 
     begin
-        if not IsTotalValid() then
+        if not Rec.IsTotalValid() then
             Error(TotalsMismatchErr);
     end;
 }

@@ -385,7 +385,7 @@ page 50042 "BC6_Purchase Invoices VSC"
                         WorkflowWebhookManagement: Codeunit "Workflow Webhook Management";
                     begin
                         ApprovalsMgmt.OnCancelPurchaseApprovalRequest(Rec);
-                        WorkflowWebhookManagement.FindAndCancel(RecordId);
+                        WorkflowWebhookManagement.FindAndCancel(Rec.RecordId);
                     end;
                 }
                 action("Payer ce document")

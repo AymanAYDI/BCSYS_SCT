@@ -30,12 +30,12 @@ page 50002 "BC6 Purchase Order Subform VSC"
         {
             repeater(Tableaulignes)
             {
-                field(Type; "Type")
+                field(Type; Rec."Type")
                 {
                     Editable = false;
                     ApplicationArea = All;
                 }
-                field("No."; "No.")
+                field("No."; Rec."No.")
                 {
                     Editable = false;
                     ApplicationArea = All;
@@ -46,7 +46,7 @@ page 50002 "BC6 Purchase Order Subform VSC"
                         NoOnAfterValidate();
                     end;
                 }
-                field("Cross-Reference No."; "Item Reference No.")
+                field("Cross-Reference No."; Rec."Item Reference No.")
                 {
                     Editable = false;
                     Visible = false;
@@ -54,7 +54,7 @@ page 50002 "BC6 Purchase Order Subform VSC"
 
                     trigger OnLookup(var Text: Text): Boolean
                     begin
-                        GetPurchHeader();
+                        Rec.GetPurchHeader();
                         ItemReferenceMgt.PurchaseReferenceNoLookUp(Rec, PurchHeader);
                         InsertExtendedText(FALSE);
                     end;
@@ -113,25 +113,25 @@ page 50002 "BC6 Purchase Order Subform VSC"
                     Visible = false;
                     ApplicationArea = All;
                 }
-                field("Line Discount Amount"; "Line Discount Amount")
+                field("Line Discount Amount"; Rec."Line Discount Amount")
                 {
                     Editable = false;
                     Visible = false;
                     ApplicationArea = All;
                 }
-                field("Prepayment %"; "Prepayment %")
+                field("Prepayment %"; Rec."Prepayment %")
                 {
                     Editable = false;
                     Visible = false;
                     ApplicationArea = All;
                 }
-                field("Prepmt. Line Amount"; "Prepmt. Line Amount")
+                field("Prepmt. Line Amount"; Rec."Prepmt. Line Amount")
                 {
                     Editable = false;
                     Visible = false;
                     ApplicationArea = All;
                 }
-                field("Prepmt. Amt. Inv."; "Prepmt. Amt. Inv.")
+                field("Prepmt. Amt. Inv."; Rec."Prepmt. Amt. Inv.")
                 {
                     Editable = false;
                     Visible = false;
