@@ -104,17 +104,21 @@ xmlport 50023 "BC6_Yooz Import Payable NY"
         OComp: Text;
 
     trigger OnPreXMLport()
+    var
+        VSCSettings: Record "BC6_VSC Settings";
     begin
-        CASE COMPANYNAME OF
-            'VFEC':
-                CompName := 'VSCG';
-            'Agence':
-                CompName := 'AGVSC';
-            'VSC':
-                CompName := 'VSC';
-            'VSCT':
-                CompName := 'VSCT';
-        END;
+        VSCSettings.Get();
+        VSCSettings.TestField("Company Name Import/Export");
+        CompName := VSCSettings."Company Name Import/Export";
+        //         'VFEC':
+        //             CompName := 'VSCG';
+        //         'Agence':
+        //             CompName := 'AGVSC';
+        //         'VSC':
+        //             CompName := 'VSC';
+        //         'VSCT':
+        //             CompName := 'VSCT';
+        // END;
     end;
 
     trigger OnPostXMLport()

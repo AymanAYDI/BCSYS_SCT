@@ -260,21 +260,25 @@ xmlport 50015 "BC6_Export Magnitude"
                 end;
 
                 trigger OnAfterGetRecord()
+                var
+                    VSCSettings: Record "BC6_VSC Settings";
                 begin
                     d_ca := 'C';
                     d_dp := Gtxt_Annee + '.' + Gtxt_Mois;
 
                     d_ru := '';
-                    case COMPANYNAME of
-                        'VSCT', 'VSCT TEST':
-                            d_ru := 'GLI85';
-                        'VSC', 'VSC TEST':
-                            d_ru := 'GLI80';
-                        'VFEC', 'VFEC TEST':
-                            d_ru := 'GLI81';
-                        'Agence', 'Agence TEST':
-                            d_ru := 'GLI82';
-                    end;
+                    VSCSettings.Get();
+                    VSCSettings.TestField("Company Name Import/Export");
+                    d_ru := VSCSettings."Company Name Import/Export";
+                    //         'VSCT', 'VSCT TEST':
+                    //             d_ru := 'GLI85';
+                    //         'VSC', 'VSC TEST':
+                    //             d_ru := 'GLI80';
+                    //         'VFEC', 'VFEC TEST':
+                    //             d_ru := 'GLI81';
+                    //         'Agence', 'Agence TEST':
+                    //             d_ru := 'GLI82';
+                    // end;
 
                     d_tftr := '';
                     d_metier := '';

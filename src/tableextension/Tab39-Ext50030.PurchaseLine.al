@@ -33,6 +33,13 @@ tableextension 50030 "BC6_PurchaseLine" extends "Purchase Line" //39
         {
         }
     }
+    procedure ShowShortcutDimCodeV(var ShortcutDimCode: array[10] of Code[20])
+    var
+        FunctionsMgt: Codeunit BC6_FunctionsMgt;
+    begin
+        FunctionsMgt.Cdu408_GetShortcutDimensions("Dimension Set ID", ShortcutDimCode);
+    end;
+
     procedure SetCompany(NameSociety: Text[30])
     begin
         PurchHeader.CHANGECOMPANY(NameSociety);

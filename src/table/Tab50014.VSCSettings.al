@@ -55,6 +55,11 @@ table 50014 "BC6_VSC Settings"
             Caption = 'Type URL', Comment = 'FRA="Type URL"';
             DataClassification = CustomerContent;
         }
+        field(31; "Company Name Import/Export"; Text[30])
+        {
+            Caption = 'Company Name Import/Export', Comment = 'FRA="Nom société Import/Export"';
+            DataClassification = CustomerContent;
+        }
     }
 
     keys

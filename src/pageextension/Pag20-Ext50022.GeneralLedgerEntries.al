@@ -45,13 +45,6 @@ pageextension 50022 "BC6_GeneralLedgerEntries" extends "General Ledger Entries" 
                 ApplicationArea = All;
             }
         }
-        addafter("FA Entry No.")
-        {
-            field("BC6_External Document No."; Rec."External Document No.")
-            {
-                ApplicationArea = All;
-            }
-        }
         modify("Entry No.")
         {
             Visible = false;

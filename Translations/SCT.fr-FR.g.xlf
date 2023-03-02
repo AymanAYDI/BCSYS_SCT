@@ -675,6 +675,12 @@
           <note from="Xliff Generator" annotates="general" priority="3">Table BC6_VSC Settings - Field BCUse Temporary Path - Property Caption</note>
           <target>Utiliser répertoire temporaire</target>
         </trans-unit>
+        <trans-unit id="Table 885204053 - Field 4283165714 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Company Name Import/Export</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Nom société Import/Export"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table BC6_VSC Settings - Field Company Name Import/Export - Property Caption</note>
+          <target>Nom société Import/Export</target>
+        </trans-unit>
         <trans-unit id="Table 885204053 - Field 1067130403 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Avis Virement : Nom du responsable</source>
           <note from="Developer" annotates="general" priority="2">FRA="Avis Virement : Nom du responsable"</note>
@@ -1400,10 +1406,10 @@
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Duplicating records - NamedType text112</note>
           <target>Confirmez-vous la validation des périodes sur la société %1 ?</target>
         </trans-unit>
-        <trans-unit id="Codeunit 3822108280 - Method 2283919174 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
+        <trans-unit id="Codeunit 3822108280 - Method 2283919174 - NamedType 3651676854" size-unit="char" translate="yes" xml:space="preserve">
           <source>Users have been updated on all companies</source>
           <note from="Developer" annotates="general" priority="2">FRA="Les utilisateurs ont été mis à jour sur toutes les sociétés"</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Duplicating records - Method CopierPeriodesValidation - NamedType Text001</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Duplicating records - Method CopierPeriodesValidation - NamedType Text001V</note>
           <target>Les utilisateurs ont été mis à jour sur toutes les sociétés</target>
         </trans-unit>
         <trans-unit id="Codeunit 3822108280 - Method 2283919174 - NamedType 2247286032" size-unit="char" translate="yes" xml:space="preserve">
@@ -1448,6 +1454,12 @@
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method Fct_OnBeforeSelectPostOrderOptionCodeunit91 - NamedType Text003</note>
           <target>Souhaitez-vous valider ce document en réception ?</target>
         </trans-unit>
+        <trans-unit id="Codeunit 306476849 - Method 2015854606 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
+          <source>This Shortcut Dimension is not defined in the %1.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Ce racourci axe n'est pas défini dans les %1."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method LookupDimValueCodeCDU408 - NamedType Text002</note>
+          <target>Ce racourci axe n'est pas défini dans les %1.</target>
+        </trans-unit>
         <trans-unit id="Codeunit 306476849 - Method 880957065 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve">
           <source>The Ship-to Address has been changed</source>
           <note from="Developer" annotates="general" priority="2">FRA="L'adresse destinataire a changé."</note>
@@ -1471,6 +1483,18 @@
           <note from="Developer" annotates="general" priority="2">FRA="L'axe analytique utilisé dans %1 %2, %3, %4 a provoqué une erreur. %5"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method OnCheckDimensionsOnAfterAssignDimTableIDsCodeunit11 - NamedType Text012</note>
           <target>L'axe analytique utilisé dans %1 %2, %3, %4 a provoqué une erreur. %5</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 306476849 - Method 1584099060 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
+          <source>This Shortcut Dimension is not defined in the %1.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Ce racourci axe n'est pas défini dans les %1."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method ValidateDimValueCode - NamedType Text002</note>
+          <target>Ce racourci axe n'est pas défini dans les %1.</target>
+        </trans-unit>
+        <trans-unit id="Codeunit 306476849 - Method 1584099060 - NamedType 95063322" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 is not an available %2 for that dimension.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="%1 : %2 n'est pas une %3 disponible pour cet axe analytique."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method ValidateDimValueCode - NamedType Text003</note>
+          <target>%1 : %2 n'est pas une %3 disponible pour cet axe analytique.</target>
         </trans-unit>
         <trans-unit id="Codeunit 378970871 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
           <source>One of your slips is being entered. Do you want to add this payment to this slip?</source>
@@ -5331,15 +5355,15 @@
         </trans-unit>
         <trans-unit id="Page 885204053 - Control 1741918192 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>PDF Instance</source>
-          <note from="Developer" annotates="general" priority="2">FRA="BC Test Mode"</note>
+          <note from="Developer" annotates="general" priority="2">FRA="BC en mode Test"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page BC6_VSC Settings - Control BC Test Mode - Property Caption</note>
-          <target>BC Test Mode</target>
+          <target>BC en mode Test</target>
         </trans-unit>
         <trans-unit id="Page 885204053 - Control 2645239153 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>PDF Instance</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Draft Notice"</note>
+          <note from="Developer" annotates="general" priority="2">FRA="Avis de virement"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page BC6_VSC Settings - Control Draft Notice - Property Caption</note>
-          <target>Draft Notice</target>
+          <target>Avis de virement</target>
         </trans-unit>
         <trans-unit id="Page 885204053 - Control 1647001711 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>PDF Instance</source>
@@ -6717,6 +6741,12 @@
           <source>Détail TVA</source>
           <note from="Developer" annotates="general" priority="2"/>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Bon de réception achat - Control VATDetail - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 1649977559 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Cash Pooling</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Cash Pooling"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Cash Pooling - Property Caption</note>
+          <target>Cash Pooling</target>
         </trans-unit>
         <trans-unit id="Report 399322351 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Order</source>
@@ -8182,9 +8212,9 @@
         </trans-unit>
         <trans-unit id="Report 1646938579 - NamedType 3851306719" size-unit="char" translate="yes" xml:space="preserve">
           <source>Phone No.</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Nø téléphone"</note>
+          <note from="Developer" annotates="general" priority="2">FRA="N° téléphone"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Draft notice VSC - NamedType CompanyInformation__Phone_No__CaptionLbl</note>
-          <target>Nø téléphone</target>
+          <target>N° téléphone</target>
         </trans-unit>
         <trans-unit id="Report 1646938579 - NamedType 247272984" size-unit="char" translate="yes" xml:space="preserve">
           <source>VAT Registration No.</source>
@@ -18153,17 +18183,18 @@
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_ApprovalEntry - Field BC6_Vendor Name - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1425254293 - Field 3643649038 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
-          <source>BC6_CGV</source>
+          <source>CGV</source>
           <note from="Developer" annotates="general" priority="2"/>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_CompanyInformation - Field BC6_CGV - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1425254293 - Field 2392954269 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3469146285">
           <source>Leader</source>
-          <note from="Developer" annotates="general" priority="2"/>
+          <note from="Developer" annotates="general" priority="2">FRA="Dirigeant"</note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_CompanyInformation - Field BC6_Leader - Property Caption</note>
+          <target>Dirigeant</target>
         </trans-unit>
         <trans-unit id="TableExtension 2742365984 - Field 764996304 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 2007144088">
-          <source>BC6_Document Prepaid</source>
+          <source>N° Document Prépayé</source>
           <note from="Developer" annotates="general" priority="2"/>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_CVLedgerEntryBuffer - Field BC6_Document Prepaid - Property Caption</note>
         </trans-unit>
@@ -18347,7 +18378,7 @@
           <target>N° Fournisseur</target>
         </trans-unit>
         <trans-unit id="TableExtension 4084347923 - Field 2245474066 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 149196923">
-          <source>BC6_Description</source>
+          <source>Description</source>
           <note from="Developer" annotates="general" priority="2"/>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_InvoicePostingBuffer - Field BC6_Description - Property Caption</note>
         </trans-unit>

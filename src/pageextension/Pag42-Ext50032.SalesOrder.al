@@ -26,7 +26,7 @@ pageextension 50032 "BC6_SalesOrder" extends "Sales Order" //42
 
                 trigger OnValidate()
                 begin
-                    Rec.ValidateShortcutDimCode(9, ShortcutDimCode[9]);
+                    Rec.BC6_ValidateShortcutDimCode(9, ShortcutDimCode[9]);
                 end;
             }
         }

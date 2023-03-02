@@ -26,7 +26,7 @@ xmlport 50026 "BC6_Timing"
                 textelement(Gtxt_DateComptabilisation)
                 {
                 }
-                textelement(Gtxt_Quantit)
+                textelement(Gtxt_Quantité)
                 {
                 }
                 textelement(Gtxt_Axe0)
@@ -44,7 +44,6 @@ xmlport 50026 "BC6_Timing"
                 trigger OnBeforeInsertRecord()
                 VAR
                     Nb: Integer;
-                    Gtxt_Quantité: Text;
                 BEGIN
                     //Modif JX-AUD du 22/02/2012
                     Gint_CompteurLigne += 1;
@@ -530,8 +529,8 @@ xmlport 50026 "BC6_Timing"
         //EnterCell1(2, 10, 'Quantit‚ cde aprŠs', TRUE, FALSE, FALSE);
         //EnterCell1(2, 11, 'Nø commande', TRUE, FALSE, FALSE);
 
-        EnterCell1(2, 1, 'Nø commande', TRUE, FALSE, FALSE);
-        EnterCell1(2, 2, 'Nø ligne commande', TRUE, FALSE, FALSE);
+        EnterCell1(2, 1, 'N° commande', TRUE, FALSE, FALSE);
+        EnterCell1(2, 2, 'N° ligne commande', TRUE, FALSE, FALSE);
         EnterCell1(2, 3, 'Quantité ligne initiale', TRUE, FALSE, FALSE);
         EnterCell1(2, 4, 'Quantité ajoutée par F2i', TRUE, FALSE, FALSE);
         EnterCell1(2, 5, 'Quantité ligne cmd après', TRUE, FALSE, FALSE);

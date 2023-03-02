@@ -16,6 +16,11 @@ page 50048 "BC6_VSC Settings"
                 {
                     ApplicationArea = All;
                 }
+                field("Company Name Import/Export"; Rec."Company Name Import/Export")
+                {
+                    ApplicationArea = All;
+                }
+
                 field("BC Path"; Rec."BC Path")
                 {
                     ApplicationArea = All;
@@ -23,7 +28,7 @@ page 50048 "BC6_VSC Settings"
             }
             group("BC Test Mode")
             {
-                Caption = 'PDF Instance', Comment = 'FRA="BC Test Mode"';
+                Caption = 'PDF Instance', Comment = 'FRA="BC en mode Test"';
                 field("BBC Test Mode>"; Rec."BC Test Mode")
                 {
                     ApplicationArea = All;
@@ -35,7 +40,7 @@ page 50048 "BC6_VSC Settings"
             }
             group("Draft Notice")
             {
-                Caption = 'PDF Instance', Comment = 'FRA="Draft Notice"';
+                Caption = 'PDF Instance', Comment = 'FRA="Avis de virement"';
                 field("Draft Account. Depart. Manager"; Rec."Draft Account. Dep. Manag")
                 {
                     ApplicationArea = All;

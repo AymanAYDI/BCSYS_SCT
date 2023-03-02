@@ -187,7 +187,7 @@ codeunit 50011 "BC6_FunctionsMgt"
     procedure OnAfterConfirmPostCodeunit81(var SalesHeader: Record "Sales Header")
     var
         Lrec_DimensionValue: Record "Dimension Value";
-        Lrec_Dimension: Record "Sales Line";
+        Lrec_Dimension: Record Dimension;
         Lrec_SalesLine: Record "Sales Line";
         Lcode_AxeReserve: Code[10];
         LCode_DimCode: array[50] of Code[20];
@@ -279,8 +279,10 @@ codeunit 50011 "BC6_FunctionsMgt"
         if CONFIRM(Text003) then begin
             PurchaseHeader.Receive := true;
             PurchaseHeader.Invoice := false;
-        end else
+        end else begin
+            IsHandled := true;
             exit;
+        end;
         IsHandled := true;
         exit(true);
     end;
@@ -684,5 +686,162 @@ codeunit 50011 "BC6_FunctionsMgt"
             Rec."BC6_Paying agent" := Grec_SalesInvoiceHeader."BC6_Paying agent";
         END;
     END;
+    //---CDU408
+    procedure LookupDimValueCodeCDU408(FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    var
+        DimVal: Record "Dimension Value";
+        GLSetup: Record "General Ledger Setup";
+        DimensionManagement: Codeunit DimensionManagement;
+        Text002: Label 'This Shortcut Dimension is not defined in the %1.', Comment = 'FRA="Ce racourci axe n''est pas défini dans les %1."';
+    begin
+        if FieldNumber > 8 then begin
+            IsHandled := true;
+            BC6_GetGLSetup(GLSetupShortcutDimCode);
+            if GLSetupShortcutDimCode[FieldNumber] = '' then
+                Error(Text002, GLSetup.TableCaption());
+            DimVal.SetRange("Dimension Code", GLSetupShortcutDimCode[FieldNumber]);
+            DimVal."Dimension Code" := GLSetupShortcutDimCode[FieldNumber];
+            DimVal.Code := ShortcutDimCode;
+            if PAGE.RunModal(0, DimVal) = ACTION::LookupOK then begin
+                DimensionManagement.CheckDim(DimVal."Dimension Code");
+                DimensionManagement.CheckDimValue(DimVal."Dimension Code", DimVal.Code);
+                ShortcutDimCode := DimVal.Code;
+            end;
+        end;
+    end;
 
+    procedure BC6_GetGLSetup(var GLSetupShortcutDimCodeV: array[10] of Code[20])
+    var
+        GLSetup: Record "General Ledger Setup";
+        HasGotGLSetup: Boolean;
+    begin
+        if not HasGotGLSetup then begin
+            GLSetup.Get();
+            GLSetupShortcutDimCodeV[9] := GLSetup."Shortcut Dimension 1 Code";
+            GLSetupShortcutDimCodeV[10] := GLSetup."Shortcut Dimension 2 Code";
+            HasGotGLSetup := true;
+        end;
+    end;
+
+    procedure BC6_ValidateShortcutDimValues(FieldNumber: Integer; var ShortcutDimCode: Code[20]; var DimSetID: Integer)
+    var
+        DimVal: Record "Dimension Value";
+        TempDimSetEntry: Record "Dimension Set Entry" temporary;
+        DimensionManagement: Codeunit DimensionManagement;
+    begin
+        ValidateDimValueCode(FieldNumber, ShortcutDimCode);
+        DimVal."Dimension Code" := GLSetupShortcutDimCode[FieldNumber];
+        if ShortcutDimCode <> '' then begin
+            DimVal.Get(DimVal."Dimension Code", ShortcutDimCode);
+            if not DimensionManagement.CheckDim(DimVal."Dimension Code") then
+                Error(DimensionManagement.GetDimErr());
+            if not DimensionManagement.CheckDimValue(DimVal."Dimension Code", ShortcutDimCode) then
+                Error(DimensionManagement.GetDimErr());
+        end;
+        DimensionManagement.GetDimensionSet(TempDimSetEntry, DimSetID);
+        if TempDimSetEntry.Get(TempDimSetEntry."Dimension Set ID", DimVal."Dimension Code") then
+            if TempDimSetEntry."Dimension Value Code" <> ShortcutDimCode then
+                TempDimSetEntry.Delete();
+        if ShortcutDimCode <> '' then begin
+            TempDimSetEntry."Dimension Code" := DimVal."Dimension Code";
+            TempDimSetEntry."Dimension Value Code" := DimVal.Code;
+            TempDimSetEntry."Dimension Value ID" := DimVal."Dimension Value ID";
+            if TempDimSetEntry.Insert() then;
+        end;
+        DimSetID := DimensionManagement.GetDimensionSetID(TempDimSetEntry);
+    end;
+
+    procedure ValidateDimValueCode(FieldNumber: Integer; var ShortcutDimCode: Code[20])
+    var
+        DimVal: Record "Dimension Value";
+        GLSetup: Record "General Ledger Setup";
+        Text002: Label 'This Shortcut Dimension is not defined in the %1.', Comment = 'FRA="Ce racourci axe n''est pas défini dans les %1."';
+        Text003: Label '%1 is not an available %2 for that dimension.', Comment = 'FRA="%1 : %2 n''est pas une %3 disponible pour cet axe analytique."';
+    begin
+
+        BC6_GetGLSetup(GLSetupShortcutDimCode);
+        if (GLSetupShortcutDimCode[FieldNumber] = '') and (ShortcutDimCode <> '') then
+            Error(Text002, GLSetup.TableCaption());
+        DimVal.SetRange("Dimension Code", GLSetupShortcutDimCode[FieldNumber]);
+        if ShortcutDimCode <> '' then begin
+            DimVal.SetRange(Code, ShortcutDimCode);
+            if not DimVal.FindFirst() then begin
+                DimVal.SetFilter(Code, StrSubstNo('%1*', ShortcutDimCode));
+                if DimVal.FindFirst() then
+                    ShortcutDimCode := DimVal.Code
+                else
+                    Error(
+                      Text003,
+                      ShortcutDimCode, DimVal.FieldCaption(Code));
+            end;
+        end;
+    end;
+
+    procedure Cdu408_GetShortcutDimensions(DimSetID: Integer; var ShortcutDimCode: array[10] of Code[20])
+    begin
+        Cdu480_GetShortcutDimensions(DimSetID, ShortcutDimCode);
+    end;
+    //---CDU480
+    procedure Cdu480_GetShortcutDimensions(DimSetID: Integer; var ShortcutDimCode: array[10] of Code[20])
+    var
+        i: Integer;
+    begin
+        Clear(ShortcutDimCode);
+        if DimSetID = 0 then
+            exit;
+        Cdu48_GetGLSetup();
+        for i := 9 to 10 do
+            if GLSetupShortcutDimCode[i] <> '' then
+                ShortcutDimCode[i] := Cdu480_GetDimSetEntry(DimSetID, GLSetupShortcutDimCode[i]);
+    end;
+
+    procedure Cdu48_GetGLSetup()
+    var
+        GLSetup: Record "General Ledger Setup";
+        WhenGotGLSetup: DateTime;
+        HasGotGLSetup: Boolean;
+    begin
+        if WhenGotGLSetup = 0DT then
+            WhenGotGLSetup := CurrentDateTime;
+        if CurrentDateTime > WhenGotGLSetup + 60000 then
+            HasGotGLSetup := false;
+        if HasGotGLSetup then
+            exit;
+        GLSetup.Get();
+        GLSetupShortcutDimCode[9] := GLSetup."Shortcut Dimension 1 Code";
+        GLSetupShortcutDimCode[10] := GLSetup."Shortcut Dimension 2 Code";
+
+        HasGotGLSetup := true;
+        WhenGotGLSetup := CurrentDateTime;
+    end;
+
+    procedure Cdu480_GetDimSetEntry(DimSetID: Integer; DimCode: Code[20]): Code[20]
+    var
+        TempDimSetEntry: Record "Dimension Set Entry" temporary;
+        DimensionSetEntry: Record "Dimension Set Entry";
+    begin
+        if TempDimSetEntry.Get(DimSetID, DimCode) then
+            exit(TempDimSetEntry."Dimension Value Code");
+        TempDimSetEntry.Init();
+        if DimensionSetEntry.Get(DimSetID, DimCode) then
+            TempDimSetEntry := DimensionSetEntry
+        else begin
+            TempDimSetEntry."Dimension Set ID" := DimSetID;
+            TempDimSetEntry."Dimension Code" := DimCode;
+        end;
+        TempDimSetEntry.Insert();
+        exit(TempDimSetEntry."Dimension Value Code");
+    end;
+
+    //---Tab39
+    procedure VerifyItemLineDim()
+    var
+        PurchaseLine: Record "Purchase Line";
+    begin
+        if PurchaseLine.IsReceivedShippedItemDimChanged() then
+            PurchaseLine.ConfirmReceivedShippedItemDimChange();
+    end;
+
+    var
+        GLSetupShortcutDimCode: array[10] of Code[20];
 }

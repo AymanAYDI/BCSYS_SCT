@@ -109,20 +109,24 @@ xmlport 50024 "BC6_Yooz Purch. Inv.&CrM. Imp"
     }
 
     trigger OnPreXMLport()
+    var
+        VSCSettings: Record "BC6_VSC Settings";
     begin
-        case COMPANYNAME of
-            'VFEC':
-                CompName := 'VSCG';
-            'Agence':
-                CompName := 'AGVSC';
-            'VSC':
-                CompName := 'VSC';
-            'VSCT':
-                CompName := 'VSCT';
-            //BCSYS 021019
-            'SNCF-C25':
-                CompName := 'SNCFC25';
-        end;
+        VSCSettings.Get();
+        VSCSettings.TestField("Company Name Import/Export");
+        CompName := VSCSettings."Company Name Import/Export";
+        //         'VFEC':
+        //             CompName := 'VSCG';
+        //         'Agence':
+        //             CompName := 'AGVSC';
+        //         'VSC':
+        //             CompName := 'VSC';
+        //         'VSCT':
+        //             CompName := 'VSCT';
+        //         //BCSYS 021019
+        //         'SNCF-C25':
+        //             CompName := 'SNCFC25';
+        // end;
     end;
 
     trigger OnPostXMLport()

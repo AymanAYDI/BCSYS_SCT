@@ -162,5 +162,19 @@ pageextension 50050 "BC6_PurchaseOrderSubform" extends "Purchase Order Subform" 
                 ApplicationArea = All;
             }
         }
+        modify("No.")
+        {
+            trigger OnAfterValidate()
+            begin
+                Rec.ShowShortcutDimCodeV(ShortcutDimCode)
+            end;
+        }
     }
+    trigger OnAfterGetRecord()
+    begin
+        Rec.ShowShortcutDimCodeV(ShortcutDimCode)
+    end;
+
+    var
+        ShortcutDimCode: array[10] of Code[20];
 }

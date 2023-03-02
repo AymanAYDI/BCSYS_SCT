@@ -59,4 +59,11 @@ tableextension 50041 "BC6_GenJournalLine" extends "Gen. Journal Line" //81
             Caption = 'Document Prepaid', Comment = 'FRA="Document Prepaid"';
         }
     }
+    procedure ShowShortcutDimCodeV(var ShortcutDimCode: array[8] of Code[20])
+    var
+        FunctionsMgt: Codeunit BC6_FunctionsMgt;
+    begin
+        FunctionsMgt.Cdu408_GetShortcutDimensions("Dimension Set ID", ShortcutDimCode);
+    end;
+
 }

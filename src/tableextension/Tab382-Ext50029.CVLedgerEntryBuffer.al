@@ -9,6 +9,7 @@ tableextension 50029 "BC6_CVLedgerEntryBuffer" extends "CV Ledger Entry Buffer" 
         field(50021; "BC6_Document Prepaid"; Code[20])
         {
             DataClassification = CustomerContent;
+            Caption = 'N° Document Prépayé';
         }
     }
 }

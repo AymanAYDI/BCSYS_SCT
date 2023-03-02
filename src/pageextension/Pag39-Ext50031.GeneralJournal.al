@@ -224,6 +224,11 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
             }
         }
     }
+    trigger OnAfterGetRecord()
+    begin
+        Rec.ShowShortcutDimCodeV(ShortcutDimCode);
+    end;
+
     var
         ContrepasserCCA: Report "BC6_Contrepassation des CCA";
         ContrepasserFNP: Report "BC6_Contrepassation des FNP";
@@ -233,4 +238,5 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
         ReportPrint: Codeunit "Test Report-Print";
         GénérerImportOD: XMLport "BC6_Import OD Paye";
         CurrentJnlBatchName: Code[10];
+        ShortcutDimCode: array[10] of code[20];
 }

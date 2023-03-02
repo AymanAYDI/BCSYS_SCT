@@ -579,7 +579,7 @@ report 50015 "BC6_Draft notice VSC"
         ABS__Remaining_Amount___Control1120059CaptionLbl: Label 'Amount', Comment = 'FRA="Montant"';
         CodeCaptionLbl: Label 'Code';
         CompanyInformation__Fax_No__CaptionLbl: Label 'FAX No.', Comment = 'FRA="N° Télécopie"';
-        CompanyInformation__Phone_No__CaptionLbl: Label 'Phone No.', Comment = 'FRA="Nø téléphone"';
+        CompanyInformation__Phone_No__CaptionLbl: Label 'Phone No.', Comment = 'FRA="N° téléphone"';
         CompanyInformation__VAT_Registration_No__CaptionLbl: Label 'VAT Registration No.', Comment = 'FRA="N° identif. intracomm."';
         Draft_Notice_AmountCaptionLbl: Label 'Draft Notice Amount', Comment = 'FRA="TOTAL"';
         HeaderText2: Label 'This transfer is related to these invoices :', Comment = 'FRA="Ce virement est lié aux factures suivantes :"';

@@ -847,6 +847,64 @@ codeunit 50005 "BC6_EventsMgt"
         end;
         ShowDifferentPayToVendMsg := false;
     end;
+    //---CDU408
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DimensionManagement", 'OnBeforeLookupDimValueCode', '', false, false)]
+    local procedure Cdu408_OnBeforeLookupDimValueCode_DimensionManagement(FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    var
+        FunctionsMgt: Codeunit BC6_FunctionsMgt;
+    begin
+        FunctionsMgt.LookupDimValueCodeCDU408(FieldNumber, ShortcutDimCode, IsHandled);
+    end;
+    //---Tab81
+    [EventSubscriber(ObjectType::Table, DataBase::"Gen. Journal Line", 'OnBeforeValidateShortcutDimCode', '', false, false)]
+    local procedure Tab81_OnBeforeValidateShortcutDimCode_GenJournalLine(var GenJournalLine: Record "Gen. Journal Line"; var xGenJournalLine: Record "Gen. Journal Line"; FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    var
+        FunctionsMgt: codeunit "BC6_FunctionsMgt";
+    begin
+        if FieldNumber > 8 then begin
+            IsHandled := true;
+            GenJournalLine.TestField("Check Printed", false);
+            FunctionsMgt.BC6_ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, GenJournalLine."Dimension Set ID");
+        end;
+
+    end;
+    //---Tab81
+    [EventSubscriber(ObjectType::Table, DataBase::"Gen. Journal Line", 'OnBeforeLookupShortcutDimCode', '', false, false)]
+    local procedure Tab81_OnBeforeLookupShortcutDimCode_GenJournalLine(var GenJournalLine: Record "Gen. Journal Line"; xGenJournalLine: Record "Gen. Journal Line"; FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    var
+        FunctionsMgt: codeunit "BC6_FunctionsMgt";
+    begin
+        if FieldNumber > 8 then begin
+            GenJournalLine.TestField("Check Printed", false);
+            FunctionsMgt.LookupDimValueCodeCDU408(FieldNumber, ShortcutDimCode, IsHandled);
+            FunctionsMgt.BC6_ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, GenJournalLine."Dimension Set ID");
+        end;
+
+    end;
+    //---Tab39
+    [EventSubscriber(ObjectType::Table, DataBase::"Purchase Line", 'OnBeforeValidateShortcutDimCode', '', false, false)]
+    local procedure Tab39_OnBeforeValidateShortcutDimCode_PurchaseLine(var PurchaseLine: Record "Purchase Line"; var xPurchaseLine: Record "Purchase Line"; FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    var
+        FunctionsMgt: codeunit "BC6_FunctionsMgt";
+    begin
+        if FieldNumber > 8 then begin
+            IsHandled := true;
+            FunctionsMgt.BC6_ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, PurchaseLine."Dimension Set ID");
+            FunctionsMgt.VerifyItemLineDim();
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, DataBase::"Purchase Line", 'OnBeforeLookupShortcutDimCode', '', false, false)]
+    local procedure Tab39_OnBeforeLookupShortcutDimCode_PurchaseLine(var PurchaseLine: Record "Purchase Line"; var xPurchaseLine: Record "Purchase Line"; FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    var
+        FunctionsMgt: codeunit "BC6_FunctionsMgt";
+    begin
+        if FieldNumber > 8 then begin
+            FunctionsMgt.LookupDimValueCodeCDU408(FieldNumber, ShortcutDimCode, IsHandled);
+            FunctionsMgt.BC6_ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, PurchaseLine."Dimension Set ID");
+            FunctionsMgt.VerifyItemLineDim();
+        end;
+    end;
 
     var
         Gbool_ImportGroupInvoice_PurchHeader: Boolean;
