@@ -34,5 +34,37 @@ tableextension 50044 "BC6_UserSetup" extends "User Setup" //91
             CalcFormula = exist("User Setup" where("Approver ID" = field("User ID")));
             Editable = false;
         }
+
+        //TODO:Table 'Product Group' is removed.
+        // field(50011; BC6_ProductGroupCode; Code[10])
+        // {
+        //     DataClassification = CustomerContent;
+        //     Caption = 'Product Group Code', Comment = 'FRA="Code groupe produit"';
+        //     TableRelation = "Product Group".Code WHERE("Item Category Code" = FILTER(''));
+        // }
+        field(50012; BC6_Sign; Boolean)
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Sign', Comment = 'FRA="Signature"';
+            trigger OnValidate()
+            var
+                Text001: Label 'Only one user must be selected !', Comment = 'FRA="Un seul utilisateur doit étre sélectionné !"';
+            begin
+                IF BC6_Sign THEN BEGIN
+                    RecGUserSetup.SETRANGE(BC6_Sign, TRUE);
+                    IF NOT RecGUserSetup.ISEMPTY THEN
+                        ERROR(Text001);
+                END;
+            end;
+        }
+        field(50013; "BC6_Sign Name"; Text[30])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Sign Name', Comment = 'FRA="Nom et prenom (signature)"';
+        }
+
     }
+    var
+        RecGUserSetup: Record "User Setup";
+
 }

@@ -13,7 +13,7 @@ report 50026 "VSC- Calc. Post VAT Settlement"
     DefaultLayout = RDLC;
     RDLCLayout = './src/Report/RDLC/VSCCalcPostVATSettlement.rdl';
 
-    Caption = 'Calc. and Post VAT Settlement', Comment = 'FRA="Calculer et valider décl. TVA"';
+    Caption = 'Calc. and Post VAT Settlement', Comment = 'FRA="NV Calculer et valider décl. TVA"';
     Permissions = TableData "VAT Entry" = imd;
 
     dataset

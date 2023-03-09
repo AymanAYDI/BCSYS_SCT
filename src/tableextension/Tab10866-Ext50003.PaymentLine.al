@@ -9,6 +9,12 @@ tableextension 50003 "BC6_PaymentLine" extends "Payment Line" //10866
             Editable = false;
             DataClassification = CustomerContent;
         }
+        field(50001; "BC6_E-mail Sent To Vendor"; Boolean)
+        {
+            Caption = 'E-mail sent to vendor', Comment = 'FRA="E-mail envoyé au fournisseur"';
+            Description = 'BC6';
+            DataClassification = CustomerContent;
+        }
         field(50010; "BC6_Applied Yooz No."; Text[250])
         {
             Caption = 'N° Yooz lettrés', Comment = 'FRA="N° Yooz lettrés"';

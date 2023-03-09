@@ -633,6 +633,21 @@
           <note from="Developer" annotates="general" priority="2">FRA="Nom société Import/Export"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Table BC6_VSC Settings - Field Company Name Import/Export - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Table 885204053 - Field 294562567 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Draft Account Depart. E-mail</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Avis Virement : Email"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table BC6_VSC Settings - Field Draft Account Depart. E-mail - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 885204053 - Field 3378643419 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Draft Account Depart. Path</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Avis Virement : Chemin d'export"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table BC6_VSC Settings - Field Draft Account Depart. Path - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 885204053 - Field 1959847961 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Draft Account Depart.Auto Send</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Avis Virement : Envoi automatique"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table BC6_VSC Settings - Field Draft Account Depart.Auto Send - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Table 885204053 - Field 1067130403 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Avis Virement : Nom du responsable</source>
           <note from="Developer" annotates="general" priority="2">FRA="Avis Virement : Nom du responsable"</note>
@@ -642,6 +657,11 @@
           <source>Avis Virement : Téléphone</source>
           <note from="Developer" annotates="general" priority="2">FRA="Avis Virement : Téléphone"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Table BC6_VSC Settings - Field Draft Account. Dep. Phone - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Table 885204053 - Field 4168138272 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Email CDG</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Table BC6_VSC Settings - Field Email CDG - Property Caption</note>
         </trans-unit>
         <trans-unit id="Table 885204053 - Field 242446507 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Réutilisation Instance</source>
@@ -1313,6 +1333,61 @@
           <note from="Developer" annotates="general" priority="2">FRA="%1 : %2 n'est pas une %3 disponible pour cet axe analytique."</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method ValidateDimValueCode - NamedType Text003</note>
         </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 986982549" size-unit="char" translate="yes" xml:space="preserve">
+          <source>&lt;br&gt;&lt;br&gt;</source>
+          <note from="Developer" annotates="general" priority="2">FRA="&lt;br&gt;&lt;br&gt;"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType EmptyLine</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 4286043119" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Unable to send emails because %1 is not enabled in VSC Settings.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Impossible d'envoyer les emails car le champ %1 n'est pas activé dans Paramètres VSC."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType ErrEnabledMailSending</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 3226349698" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Good morning,</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Bonjour,"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType Line0</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 2588653081" size-unit="char" translate="yes" xml:space="preserve">
+          <source>You will find attached your transfer advice.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Vous trouverez en pièce jointe votre avis de virement."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType Line1</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 1950956464" size-unit="char" translate="yes" xml:space="preserve">
+          <source>We wish you good reception and remain at your disposal for any further questions.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Nous vous en souhaitons bonne réception et restons à votre disposition pour toutes questions complémentaires."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType Line2</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 1313259847" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Best regards,&lt;br&gt;&lt;br&gt;</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Cordialement,&lt;br&gt;&lt;br&gt;"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType Line3</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 1482168870" size-unit="char" translate="yes" xml:space="preserve">
+          <source>The accounting department of OUI.Sncf</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Le service de comptabilité  de OUI.Sncf"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType Line4</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 94792744" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Vous voulez envoyer les virements par e-mail aux fournisseurs? </source>
+          <note from="Developer" annotates="general" priority="2">FRA="Vous voulez envoyer les virements par e-mail aux fournisseurs? "</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType MsgGConfirmSendEmail</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 3558281861" size-unit="char" translate="yes" xml:space="preserve">
+          <source>These transfers have already been sent to suppliers or no e-mail address is configured on the supplier files.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Ces virements ont été déjà envoyés aux fournisseurs ou aucune adresse E-mail est paramétrée sur les fiches fournisseurs."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType MsgPaymentsNotFound</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 2188970917" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sending emails in progress</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Envoi des mails en cours"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType MsgProgressEmails</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 1130508604" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sending emails is completed successfully.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Envoi des e-mails s'est terminé avec succès."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType MsgSendCompleted</note>
+        </trans-unit>
         <trans-unit id="Codeunit 378970871 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
           <source>One of your slips is being entered. Do you want to add this payment to this slip?</source>
           <note from="Developer" annotates="general" priority="2">FRA="Un de vos bordereaux est en cours de saisie. Voulez-vous ajouter ce paiement à ce bordereau ?"</note>
@@ -1342,6 +1417,16 @@
           <source>This document already appears on the %1 slip. Would you like to continue ?</source>
           <note from="Developer" annotates="general" priority="2">FRA="Ce document déjà figure sur le bordereau %1. Souhaitez-vous continuer ?"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType Text006</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 1980250409" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 - Payment %2</source>
+          <note from="Developer" annotates="general" priority="2">FRA="%1 - Avis de virement %2"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType TextGSubjectMail</note>
+        </trans-unit>
+        <trans-unit id="Codeunit 378970871 - NamedType 868516005" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Payment - %1.pdf</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Virement - %1.pdf"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_Vendor Payments - NamedType TxtGAttachName</note>
         </trans-unit>
         <trans-unit id="Codeunit 775682004 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
           <source>Hello,</source>
@@ -4548,6 +4633,11 @@
           <note from="Developer" annotates="general" priority="2">FRA="Paramètres VSC"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page BC6_VSC Settings - Property Caption</note>
         </trans-unit>
+        <trans-unit id="Page 885204053 - Control 3411129801 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>BC Mail Auto</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Page BC6_VSC Settings - Control BC Mail Auto - Property Caption</note>
+        </trans-unit>
         <trans-unit id="Page 885204053 - Control 1741918192 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>PDF Instance</source>
           <note from="Developer" annotates="general" priority="2">FRA="BC en mode Test"</note>
@@ -5770,7 +5860,7 @@
         </trans-unit>
         <trans-unit id="Report 399322351 - NamedType 2826867220" size-unit="char" translate="yes" xml:space="preserve">
           <source>Phone No.</source>
-          <note from="Developer" annotates="general" priority="2">FRA="N° tééléphone"</note>
+          <note from="Developer" annotates="general" priority="2">FRA="N° téléphone"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Commande achat - NamedType CompanyInfoPhoneNoCaptionLbl</note>
         </trans-unit>
         <trans-unit id="Report 399322351 - NamedType 322581705" size-unit="char" translate="yes" xml:space="preserve">
@@ -6052,6 +6142,11 @@
           <source>Purchase Order</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Commande achat - ReportDataItem Purchase Header - Property RequestFilterHeading</note>
+        </trans-unit>
+        <trans-unit id="Report 399322351 - ReportDataItem 2072992664 - Method 3245603402 - NamedType 2344539320" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No user is selected</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Aucun utilisateurs n'est sélectionner"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Commande achat - ReportDataItem Purchase Header - Method OnAfterGetRecord - NamedType Text0001</note>
         </trans-unit>
         <trans-unit id="Report 399322351 - ReportLabel 750828022" size-unit="char" translate="yes" xml:space="preserve">
           <source>Purchaser</source>
@@ -6422,6 +6517,11 @@
           <source>Purchase Order</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Commande achat et contrat - ReportDataItem Purchase Header - Property RequestFilterHeading</note>
+        </trans-unit>
+        <trans-unit id="Report 505731399 - ReportDataItem 2072992664 - Method 3245603402 - NamedType 2344539320" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No user is selected</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Aucun utilisateurs n'est sélectionner"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Commande achat et contrat - ReportDataItem Purchase Header - Method OnAfterGetRecord - NamedType Text0001</note>
         </trans-unit>
         <trans-unit id="Report 505731399 - ReportLabel 750828022" size-unit="char" translate="yes" xml:space="preserve">
           <source>Purchaser</source>
@@ -10038,6 +10138,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_PurchaseOrder aVSC FR - ReportDataItem Purchase Header - Property RequestFilterHeading</note>
         </trans-unit>
+        <trans-unit id="Report 1987778434 - ReportDataItem 2072992664 - Method 3245603402 - NamedType 2344539320" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No user is selected</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Aucun utilisateurs n'est sélectionner"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_PurchaseOrder aVSC FR - ReportDataItem Purchase Header - Method OnAfterGetRecord - NamedType Text0001</note>
+        </trans-unit>
         <trans-unit id="Report 1987778434 - ReportLabel 750828022" size-unit="char" translate="yes" xml:space="preserve">
           <source>Purchaser</source>
           <note from="Developer" annotates="general" priority="2">FRA="Acheteur"</note>
@@ -10408,6 +10513,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_PurchaseOrder VSC EN - ReportDataItem Purchase Header - Property RequestFilterHeading</note>
         </trans-unit>
+        <trans-unit id="Report 495478468 - ReportDataItem 2072992664 - Method 3245603402 - NamedType 2344539320" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No user is selected</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Aucun utilisateurs n'est sélectionner"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_PurchaseOrder VSC EN - ReportDataItem Purchase Header - Method OnAfterGetRecord - NamedType Text0001</note>
+        </trans-unit>
         <trans-unit id="Report 495478468 - ReportLabel 750828022" size-unit="char" translate="yes" xml:space="preserve">
           <source>Purchaser</source>
           <note from="Developer" annotates="general" priority="2">FRA="Acheteur"</note>
@@ -10777,6 +10887,11 @@
           <source>Purchase Order</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_PurchaseOrder VSC FR - ReportDataItem Purchase Header - Property RequestFilterHeading</note>
+        </trans-unit>
+        <trans-unit id="Report 2609576761 - ReportDataItem 2072992664 - Method 3245603402 - NamedType 2344539320" size-unit="char" translate="yes" xml:space="preserve">
+          <source>No user is selected</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Aucun utilisateurs n'est sélectionner"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_PurchaseOrder VSC FR - ReportDataItem Purchase Header - Method OnAfterGetRecord - NamedType Text0001</note>
         </trans-unit>
         <trans-unit id="Report 2609576761 - ReportLabel 750828022" size-unit="char" translate="yes" xml:space="preserve">
           <source>Purchaser</source>
@@ -11357,6 +11472,116 @@
           <source>Sales_Invoice_Export</source>
           <note from="Developer" annotates="general" priority="2">FRA="Export_factures_ventes"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Sales_Invoice_Export - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 2255140028" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Le service comptabilité.</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType AccountingServiceCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 3285233284" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Montant</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType AmountCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 4257318669" size-unit="char" translate="yes" xml:space="preserve">
+          <source>EUR</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType CurrencyCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 2833281111" size-unit="char" translate="yes" xml:space="preserve">
+          <source>N° doc</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType DocNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 83808283" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Date facture</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType InvoiceDateCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 3035507035" size-unit="char" translate="yes" xml:space="preserve">
+          <source>A Paris La Défense</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType LocationCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 1423935656" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Madame, Monsieur,</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType MessieursCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 2801657427" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Objet : Avis de virement bancaire</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType ObjectCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 650077689" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Page</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType PageCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 1701606193" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Réf. Virement :</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType PaymentRefCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Nous vous informons que nous avons viré, en date du %1, sur votre compte, dont le numéro est :</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType Text001</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Le montant de</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType Text002</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 95063322" size-unit="char" translate="yes" xml:space="preserve">
+          <source>En règlement de :</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType Text003</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 732759939" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Le %1</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType Text004</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 1370456556" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 - %2 au capital de %3</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType Text005</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 2008153173" size-unit="char" translate="yes" xml:space="preserve">
+          <source>%1 %2 %3 %4</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType Text006</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 1583171122" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Total</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType TotalCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 449695264" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Type</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType TypeCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 3314371211" size-unit="char" translate="yes" xml:space="preserve">
+          <source>N° fournisseur :</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType VendorNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 1676890689 - NamedType 3393578554" size-unit="char" translate="yes" xml:space="preserve">
+          <source>N° interne</source>
+          <note from="Developer" annotates="general" priority="2"></note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Pay. E-mail - NamedType YoozNoCaptionLbl</note>
+        </trans-unit>
+        <trans-unit id="Report 485143299 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Send Vendor Payments</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Envoi virements aux fournisseurs"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Payments - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="Report 485143299 - NamedType 98444060" size-unit="char" translate="yes" xml:space="preserve">
+          <source>Sending E-mails: @1@@@@@@@@@@@@@@@</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Envoi des mails: @1@@@@@@@@@@@@@@@"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Report BC6_Send Vendor Payments - NamedType SendingEmail</note>
         </trans-unit>
         <trans-unit id="Report 924400891 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Solde BC Masse</source>
@@ -13885,7 +14110,7 @@
         </trans-unit>
         <trans-unit id="Report 634583914 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Calc. and Post VAT Settlement</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Calculer et valider décl. TVA"</note>
+          <note from="Developer" annotates="general" priority="2">FRA="NV Calculer et valider décl. TVA"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Report VSC- Calc. Post VAT Settlement - Property Caption</note>
         </trans-unit>
         <trans-unit id="Report 634583914 - NamedType 3735374774" size-unit="char" translate="yes" xml:space="preserve">
@@ -14633,6 +14858,11 @@
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension BC6_PaymentSlip - Action BC6_Export Nos. Yooz - Property Caption</note>
         </trans-unit>
+        <trans-unit id="PageExtension 1146738408 - Action 475581500 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2211706696">
+          <source>Send vendor payments</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Envoyer paiements fournisseurs"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension BC6_PaymentSlip - Action BC6_SendEmail - Property Caption</note>
+        </trans-unit>
         <trans-unit id="PageExtension 1146738408 - Action 4143613969 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2211706696">
           <source>Mettre à jour numéros Yooz</source>
           <note from="Developer" annotates="general" priority="2"></note>
@@ -14647,6 +14877,11 @@
           <source>N° Yooz Bordereau</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">PageExtension BC6_PaymentSlip - Control N° Yooz Bordereau - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="PageExtension 3368737450 - Control 2440327883 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 4205919186">
+          <source>E-Mail</source>
+          <note from="Developer" annotates="general" priority="2">FRA="E-mail"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">PageExtension BC6_PaymentSlipSubform - Control BC6_E-Mail - Property Caption</note>
         </trans-unit>
         <trans-unit id="PageExtension 4198271871 - Action 1808300369 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Page 2854365759">
           <source>&amp;Line</source>
@@ -15768,6 +16003,11 @@
           <note from="Developer" annotates="general" priority="2">FRA="N° Yooz lettrés"</note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PaymentLine - Field BC6_Applied Yooz No. - Property Caption</note>
         </trans-unit>
+        <trans-unit id="TableExtension 2793286624 - Field 1013510910 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3074347584">
+          <source>E-mail sent to vendor</source>
+          <note from="Developer" annotates="general" priority="2">FRA="E-mail envoyé au fournisseur"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PaymentLine - Field BC6_E-mail Sent To Vendor - Property Caption</note>
+        </trans-unit>
         <trans-unit id="TableExtension 2793286624 - Field 2214029124 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3074347584">
           <source>N° Document payé</source>
           <note from="Developer" annotates="general" priority="2">FRA="N° Document payé"</note>
@@ -16037,6 +16277,11 @@
           <source>Code matricule</source>
           <note from="Developer" annotates="general" priority="2"></note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PurchaseLineArchive - Field BC6_Matricule No. - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 1184558714 - Field 3033819408 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3921990236">
+          <source>Enable Signature Print</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Activer impression signature"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_PurchasesPayablesSetup - Field BC6_Enable Signature Print - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 1184558714 - Field 1747552538 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 3921990236">
           <source>Code Entité</source>
@@ -16332,6 +16577,21 @@
           <source>Service</source>
           <note from="Developer" annotates="general" priority="2">FRA="Service"</note>
           <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_UserSetup - Field BC6_Service - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3473588906 - Field 3984271845 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 337631938">
+          <source>Sign</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Signature"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_UserSetup - Field BC6_Sign - Property Caption</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3473588906 - Field 3984271845 - Method 2126772001 - NamedType 3114637384" size-unit="char" translate="yes" xml:space="preserve" al-object-target="TableExtension 3473588906">
+          <source>Only one user must be selected !</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Un seul utilisateur doit étre sélectionné !"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_UserSetup - Field BC6_Sign - Method OnValidate - NamedType Text001</note>
+        </trans-unit>
+        <trans-unit id="TableExtension 3473588906 - Field 2175495248 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 337631938">
+          <source>Sign Name</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Nom et prenom (signature)"</note>
+          <note from="Xliff Generator" annotates="general" priority="3">TableExtension BC6_UserSetup - Field BC6_Sign Name - Property Caption</note>
         </trans-unit>
         <trans-unit id="TableExtension 3450627152 - Field 2210211803 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve" al-object-target="Table 1936001480">
           <source>Default Bank Account Code</source>

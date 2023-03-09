@@ -1,7 +1,5 @@
 pageextension 50039 "BC6_PurchasesPayablesSetup" extends "Purchases & Payables Setup" //460
 {
-    // //Modif JX-AUD du 25/10/11
-    // //Ajout de l'onglet Approbation et du champ Montant max. autorisé
     layout
     {
         addafter("Default Qty. to Receive")
@@ -11,6 +9,10 @@ pageextension 50039 "BC6_PurchasesPayablesSetup" extends "Purchases & Payables S
                 ApplicationArea = All;
             }
             field("BC6_Mail Invoice Path"; Rec."BC6_Mail Invoice Path")
+            {
+                ApplicationArea = All;
+            }
+            field("BC6_Enable Signature Print"; Rec."BC6_Enable Signature Print")
             {
                 ApplicationArea = All;
             }

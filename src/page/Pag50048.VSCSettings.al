@@ -38,6 +38,14 @@ page 50048 "BC6_VSC Settings"
                     ApplicationArea = All;
                 }
             }
+            group("BC Mail Auto")
+            {
+                Caption = 'BC Mail Auto';
+                field("Email CDG"; Rec."Email CDG")
+                {
+                    ApplicationArea = All;
+                }
+            }
             group("Draft Notice")
             {
                 Caption = 'PDF Instance', Comment = 'FRA="Avis de virement"';
@@ -49,6 +57,19 @@ page 50048 "BC6_VSC Settings"
                 {
                     ApplicationArea = All;
                 }
+                field("Draft Account Depart. E-mail"; Rec."Draft Account Depart. E-mail")
+                {
+                    ApplicationArea = All;
+                }
+                field("Draft Account Depart. Path"; Rec."Draft Account Depart. Path")
+                {
+                    ApplicationArea = All;
+                }
+                field("Draft Account Depart.Auto Send"; Rec."Draft Account Depart.Auto Send")
+                {
+                    ApplicationArea = All;
+                }
+
             }
             group("Get URL")
             {

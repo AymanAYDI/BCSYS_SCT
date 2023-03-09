@@ -68,15 +68,18 @@ codeunit 50001 "BC6_PrintOrderVSC"
                         repeat
                             REPORT.RUNMODAL(ReportSelection."Report ID", true, false, PurchaseHeader)
                         until ReportSelection.NEXT() = 0;
-                    end;
-            // ELSE BEGIN
-            // IF (COMPANYNAME = 'Agence') OR (COMPANYNAME = 'Agence Test') THEN BEGIN
-            //     REPORT.RUNMODAL(Report::"PurchaseOrder aVSC EN", TRUE, FALSE, PurchaseHeader);
-            // END;
-            // IF (COMPANYNAME = 'VSC') OR (COMPANYNAME = 'VSC Test') THEN BEGIN
-            //     REPORT.RUNMODAL(Report::"PurchaseOrder VSC EN", TRUE, FALSE, PurchaseHeader);
-            // END;
-            // END;
+                    end
+                    ELSE BEGIN
+                        // IF (COMPANYNAME = 'Agence') OR (COMPANYNAME = 'Agence Test') THEN BEGIN
+                        //     REPORT.RUNMODAL(Report::"PurchaseOrder aVSC EN", TRUE, FALSE, PurchaseHeader);
+
+
+                        IF (COMPANYNAME = 'VSC') OR (COMPANYNAME = 'VSC Test') THEN
+                            REPORT.RUNMODAL(Report::"BC6_PurchaseOrder VSC EN", TRUE, FALSE, PurchaseHeader);
+                        IF (COMPANYNAME = 'SNCF-C25') OR (COMPANYNAME = 'Recette_SNCF-C25') THEN
+                            REPORT.RUNMODAL(Report::"BC6_PurchaseOrder VSC EN", TRUE, FALSE, PurchaseHeader);
+                    END;
+
             else
                 exit;
         end;

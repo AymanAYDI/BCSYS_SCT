@@ -1,7 +1,5 @@
 pageextension 50002 "BC6_PaymentSlip" extends "Payment Slip" //10868
 {
-    // //Modif LAB du 18/11/08
-    // //desactivation de la fonction modification RIB
     layout
     {
         addafter("Account No.")
@@ -53,6 +51,21 @@ pageextension 50002 "BC6_PaymentSlip" extends "Payment Slip" //10868
                 trigger OnAction()
                 begin
                     Rec.FctYooz(TRUE);
+                end;
+            }
+            action(BC6_SendEmail)
+            {
+                ApplicationArea = All;
+                Promoted = true;
+                Image = Email;
+                PromotedCategory = Process;
+                Caption = 'Send vendor payments', Comment = 'FRA="Envoyer paiements fournisseurs"';
+                trigger OnAction()
+                var
+                    CduLVendorPayments: Codeunit "BC6_Vendor Payments";
+                begin
+                    CLEAR(CduLVendorPayments);
+                    CduLVendorPayments.FctSendPaymentMail(Rec, TRUE);
                 end;
             }
         }

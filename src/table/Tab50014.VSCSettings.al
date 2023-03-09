@@ -60,6 +60,30 @@ table 50014 "BC6_VSC Settings"
             Caption = 'Company Name Import/Export', Comment = 'FRA="Nom société Import/Export"';
             DataClassification = CustomerContent;
         }
+
+
+        field(32; "Draft Account Depart. E-mail"; Text[30])
+        {
+            Caption = 'Draft Account Depart. E-mail', Comment = 'FRA="Avis Virement : Email"';
+            DataClassification = CustomerContent;
+        }
+        field(33; "Draft Account Depart. Path"; Text[250])
+        {
+            Caption = 'Draft Account Depart. Path', Comment = 'FRA="Avis Virement : Chemin d''export"';
+            DataClassification = CustomerContent;
+        }
+        field(34; "Draft Account Depart.Auto Send"; Boolean)
+        {
+            Caption = 'Draft Account Depart.Auto Send', Comment = 'FRA="Avis Virement : Envoi automatique"';
+            DataClassification = CustomerContent;
+        }
+        field(35; "Email CDG"; Text[250])
+        {
+            Caption = 'Email CDG';
+            DataClassification = CustomerContent;
+        }
+
+
     }
 
     keys

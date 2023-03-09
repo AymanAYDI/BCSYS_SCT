@@ -71,5 +71,10 @@ tableextension 50023 "BC6_PurchasesPayablesSetup" extends "Purchases & Payables 
             Caption = 'Chemin Mail Envoi Facture', Comment = 'FRA="Chemin Mail Envoi Facture"';
             DataClassification = CustomerContent;
         }
+        field(50031; "BC6_Enable Signature Print"; Boolean)
+        {
+            Caption = 'Enable Signature Print', Comment = 'FRA="Activer impression signature"';
+            DataClassification = CustomerContent;
+        }
     }
 }

@@ -496,6 +496,23 @@ codeunit 50005 "BC6_EventsMgt"
         //
         Rec.Modify();
     end;
+
+    [EventSubscriber(ObjectType::Table, DataBase::"Payment Header", 'OnAfterValidateEvent', 'Status No.', false, false)]
+    local procedure TAB10865_OnAfterValidateEvent_PaymentHeader(var xRec: Record "Payment Header"; var Rec: Record "Payment Header"; CurrFieldNo: Integer)
+    var
+        RecLVSCSettings: Record "BC6_VSC Settings";
+        CduLVendorPayments: Codeunit "BC6_Vendor Payments";
+    begin
+        //>>BC6 SBE 25/11/2021
+        RecLVSCSettings.GET();
+        IF (xRec."Status No." <> Rec."Status No.") AND (Rec."Status No." = 5000) THEN
+            //Check If enabled Auto Mail Sending
+            IF RecLVSCSettings."Draft Account Depart.Auto Send" THEN BEGIN
+                CLEAR(CduLVendorPayments);
+                CduLVendorPayments.FctSendPaymentMail(Rec, FALSE);
+            END;
+        //<<BC6 SBE 25/11/2021
+    end;
     //---TAB10866---
     [EventSubscriber(ObjectType::Table, DataBase::"Payment Line", 'OnAfterModifyEvent', '', false, false)]
     local procedure TAB10866_OnAfterModifyEvent_PaymentLine(var Rec: Record "Payment Line"; RunTrigger: Boolean)
@@ -766,6 +783,7 @@ codeunit 50005 "BC6_EventsMgt"
     begin
         PaymentSlip.FctYoozNo();
     end;
+
     //---TAB296---
     [EventSubscriber(ObjectType::Table, DataBase::"Reminder Line", 'OnAfterModifyEvent', '', false, false)]
     local procedure TAB296_OnAfterModifyEvent_ReminderLine(var xRec: Record "Reminder Line"; var Rec: Record "Reminder Line"; RunTrigger: Boolean)

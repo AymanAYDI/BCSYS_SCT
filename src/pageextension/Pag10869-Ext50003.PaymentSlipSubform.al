@@ -1,7 +1,5 @@
 pageextension 50003 "BC6_PaymentSlipSubform" extends "Payment Slip Subform" //10869
 {
-    // //Jx-AUD du 10/09/2013
-    // //Mise en non éditable les champs Code établissement, Agence, Compte bancaire
     layout
     {
         addafter("Account No.")
@@ -11,6 +9,17 @@ pageextension 50003 "BC6_PaymentSlipSubform" extends "Payment Slip Subform" //10
                 ApplicationArea = All;
             }
         }
+        addafter("External Document No.")
+        {
+            field("BC6_E-Mail"; RecGVendor."E-Mail")
+            {
+                ApplicationArea = all;
+                Caption = 'E-Mail', Comment = 'FRA="E-mail"';
+                Visible = BooGEmailVisibility;
+                Editable = false;
+            }
+        }
+
         addafter("Direct Debit Mandate ID")
         {
             field("BC6_Pay Document Type"; Rec."BC6_Pay Document Type")
@@ -23,10 +32,25 @@ pageextension 50003 "BC6_PaymentSlipSubform" extends "Payment Slip Subform" //10
                 Editable = false;
                 ApplicationArea = All;
             }
+            field("BC6_E-mail Sent To Vendor"; Rec."BC6_E-mail Sent To Vendor")
+            {
+                ApplicationArea = all;
+                Editable = false;
+            }
         }
     }
     var
+        RecGVendor: Record Vendor;
         "Bank Account NameVisible": Boolean;
+        BooGEmailVisibility: Boolean;
+
+    trigger OnAfterGetRecord()
+    begin
+        BooGEmailVisibility := Rec."Account Type" = Rec."Account Type"::Vendor;
+
+        IF (Rec."Account Type" = Rec."Account Type"::Vendor) THEN
+            IF RecGVendor.GET(Rec."Account No.") THEN;
+    end;
 
     trigger OnOpenPage()
     begin

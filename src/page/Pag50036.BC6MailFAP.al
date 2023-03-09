@@ -529,7 +529,6 @@ page 50036 "BC6_BC6 Mail FAP"
         TempBlob: codeunit "Temp Blob";
     begin
         CLEAR(EmailMessage);
-
         //recherche du mail de l'utilisateur
         IF Grec_UserSetup.GET(USERID) THEN
             Gtext_Mail := Grec_UserSetup."E-Mail";

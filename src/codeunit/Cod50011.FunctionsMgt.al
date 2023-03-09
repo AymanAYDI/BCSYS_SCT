@@ -302,8 +302,8 @@ codeunit 50011 "BC6_FunctionsMgt"
         Lcode_AxeReserve := 'RESERVE';
         if Lrec_Dimen.GET(Lcode_AxeReserve) then
             // On initialise, si nécessaire, les sections de l'axe analytique 'RESERVE'
-            if not Lrec_DimensionValue.GET(Lcode_AxeReserve, '100') then
-                for Lint_Compteur := 1 to 100 do
+            if not Lrec_DimensionValue.GET(Lcode_AxeReserve, '400') then
+                for Lint_Compteur := 1 to 400 do
                     if not Lrec_DimensionValue.GET(Lcode_AxeReserve, FORMAT(Lint_Compteur)) then begin
                         Lrec_DimensionValue.INIT();
                         Lrec_DimensionValue.VALIDATE(Lrec_DimensionValue."Dimension Code", Lcode_AxeReserve);

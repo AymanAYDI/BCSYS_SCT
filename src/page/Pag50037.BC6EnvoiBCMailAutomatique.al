@@ -1,8 +1,5 @@
 page 50037 "BC6 Envoi BC Mail Automatique"
 {
-    // JX-ABE 09/12/2016 : Modification de la signature du corps
-    // JX-ABE 21/12/2017 : Changer la signature du corps.
-    // JX-ABE 21/12/2017 : Ajout le text demandé.
 
     DeleteAllowed = false;
     InsertAllowed = false;
@@ -39,13 +36,8 @@ page 50037 "BC6 Envoi BC Mail Automatique"
                     InStream: InStream;
                 begin
                     //mail expéditeur
-                    IF Grec_UserSetup.GET(USERID) THEN
-                        Gtext_Mail := Grec_UserSetup."E-Mail";
+                    //VSC01102021
 
-                    //Window.OPEN('processing');
-                    //WindowisOpen := FALSE;
-                    //IF FileName = '' THEN
-                    //ERROR('Please specify what the file should be saved as');
                     Object.GET(Object.Type::Report, '', ReportID);
 
                     Grec_PurchaseHeader.SETFILTER(Grec_PurchaseHeader."Document Type", FORMAT(Grec_PurchaseHeader."Document Type"::Order));
@@ -92,54 +84,37 @@ page 50037 "BC6 Envoi BC Mail Automatique"
                                 ObjetMail := Name;
                                 Corps := 'Madame, Monsieur,<br><br>';
                                 Corps += 'Vous trouverez en pièce jointe le bon de commande concernant la prestation de ';
-                                Corps += Gtext_NomPresta + ' ' + Gtext_PrenomPresta + ' ';
+                                //Corps += Gtext_NomPresta + ' ' + Gtext_PrenomPresta + ' ';
+                                Corps += Gtext_PrenomPresta + ' ' + Gtext_NomPresta + ' ';
                                 Corps += 'pour la période du ' + Gtext_DebutContrat + ' au ' + Gtext_FinContrat + '.<br><br>';
-                                Corps += '<u>Nous vous remercions de rappeler la référence des bons de commande sur vos factures.</u><br><br>';
+                                Corps += '<b>Nous vous remercions de rappeler la référence des bons de commande sur vos factures.</b><br><br>';
                                 //JX-ABE Ajout du 21/12/2017
-                                Corps += 'Les factures sont à transmettre à cette adresse mail : Facturesonly@oui.sncf,<br><br>';
+                                Corps += 'Les heures d''astreinte pour les prestataires concernés ne sont pas mentionnées dans le bon de commande.<br><br>';
+                                Corps += 'Vous pouvez envoyer votre facture … l''adresse mentionnée ci-dessous, méme en cas d''écart avec le bon de commande envoyé. Les écarts seront traités et analysés par les référents internes et corrigés a posteriori si besoin.<br><br>'
+                          ;
+                                Corps += '<b>Les factures d''astreintes doivent étre accompagnées du compte rendu d''activité avec la validation du référent interne du prestataire.</b><br><br>';
+                                Corps += '<u> Toutes les factures sont à transmettre à cette adresse e-mail : Factures_only@connect-tech.sncf</u>.<br><br>';
                                 //JX-ABE Fin d'ajout du 21/12/2017
                                 Corps += 'Nous vous en souhaitons bonne réception et restons à votre disposition pour toutes questions complémentaires.';
                                 Corps += '<br><br>';
                                 Corps += 'Cordialement,<br><br>';
 
-                                //JX-ABE Modif du 21/12/2017 : Changer la signature du corps
 
-                                // //JX-ABE Modif du 09/12/2016
-                                // //Corps += 'Le Service Contrôle de Gestion VSC-Technologies';
-                                // Corps += 'Le Service Contrôle de Gestion Voyages-Sncf.com';
-                                // //JX-ABE Fin Modif du 09/12/2016
-
-                                Corps += 'Le Service Contrôle de Gestion de OUI.Sncf';
-
-                                //JX-ABE Fin Modif du 21/12/2017
+                                Corps += 'Le Service Contrôle de Gestion de SNCF Connect';
 
 
-                                /* // Suppression du code PDFCreator suite migration Nav2015
-                                      PDFCreatorOption :=  PDFCreator.cOptions;
 
-                                      PDFCreatorOption.UseAutosave := 1;
-                                      PDFCreatorOption.UseAutosaveDirectory := 1;
-                                      PDFCreatorOption.AutosaveDirectory := FileDirectory;
-                                      PDFCreatorOption.AutosaveFormat := 0;                       //PDF file, you can also save in other formats
-                                      PDFCreatorOption.AutosaveFilename := FileName;
-
-                                      PDFCreator.cOptions := PDFCreatorOption;
-                                      PDFCreator.cClearCache();
-                                      DefaultPrinter := PDFCreator.cDefaultPrinter;
-                                      PDFCreator.cDefaultPrinter := 'PDFCreator';
-                                      PDFCreator.cPrinterStop := FALSE;
-                                */
 
                                 REPORT.SaveAsPdf(ReportID, FileDirectory + FileName, Grec_PurchaseHeader2);
-                                //      SLEEP(8000); 
 
                                 // JX-VSC3.0-PBD Nav2015
                                 EMailTest.Add(VSCSettings."BC E-Mail Test");
+
                                 Gtext_FournisseurList.Add(Gtext_Fournisseur);
                                 IF VSCSettings."BC Test Mode" THEN
-                                    EmailMessage.Create(EMailTest, ObjetMail, '', TRUE)
+                                    EmailMessage.Create(EMailTest, ObjetMail, '', true, VSCSettings."Email CDG".Split(''), VSCSettings."Email CDG".Split(''))
                                 ELSE
-                                    EmailMessage.Create(Gtext_FournisseurList, ObjetMail, '', TRUE);
+                                    EmailMessage.Create(Gtext_FournisseurList, ObjetMail, '', true, VSCSettings."Email CDG".Split(''), VSCSettings."Email CDG".Split(''));
                                 EmailMessage.AppendToBody(Corps);
                                 TempBlob.CreateInStream(InStream);
                                 EmailMessage.AddAttachment(FileDirectory + FileName, FileName, InStream);
@@ -173,12 +148,6 @@ page 50037 "BC6 Envoi BC Mail Automatique"
         Rec.SETRANGE("Period Start", WORKDATE());
 
         VSCSettings.GET();
-        /*
-        IF ISCLEAR(PDFCreator) THEN
-          CREATE(PDFCreator,VSCSettings."New Server",VSCSettings."On Client");
-        IF ISCLEAR(PDFCreatorError) THEN
-          CREATE(PDFCreatorError,VSCSettings."New Server",VSCSettings."On Client");
-        */
 
         ReportID := 50041;
         IF Object.GET(Object.Type::Report, '', ReportID) THEN;
@@ -189,12 +158,6 @@ page 50037 "BC6 Envoi BC Mail Automatique"
         ELSE
             FileDirectory := TEMPORARYPATH;
 
-        /*
-        PDFCreatorError := PDFCreator.cError;
-        
-        IF PDFCreator.cStart('/NoProcessingAtStartup',TRUE) = FALSE THEN
-             ERROR('Status: Error[' + FORMAT(PDFCreatorError.Number) + ']: ' + PDFCreatorError.Description);
-        */
 
     end;
 
@@ -211,7 +174,8 @@ page 50037 "BC6 Envoi BC Mail Automatique"
         EmailMessage: codeunit "Email Message";
         Gdate_DateCompta: Date;
         ReportID: Integer;
-        EMailTest, Gtext_FournisseurList : list of [Text];
+        EMailTest: list of [Text];
+        Gtext_FournisseurList: list of [Text];
         Corps: Text;
         FileDirectory: Text;
         FileName: Text;

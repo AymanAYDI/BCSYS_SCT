@@ -94,7 +94,7 @@ report 50041 "BC6_Commande achat et contrat"
             column(VATDetail; VATDetail)
             {
             }
-            column(UserSetupName; Grec_UserSetup."BC6_Nom")
+            column(UserSetupName; TxtGName)
             {
             }
             column(UserSetupFct; Grec_UserSetup."BC6_Fonction")
@@ -1057,8 +1057,9 @@ report 50041 "BC6_Commande achat et contrat"
 
             trigger OnAfterGetRecord()
             var
-            //TODO: Record Approval Setup is missing 
-            // Lrec_ApprovalSetup: Record "Approval Setup";
+                //TODO: Record Approval Setup is missing 
+                //Lrec_ApprovalSetup: Record "Approval Setup";
+                Text0001: Label 'No user is selected', Comment = 'FRA="Aucun utilisateurs n''est sélectionner"';
             begin
                 CurrReport.Language := Language.GetLanguageIdOrDefault("Language Code");
 
@@ -1148,43 +1149,58 @@ report 50041 "BC6_Commande achat et contrat"
                     END;
                 END;
                 PricesInclVATtxt := FORMAT("Prices Including VAT");
+                //>>> BC6 NC 09/05/2022
+                IF PurchSetup."BC6_Enable Signature Print" THEN BEGIN
+                    Grec_UserSetup.SETRANGE("BC6_Sign", TRUE);
+                    IF Grec_UserSetup.FINDFIRST THEN
+                        TxtGName := Grec_UserSetup."BC6_Sign Name"
+                    ELSE
+                        ERROR(Text0001);
+                END ELSE BEGIN
 
-
-                // Prendre la signature de l'utilisateur s'il a les droits nécessaires,
-                // sinon prendre celle de l'approbateur et remonter ainsi la chaine des approbateurs jusqu'à ce que les droits le permmettent
-                CALCFIELDS(Amount);
-                Gcode_PrécédentUserID := ''; // MODIF JX-XAD 05/07/2011
-                Gcode_UserID := "Purchase Header"."Assigned User ID";
-                IF Grec_UserSetup.GET(Gcode_UserID) THEN
-                    //Modif JX-XAD 12/11/08
-                    //  WHILE ("Purchase Line".Amount > Grec_UserSetup."Request Amount Approval Limit")
-                    WHILE (Amount > Grec_UserSetup."Request Amount Approval Limit")
+                    // Prendre la signature de l'utilisateur s'il a les droits nécessaires,
+                    // sinon prendre celle de l'approbateur et remonter ainsi la chaine des approbateurs jusqu'à ce que les droits le permmettent
+                    CALCFIELDS(Amount);
+                    Gcode_PrécédentUserID := ''; // MODIF JX-XAD 05/07/2011
+                    Gcode_UserID := "Purchase Header"."Assigned User ID";
+                    IF Grec_UserSetup.GET(Gcode_UserID) THEN
+                        //Modif JX-XAD 12/11/08
+                        //  WHILE ("Purchase Line".Amount > Grec_UserSetup."Request Amount Approval Limit")
+                        WHILE (Amount > Grec_UserSetup."Request Amount Approval Limit")
                         AND (NOT Grec_UserSetup."Unlimited Request Approval") DO BEGIN
-                        // DEBUT MODIF JX-XAD 05/07/2011
-                        IF (Gcode_PrécédentUserID = Gcode_UserID) THEN
-                            ERROR(Text016);
-                        // FIN MODIF JX-XAD 05/07/2011
-                        Gcode_PrécédentUserID := Gcode_UserID;
-                        Gcode_UserID := Grec_UserSetup."Approver ID";
-                        IF NOT Grec_UserSetup.GET(Gcode_UserID) THEN
-                            ERROR(Text012, Gcode_PrécédentUserID);
-                    END
-                ELSE
-                    ERROR(Text011, Gcode_UserID);
-                //TODO: Record Approval Setup is missing 
-                // Lrec_ApprovalSetup.RESET;
-                // Lrec_ApprovalSetup.FIND('-');
-                // IF Gcode_UserID = Lrec_ApprovalSetup."Approval Administrator" THEN
-
-
-                BEGIN
-                    Gcode_UserID := CompanyInfo."BC6_Leader";
-                    IF NOT Grec_UserSetup.GET(Gcode_UserID) THEN
+                            // DEBUT MODIF JX-XAD 05/07/2011
+                            IF (Gcode_PrécédentUserID = Gcode_UserID) THEN
+                                ERROR(Text016);
+                            // FIN MODIF JX-XAD 05/07/2011
+                            Gcode_PrécédentUserID := Gcode_UserID;
+                            Gcode_UserID := Grec_UserSetup."Approver ID";
+                            IF NOT Grec_UserSetup.GET(Gcode_UserID) THEN
+                                ERROR(Text012, Gcode_PrécédentUserID);
+                        END
+                    ELSE
                         ERROR(Text011, Gcode_UserID);
+                    //TODO: Record Approval Setup is missing 
+                    // Lrec_ApprovalSetup.RESET;
+                    // Lrec_ApprovalSetup.FIND('-');
+                    // IF Gcode_UserID = Lrec_ApprovalSetup."Approval Administrator" THEN
+                    // BEGIN
+                    //     Gcode_UserID := CompanyInfo."BC6_Leader";
+                    //     IF NOT Grec_UserSetup.GET(Gcode_UserID) THEN
+                    //         ERROR(Text011, Gcode_UserID);
+                    //     //END;
+                    //     BEGIN
+                    //         //DEBUT MODIF JX-XAD 07/03/2011
+                    //         //Gcode_UserID := 'RACHEL_PICARD';
+                    //         Gcode_UserID := CompanyInfo.BC6_Leader;
+                    //         //FIN MODIF JX-XAD 07/03/2011
+                    //         IF NOT Grec_UserSetup.GET(Gcode_UserID) THEN
+                    //             ERROR(Text011, Gcode_UserID);
+                    //     END;
+                    //     //>>> BC6 NC 09/05/2022
+                    TxtGName := Grec_UserSetup.BC6_Nom
+                    //>>> BC6 NC 09/05/2022
                 END;
-
                 Grec_UserSetup.CALCFIELDS(Grec_UserSetup."BC6_Picture");
-
                 // Grec_Contract.SETFILTER(Grec_Contract."BC6 Order No.", "Purchase Header"."No.");
                 // IF NOT Grec_Contract.FINDFIRST THEN
                 //     Grec_Contract.INIT;
@@ -1401,6 +1417,8 @@ report 50041 "BC6_Commande achat et contrat"
         Pied4: Text;
         Pied5: Text;
         Pied6: Text;
+        TxtGName: Text[50];
+
         AllowInvDisctxt: Text[30];
         CopyText: Text[30];
         Gtxt_Fax: Text[30];
