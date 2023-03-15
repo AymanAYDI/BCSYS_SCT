@@ -687,7 +687,7 @@ codeunit 50011 "BC6_FunctionsMgt"
         END;
     END;
     //---CDU408
-    procedure LookupDimValueCodeCDU408(FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    procedure BC6_LookupDimValueCode_CDU408(FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
     var
         DimVal: Record "Dimension Value";
         GLSetup: Record "General Ledger Setup";
@@ -717,8 +717,8 @@ codeunit 50011 "BC6_FunctionsMgt"
     begin
         if not HasGotGLSetup then begin
             GLSetup.Get();
-            GLSetupShortcutDimCodeV[9] := GLSetup."Shortcut Dimension 1 Code";
-            GLSetupShortcutDimCodeV[10] := GLSetup."Shortcut Dimension 2 Code";
+            GLSetupShortcutDimCodeV[9] := GLSetup."BC6_Shortcut Dimension 9 Code";
+            GLSetupShortcutDimCodeV[10] := GLSetup."BC6_Shortcut Dimension 10 Code";
             HasGotGLSetup := true;
         end;
     end;
@@ -776,63 +776,6 @@ codeunit 50011 "BC6_FunctionsMgt"
             end;
         end;
     end;
-
-    procedure Cdu408_GetShortcutDimensions(DimSetID: Integer; var ShortcutDimCode: array[10] of Code[20])
-    begin
-        Cdu480_GetShortcutDimensions(DimSetID, ShortcutDimCode);
-    end;
-    //---CDU480
-    procedure Cdu480_GetShortcutDimensions(DimSetID: Integer; var ShortcutDimCode: array[10] of Code[20])
-    var
-        i: Integer;
-    begin
-        Clear(ShortcutDimCode);
-        if DimSetID = 0 then
-            exit;
-        Cdu48_GetGLSetup();
-        for i := 9 to 10 do
-            if GLSetupShortcutDimCode[i] <> '' then
-                ShortcutDimCode[i] := Cdu480_GetDimSetEntry(DimSetID, GLSetupShortcutDimCode[i]);
-    end;
-
-    procedure Cdu48_GetGLSetup()
-    var
-        GLSetup: Record "General Ledger Setup";
-        WhenGotGLSetup: DateTime;
-        HasGotGLSetup: Boolean;
-    begin
-        if WhenGotGLSetup = 0DT then
-            WhenGotGLSetup := CurrentDateTime;
-        if CurrentDateTime > WhenGotGLSetup + 60000 then
-            HasGotGLSetup := false;
-        if HasGotGLSetup then
-            exit;
-        GLSetup.Get();
-        GLSetupShortcutDimCode[9] := GLSetup."Shortcut Dimension 1 Code";
-        GLSetupShortcutDimCode[10] := GLSetup."Shortcut Dimension 2 Code";
-
-        HasGotGLSetup := true;
-        WhenGotGLSetup := CurrentDateTime;
-    end;
-
-    procedure Cdu480_GetDimSetEntry(DimSetID: Integer; DimCode: Code[20]): Code[20]
-    var
-        TempDimSetEntry: Record "Dimension Set Entry" temporary;
-        DimensionSetEntry: Record "Dimension Set Entry";
-    begin
-        if TempDimSetEntry.Get(DimSetID, DimCode) then
-            exit(TempDimSetEntry."Dimension Value Code");
-        TempDimSetEntry.Init();
-        if DimensionSetEntry.Get(DimSetID, DimCode) then
-            TempDimSetEntry := DimensionSetEntry
-        else begin
-            TempDimSetEntry."Dimension Set ID" := DimSetID;
-            TempDimSetEntry."Dimension Code" := DimCode;
-        end;
-        TempDimSetEntry.Insert();
-        exit(TempDimSetEntry."Dimension Value Code");
-    end;
-
     //---Tab39
     procedure VerifyItemLineDim()
     var

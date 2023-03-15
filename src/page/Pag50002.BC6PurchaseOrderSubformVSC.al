@@ -42,7 +42,7 @@ page 50002 "BC6 Purchase Order Subform VSC"
 
                     trigger OnValidate()
                     begin
-                        Rec.ShowShortcutDimCode(ShortcutDimCode);
+                        Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
                         NoOnAfterValidate();
                     end;
                 }
@@ -265,7 +265,7 @@ page 50002 "BC6 Purchase Order Subform VSC"
                 }
                 field("ShortcutDimCode[9]"; ShortcutDimCode[9])
                 {
-                    CaptionClass = '1,2,9';
+                    CaptionClass = '1,50000,9';
                     Visible = false;
                     ApplicationArea = All;
 
@@ -281,7 +281,7 @@ page 50002 "BC6 Purchase Order Subform VSC"
                 }
                 field("ShortcutDimCode[10]"; ShortcutDimCode[10])
                 {
-                    CaptionClass = '1,2,10';
+                    CaptionClass = '1,50000,10';
                     Enabled = false;
                     Visible = false;
                     ApplicationArea = All;
@@ -456,7 +456,7 @@ page 50002 "BC6 Purchase Order Subform VSC"
             }
             group("Fonction&s")
             {
-                Caption = 'F&unctions', Comment = 'FRA="=Fonction&s"';
+                Caption = 'F&unctions', Comment = 'FRA="Fonction&s"';
                 Image = "Action";
                 action("&Eclater nomenclature")
                 {
@@ -551,7 +551,7 @@ page 50002 "BC6 Purchase Order Subform VSC"
 
     trigger OnAfterGetRecord()
     begin
-        Rec.ShowShortcutDimCode(ShortcutDimCode);
+        Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
     end;
 
     trigger OnDeleteRecord(): Boolean

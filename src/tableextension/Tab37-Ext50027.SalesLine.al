@@ -42,6 +42,13 @@ tableextension 50027 "BC6_SalesLine" extends "Sales Line" //37
         Gbool_ImportGroupInvoice := true;
     end;
 
+    procedure BC6_ShowShortcutDimCode(var ShortcutDimCode: array[10] of Code[20])
+    var
+        GetShortcutDimVal: Codeunit "BC6_Get Shortcut Dimension Val";
+    begin
+        GetShortcutDimVal.BC6_GetShortcutDimensions("Dimension Set ID", ShortcutDimCode);
+    end;
+
     var
         Currency: Record Currency;
         CurrExchRate: Record "Currency Exchange Rate";

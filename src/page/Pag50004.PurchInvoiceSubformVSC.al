@@ -25,7 +25,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
 
                     trigger OnValidate()
                     begin
-                        Rec.ShowShortcutDimCode(ShortcutDimCode);
+                        Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
                         NoOnAfterValidate();
                     end;
                 }
@@ -90,7 +90,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 }
                 field("ShortcutDimCode[9]"; ShortcutDimCode[9])
                 {
-                    CaptionClass = '1,2,9';
+                    CaptionClass = '1,50000,9';
                     Visible = false;
                     ApplicationArea = All;
 
@@ -106,7 +106,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
                 }
                 field("ShortcutDimCode[10]"; ShortcutDimCode[10])
                 {
-                    CaptionClass = '1,2,10';
+                    CaptionClass = '1,50000,10';
                     Enabled = false;
                     Visible = false;
                     ApplicationArea = All;
@@ -245,7 +245,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
 
                     trigger OnValidate()
                     begin
-                        Rec.ShowShortcutDimCode(ShortcutDimCode);
+                        Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
                     end;
                 }
                 field("Job Task No."; Rec."Job Task No.")
@@ -532,7 +532,7 @@ page 50004 "BC6_Purch. Invoice Subform VSC"
 
     trigger OnAfterGetRecord()
     begin
-        Rec.ShowShortcutDimCode(ShortcutDimCode);
+        Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
     end;
 
     trigger OnDeleteRecord(): Boolean

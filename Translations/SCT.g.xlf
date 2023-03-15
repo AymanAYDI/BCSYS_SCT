@@ -1288,6 +1288,11 @@
           <note from="Developer" annotates="general" priority="2">FRA="La longueur maximum du code fournisseur est de 10 caractères"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_EventsMgt - Method TAB23_OnAfterValidateEvent_Vendor - NamedType Text50000</note>
         </trans-unit>
+        <trans-unit id="Codeunit 306476849 - Method 1932128135 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
+          <source>This Shortcut Dimension is not defined in the %1.</source>
+          <note from="Developer" annotates="general" priority="2">FRA="Ce racourci axe n'est pas défini dans les %1."</note>
+          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method BC6_LookupDimValueCode_CDU408 - NamedType Text002</note>
+        </trans-unit>
         <trans-unit id="Codeunit 306476849 - Method 869667873 - NamedType 1526620110" size-unit="char" translate="yes" xml:space="preserve">
           <source>The field "Your reference" in header %1 is mandatory</source>
           <note from="Developer" annotates="general" priority="2">FRA="Le champs "Votre référence" dans en-tête %1 est obligatoire"</note>
@@ -1297,11 +1302,6 @@
           <source>Do you want this document to confirm receipt?</source>
           <note from="Developer" annotates="general" priority="2">FRA="Souhaitez-vous valider ce document en réception ?"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method Fct_OnBeforeSelectPostOrderOptionCodeunit91 - NamedType Text003</note>
-        </trans-unit>
-        <trans-unit id="Codeunit 306476849 - Method 2015854606 - NamedType 3752334001" size-unit="char" translate="yes" xml:space="preserve">
-          <source>This Shortcut Dimension is not defined in the %1.</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Ce racourci axe n'est pas défini dans les %1."</note>
-          <note from="Xliff Generator" annotates="general" priority="3">Codeunit BC6_FunctionsMgt - Method LookupDimValueCodeCDU408 - NamedType Text002</note>
         </trans-unit>
         <trans-unit id="Codeunit 306476849 - Method 880957065 - NamedType 2476940767" size-unit="char" translate="yes" xml:space="preserve">
           <source>The Ship-to Address has been changed</source>
@@ -1685,7 +1685,7 @@
         </trans-unit>
         <trans-unit id="Page 1613398211 - Control 623768203 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>Orders &amp; Invoices</source>
-          <note from="Developer" annotates="general" priority="2">FRA="Factures &amp; Avoirs"</note>
+          <note from="Developer" annotates="general" priority="2">FRA="Commandes"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page BC6 Purchase Activities VSC - Control Commandes - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1613398211 - Control 3047739679 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
@@ -2145,7 +2145,7 @@
         </trans-unit>
         <trans-unit id="Page 1297179970 - Action 2322805527 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">
           <source>F&amp;unctions</source>
-          <note from="Developer" annotates="general" priority="2">FRA="=Fonction&amp;s"</note>
+          <note from="Developer" annotates="general" priority="2">FRA="Fonction&amp;s"</note>
           <note from="Xliff Generator" annotates="general" priority="3">Page BC6 Purchase Order Subform VSC - Action Fonction&amp;s - Property Caption</note>
         </trans-unit>
         <trans-unit id="Page 1297179970 - Action 2249241027 - Property 2879900210" size-unit="char" translate="yes" xml:space="preserve">

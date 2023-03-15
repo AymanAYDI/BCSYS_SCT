@@ -10,6 +10,10 @@ pageextension 50038 "BC6_SalesOrderSubform" extends "Sales Order Subform" //46
         modify("No.")
         {
             Visible = false;
+            trigger OnAfterValidate()
+            begin
+                Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
+            end;
         }
         addafter("Appl.-to Item Entry")
         {
@@ -62,7 +66,7 @@ pageextension 50038 "BC6_SalesOrderSubform" extends "Sales Order Subform" //46
         {
             field(BC6_ShortcutDimCode9; ShortcutDimCode[9])
             {
-                CaptionClass = '1,2,9';
+                CaptionClass = '1,50000,9';
                 Visible = false;
                 ApplicationArea = All;
 
@@ -81,7 +85,7 @@ pageextension 50038 "BC6_SalesOrderSubform" extends "Sales Order Subform" //46
         {
             field("ShortcutDimCode[10]"; ShortcutDimCode[10])
             {
-                CaptionClass = '1,2,10';
+                CaptionClass = '1,50000,10';
                 Enabled = false;
                 Visible = false;
                 ApplicationArea = All;
@@ -97,5 +101,19 @@ pageextension 50038 "BC6_SalesOrderSubform" extends "Sales Order Subform" //46
                 end;
             }
         }
+        modify(Description)
+        {
+            trigger OnAfterValidate()
+            begin
+                Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
+            end;
+        }
     }
+    trigger OnAfterGetRecord()
+    begin
+        Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
+    end;
+
+    var
+        ShortcutDimCode: array[10] of Code[20];
 }

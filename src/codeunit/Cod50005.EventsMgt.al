@@ -463,6 +463,7 @@ codeunit 50005 "BC6_EventsMgt"
     local procedure TAB10865_OnBeforeInsertEvent_PaymentHeader(var Rec: Record "Payment Header"; RunTrigger: Boolean)
     var
         GLSetup: Record "General Ledger Setup";
+        GetProcess: Record "Payment Class";
         Process: Record "Payment Class";
         xRec: Record "Payment Header";
         NoSeriesMgt: Codeunit NoSeriesManagement;
@@ -473,8 +474,11 @@ codeunit 50005 "BC6_EventsMgt"
             exit;
         if Rec."No." = '' then begin
             GLSetup.GET();
-            IF GLSetup."BC6_Default Payment Class" <> '' THEN
-                Process.GET(GLSetup."BC6_Default Payment Class");
+            IF GLSetup."BC6_Default Payment Class" <> '' then
+                Process.GET(GLSetup."BC6_Default Payment Class")
+            else
+                if PAGE.RunModal(PAGE::"Payment Class List", GetProcess) = ACTION::LookupOK then
+                    Process := GetProcess;
             Process.TestField("Header No. Series");
             NoSeriesMgt.InitSeries(Process."Header No. Series", xRec."No. Series", 0D, Rec."No.", Rec."No. Series");
             Rec.Validate("Payment Class", Process.Code);
@@ -871,7 +875,7 @@ codeunit 50005 "BC6_EventsMgt"
     var
         FunctionsMgt: Codeunit BC6_FunctionsMgt;
     begin
-        FunctionsMgt.LookupDimValueCodeCDU408(FieldNumber, ShortcutDimCode, IsHandled);
+        FunctionsMgt.BC6_LookupDimValueCode_CDU408(FieldNumber, ShortcutDimCode, IsHandled);
     end;
     //---Tab81
     [EventSubscriber(ObjectType::Table, DataBase::"Gen. Journal Line", 'OnBeforeValidateShortcutDimCode', '', false, false)]
@@ -894,7 +898,7 @@ codeunit 50005 "BC6_EventsMgt"
     begin
         if FieldNumber > 8 then begin
             GenJournalLine.TestField("Check Printed", false);
-            FunctionsMgt.LookupDimValueCodeCDU408(FieldNumber, ShortcutDimCode, IsHandled);
+            FunctionsMgt.BC6_LookupDimValueCode_CDU408(FieldNumber, ShortcutDimCode, IsHandled);
             FunctionsMgt.BC6_ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, GenJournalLine."Dimension Set ID");
         end;
 
@@ -918,10 +922,75 @@ codeunit 50005 "BC6_EventsMgt"
         FunctionsMgt: codeunit "BC6_FunctionsMgt";
     begin
         if FieldNumber > 8 then begin
-            FunctionsMgt.LookupDimValueCodeCDU408(FieldNumber, ShortcutDimCode, IsHandled);
+            FunctionsMgt.BC6_LookupDimValueCode_CDU408(FieldNumber, ShortcutDimCode, IsHandled);
             FunctionsMgt.BC6_ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, PurchaseLine."Dimension Set ID");
             FunctionsMgt.VerifyItemLineDim();
         end;
+    end;
+    //---TAB37
+    [EventSubscriber(ObjectType::Table, DataBase::"Sales Line", 'OnBeforeLookupShortcutDimCode', '', false, false)]
+    local procedure TAB37_OnBeforeLookupShortcutDimCode(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line"; FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    var
+        FunctionsMgt: codeunit "BC6_FunctionsMgt";
+    begin
+        if FieldNumber > 8 then begin
+            FunctionsMgt.BC6_LookupDimValueCode_CDU408(FieldNumber, ShortcutDimCode, IsHandled);
+            FunctionsMgt.BC6_ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, SalesLine."Dimension Set ID");
+            FunctionsMgt.VerifyItemLineDim();
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, DataBase::"Sales Line", 'OnBeforeValidateShortcutDimCode', '', false, false)]
+    local procedure TAB37_OnBeforeValidateShortcutDimCode(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line"; FieldNumber: Integer; var ShortcutDimCode: Code[20]; var IsHandled: Boolean)
+    var
+        FunctionsMgt: codeunit "BC6_FunctionsMgt";
+    begin
+        if FieldNumber > 8 then begin
+            IsHandled := true;
+            FunctionsMgt.BC6_ValidateShortcutDimValues(FieldNumber, ShortcutDimCode, SalesLine."Dimension Set ID");
+            FunctionsMgt.VerifyItemLineDim();
+        end;
+    end;
+
+    //COD343
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Dimension CaptionClass Mgmt", 'OnTranslateDimCaptionClassOnDimCaptionTypeCaseElse', '', false, false)]
+    local procedure COD343_OnTranslateDimCaptionClassOnDimCaptionTypeCaseElse(DimCaptionType: Text[80]; DimCaptionRef: Text[80]; Language: Integer; DimOptionalParam1: Text[80]; DimOptionalParam2: Text[80]; var Result: Text; var IsHandled: Boolean)
+    var
+        GLSetup: Record "General Ledger Setup";
+    begin
+        GLSetup.Get();
+        case DimCaptionType of
+            '50000':
+                begin
+                    case DimCaptionRef of
+                        '9':
+                            Result :=
+                              CodeCaption(
+                                Language, DimOptionalParam1, DimOptionalParam2,
+                                GLSetup."BC6_Shortcut Dimension 9 Code",
+                                GLSetup.FieldCaption("BC6_Shortcut Dimension 9 Code"));
+                        '10':
+                            Result :=
+                              CodeCaption(
+                                Language, DimOptionalParam1, DimOptionalParam2,
+                                GLSetup."BC6_Shortcut Dimension 10 Code",
+                                GLSetup.FieldCaption("BC6_Shortcut Dimension 10 Code"));
+                    end;
+                    IsHandled := true;
+                end;
+        end;
+    end;
+
+    local procedure CodeCaption(Language: Integer; DimOptionalParam1: Text; DimOptionalParam2: Text; DimCode: Code[20]; DimFieldCaption: Text[1024]): Text
+    var
+        Dim: Record Dimension;
+    begin
+        if Dim.Get(DimCode) then
+            exit(DimOptionalParam1 + Dim.GetMLCodeCaption(Language) + DimOptionalParam2);
+        exit(
+          DimOptionalParam1 +
+          DimFieldCaption +
+          DimOptionalParam2);
     end;
 
     var

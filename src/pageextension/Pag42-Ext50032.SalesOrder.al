@@ -17,11 +17,11 @@ pageextension 50032 "BC6_SalesOrder" extends "Sales Order" //42
             }
             field("ShortcutDimCode[9]"; ShortcutDimCode[9])
             {
-                CaptionClass = '1,2,9';
+                CaptionClass = '1,50000,9';
                 ApplicationArea = All;
                 trigger OnLookup(var Text: Text): Boolean
                 begin
-                    Rec.LookupShortcutDimCode(9, ShortcutDimCode[9]);
+                    Rec.BC6_LookupShortcutDimCode(9, ShortcutDimCode[9]);
                 end;
 
                 trigger OnValidate()
@@ -155,9 +155,10 @@ pageextension 50032 "BC6_SalesOrder" extends "Sales Order" //42
         // JobQueueVisible := "Job Queue Status" = "Job Queue Status"::"Scheduled for Posting";
         // SetExtDocNoMandatoryCondition;
         // Ajout ABE 18/05/2016
-        Rec.ShowShortcutDimCode(ShortcutDimCode);
+        Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
         // Fin ABE 18/05/2016
     end;
+
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin

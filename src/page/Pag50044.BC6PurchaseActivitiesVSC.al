@@ -56,7 +56,7 @@ page 50044 "BC6 Purchase Activities VSC"
             }
             cuegroup(Commandes)
             {
-                Caption = 'Orders & Invoices', Comment = 'FRA="Factures & Avoirs"';
+                Caption = 'Orders & Invoices', Comment = 'FRA="Commandes"';
                 field("<Historique BC>"; Rec."BC6_All Orders")
                 {
                     Caption = 'Historique BC', Comment = 'FRA="Historique BC"';

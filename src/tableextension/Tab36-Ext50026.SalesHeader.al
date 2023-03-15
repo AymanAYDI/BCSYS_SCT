@@ -15,15 +15,17 @@ tableextension 50026 "BC6_SalesHeader" extends "Sales Header" //36
         }
     }
 
-    procedure LookupShortcutDimCode(FieldNumber: Integer; var ShortcutDimCode: Code[20])
+    procedure BC6_LookupShortcutDimCode(FieldNumber: Integer; var ShortcutDimCode: Code[20])
     begin
         DimMgt.LookupDimValueCode(FieldNumber, ShortcutDimCode);
         BC6_ValidateShortcutDimCode(FieldNumber, ShortcutDimCode);
     end;
 
-    procedure ShowShortcutDimCode(var ShortcutDimCode: array[10] of Code[20])
+    procedure BC6_ShowShortcutDimCode(var ShortcutDimCode: array[10] of Code[20])
+    var
+        GetShortcutDimVal: Codeunit "BC6_Get Shortcut Dimension Val";
     begin
-        DimMgt.GetShortcutDimensions("Dimension Set ID", ShortcutDimCode);
+        GetShortcutDimVal.BC6_GetShortcutDimensions("Dimension Set ID", ShortcutDimCode);
     end;
 
     procedure BC6_ValidateShortcutDimCode(FieldNumber: Integer; var ShortcutDimCode: Code[20])

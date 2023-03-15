@@ -31,7 +31,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
         {
             field("ShortcutDimCode[9]"; ShortcutDimCode[9])
             {
-                CaptionClass = '1,2,9';
+                CaptionClass = '1,50000,9';
                 Visible = false;
                 ApplicationArea = All;
 
@@ -47,7 +47,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
             }
             field("ShortcutDimCode[10]"; ShortcutDimCode[10])
             {
-                CaptionClass = '1,2,10';
+                CaptionClass = '1,50000,10';
                 Visible = false;
                 ApplicationArea = All;
 
@@ -61,6 +61,20 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
                     Rec.ValidateShortcutDimCode(10, ShortcutDimCode[10]);
                 end;
             }
+        }
+        modify("Bal. Account No.")
+        {
+            trigger OnAfterValidate()
+            begin
+                Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
+            end;
+        }
+        modify("Account No.")
+        {
+            trigger OnAfterValidate()
+            begin
+                Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
+            end;
         }
     }
     actions
@@ -226,7 +240,7 @@ pageextension 50031 "BC6_GeneralJournal" extends "General Journal" //39
     }
     trigger OnAfterGetRecord()
     begin
-        Rec.ShowShortcutDimCodeV(ShortcutDimCode);
+        Rec.BC6_ShowShortcutDimCode(ShortcutDimCode);
     end;
 
     var
